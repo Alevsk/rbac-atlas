@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html><head lang="en"><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge"><title>argo-cd - My New Hugo Site</title><meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="asd" />
+	<meta property="og:image" content=""/>
+	<meta property="og:url" content="http://localhost:1313/argo-cd/8.0.11/">
+  <meta property="og:site_name" content="My New Hugo Site">
+  <meta property="og:title" content="argo-cd">
+  <meta property="og:description" content="asd">
+  <meta property="og:locale" content="en_us">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="argo-cd">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="argo-cd">
+  <meta name="twitter:description" content="asd">
+
+        <link href="http://localhost:1313/css/fonts.2c2227b81b1970a03e760aa2e6121cd01f87c88586803cbb282aa224720a765f.css" rel="stylesheet">
+	
+
+	
+	<link rel="stylesheet" type="text/css" media="screen" href="http://localhost:1313/css/main.6a0f23ea50fd34b46fee262a5a68e17d458c51a2bc99ba1ba018065de6b180c3.css" />
+</head>
+<body>
+        <div class="content"><header>
+	<div class="main">
+		<a href="http://localhost:1313/">My New Hugo Site</a>
+	</div>
+	<nav>
+		
+		
+	</nav>
+</header>
+
+<main>
+  <article>
+    <div class="post-container">
+      
+      <div class="post-content">
+        <div class="title">
+          <h1 class="title">argo-cd</h1>
+          <div class="meta">Posted on Jan 1, 1</div>
+        </div>
+        
+        <section class="body">
+          <h1 id="argo-cd">argo-cd</h1>
+<ul>
+<li><strong>Version:</strong> <code>8.0.11</code></li>
+<li>Generated 2025-05-29 01:08:16 UTC</li>
+</ul>
+<h2 id="overview">Overview</h2>
+<table>
+  <thead>
+      <tr>
+          <th>ServiceAccount</th>
+          <th>Namespace</th>
+          <th>Automount</th>
+          <th>Secrets</th>
+          <th>Permissions</th>
+          <th>Workloads</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td><a href="#sa-argocd-dex-server"><code>argocd-dex-server</code></a></td>
+          <td>default</td>
+          <td>✅</td>
+          <td>—</td>
+          <td>2</td>
+          <td>1</td>
+      </tr>
+      <tr>
+          <td><a href="#sa-argo-cd-redis-ha-haproxy"><code>argo-cd-redis-ha-haproxy</code></a></td>
+          <td>default</td>
+          <td>❌</td>
+          <td>—</td>
+          <td>0</td>
+          <td>1</td>
+      </tr>
+      <tr>
+          <td><a href="#sa-argo-cd-argocd-repo-server"><code>argo-cd-argocd-repo-server</code></a></td>
+          <td>default</td>
+          <td>✅</td>
+          <td>—</td>
+          <td>0</td>
+          <td>1</td>
+      </tr>
+      <tr>
+          <td><a href="#sa-argocd-applicationset-controller"><code>argocd-applicationset-controller</code></a></td>
+          <td>default</td>
+          <td>✅</td>
+          <td>—</td>
+          <td>11</td>
+          <td>1</td>
+      </tr>
+      <tr>
+          <td><a href="#sa-argocd-application-controller"><code>argocd-application-controller</code></a></td>
+          <td>default</td>
+          <td>✅</td>
+          <td>—</td>
+          <td>8</td>
+          <td>1</td>
+      </tr>
+      <tr>
+          <td><a href="#sa-argocd-notifications-controller"><code>argocd-notifications-controller</code></a></td>
+          <td>default</td>
+          <td>✅</td>
+          <td>—</td>
+          <td>8</td>
+          <td>1</td>
+      </tr>
+      <tr>
+          <td><a href="#sa-argo-cd-redis-ha"><code>argo-cd-redis-ha</code></a></td>
+          <td>default</td>
+          <td>❌</td>
+          <td>argocd-redis</td>
+          <td>0</td>
+          <td>3</td>
+      </tr>
+      <tr>
+          <td><a href="#sa-argo-cd-argocd-redis-secret-init"><code>argo-cd-argocd-redis-secret-init</code></a></td>
+          <td>default</td>
+          <td>✅</td>
+          <td>—</td>
+          <td>0</td>
+          <td>1</td>
+      </tr>
+      <tr>
+          <td><a href="#sa-argocd-server"><code>argocd-server</code></a></td>
+          <td>default</td>
+          <td>✅</td>
+          <td>—</td>
+          <td>14</td>
+          <td>1</td>
+      </tr>
+  </tbody>
+</table>
+<blockquote>
+<p><em>Numbers in the last two columns indicate how many bindings or workloads involve each ServiceAccount.</em></p></blockquote>
+<hr>
+<h2 id="identities">Identities</h2>
+<h3 id="sa-argocd-server"><code>argocd-server</code></h3>
+<p><strong>Namespace:</strong> <code>default</code>  |  <strong>Automount:</strong> ✅</p>
+<h4 id="permissions-14">Permissions (14)</h4>
+<table>
+  <thead>
+      <tr>
+          <th>Role</th>
+          <th>Resource</th>
+          <th>Verbs</th>
+          <th>Risk</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>ClusterRole <code>argo-cd-argocd-server</code></td>
+          <td><em>/</em></td>
+          <td>delete · get · patch</td>
+          <td>Critical</td>
+      </tr>
+      <tr>
+          <td>ClusterRole <code>argo-cd-argocd-server</code></td>
+          <td>core/events</td>
+          <td>create · list</td>
+          <td>Medium</td>
+      </tr>
+      <tr>
+          <td>ClusterRole <code>argo-cd-argocd-server</code></td>
+          <td>core/pods</td>
+          <td>get</td>
+          <td>Medium</td>
+      </tr>
+      <tr>
+          <td>ClusterRole <code>argo-cd-argocd-server</code></td>
+          <td>core/pods/log</td>
+          <td>get</td>
+          <td>Medium</td>
+      </tr>
+      <tr>
+          <td>ClusterRole <code>argo-cd-argocd-server</code></td>
+          <td>argoproj.io/applications</td>
+          <td>get · list · update · watch</td>
+          <td>Medium</td>
+      </tr>
+      <tr>
+          <td>ClusterRole <code>argo-cd-argocd-server</code></td>
+          <td>argoproj.io/applicationsets</td>
+          <td>get · list · update · watch</td>
+          <td>Medium</td>
+      </tr>
+      <tr>
+          <td>ClusterRole <code>argo-cd-argocd-server</code></td>
+          <td>argoproj.io/workflows</td>
+          <td>create</td>
+          <td>Medium</td>
+      </tr>
+      <tr>
+          <td>ClusterRole <code>argo-cd-argocd-server</code></td>
+          <td>batch/jobs</td>
+          <td>create</td>
+          <td>Medium</td>
+      </tr>
+      <tr>
+          <td>Role <code>argo-cd-argocd-server</code></td>
+          <td>core/secrets</td>
+          <td>create · delete · get · list · patch · update · watch</td>
+          <td>Low</td>
+      </tr>
+      <tr>
+          <td>Role <code>argo-cd-argocd-server</code></td>
+          <td>core/configmaps</td>
+          <td>create · delete · get · list · patch · update · watch</td>
+          <td>Low</td>
+      </tr>
+      <tr>
+          <td>Role <code>argo-cd-argocd-server</code></td>
+          <td>core/events</td>
+          <td>create · list</td>
+          <td>Low</td>
+      </tr>
+      <tr>
+          <td>Role <code>argo-cd-argocd-server</code></td>
+          <td>argoproj.io/applications</td>
+          <td>create · delete · get · list · patch · update · watch</td>
+          <td>Low</td>
+      </tr>
+      <tr>
+          <td>Role <code>argo-cd-argocd-server</code></td>
+          <td>argoproj.io/applicationsets</td>
+          <td>create · delete · get · list · patch · update · watch</td>
+          <td>Low</td>
+      </tr>
+      <tr>
+          <td>Role <code>argo-cd-argocd-server</code></td>
+          <td>argoproj.io/appprojects</td>
+          <td>create · delete · get · list · patch · update · watch</td>
+          <td>Low</td>
+      </tr>
+  </tbody>
+</table>
+<h4 id="workloads-1">Workloads (1)</h4>
+<table>
+  <thead>
+      <tr>
+          <th>Kind</th>
+          <th>Name</th>
+          <th>Container</th>
+          <th>Image</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>Deployment</td>
+          <td>argo-cd-argocd-server</td>
+          <td>server</td>
+          <td>quay.io/argoproj/argocd:v3.0.4</td>
+      </tr>
+  </tbody>
+</table>
+<hr>
+<h3 id="sa-argocd-application-controller"><code>argocd-application-controller</code></h3>
+<p><strong>Namespace:</strong> <code>default</code>  |  <strong>Automount:</strong> ✅</p>
+<h4 id="permissions-8">Permissions (8)</h4>
+<table>
+  <thead>
+      <tr>
+          <th>Role</th>
+          <th>Resource</th>
+          <th>Verbs</th>
+          <th>Risk</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>ClusterRole <code>argo-cd-argocd-application-controller</code></td>
+          <td><em>/</em></td>
+          <td>*</td>
+          <td>Critical</td>
+      </tr>
+      <tr>
+          <td>Role <code>argo-cd-argocd-application-controller</code></td>
+          <td>core/secrets</td>
+          <td>get · list · watch</td>
+          <td>Low</td>
+      </tr>
+      <tr>
+          <td>Role <code>argo-cd-argocd-application-controller</code></td>
+          <td>core/configmaps</td>
+          <td>get · list · watch</td>
+          <td>Low</td>
+      </tr>
+      <tr>
+          <td>Role <code>argo-cd-argocd-application-controller</code></td>
+          <td>core/events</td>
+          <td>create · list</td>
+          <td>Low</td>
+      </tr>
+      <tr>
+          <td>Role <code>argo-cd-argocd-application-controller</code></td>
+          <td>argoproj.io/appprojects</td>
+          <td>create · delete · get · list · patch · update · watch</td>
+          <td>Low</td>
+      </tr>
+      <tr>
+          <td>Role <code>argo-cd-argocd-application-controller</code></td>
+          <td>argoproj.io/applications</td>
+          <td>create · delete · get · list · patch · update · watch</td>
+          <td>Low</td>
+      </tr>
+      <tr>
+          <td>Role <code>argo-cd-argocd-application-controller</code></td>
+          <td>argoproj.io/applicationsets</td>
+          <td>create · delete · get · list · patch · update · watch</td>
+          <td>Low</td>
+      </tr>
+      <tr>
+          <td>Role <code>argo-cd-argocd-application-controller</code></td>
+          <td>apps/deployments</td>
+          <td>get · list · watch</td>
+          <td>Low</td>
+      </tr>
+  </tbody>
+</table>
+<h4 id="workloads-1-1">Workloads (1)</h4>
+<table>
+  <thead>
+      <tr>
+          <th>Kind</th>
+          <th>Name</th>
+          <th>Container</th>
+          <th>Image</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>StatefulSet</td>
+          <td>argo-cd-argocd-application-controller</td>
+          <td>application-controller</td>
+          <td>quay.io/argoproj/argocd:v3.0.4</td>
+      </tr>
+  </tbody>
+</table>
+<hr>
+<h3 id="sa-argocd-notifications-controller"><code>argocd-notifications-controller</code></h3>
+<p><strong>Namespace:</strong> <code>default</code>  |  <strong>Automount:</strong> ✅</p>
+<h4 id="permissions-8-1">Permissions (8)</h4>
+<table>
+  <thead>
+      <tr>
+          <th>Role</th>
+          <th>Resource</th>
+          <th>Verbs</th>
+          <th>Risk</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>ClusterRole <code>argo-cd-argocd-notifications-controller</code></td>
+          <td>argoproj.io/applications</td>
+          <td>get · list · patch · update · watch</td>
+          <td>Medium</td>
+      </tr>
+      <tr>
+          <td>ClusterRole <code>argo-cd-argocd-notifications-controller</code></td>
+          <td>argoproj.io/appprojects</td>
+          <td>get · list · patch · update · watch</td>
+          <td>Medium</td>
+      </tr>
+      <tr>
+          <td>ClusterRole <code>argo-cd-argocd-notifications-controller</code></td>
+          <td>core/configmaps</td>
+          <td>get · list · watch</td>
+          <td>Medium</td>
+      </tr>
+      <tr>
+          <td>ClusterRole <code>argo-cd-argocd-notifications-controller</code></td>
+          <td>core/secrets</td>
+          <td>get · list · watch</td>
+          <td>Medium</td>
+      </tr>
+      <tr>
+          <td>Role <code>argo-cd-argocd-notifications-controller</code></td>
+          <td>core/configmaps</td>
+          <td>get · list · watch</td>
+          <td>Low</td>
+      </tr>
+      <tr>
+          <td>Role <code>argo-cd-argocd-notifications-controller</code></td>
+          <td>core/secrets</td>
+          <td>get · list · watch</td>
+          <td>Low</td>
+      </tr>
+      <tr>
+          <td>Role <code>argo-cd-argocd-notifications-controller</code></td>
+          <td>argoproj.io/applications</td>
+          <td>get · list · patch · update · watch</td>
+          <td>Low</td>
+      </tr>
+      <tr>
+          <td>Role <code>argo-cd-argocd-notifications-controller</code></td>
+          <td>argoproj.io/appprojects</td>
+          <td>get · list · patch · update · watch</td>
+          <td>Low</td>
+      </tr>
+  </tbody>
+</table>
+<h4 id="workloads-1-2">Workloads (1)</h4>
+<table>
+  <thead>
+      <tr>
+          <th>Kind</th>
+          <th>Name</th>
+          <th>Container</th>
+          <th>Image</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>Deployment</td>
+          <td>argo-cd-argocd-notifications-controller</td>
+          <td>notifications-controller</td>
+          <td>quay.io/argoproj/argocd:v3.0.4</td>
+      </tr>
+  </tbody>
+</table>
+<hr>
+<h3 id="sa-argocd-applicationset-controller"><code>argocd-applicationset-controller</code></h3>
+<p><strong>Namespace:</strong> <code>default</code>  |  <strong>Automount:</strong> ✅</p>
+<h4 id="permissions-11">Permissions (11)</h4>
+<table>
+  <thead>
+      <tr>
+          <th>Role</th>
+          <th>Resource</th>
+          <th>Verbs</th>
+          <th>Risk</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>Role <code>argo-cd-argocd-applicationset-controller</code></td>
+          <td>extensions/deployments</td>
+          <td>get · list · watch</td>
+          <td>Low</td>
+      </tr>
+      <tr>
+          <td>Role <code>argo-cd-argocd-applicationset-controller</code></td>
+          <td>coordination.k8s.io/leases</td>
+          <td>create · delete · get · list · patch · update · watch</td>
+          <td>Low</td>
+      </tr>
+      <tr>
+          <td>Role <code>argo-cd-argocd-applicationset-controller</code></td>
+          <td>argoproj.io/applications</td>
+          <td>create · delete · get · list · patch · update · watch</td>
+          <td>Low</td>
+      </tr>
+      <tr>
+          <td>Role <code>argo-cd-argocd-applicationset-controller</code></td>
+          <td>argoproj.io/applicationsets</td>
+          <td>create · delete · get · list · patch · update · watch</td>
+          <td>Low</td>
+      </tr>
+      <tr>
+          <td>Role <code>argo-cd-argocd-applicationset-controller</code></td>
+          <td>argoproj.io/applicationsets/finalizers</td>
+          <td>create · delete · get · list · patch · update · watch</td>
+          <td>Low</td>
+      </tr>
+      <tr>
+          <td>Role <code>argo-cd-argocd-applicationset-controller</code></td>
+          <td>argoproj.io/applicationsets/status</td>
+          <td>get · patch · update</td>
+          <td>Low</td>
+      </tr>
+      <tr>
+          <td>Role <code>argo-cd-argocd-applicationset-controller</code></td>
+          <td>argoproj.io/appprojects</td>
+          <td>get · list · watch</td>
+          <td>Low</td>
+      </tr>
+      <tr>
+          <td>Role <code>argo-cd-argocd-applicationset-controller</code></td>
+          <td>core/secrets</td>
+          <td>get · list · watch</td>
+          <td>Low</td>
+      </tr>
+      <tr>
+          <td>Role <code>argo-cd-argocd-applicationset-controller</code></td>
+          <td>core/events</td>
+          <td>create · get · list · patch · watch</td>
+          <td>Low</td>
+      </tr>
+      <tr>
+          <td>Role <code>argo-cd-argocd-applicationset-controller</code></td>
+          <td>core/configmaps</td>
+          <td>create · delete · get · list · patch · update · watch</td>
+          <td>Low</td>
+      </tr>
+      <tr>
+          <td>Role <code>argo-cd-argocd-applicationset-controller</code></td>
+          <td>apps/deployments</td>
+          <td>get · list · watch</td>
+          <td>Low</td>
+      </tr>
+  </tbody>
+</table>
+<h4 id="workloads-1-3">Workloads (1)</h4>
+<table>
+  <thead>
+      <tr>
+          <th>Kind</th>
+          <th>Name</th>
+          <th>Container</th>
+          <th>Image</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>Deployment</td>
+          <td>argo-cd-argocd-applicationset-controller</td>
+          <td>applicationset-controller</td>
+          <td>quay.io/argoproj/argocd:v3.0.4</td>
+      </tr>
+  </tbody>
+</table>
+<hr>
+<h3 id="sa-argocd-dex-server"><code>argocd-dex-server</code></h3>
+<p><strong>Namespace:</strong> <code>default</code>  |  <strong>Automount:</strong> ✅</p>
+<h4 id="permissions-2">Permissions (2)</h4>
+<table>
+  <thead>
+      <tr>
+          <th>Role</th>
+          <th>Resource</th>
+          <th>Verbs</th>
+          <th>Risk</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>Role <code>argo-cd-argocd-dex-server</code></td>
+          <td>core/secrets</td>
+          <td>get · list · watch</td>
+          <td>Low</td>
+      </tr>
+      <tr>
+          <td>Role <code>argo-cd-argocd-dex-server</code></td>
+          <td>core/configmaps</td>
+          <td>get · list · watch</td>
+          <td>Low</td>
+      </tr>
+  </tbody>
+</table>
+<h4 id="workloads-1-4">Workloads (1)</h4>
+<table>
+  <thead>
+      <tr>
+          <th>Kind</th>
+          <th>Name</th>
+          <th>Container</th>
+          <th>Image</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>Deployment</td>
+          <td>argo-cd-argocd-dex-server</td>
+          <td>dex-server</td>
+          <td>ghcr.io/dexidp/dex:v2.43.1</td>
+      </tr>
+  </tbody>
+</table>
+<hr>
+<h3 id="sa-argo-cd-argocd-redis-secret-init"><code>argo-cd-argocd-redis-secret-init</code></h3>
+<p><strong>Namespace:</strong> <code>default</code>  |  <strong>Automount:</strong> ✅</p>
+<h4 id="permissions-0">Permissions (0)</h4>
+<p><em>No explicit RBAC bindings.</em></p>
+<h4 id="workloads-1-5">Workloads (1)</h4>
+<table>
+  <thead>
+      <tr>
+          <th>Kind</th>
+          <th>Name</th>
+          <th>Container</th>
+          <th>Image</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>Job</td>
+          <td>argo-cd-argocd-redis-secret-init</td>
+          <td>secret-init</td>
+          <td>quay.io/argoproj/argocd:v3.0.4</td>
+      </tr>
+  </tbody>
+</table>
+<hr>
+<h3 id="sa-argo-cd-argocd-repo-server"><code>argo-cd-argocd-repo-server</code></h3>
+<p><strong>Namespace:</strong> <code>default</code>  |  <strong>Automount:</strong> ✅</p>
+<h4 id="permissions-0-1">Permissions (0)</h4>
+<p><em>No explicit RBAC bindings.</em></p>
+<h4 id="workloads-1-6">Workloads (1)</h4>
+<table>
+  <thead>
+      <tr>
+          <th>Kind</th>
+          <th>Name</th>
+          <th>Container</th>
+          <th>Image</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>Deployment</td>
+          <td>argo-cd-argocd-repo-server</td>
+          <td>repo-server</td>
+          <td>quay.io/argoproj/argocd:v3.0.4</td>
+      </tr>
+  </tbody>
+</table>
+<hr>
+<h3 id="sa-argo-cd-redis-ha"><code>argo-cd-redis-ha</code></h3>
+<p><strong>Namespace:</strong> <code>default</code>  |  <strong>Automount:</strong> ❌  |  <strong>Secrets:</strong> argocd-redis</p>
+<h4 id="permissions-0-2">Permissions (0)</h4>
+<p><em>No explicit RBAC bindings.</em></p>
+<h4 id="workloads-3">Workloads (3)</h4>
+<table>
+  <thead>
+      <tr>
+          <th>Kind</th>
+          <th>Name</th>
+          <th>Container</th>
+          <th>Image</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>StatefulSet</td>
+          <td>argo-cd-redis-ha-server</td>
+          <td>redis</td>
+          <td>public.ecr.aws/docker/library/redis:7.2.8-alpine</td>
+      </tr>
+      <tr>
+          <td>StatefulSet</td>
+          <td>argo-cd-redis-ha-server</td>
+          <td>sentinel</td>
+          <td>public.ecr.aws/docker/library/redis:7.2.8-alpine</td>
+      </tr>
+      <tr>
+          <td>StatefulSet</td>
+          <td>argo-cd-redis-ha-server</td>
+          <td>split-brain-fix</td>
+          <td>public.ecr.aws/docker/library/redis:7.2.8-alpine</td>
+      </tr>
+  </tbody>
+</table>
+<hr>
+<h3 id="sa-argo-cd-redis-ha-haproxy"><code>argo-cd-redis-ha-haproxy</code></h3>
+<p><strong>Namespace:</strong> <code>default</code>  |  <strong>Automount:</strong> ❌</p>
+<h4 id="permissions-0-3">Permissions (0)</h4>
+<p><em>No explicit RBAC bindings.</em></p>
+<h4 id="workloads-1-7">Workloads (1)</h4>
+<table>
+  <thead>
+      <tr>
+          <th>Kind</th>
+          <th>Name</th>
+          <th>Container</th>
+          <th>Image</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>Deployment</td>
+          <td>argo-cd-redis-ha-haproxy</td>
+          <td>haproxy</td>
+          <td>public.ecr.aws/docker/library/haproxy:3.0.8-alpine</td>
+      </tr>
+  </tbody>
+</table>
+<hr>
+
+        </section>
+        <div class="post-tags">
+          
+          
+          
+        </div>
+      </div>
+
+      
+      
+    </div>
+
+    </article>
+</main>
+<footer>
+  <div style="display:flex"></div>
+  <div class="footer-info">
+    2025  <a
+      href="https://github.com/athul/archie">Archie Theme</a> | Built with <a href="https://gohugo.io">Hugo</a>
+  </div>
+</footer>
+
+</div>
+    </body>
+</html>
