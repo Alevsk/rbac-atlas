@@ -72,7 +72,15 @@ def build_markdown(data: Dict[str, Any]) -> str:
     if 'extra' in meta and 'helm' in meta['extra'] and 'keywords' in meta['extra']['helm']:
         categories = meta['extra']['helm']['keywords']
     out += f"categories: [{', '.join(categories)}]\n"
-    out += "tags: []\n"
+
+    # Extract and deduplicate tags from all service account permissions
+    tags = set()
+    for p in perms:
+        perm_tags = p.get("tags", [])
+        if perm_tags is not None:
+            tags.update(perm_tags)
+
+    out += f"tags: [{', '.join(sorted(tags))}]\n"
     out += "---\n\n"
 
     # ── Overview table ──

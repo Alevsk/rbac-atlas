@@ -16,10 +16,15 @@
   <h1>Top Risks</h1>
 
   <div class="tags-list">
-    {{ range $name, $taxonomy := .Site.Taxonomies.tags }}
-      <a href="{{ "/tags/" | relLangURL }}{{ $name | urlize }}">{{ $name }}</a>
-      ({{ .Count }} projects)
+    {{ range $taxonomy := first 10 .Site.Taxonomies.tags.ByCount }}
+      <a href="{{ "/tags/" | relLangURL }}{{ $taxonomy.Name | urlize }}">{{ $taxonomy.Name }}</a>
+      ({{ $taxonomy.Count }} projects)
     {{ end }}
+    <br/><br/>
+    <div class="see-all">
+      <a href="{{ "/tags/" | relLangURL }}">See All →</a>
+    </div>
+    <br/>
   </div>
 
   <hr>
@@ -27,11 +32,15 @@
   <h1>Project Types</h1>
 
   <div class="categories-list">
-    {{ range $name, $taxonomy := .Site.Taxonomies.categories }}
-      <a href="{{ "/categories/" | relLangURL }}{{ $name | urlize }}">{{ $name }}</a>
-      ({{ .Count }} projects)
-
+    {{ range $taxonomy := first 10 .Site.Taxonomies.categories.ByCount }}
+      <a href="{{ "/categories/" | relLangURL }}{{ $taxonomy.Name | urlize }}">{{ $taxonomy.Name }}</a>
+      ({{ $taxonomy.Count }} projects)
     {{ end }}
+    <br/><br/>
+    <div class="see-all">
+      <a href="{{ "/categories/" | relLangURL }}">See All →</a>
+    </div>
+    <br/>
   </div>
 
   <hr>
@@ -67,10 +76,15 @@
 
         {{ if .Params.tags }}
           <span class="post-tags">
-            {{ range .Params.tags }}
+            {{ $tags := .Params.tags }}
+            {{ $tagCount := len $tags }}
+            {{ range first 3 $tags }}
             #<a href="{{ (urlize (printf "tags/%s/" . )) | absLangURL }}">
               {{- . -}}
             </a>&nbsp;
+            {{ end }}
+            {{ if gt $tagCount 3 }}
+              ({{ sub $tagCount 3 }} more)
             {{ end }}
           </span>
         {{ end }}
