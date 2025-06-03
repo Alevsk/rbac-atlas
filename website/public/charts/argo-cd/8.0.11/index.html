@@ -97,7 +97,7 @@
   <meta property="article:section" content="gitops" />
 
 
-  <meta property="article:published_time" content="2025-05-30 20:15:13 &#43;0000 UTC" />
+  <meta property="article:published_time" content="2025-06-02 23:31:44 &#43;0000 UTC" />
 
 
 
@@ -139,7 +139,7 @@
   <h1 class="post-title">
     <a href="http://localhost:1313/charts/argo-cd/8.0.11/">argo-cd</a>
   </h1>
-  <div class="post-meta"><time class="post-date">2025-05-30</time></div>
+  <div class="post-meta"><time class="post-date">2025-06-02</time></div>
 
   
   
@@ -162,12 +162,12 @@
   </thead>
   <tbody>
       <tr>
-          <td><a href="/charts/argo-cd/8.0.11/#sa-argo-cd-redis-ha"><code>argo-cd-redis-ha</code></a></td>
+          <td><a href="/charts/argo-cd/8.0.11/#sa-argocd-dex-server"><code>argocd-dex-server</code></a></td>
           <td>default</td>
-          <td>❌</td>
-          <td>argocd-redis</td>
-          <td>0</td>
-          <td>3</td>
+          <td>✅</td>
+          <td>—</td>
+          <td>2</td>
+          <td>1</td>
       </tr>
       <tr>
           <td><a href="/charts/argo-cd/8.0.11/#sa-argo-cd-redis-ha-haproxy"><code>argo-cd-redis-ha-haproxy</code></a></td>
@@ -178,15 +178,31 @@
           <td>1</td>
       </tr>
       <tr>
-          <td><a href="/charts/argo-cd/8.0.11/#sa-argocd-application-controller"><code>argocd-application-controller</code></a></td>
+          <td><a href="/charts/argo-cd/8.0.11/#sa-argocd-applicationset-controller"><code>argocd-applicationset-controller</code></a></td>
           <td>default</td>
           <td>✅</td>
           <td>—</td>
-          <td>8</td>
+          <td>11</td>
+          <td>1</td>
+      </tr>
+      <tr>
+          <td><a href="/charts/argo-cd/8.0.11/#sa-argocd-server"><code>argocd-server</code></a></td>
+          <td>default</td>
+          <td>✅</td>
+          <td>—</td>
+          <td>14</td>
           <td>1</td>
       </tr>
       <tr>
           <td><a href="/charts/argo-cd/8.0.11/#sa-argo-cd-argocd-redis-secret-init"><code>argo-cd-argocd-redis-secret-init</code></a></td>
+          <td>default</td>
+          <td>✅</td>
+          <td>—</td>
+          <td>0</td>
+          <td>1</td>
+      </tr>
+      <tr>
+          <td><a href="/charts/argo-cd/8.0.11/#sa-argo-cd-argocd-repo-server"><code>argo-cd-argocd-repo-server</code></a></td>
           <td>default</td>
           <td>✅</td>
           <td>—</td>
@@ -202,36 +218,20 @@
           <td>1</td>
       </tr>
       <tr>
-          <td><a href="/charts/argo-cd/8.0.11/#sa-argocd-server"><code>argocd-server</code></a></td>
+          <td><a href="/charts/argo-cd/8.0.11/#sa-argocd-application-controller"><code>argocd-application-controller</code></a></td>
           <td>default</td>
           <td>✅</td>
           <td>—</td>
-          <td>14</td>
+          <td>8</td>
           <td>1</td>
       </tr>
       <tr>
-          <td><a href="/charts/argo-cd/8.0.11/#sa-argocd-applicationset-controller"><code>argocd-applicationset-controller</code></a></td>
+          <td><a href="/charts/argo-cd/8.0.11/#sa-argo-cd-redis-ha"><code>argo-cd-redis-ha</code></a></td>
           <td>default</td>
-          <td>✅</td>
-          <td>—</td>
-          <td>11</td>
-          <td>1</td>
-      </tr>
-      <tr>
-          <td><a href="/charts/argo-cd/8.0.11/#sa-argocd-dex-server"><code>argocd-dex-server</code></a></td>
-          <td>default</td>
-          <td>✅</td>
-          <td>—</td>
-          <td>2</td>
-          <td>1</td>
-      </tr>
-      <tr>
-          <td><a href="/charts/argo-cd/8.0.11/#sa-argo-cd-argocd-repo-server"><code>argo-cd-argocd-repo-server</code></a></td>
-          <td>default</td>
-          <td>✅</td>
-          <td>—</td>
+          <td>❌</td>
+          <td>argocd-redis</td>
           <td>0</td>
-          <td>1</td>
+          <td>3</td>
       </tr>
   </tbody>
 </table>
@@ -253,52 +253,70 @@
   </thead>
   <tbody>
       <tr>
-          <td>ClusterRole <code>argo-cd-argocd-server</code></td>
-          <td><em>/</em></td>
-          <td>delete · get · patch</td>
+          <td>Role <code>argo-cd-argocd-server</code></td>
+          <td>core/secrets</td>
+          <td>create · delete · get · list · patch · update · watch</td>
           <td>Critical</td>
       </tr>
       <tr>
           <td>ClusterRole <code>argo-cd-argocd-server</code></td>
-          <td>core/events</td>
-          <td>create · list</td>
-          <td>Medium</td>
-      </tr>
-      <tr>
-          <td>ClusterRole <code>argo-cd-argocd-server</code></td>
-          <td>core/pods</td>
-          <td>get</td>
-          <td>Medium</td>
+          <td><em>/</em></td>
+          <td>delete · get · patch</td>
+          <td>High</td>
       </tr>
       <tr>
           <td>ClusterRole <code>argo-cd-argocd-server</code></td>
           <td>core/pods/log</td>
           <td>get</td>
-          <td>Medium</td>
+          <td>High</td>
+      </tr>
+      <tr>
+          <td>Role <code>argo-cd-argocd-server</code></td>
+          <td>core/configmaps</td>
+          <td>create · delete · get · list · patch · update · watch</td>
+          <td>High</td>
+      </tr>
+      <tr>
+          <td>ClusterRole <code>argo-cd-argocd-server</code></td>
+          <td>core/events</td>
+          <td>create · list</td>
+          <td>Low</td>
+      </tr>
+      <tr>
+          <td>ClusterRole <code>argo-cd-argocd-server</code></td>
+          <td>core/pods</td>
+          <td>get</td>
+          <td>Low</td>
       </tr>
       <tr>
           <td>ClusterRole <code>argo-cd-argocd-server</code></td>
           <td>argoproj.io/applications</td>
           <td>get · list · update · watch</td>
-          <td>Medium</td>
+          <td>Low</td>
       </tr>
       <tr>
           <td>ClusterRole <code>argo-cd-argocd-server</code></td>
           <td>argoproj.io/applicationsets</td>
           <td>get · list · update · watch</td>
-          <td>Medium</td>
+          <td>Low</td>
       </tr>
       <tr>
           <td>ClusterRole <code>argo-cd-argocd-server</code></td>
           <td>argoproj.io/workflows</td>
           <td>create</td>
-          <td>Medium</td>
+          <td>Low</td>
       </tr>
       <tr>
           <td>ClusterRole <code>argo-cd-argocd-server</code></td>
           <td>batch/jobs</td>
           <td>create</td>
-          <td>Medium</td>
+          <td>Low</td>
+      </tr>
+      <tr>
+          <td>Role <code>argo-cd-argocd-server</code></td>
+          <td>core/events</td>
+          <td>create · list</td>
+          <td>Low</td>
       </tr>
       <tr>
           <td>Role <code>argo-cd-argocd-server</code></td>
@@ -318,24 +336,6 @@
           <td>create · delete · get · list · patch · update · watch</td>
           <td>Low</td>
       </tr>
-      <tr>
-          <td>Role <code>argo-cd-argocd-server</code></td>
-          <td>core/secrets</td>
-          <td>create · delete · get · list · patch · update · watch</td>
-          <td>Low</td>
-      </tr>
-      <tr>
-          <td>Role <code>argo-cd-argocd-server</code></td>
-          <td>core/configmaps</td>
-          <td>create · delete · get · list · patch · update · watch</td>
-          <td>Low</td>
-      </tr>
-      <tr>
-          <td>Role <code>argo-cd-argocd-server</code></td>
-          <td>core/events</td>
-          <td>create · list</td>
-          <td>Low</td>
-      </tr>
   </tbody>
 </table>
 <h4 id="workloads-1">Workloads (1)<a href="#workloads-1" class="hanchor" ariaLabel="Anchor">#</a> </h4>
@@ -353,6 +353,107 @@
           <td>Deployment</td>
           <td>argo-cd-argocd-server</td>
           <td>server</td>
+          <td>quay.io/argoproj/argocd:v3.0.4</td>
+      </tr>
+  </tbody>
+</table>
+<hr>
+<h3 id="sa-argocd-applicationset-controller"><code>argocd-applicationset-controller</code><a href="#sa-argocd-applicationset-controller" class="hanchor" ariaLabel="Anchor">#</a> </h3>
+<p><strong>Namespace:</strong> <code>default</code>  |  <strong>Automount:</strong> ✅</p>
+<h4 id="permissions-11">Permissions (11)<a href="#permissions-11" class="hanchor" ariaLabel="Anchor">#</a> </h4>
+<table>
+  <thead>
+      <tr>
+          <th>Role</th>
+          <th>Resource</th>
+          <th>Verbs</th>
+          <th>Risk</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>Role <code>argo-cd-argocd-applicationset-controller</code></td>
+          <td>core/secrets</td>
+          <td>get · list · watch</td>
+          <td>Critical</td>
+      </tr>
+      <tr>
+          <td>Role <code>argo-cd-argocd-applicationset-controller</code></td>
+          <td>coordination.k8s.io/leases</td>
+          <td>create · delete · get · list · patch · update · watch</td>
+          <td>Critical</td>
+      </tr>
+      <tr>
+          <td>Role <code>argo-cd-argocd-applicationset-controller</code></td>
+          <td>core/configmaps</td>
+          <td>create · delete · get · list · patch · update · watch</td>
+          <td>High</td>
+      </tr>
+      <tr>
+          <td>Role <code>argo-cd-argocd-applicationset-controller</code></td>
+          <td>argoproj.io/applicationsets</td>
+          <td>create · delete · get · list · patch · update · watch</td>
+          <td>Low</td>
+      </tr>
+      <tr>
+          <td>Role <code>argo-cd-argocd-applicationset-controller</code></td>
+          <td>argoproj.io/applicationsets/finalizers</td>
+          <td>create · delete · get · list · patch · update · watch</td>
+          <td>Low</td>
+      </tr>
+      <tr>
+          <td>Role <code>argo-cd-argocd-applicationset-controller</code></td>
+          <td>argoproj.io/applicationsets/status</td>
+          <td>get · patch · update</td>
+          <td>Low</td>
+      </tr>
+      <tr>
+          <td>Role <code>argo-cd-argocd-applicationset-controller</code></td>
+          <td>argoproj.io/appprojects</td>
+          <td>get · list · watch</td>
+          <td>Low</td>
+      </tr>
+      <tr>
+          <td>Role <code>argo-cd-argocd-applicationset-controller</code></td>
+          <td>argoproj.io/applications</td>
+          <td>create · delete · get · list · patch · update · watch</td>
+          <td>Low</td>
+      </tr>
+      <tr>
+          <td>Role <code>argo-cd-argocd-applicationset-controller</code></td>
+          <td>core/events</td>
+          <td>create · get · list · patch · watch</td>
+          <td>Low</td>
+      </tr>
+      <tr>
+          <td>Role <code>argo-cd-argocd-applicationset-controller</code></td>
+          <td>apps/deployments</td>
+          <td>get · list · watch</td>
+          <td>Low</td>
+      </tr>
+      <tr>
+          <td>Role <code>argo-cd-argocd-applicationset-controller</code></td>
+          <td>extensions/deployments</td>
+          <td>get · list · watch</td>
+          <td>Low</td>
+      </tr>
+  </tbody>
+</table>
+<h4 id="workloads-1-1">Workloads (1)<a href="#workloads-1-1" class="hanchor" ariaLabel="Anchor">#</a> </h4>
+<table>
+  <thead>
+      <tr>
+          <th>Kind</th>
+          <th>Name</th>
+          <th>Container</th>
+          <th>Image</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>Deployment</td>
+          <td>argo-cd-argocd-applicationset-controller</td>
+          <td>applicationset-controller</td>
           <td>quay.io/argoproj/argocd:v3.0.4</td>
       </tr>
   </tbody>
@@ -381,13 +482,13 @@
           <td>Role <code>argo-cd-argocd-application-controller</code></td>
           <td>core/secrets</td>
           <td>get · list · watch</td>
-          <td>Low</td>
+          <td>Critical</td>
       </tr>
       <tr>
           <td>Role <code>argo-cd-argocd-application-controller</code></td>
           <td>core/configmaps</td>
           <td>get · list · watch</td>
-          <td>Low</td>
+          <td>Medium</td>
       </tr>
       <tr>
           <td>Role <code>argo-cd-argocd-application-controller</code></td>
@@ -421,7 +522,7 @@
       </tr>
   </tbody>
 </table>
-<h4 id="workloads-1-1">Workloads (1)<a href="#workloads-1-1" class="hanchor" ariaLabel="Anchor">#</a> </h4>
+<h4 id="workloads-1-2">Workloads (1)<a href="#workloads-1-2" class="hanchor" ariaLabel="Anchor">#</a> </h4>
 <table>
   <thead>
       <tr>
@@ -456,31 +557,37 @@
   <tbody>
       <tr>
           <td>ClusterRole <code>argo-cd-argocd-notifications-controller</code></td>
-          <td>argoproj.io/applications</td>
-          <td>get · list · patch · update · watch</td>
-          <td>Medium</td>
+          <td>core/secrets</td>
+          <td>get · list · watch</td>
+          <td>Critical</td>
+      </tr>
+      <tr>
+          <td>Role <code>argo-cd-argocd-notifications-controller</code></td>
+          <td>core/secrets</td>
+          <td>get · list · watch</td>
+          <td>Critical</td>
       </tr>
       <tr>
           <td>ClusterRole <code>argo-cd-argocd-notifications-controller</code></td>
-          <td>argoproj.io/appprojects</td>
-          <td>get · list · patch · update · watch</td>
-          <td>Medium</td>
+          <td>core/configmaps</td>
+          <td>get · list · watch</td>
+          <td>High</td>
       </tr>
       <tr>
-          <td>ClusterRole <code>argo-cd-argocd-notifications-controller</code></td>
+          <td>Role <code>argo-cd-argocd-notifications-controller</code></td>
           <td>core/configmaps</td>
           <td>get · list · watch</td>
           <td>Medium</td>
       </tr>
       <tr>
           <td>ClusterRole <code>argo-cd-argocd-notifications-controller</code></td>
-          <td>core/secrets</td>
-          <td>get · list · watch</td>
-          <td>Medium</td>
+          <td>argoproj.io/applications</td>
+          <td>get · list · patch · update · watch</td>
+          <td>Low</td>
       </tr>
       <tr>
-          <td>Role <code>argo-cd-argocd-notifications-controller</code></td>
-          <td>argoproj.io/applications</td>
+          <td>ClusterRole <code>argo-cd-argocd-notifications-controller</code></td>
+          <td>argoproj.io/appprojects</td>
           <td>get · list · patch · update · watch</td>
           <td>Low</td>
       </tr>
@@ -492,115 +599,8 @@
       </tr>
       <tr>
           <td>Role <code>argo-cd-argocd-notifications-controller</code></td>
-          <td>core/configmaps</td>
-          <td>get · list · watch</td>
-          <td>Low</td>
-      </tr>
-      <tr>
-          <td>Role <code>argo-cd-argocd-notifications-controller</code></td>
-          <td>core/secrets</td>
-          <td>get · list · watch</td>
-          <td>Low</td>
-      </tr>
-  </tbody>
-</table>
-<h4 id="workloads-1-2">Workloads (1)<a href="#workloads-1-2" class="hanchor" ariaLabel="Anchor">#</a> </h4>
-<table>
-  <thead>
-      <tr>
-          <th>Kind</th>
-          <th>Name</th>
-          <th>Container</th>
-          <th>Image</th>
-      </tr>
-  </thead>
-  <tbody>
-      <tr>
-          <td>Deployment</td>
-          <td>argo-cd-argocd-notifications-controller</td>
-          <td>notifications-controller</td>
-          <td>quay.io/argoproj/argocd:v3.0.4</td>
-      </tr>
-  </tbody>
-</table>
-<hr>
-<h3 id="sa-argocd-applicationset-controller"><code>argocd-applicationset-controller</code><a href="#sa-argocd-applicationset-controller" class="hanchor" ariaLabel="Anchor">#</a> </h3>
-<p><strong>Namespace:</strong> <code>default</code>  |  <strong>Automount:</strong> ✅</p>
-<h4 id="permissions-11">Permissions (11)<a href="#permissions-11" class="hanchor" ariaLabel="Anchor">#</a> </h4>
-<table>
-  <thead>
-      <tr>
-          <th>Role</th>
-          <th>Resource</th>
-          <th>Verbs</th>
-          <th>Risk</th>
-      </tr>
-  </thead>
-  <tbody>
-      <tr>
-          <td>Role <code>argo-cd-argocd-applicationset-controller</code></td>
-          <td>coordination.k8s.io/leases</td>
-          <td>create · delete · get · list · patch · update · watch</td>
-          <td>Low</td>
-      </tr>
-      <tr>
-          <td>Role <code>argo-cd-argocd-applicationset-controller</code></td>
           <td>argoproj.io/applications</td>
-          <td>create · delete · get · list · patch · update · watch</td>
-          <td>Low</td>
-      </tr>
-      <tr>
-          <td>Role <code>argo-cd-argocd-applicationset-controller</code></td>
-          <td>argoproj.io/applicationsets</td>
-          <td>create · delete · get · list · patch · update · watch</td>
-          <td>Low</td>
-      </tr>
-      <tr>
-          <td>Role <code>argo-cd-argocd-applicationset-controller</code></td>
-          <td>argoproj.io/applicationsets/finalizers</td>
-          <td>create · delete · get · list · patch · update · watch</td>
-          <td>Low</td>
-      </tr>
-      <tr>
-          <td>Role <code>argo-cd-argocd-applicationset-controller</code></td>
-          <td>argoproj.io/applicationsets/status</td>
-          <td>get · patch · update</td>
-          <td>Low</td>
-      </tr>
-      <tr>
-          <td>Role <code>argo-cd-argocd-applicationset-controller</code></td>
-          <td>argoproj.io/appprojects</td>
-          <td>get · list · watch</td>
-          <td>Low</td>
-      </tr>
-      <tr>
-          <td>Role <code>argo-cd-argocd-applicationset-controller</code></td>
-          <td>core/events</td>
-          <td>create · get · list · patch · watch</td>
-          <td>Low</td>
-      </tr>
-      <tr>
-          <td>Role <code>argo-cd-argocd-applicationset-controller</code></td>
-          <td>core/configmaps</td>
-          <td>create · delete · get · list · patch · update · watch</td>
-          <td>Low</td>
-      </tr>
-      <tr>
-          <td>Role <code>argo-cd-argocd-applicationset-controller</code></td>
-          <td>core/secrets</td>
-          <td>get · list · watch</td>
-          <td>Low</td>
-      </tr>
-      <tr>
-          <td>Role <code>argo-cd-argocd-applicationset-controller</code></td>
-          <td>apps/deployments</td>
-          <td>get · list · watch</td>
-          <td>Low</td>
-      </tr>
-      <tr>
-          <td>Role <code>argo-cd-argocd-applicationset-controller</code></td>
-          <td>extensions/deployments</td>
-          <td>get · list · watch</td>
+          <td>get · list · patch · update · watch</td>
           <td>Low</td>
       </tr>
   </tbody>
@@ -618,8 +618,8 @@
   <tbody>
       <tr>
           <td>Deployment</td>
-          <td>argo-cd-argocd-applicationset-controller</td>
-          <td>applicationset-controller</td>
+          <td>argo-cd-argocd-notifications-controller</td>
+          <td>notifications-controller</td>
           <td>quay.io/argoproj/argocd:v3.0.4</td>
       </tr>
   </tbody>
@@ -642,13 +642,13 @@
           <td>Role <code>argo-cd-argocd-dex-server</code></td>
           <td>core/secrets</td>
           <td>get · list · watch</td>
-          <td>Low</td>
+          <td>Critical</td>
       </tr>
       <tr>
           <td>Role <code>argo-cd-argocd-dex-server</code></td>
           <td>core/configmaps</td>
           <td>get · list · watch</td>
-          <td>Low</td>
+          <td>Medium</td>
       </tr>
   </tbody>
 </table>
