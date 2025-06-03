@@ -45,5 +45,5 @@ get-manifests:
 
 generate-pages:
 	for f in manifests/*.json; do \
-		python json2hugo.py "$$f" -o website/content/charts/; \
+		python json2hugo.py "$$f" -o content/charts/; \
 	done
