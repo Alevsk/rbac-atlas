@@ -68,16 +68,23 @@ def build_markdown(data: Dict[str, Any]) -> str:
     # Overview counts
     perm_counts = Counter(p["serviceAccountName"] for p in perms)
     wl_counts   = Counter(w["serviceAccountName"] for w in workloads)
+    risk_counts = Counter(p["riskLevel"] for p in perms)
 
     # ── page header ──
     out = "---\n"
     out += f"title: {name}\n"
     out += f"description: {description}\n"
+    if not version.startswith("v"):
+        version = "v" + version
     out += f"version: {version}\n"
     out += "date: \"\"\n"
     out += f"service_accounts: {len(perms_by_sa)}\n"
     out += f"workloads: {len(wl_by_sa)}\n"
     out += f"bindings: {len(perms)}\n"
+    out += f"critical_findings: {risk_counts['Critical']}\n"
+    out += f"high_findings: {risk_counts['High']}\n"
+    out += f"medium_findings: {risk_counts['Medium']}\n"
+    out += f"low_findings: {risk_counts['Low']}\n"
 
     # Extract categories from metadata.extra.helm.keywords if available
     categories = []

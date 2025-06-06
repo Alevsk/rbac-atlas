@@ -14,15 +14,54 @@
         <select class="version-select" onchange="window.location.href=this.value">
           {{ range $sortedVersions }}
             <option value="{{ .Permalink }}" {{ if eq .Params.version $.Params.version }}selected{{ end }}>
-              v{{ .Params.version }}
+              {{ .Params.version }}
             </option>
           {{ end }}
         </select>
       </div>
       {{ else }}
-      <div class="version-subtitle">v{{ .Params.version }}</div>
+      <div class="version-subtitle">{{ .Params.version }}</div>
       {{ end }}
     </div>
+  </div>
+
+  <div class="post-stats">
+    <div class="stat-item">
+      <i class="fas fa-user"></i>
+      {{ .Params.service_accounts }} Service Accounts
+    </div>
+    <div class="stat-item">
+      <i class="fas fa-cube"></i>
+      {{ .Params.workloads }} Workloads
+    </div>
+    <div class="stat-item">
+      <i class="fas fa-link"></i>
+      {{ .Params.bindings }} Bindings
+    </div>
+    {{ if gt (int .Params.critical_findings) 0 }}
+    <div class="stat-item risk-critical">
+      <i class="fas fa-skull"></i>
+      {{ .Params.critical_findings }} Critical
+    </div>
+    {{ end }}
+    {{ if gt (int .Params.high_findings) 0 }}
+    <div class="stat-item risk-high">
+      <i class="fas fa-exclamation-triangle"></i>
+      {{ .Params.high_findings }} High
+    </div>
+    {{ end }}
+    {{ if gt (int .Params.medium_findings) 0 }}
+    <div class="stat-item risk-medium">
+      <i class="fas fa-exclamation-circle"></i>
+      {{ .Params.medium_findings }} Medium
+    </div>
+    {{ end }}
+    {{ if gt (int .Params.low_findings) 0 }}
+    <div class="stat-item risk-low">
+      <i class="fas fa-info-circle"></i>
+      {{ .Params.low_findings }} Low
+    </div>
+    {{ end }}
   </div>
   <div class="post-meta">
     {{- if .Date -}}
@@ -62,11 +101,7 @@
   {{ end }}
 
   <div class="post-content">
-    {{- with .Content -}}
-      <div>
-        {{ . | replaceRE "(<h[1-9] id=\"([^\"]+)\".+)(</h[1-9]+>)" `${1}<a href="#${2}" class="hanchor" ariaLabel="Anchor">#</a> ${3}` | safeHTML }}
-      </div>
-    {{- end -}}
+    {{ .Content }}
   </div>
 
 </article>
