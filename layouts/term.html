@@ -1,24 +1,56 @@
 {{ define "main" }}
-  <h1>Posts for: #{{ .Title }}</h1>
+  <h1>#{{ .Title }}</h1>
   {{ with .Content }}
     <div class="index-content">
       {{ . }}
     </div>
   {{ end }}
   <div class="posts">
-    {{ range .Paginator.Pages }}
+    {{ $isntDefault := not (or (eq (trim $.Site.Params.contentTypeName " ") "posts") (eq (trim $.Site.Params.contentTypeName " ") "")) }}
+    {{ $contentTypeName := cond $isntDefault (string $.Site.Params.contentTypeName) "posts" }}
+
+    {{ $PageContext := . }}
+    {{ if .IsHome }}
+      {{ $PageContext = .Site }}
+    {{ end }}
+
+    {{/* Group and sort pages by project name */}}
+    {{ $allPages := where $PageContext.RegularPages "Type" $contentTypeName }}
+    {{ $groupedPages := slice }}
+
+    {{/* First, get unique project names */}}
+    {{ $projectNames := slice }}
+    {{ range $allPages }}
+      {{ $projectName := index (split .File.Dir "/") 1 }}
+      {{ $projectNames = $projectNames | append $projectName }}
+    {{ end }}
+    {{ $projectNames = uniq (sort $projectNames) }}
+
+    {{/* For each project, find its latest version */}}
+    {{ range $projectNames }}
+      {{ $projectName := . }}
+      {{ $projectPages := where $allPages "File.Dir" (printf "charts/%s/" $projectName) }}
+      {{ $latestPage := index (sort $projectPages "Params.version" "desc") 0 }}
+      {{ $groupedPages = $groupedPages | append $latestPage }}
+    {{ end }}
+
+    {{ $paginator := .Paginate $groupedPages }}
+
+    {{ range $paginator.Pages }}
+      {{ $page := . }}
       <article class="post on-list">
-        <h1 class="post-title">
-          <a href="{{ .Permalink }}">{{ .Title | markdownify }}</a>
-        </h1>
+        <h2 class="post-title">
+          <a href="{{ $page.Permalink }}">{{ $page.Title | markdownify }}</a>
+        </h2>
+
         <div class="post-meta">
-          {{- if .Params.version -}}
+          {{- if $page.Params.version -}}
             <span class="post-version">
-              v{{- .Params.version -}}
+              v{{- $page.Params.version -}}
             </span>
           {{- end -}}
-          {{- with .Params.Author -}}
-            <span class="post-author">{{- . -}}</span>
+          {{- with $page.Params.Author -}}
+            <span class="post-author">{{ . }}</span>
           {{- end -}}
         </div>
 
@@ -38,6 +70,12 @@
         {{ end }}
 
         {{ partial "cover.html" . }}
+
+        <div class="post-stats">
+          <span class="stat-item"><i class="fa-solid fa-user"></i> {{ default "0" .Params.service_accounts }}</span>
+          <span class="stat-item"><i class="fa-solid fa-gear"></i> {{ default "0" .Params.workloads }}</span>
+          <span class="stat-item"><i class="fa-solid fa-key"></i> {{ default "0" .Params.bindings }}</span>
+        </div>
 
         <div class="post-content">
           {{ if .Params.showFullContent }}

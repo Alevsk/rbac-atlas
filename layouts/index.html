@@ -20,7 +20,6 @@
     {{ range $taxonomy := first 10 .Site.Taxonomies.tags.ByCount }}
       <a href="{{ "/tags/" | relLangURL }}{{ $taxonomy.Name | urlize }}">
         {{ $taxonomy.Name }}
-        ({{ $taxonomy.Count }} projects)
       </a>
     {{ end }}
     </p>
@@ -38,7 +37,6 @@
     {{ range $taxonomy := first 10 .Site.Taxonomies.categories.ByCount }}
       <a href="{{ "/categories/" | relLangURL }}{{ $taxonomy.Name | urlize }}">
         {{ $taxonomy.Name }}
-        ({{ $taxonomy.Count }} projects)
       </a>
     {{ end }}
     </p>
@@ -59,21 +57,43 @@
     {{ if .IsHome }}
       {{ $PageContext = .Site }}
     {{ end }}
-    {{ $paginator := .Paginate (where $PageContext.RegularPages "Type" $contentTypeName) }}
+
+    {{/* Group and sort pages by project name */}}
+    {{ $allPages := where $PageContext.RegularPages "Type" $contentTypeName }}
+    {{ $groupedPages := slice }}
+
+    {{/* First, get unique project names */}}
+    {{ $projectNames := slice }}
+    {{ range $allPages }}
+      {{ $projectName := index (split .File.Dir "/") 1 }}
+      {{ $projectNames = $projectNames | append $projectName }}
+    {{ end }}
+    {{ $projectNames = uniq (sort $projectNames) }}
+
+    {{/* For each project, find its latest version */}}
+    {{ range $projectNames }}
+      {{ $projectName := . }}
+      {{ $projectPages := where $allPages "File.Dir" (printf "charts/%s/" $projectName) }}
+      {{ $latestPage := index (sort $projectPages "Params.version" "desc") 0 }}
+      {{ $groupedPages = $groupedPages | append $latestPage }}
+    {{ end }}
+
+    {{ $paginator := .Paginate $groupedPages }}
 
     {{ range $paginator.Pages }}
+      {{ $page := . }}
       <article class="post on-list">
         <h2 class="post-title">
-          <a href="{{ .Permalink }}">{{ .Title | markdownify }}</a>
+          <a href="{{ $page.Permalink }}">{{ $page.Title | markdownify }}</a>
         </h2>
 
         <div class="post-meta">
-          {{- if .Params.version -}}
+          {{- if $page.Params.version -}}
             <span class="post-version">
-              v{{- .Params.version -}}
+              v{{- $page.Params.version -}}
             </span>
           {{- end -}}
-          {{- with .Params.Author -}}
+          {{- with $page.Params.Author -}}
             <span class="post-author">{{ . }}</span>
           {{- end -}}
         </div>
