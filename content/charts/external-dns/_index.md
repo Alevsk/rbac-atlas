@@ -9,5 +9,4 @@ ExternalDNS is a Kubernetes addon that configures public DNS servers with inform
 
 ## Sources
 
-* https://github.com/bitnami/charts/tree/main/bitnami/external-dns
-
+- https://github.com/bitnami/charts/tree/main/bitnami/external-dns

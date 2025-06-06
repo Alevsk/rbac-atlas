@@ -9,5 +9,4 @@ MySQL is a fast, reliable, scalable, and easy to use open source relational data
 
 ## Sources
 
-* https://github.com/bitnami/charts/tree/main/bitnami/mysql
-
+- https://github.com/bitnami/charts/tree/main/bitnami/mysql

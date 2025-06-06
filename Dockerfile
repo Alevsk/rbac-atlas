@@ -1,9 +1,16 @@
 # Build stage
 FROM klakegg/hugo:latest AS builder
 
+# Install Python and pip
+RUN apk add --no-cache python3 py3-pip
+
+# Install pagefind
+RUN python3 -m pip install 'pagefind[extended]'
+
 WORKDIR /src
 COPY . .
 RUN hugo --minify
+RUN python3 -m pagefind --site public
 
 # Production stage
 FROM nginx:alpine

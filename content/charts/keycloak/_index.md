@@ -9,5 +9,4 @@ Keycloak is a high performance Java-based identity and access management solutio
 
 ## Sources
 
-* https://github.com/bitnami/charts/tree/main/bitnami/keycloak
-
+- https://github.com/bitnami/charts/tree/main/bitnami/keycloak

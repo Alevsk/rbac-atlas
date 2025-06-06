@@ -9,5 +9,4 @@ Apache Kafka is a distributed streaming platform designed to build real-time pip
 
 ## Sources
 
-* https://github.com/bitnami/charts/tree/main/bitnami/kafka
-
+- https://github.com/bitnami/charts/tree/main/bitnami/kafka

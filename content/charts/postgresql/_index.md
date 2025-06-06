@@ -9,5 +9,4 @@ PostgreSQL (Postgres) is an open source object-relational database known for rel
 
 ## Sources
 
-* https://github.com/bitnami/charts/tree/main/bitnami/postgresql
-
+- https://github.com/bitnami/charts/tree/main/bitnami/postgresql

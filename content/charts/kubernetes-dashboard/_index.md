@@ -9,5 +9,4 @@ General-purpose web UI for Kubernetes clusters
 
 ## Sources
 
-* https://github.com/kubernetes/dashboard
-
+- https://github.com/kubernetes/dashboard

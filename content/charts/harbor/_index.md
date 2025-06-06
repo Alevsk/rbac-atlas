@@ -9,6 +9,5 @@ An open source trusted cloud native registry that stores, signs, and scans conte
 
 ## Sources
 
-* https://github.com/goharbor/harbor
-* https://github.com/goharbor/harbor-helm
-
+- https://github.com/goharbor/harbor
+- https://github.com/goharbor/harbor-helm

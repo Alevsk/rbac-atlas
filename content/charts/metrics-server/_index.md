@@ -9,5 +9,4 @@ Metrics Server is a scalable, efficient source of container resource metrics for
 
 ## Sources
 
-* https://github.com/kubernetes-sigs/metrics-server
-
+- https://github.com/kubernetes-sigs/metrics-server

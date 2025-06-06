@@ -7,9 +7,11 @@ HUGO_PORT := 1313
 
 install-deps:
 	npm install -g playwright
+	python3 -m pip install 'pagefind[extended]'
 
 build:
 	hugo --minify
+	python3 -m pagefind --site public
 
 docker:
 	docker build -t $(DOCKER_IMAGE):$(DOCKER_TAG) .
@@ -33,6 +35,8 @@ clean:
 	rm -rf playwright-report
 
 serve:
+	hugo build
+	python3 -m pagefind --site public
 	hugo server -D --bind 0.0.0.0 -p $(HUGO_PORT)
 
 get-manifests:

@@ -9,5 +9,4 @@ Ingress controller for Kubernetes using NGINX as a reverse proxy and load balanc
 
 ## Sources
 
-* https://github.com/kubernetes/ingress-nginx
-
+- https://github.com/kubernetes/ingress-nginx

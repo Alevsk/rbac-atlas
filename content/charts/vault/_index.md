@@ -9,8 +9,7 @@ Official HashiCorp Vault Chart
 
 ## Sources
 
-* https://github.com/hashicorp/vault
-* https://github.com/hashicorp/vault-helm
-* https://github.com/hashicorp/vault-k8s
-* https://github.com/hashicorp/vault-csi-provider
-
+- https://github.com/hashicorp/vault
+- https://github.com/hashicorp/vault-helm
+- https://github.com/hashicorp/vault-k8s
+- https://github.com/hashicorp/vault-csi-provider

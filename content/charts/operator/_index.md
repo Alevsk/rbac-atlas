@@ -9,5 +9,4 @@ A Helm chart for MinIO Operator
 
 ## Sources
 
-* https://github.com/minio/operator
-
+- https://github.com/minio/operator
