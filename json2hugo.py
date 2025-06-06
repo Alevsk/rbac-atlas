@@ -48,10 +48,13 @@ def build_markdown(data: Dict[str, Any]) -> str:
     if 'extra' in meta and 'helm' in meta['extra'] and 'description' in meta['extra']['helm']:
         description = meta['extra']['helm']['description']
 
-    ts = meta.get("timestamp")
-    sa_data   = data.get("serviceAccountData", [])
-    perms     = data.get("serviceAccountPermissions", [])
-    workloads = data.get("serviceAccountWorkloads", [])
+    # ts = meta.get("timestamp")
+    sa_data   = sorted(data.get("serviceAccountData", []), key=lambda x: x.get("serviceAccountName", ""))
+    risk_order = {"Critical": 0, "High": 1, "Medium": 2, "Low": 3}
+    perms     = sorted(data.get("serviceAccountPermissions", []),
+                  key=lambda x: (risk_order.get(x.get("riskLevel", ""), 4), x.get("roleName", "")))
+    workloads = sorted(data.get("serviceAccountWorkloads", []),
+                  key=lambda x: (x.get("workloadType", ""), x.get("workloadName", ""), x.get("containerName", "")))
 
     # index by SA
     perms_by_sa: Dict[str, List[Dict[str, Any]]] = defaultdict(list)
@@ -71,7 +74,7 @@ def build_markdown(data: Dict[str, Any]) -> str:
     out += f"title: {name}\n"
     out += f"description: {description}\n"
     out += f"version: {version}\n"
-    out += f"date: {datetime.utcfromtimestamp(ts).strftime('%Y-%m-%d %H:%M:%S')}\n"
+    out += "date: \"\"\n"
     out += f"service_accounts: {len(perms_by_sa)}\n"
     out += f"workloads: {len(wl_by_sa)}\n"
     out += f"bindings: {len(perms)}\n"
