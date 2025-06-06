@@ -70,6 +70,22 @@ def build_markdown(data: Dict[str, Any]) -> str:
     wl_counts   = Counter(w["serviceAccountName"] for w in workloads)
     risk_counts = Counter(p["riskLevel"] for p in perms)
 
+    # Create semantic version order key
+    def get_version_order(v):
+        # Remove 'v' prefix if present
+        v = v.lstrip('v')
+        # Split into major, minor, patch
+        parts = v.split('.')
+        # Pad with zeros if needed
+        while len(parts) < 3:
+            parts.append('0')
+        # Convert to integers and create order key
+        major = int(parts[0])
+        minor = int(parts[1])
+        patch = int(parts[2])
+        # Format as fixed width numbers for proper string sorting
+        return f"{major:08d}{minor:08d}{patch:08d}"
+
     # ── page header ──
     out = "---\n"
     out += f"title: {name}\n"
@@ -77,6 +93,8 @@ def build_markdown(data: Dict[str, Any]) -> str:
     if not version.startswith("v"):
         version = "v" + version
     out += f"version: {version}\n"
+    # Add version order key for sorting
+    out += f"version_order: {get_version_order(version)}\n"
     out += "date: \"\"\n"
     out += f"service_accounts: {len(perms_by_sa)}\n"
     out += f"workloads: {len(wl_by_sa)}\n"
