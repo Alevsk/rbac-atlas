@@ -13,39 +13,43 @@
 
   <hr>
 
-  <h1>Top Risks</h1>
+  <h1>🚀 Top Risks</h1>
 
   <div class="tags-list">
+    <p>
     {{ range $taxonomy := first 10 .Site.Taxonomies.tags.ByCount }}
-      <a href="{{ "/tags/" | relLangURL }}{{ $taxonomy.Name | urlize }}">{{ $taxonomy.Name }}</a>
-      ({{ $taxonomy.Count }} projects)
+      <a href="{{ "/tags/" | relLangURL }}{{ $taxonomy.Name | urlize }}">
+        {{ $taxonomy.Name }}
+        ({{ $taxonomy.Count }} projects)
+      </a>
     {{ end }}
-    <br/><br/>
-    <div class="see-all">
-      <a href="{{ "/tags/" | relLangURL }}">See All →</a>
-    </div>
-    <br/>
+    </p>
   </div>
+  <p class="see-all">
+    <a href="{{ "/tags/" | relLangURL }}">See All →</a>
+  </p>
 
   <hr>
 
-  <h1>Project Types</h1>
+  <h1>📦 Project Types</h1>
 
   <div class="categories-list">
+    <p>
     {{ range $taxonomy := first 10 .Site.Taxonomies.categories.ByCount }}
-      <a href="{{ "/categories/" | relLangURL }}{{ $taxonomy.Name | urlize }}">{{ $taxonomy.Name }}</a>
-      ({{ $taxonomy.Count }} projects)
+      <a href="{{ "/categories/" | relLangURL }}{{ $taxonomy.Name | urlize }}">
+        {{ $taxonomy.Name }}
+        ({{ $taxonomy.Count }} projects)
+      </a>
     {{ end }}
-    <br/><br/>
-    <div class="see-all">
-      <a href="{{ "/categories/" | relLangURL }}">See All →</a>
-    </div>
-    <br/>
+    </p>
   </div>
+  <p class="see-all">
+    <a href="{{ "/categories/" | relLangURL }}">See All →</a>
+  </p>
 
   <hr>
 
-  <h1>All Projects</h1>
+  <h1>📜 All Projects</h1>
 
   <div class="posts">
     {{ $isntDefault := not (or (eq (trim $.Site.Params.contentTypeName " ") "posts") (eq (trim $.Site.Params.contentTypeName " ") "")) }}
@@ -64,10 +68,10 @@
         </h2>
 
         <div class="post-meta">
-          {{- if .Date -}}
-            <time class="post-date">
-              {{- partial "post-date" . -}}
-            </time>
+          {{- if .Params.version -}}
+            <span class="post-version">
+              v{{- .Params.version -}}
+            </span>
           {{- end -}}
           {{- with .Params.Author -}}
             <span class="post-author">{{ . }}</span>
@@ -90,6 +94,12 @@
         {{ end }}
 
         {{ partial "cover.html" . }}
+
+        <div class="post-stats">
+          <span class="stat-item"><i class="fa-solid fa-user"></i> {{ default "0" .Params.service_accounts }}</span>
+          <span class="stat-item"><i class="fa-solid fa-gear"></i> {{ default "0" .Params.workloads }}</span>
+          <span class="stat-item"><i class="fa-solid fa-key"></i> {{ default "0" .Params.bindings }}</span>
+        </div>
 
         <div class="post-content">
           {{ if .Params.showFullContent }}

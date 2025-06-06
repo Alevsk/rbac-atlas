@@ -40,6 +40,7 @@ get-manifests:
 		[ -d "$$f" ] && \
 		filename="$${f#charts/}" && \
 		filename="$${filename%\/}" && \
+		echo "Processing $$filename" && \
 		rbac-ops ingest "$$f" -o json > "manifests/$$filename.json"; \
 	done
 

@@ -43,6 +43,11 @@ def slug(text: str) -> str:
 def build_markdown(data: Dict[str, Any]) -> str:
     meta = data["metadata"]
     name, version = meta["name"], meta["version"]
+
+    description = ""
+    if 'extra' in meta and 'helm' in meta['extra'] and 'description' in meta['extra']['helm']:
+        description = meta['extra']['helm']['description']
+
     ts = meta.get("timestamp")
     sa_data   = data.get("serviceAccountData", [])
     perms     = data.get("serviceAccountPermissions", [])
@@ -64,8 +69,12 @@ def build_markdown(data: Dict[str, Any]) -> str:
     # ── page header ──
     out = "---\n"
     out += f"title: {name}\n"
-    out += f"description: {version}\n"
+    out += f"description: {description}\n"
+    out += f"version: {version}\n"
     out += f"date: {datetime.utcfromtimestamp(ts).strftime('%Y-%m-%d %H:%M:%S')}\n"
+    out += f"service_accounts: {len(perms_by_sa)}\n"
+    out += f"workloads: {len(wl_by_sa)}\n"
+    out += f"bindings: {len(perms)}\n"
 
     # Extract categories from metadata.extra.helm.keywords if available
     categories = []
@@ -184,11 +193,29 @@ def write_markdown(markdown: str, meta: Dict[str, str], output_dir: str) -> str:
     with open(path, "w", encoding="utf-8") as fh:
         fh.write(markdown)
 
-    # Create an empty _index.md file inside the folder_path
+    # Create _index.md file with metadata inside the folder_path
     folder_path = os.path.join(output_dir, meta["name"])
     index_path = os.path.join(folder_path, "_index.md")
+    index_content = "---\n"
+    index_content += f"title: {meta['name']}\n"
+    if 'extra' in meta and 'helm' in meta['extra'] and 'description' in meta['extra']['helm']:
+        index_content += f"description: {meta['extra']['helm']['description']}\n"
+    index_content += "---\n\n"
+
+    # Add title and description
+    index_content += f"## {meta['name']}\n\n"
+    if 'extra' in meta and 'helm' in meta['extra'] and 'description' in meta['extra']['helm']:
+        index_content += f"{meta['extra']['helm']['description']}\n\n"
+
+    # Add sources if available
+    if 'extra' in meta and 'helm' in meta['extra'] and 'sources' in meta['extra']['helm']:
+        index_content += "## Sources\n\n"
+        for source in meta['extra']['helm']['sources']:
+            index_content += f"* {source}\n"
+        index_content += "\n"
+
     with open(index_path, "w", encoding="utf-8") as fh:
-        pass
+        fh.write(index_content)
 
     return path
 
