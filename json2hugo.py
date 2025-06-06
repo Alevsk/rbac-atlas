@@ -79,12 +79,20 @@ def build_markdown(data: Dict[str, Any]) -> str:
         # Pad with zeros if needed
         while len(parts) < 3:
             parts.append('0')
-        # Convert to integers and create order key
-        major = int(parts[0])
-        minor = int(parts[1])
-        patch = int(parts[2])
-        # Format as fixed width numbers for proper string sorting
-        return f"{major:08d}{minor:08d}{patch:08d}"
+        try:
+            # Convert to integers
+            major = int(parts[0])
+            minor = int(parts[1])
+            patch = int(parts[2])
+            # Convert to hex with left padding
+            # This gives us a sortable string that will work with Hugo
+            major_hex = f"{major:04x}"
+            minor_hex = f"{minor:04x}"
+            patch_hex = f"{patch:04x}"
+            # Combine in reverse order for descending sort
+            return f"f{major_hex}f{minor_hex}f{patch_hex}"
+        except (ValueError, IndexError):
+            return "f0000f0000f0000"  # Default for invalid versions
 
     # ── page header ──
     out = "---\n"

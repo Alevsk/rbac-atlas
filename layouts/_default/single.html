@@ -8,7 +8,7 @@
       {{ $currentPath := .File.Dir }}
       {{ $projectName := index (split .File.Dir "/") 1 }}
       {{ $projectPages := where .Site.RegularPages "File.Dir" (printf "charts/%s/" $projectName) }}
-      {{ $sortedVersions := sort $projectPages "Params.version" "desc" }}
+      {{ $sortedVersions := sort $projectPages "Params.version_order" "desc" }}
       {{ if gt (len $sortedVersions) 1 }}
       <div class="version-selector">
         <select class="version-select" onchange="window.location.href=this.value">

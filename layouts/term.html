@@ -30,7 +30,8 @@
     {{ range $projectNames }}
       {{ $projectName := . }}
       {{ $projectPages := where $allPages "File.Dir" (printf "charts/%s/" $projectName) }}
-      {{ $latestPage := index (sort $projectPages "Params.version" "desc") 0 }}
+      {{ $sortedPages := sort $projectPages "Params.version_order" "desc" }}
+      {{ $latestPage := index $sortedPages 0 }}
       {{ $groupedPages = $groupedPages | append $latestPage }}
     {{ end }}
 
