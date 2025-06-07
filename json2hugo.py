@@ -191,7 +191,7 @@ def build_markdown(data: Dict[str, Any]) -> str:
                     f"{p['apiGroup'] or 'core'}/{p['resource']}",
                     " · ".join(p["verbs"]),
                     "{{< risk " + p['riskLevel'] + " >}}",
-                    " ".join(["{{< tag \"" + tag + "\" >}}" for tag in p.get("tags", [])])
+                    " ".join(["{{< tag \"" + tag + "\" >}}" for tag in sorted(p.get("tags", []))])
                 ]
                 for p in sorted_perms
             ]
