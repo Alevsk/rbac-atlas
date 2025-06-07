@@ -1,7 +1,7 @@
 .PHONY: build docker fmt lint test cover clean install-deps serve
 
 # Variables
-DOCKER_IMAGE := rbac-atlas
+DOCKER_IMAGE := alevsk/rbac-atlas
 DOCKER_TAG := latest
 HUGO_PORT := 1313
 
