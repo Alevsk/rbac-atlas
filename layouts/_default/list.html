@@ -1,112 +1,106 @@
 {{ define "main" }}
-  {{ with .Content }}
-    <div class="index-content">
-      {{ . }}
-    </div>
+{{ with .Content }}
+<div class="index-content">{{ . }}</div>
+{{ end }}
+<h2>Versions</h2>
+<div class="posts">
+  {{ $isntDefault := not (or (eq (trim $.Site.Params.contentTypeName " ") "posts") (eq (trim $.Site.Params.contentTypeName " ") "")) }}
+  {{ $contentTypeName := cond $isntDefault (string $.Site.Params.contentTypeName) "posts" }}
+
+  {{ $PageContext := . }}
+  {{ if .IsHome }}
+  {{ $PageContext = .Site }}
   {{ end }}
-  <h2>Versions</h2>
-  <div class="posts">
-    {{ $isntDefault := not (or (eq (trim $.Site.Params.contentTypeName " ") "posts") (eq (trim $.Site.Params.contentTypeName " ") "")) }}
-    {{ $contentTypeName := cond $isntDefault (string $.Site.Params.contentTypeName) "posts" }}
 
-    {{ $PageContext := . }}
-    {{ if .IsHome }}
-      {{ $PageContext = .Site }}
+{{/* Group and sort pages by project name */}}
+{{ $allPages := where $PageContext.RegularPages "Type" $contentTypeName }}
+
+{{/* First, get unique project names */}}
+{{ $projectNames := slice }}
+{{ range $allPages }}
+{{ $projectName := index (split .File.Dir "/") 1 }}
+{{ $projectNames = $projectNames | append $projectName }}
+{{ end }}
+{{ $projectNames = uniq (sort $projectNames) }}
+
+{{/* For each project, get all versions sorted */}}
+{{ $groupedProjects := slice }}
+{{ range $projectNames }}
+{{ $projectName := . }}
+{{ $projectPages := where $allPages "File.Dir" (printf "charts/%s/" $projectName) }}
+{{ $sortedPages := sort $projectPages "Params.version_order" "desc" }}
+{{ $groupedProjects = $groupedProjects | append (dict "name" $projectName "pages" $sortedPages) }}
+{{ end }}
+
+{{/* Display projects and their versions */}}
+{{ range $groupedProjects }}
+{{ range .pages }}
+{{ $page := . }}
+<article class="post on-list">
+  <h3 class="post-title">
+    <a href="{{ $page.Permalink }}">{{ $page.Title | markdownify }} {{ $page.Params.version }}</a>
+  </h3>
+
+  <div class="post-meta">
+    {{- if $page.Params.version -}}
+    <span class="post-version">{{- $page.Params.version -}}</span>
+    {{- end -}}
+  </div>
+
+  {{ partial "cover.html" $page }}
+
+  <div class="post-stats">
+    {{ if gt (int $page.Params.critical_findings) 0 }}
+    <span class="stat-item risk-critical">
+      <i class="fas fa-skull"></i>
+      {{ $page.Params.critical_findings }} Critical
+    </span>
+    {{ end }}
+    {{ if gt (int $page.Params.high_findings) 0 }}
+    <span class="stat-item risk-high">
+      <i class="fas fa-exclamation-triangle"></i>
+      {{ $page.Params.high_findings }} High
+    </span>
+    {{ end }}
+    {{ if gt (int $page.Params.medium_findings) 0 }}
+    <span class="stat-item risk-medium">
+      <i class="fas fa-exclamation-circle"></i>
+      {{ $page.Params.medium_findings }} Medium
+    </span>
+    {{ end }}
+    {{ if gt (int $page.Params.low_findings) 0 }}
+    <span class="stat-item risk-low">
+      <i class="fas fa-info-circle"></i>
+      {{ $page.Params.low_findings }} Low
+    </span>
     {{ end }}
 
-    {{/* Group and sort pages by project name */}}
-    {{ $allPages := where $PageContext.RegularPages "Type" $contentTypeName }}
+    <span class="stat-item"><i class="fa-solid fa-user"></i> {{ default "0" $page.Params.service_accounts }}</span>
+    <span class="stat-item"><i class="fa-solid fa-cube"></i> {{ default "0" $page.Params.workloads }}</span>
+    <span class="stat-item"><i class="fa-solid fa-link"></i> {{ default "0" $page.Params.bindings }}</span>
+  </div>
 
-    {{/* First, get unique project names */}}
-    {{ $projectNames := slice }}
-    {{ range $allPages }}
-      {{ $projectName := index (split .File.Dir "/") 1 }}
-      {{ $projectNames = $projectNames | append $projectName }}
+  {{ if $page.Params.tags }}
+  <span class="post-tags">
+    {{ $tags := $page.Params.tags }}
+    {{ $tagCount := len $tags }}
+    {{ range first 3 $tags }}
+    #<a href="{{ (urlize (printf "tags/%s/" . )) | absLangURL }}">{{- . -}}</a>&nbsp;
     {{ end }}
-    {{ $projectNames = uniq (sort $projectNames) }}
-
-    {{/* For each project, get all versions sorted */}}
-    {{ $groupedProjects := slice }}
-    {{ range $projectNames }}
-      {{ $projectName := . }}
-      {{ $projectPages := where $allPages "File.Dir" (printf "charts/%s/" $projectName) }}
-      {{ $sortedPages := sort $projectPages "Params.version_order" "desc" }}
-      {{ $groupedProjects = $groupedProjects | append (dict "name" $projectName "pages" $sortedPages) }}
+    {{ if gt $tagCount 3 }}
+    ({{ sub $tagCount 3 }} more)
     {{ end }}
+  </span>
+  {{ end }}
 
-    {{/* Display projects and their versions */}}
-    {{ range $groupedProjects }}
-      {{ range .pages }}
-        {{ $page := . }}
-        <article class="post on-list">
-          <h3 class="post-title">
-            <a href="{{ $page.Permalink }}">{{ $page.Title | markdownify }} {{ $page.Params.version }}</a>
-          </h3>
-
-          <div class="post-meta">
-            {{- if $page.Params.version -}}
-              <span class="post-version">
-                {{- $page.Params.version -}}
-              </span>
-            {{- end -}}
-          </div>
-
-          {{ partial "cover.html" $page }}
-
-          <div class="post-stats">
-            {{ if gt (int $page.Params.critical_findings) 0 }}
-              <span class="stat-item risk-critical">
-                <i class="fas fa-skull"></i>
-                {{ $page.Params.critical_findings }} Critical
-              </span>
-            {{ end }}
-            {{ if gt (int $page.Params.high_findings) 0 }}
-              <span class="stat-item risk-high">
-                <i class="fas fa-exclamation-triangle"></i>
-                {{ $page.Params.high_findings }} High
-              </span>
-            {{ end }}
-            {{ if gt (int $page.Params.medium_findings) 0 }}
-              <span class="stat-item risk-medium">
-                <i class="fas fa-exclamation-circle"></i>
-                {{ $page.Params.medium_findings }} Medium
-              </span>
-            {{ end }}
-            {{ if gt (int $page.Params.low_findings) 0 }}
-              <span class="stat-item risk-low">
-                <i class="fas fa-info-circle"></i>
-                {{ $page.Params.low_findings }} Low
-              </span>
-            {{ end }}
-
-            <span class="stat-item"><i class="fa-solid fa-user"></i> {{ default "0" $page.Params.service_accounts }}</span>
-            <span class="stat-item"><i class="fa-solid fa-cube"></i> {{ default "0" $page.Params.workloads }}</span>
-            <span class="stat-item"><i class="fa-solid fa-link"></i> {{ default "0" $page.Params.bindings }}</span>
-          </div>
-
-          {{ if $page.Params.tags }}
-          <span class="post-tags">
-            {{ $tags := $page.Params.tags }}
-            {{ $tagCount := len $tags }}
-            {{ range first 3 $tags }}
-            #<a href="{{ (urlize (printf "tags/%s/" . )) | absLangURL }}">
-              {{- . -}}
-            </a>&nbsp;
-            {{ end }}
-            {{ if gt $tagCount 3 }}
-              ({{ sub $tagCount 3 }} more)
-            {{ end }}
-          </span>
-          {{ end }}
-
-          {{ if not $page.Params.showFullContent }}
-            <div>
-              <a class="read-more button" href="{{ $page.RelPermalink }}">[{{ $.Site.Params.ReadMore }}]</a>
-            </div>
-          {{ end }}
-        </article>
-      {{ end }}
-    {{ end }}
-    {{ partial "pagination.html" . }}
+  {{ if not $page.Params.showFullContent }}
+  <div>
+    <a class="read-more button" href="{{ $page.RelPermalink }}">[{{ $.Site.Params.ReadMore }}]</a>
   </div>
   {{ end }}
+</article>
+{{ end }}
+{{ end }}
+{{ partial "pagination.html" . }}
+</div>
+{{ end }}

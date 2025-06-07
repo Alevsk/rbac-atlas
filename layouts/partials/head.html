@@ -1,11 +1,10 @@
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<meta
-  name="description"
-  content="{{ if .IsHome }}{{ $.Site.Params.Subtitle }}{{ else if .Description}}{{ .Description | plainify }}{{ else }}{{ .Summary | plainify }}{{ end }}"
-/>
-<meta name="keywords" content="{{ with .Params.Keywords }}{{ delimit . ", " }}{{
-else }}{{ $.Site.Params.Keywords }}{{ end }}" /> {{ if .Params.noindex }} {{ if
+<meta name="description"
+      content="{{ if .IsHome }}{{ $.Site.Params.Subtitle }}{{ else if .Description }}{{ .Description | plainify }}{{ else }}{{ .Summary | plainify }}{{ end }}" />
+<meta name="keywords"
+      content="{{ with .Params.Keywords }}{{ delimit . ", " }}{{ else }}{{ $.Site.Params.Keywords }}{{ end }}" />
+{{ if .Params.noindex }} {{ if
 or (eq (.Param "noindex") true) (eq (.Param "noindex") "true") }}
 <meta name="robots" content="noindex" />
 {{ end }} {{ else }}
@@ -16,13 +15,11 @@ or (eq (.Param "noindex") true) (eq (.Param "noindex") "true") }}
 {{ template "_internal/google_analytics.html" . }}
 
 <!-- Font Awesome -->
-<link
-  rel="stylesheet"
-  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
-  integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
-  crossorigin="anonymous"
-  referrerpolicy="no-referrer"
-/>
+<link rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+      integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer" />
 
 {{ $css := resources.Match "css/*.css" }} {{ range $css }} {{ $styles := . |
 minify | fingerprint }}
@@ -42,9 +39,11 @@ $styles := $customCSS | minify | fingerprint }}
 {{ end }}
 
 <!-- Custom Terminal.css styles -->
-{{ if (fileExists "static/terminal.css") -}} <link rel="stylesheet" href="{{
-"terminal.css" | absURL }}"> {{- end }}
+{{ if (fileExists "static/terminal.css") -}}
+<link rel="stylesheet" href="{{ "terminal.css" | absURL }}">
+{{- end }}
 
 <!-- Custom CSS to override theme properties (/static/style.css) -->
-{{ if (fileExists "static/style.css") -}} <link rel="stylesheet" href="{{
-"style.css" | absURL }}"> {{- end }}
+{{ if (fileExists "static/style.css") -}}
+<link rel="stylesheet" href="{{ "style.css" | absURL }}">
+{{- end }}

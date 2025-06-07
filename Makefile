@@ -9,7 +9,7 @@ install-deps:
 	@echo "Installing dependencies..."
 	npm install -g playwright
 	npm install --save-dev prettier prettier-plugin-go-template
-	python3 -m pip install 'pagefind[extended]'
+	python3 -m pip install 'pagefind[extended]' djlint
 
 prebuild:
 	@echo "Building site..."
@@ -26,10 +26,14 @@ docker: build
 fmt:
 	@echo "Formatting Markdown files..."
 	npm run fmt
+	@echo "Formatting HTML files..."
+	djlint --reformat layouts/**/*.html
 
 lint:
 	@echo "Checking Markdown formatting..."
 	npm run lint
+	@echo "Checking HTML formatting..."
+	djlint --check layouts/**/*.html
 
 test:
 	@echo "Running tests..."

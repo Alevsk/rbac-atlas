@@ -13,13 +13,16 @@
       <div class="version-selector">
         <select class="version-select" onchange="window.location.href=this.value">
           {{ range $sortedVersions }}
-            <option value="{{ .Permalink }}" {{ if eq .Params.version $.Params.version }}selected{{ end }}>
-              {{ .Params.version }}
-            </option>
+          <option value="{{ .Permalink }}"
+                  {{ if eq .Params.version $.Params.version }}
+                  selected
+                  {{ end }}>
+            {{ .Params.version }}
+          </option>
           {{ end }}
         </select>
       </div>
-      {{ else }}
+    {{ else }}
       <div class="version-subtitle">{{ .Params.version }}</div>
       {{ end }}
     </div>
@@ -65,44 +68,40 @@
   </div>
   <div class="post-meta">
     {{- if .Date -}}
-      <time class="post-date">
-        {{- partial "post-date" . -}}
-        {{- if and $.Site.Params.showLastUpdated .Lastmod -}}
-          &nbsp;{{- partial "post-lastmod" . -}}
-        {{- end -}}
-      </time>
+    <time class="post-date">
+      {{- partial "post-date" . -}}
+      {{- if and $.Site.Params.showLastUpdated .Lastmod -}}
+      &nbsp;{{- partial "post-lastmod" . -}}
+      {{- end -}}
+    </time>
     {{- end -}}
     {{- with .Params.Author -}}
-      <span class="post-author">{{ . }}</span>
+    <span class="post-author">{{ . }}</span>
     {{- end -}}
     {{- if and (.Param "readingTime") (eq (.Param "readingTime") true) -}}
-      <span class="post-reading-time">{{ .ReadingTime }} {{ $.Site.Params.minuteReadingTime | default "min read" }} ({{ .WordCount }} {{ $.Site.Params.words | default "words" }})</span>
+    <span class="post-reading-time">{{ .ReadingTime }} {{ $.Site.Params.minuteReadingTime | default "min read" }} ({{ .WordCount }} {{ $.Site.Params.words | default "words" }})</span>
     {{- end -}}
   </div>
 
   {{ if .Params.tags }}
-    <div class="tags-list">
-      <p>
-        {{ range .Params.tags }}
-        <a href="{{ (urlize (printf "tags/%s/" .)) | absLangURL }}">{{ . }}</a>
-        {{ end }}
-      </p>
-    </div>
+  <div class="tags-list">
+    <p>
+      {{ range .Params.tags }}
+      <a href="{{ (urlize (printf "tags/%s/" .)) | absLangURL }}">{{ . }}</a>
+      {{ end }}
+    </p>
+  </div>
   {{ end }}
   {{ partial "cover.html" . }}
 
   {{ if (.Params.Toc | default .Site.Params.Toc) }}
-    <div class="table-of-contents">
-      <h2>
-        {{ (.Params.TocTitle | default .Site.Params.TocTitle) | default "Table of Contents" }}
-      </h2>
-      {{ .TableOfContents }}
-    </div>
+  <div class="table-of-contents">
+    <h2>{{ (.Params.TocTitle | default .Site.Params.TocTitle) | default "Table of Contents" }}</h2>
+    {{ .TableOfContents }}
+  </div>
   {{ end }}
 
-  <div class="post-content">
-    {{ .Content }}
-  </div>
+  <div class="post-content">{{ .Content }}</div>
 
 </article>
 {{ end }}
