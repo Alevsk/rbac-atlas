@@ -49,9 +49,8 @@ def build_markdown(data: Dict[str, Any]) -> str:
         description = meta['extra']['helm']['description']
 
     # ts = meta.get("timestamp")
-    sa_data   = sorted(data.get("serviceAccountData", []), key=lambda x: x.get("serviceAccountName", ""))
     risk_order = {"Critical": 0, "High": 1, "Medium": 2, "Low": 3}
-    perms     = sorted(data.get("serviceAccountPermissions", []),
+    perms = sorted(data.get("serviceAccountPermissions", []),
                   key=lambda x: (risk_order.get(x.get("riskLevel", ""), 4), x.get("roleName", "")))
     workloads = sorted(data.get("serviceAccountWorkloads", []),
                   key=lambda x: (x.get("workloadType", ""), x.get("workloadName", ""), x.get("containerName", "")))
@@ -61,6 +60,15 @@ def build_markdown(data: Dict[str, Any]) -> str:
     for p in perms:
         perms_by_sa[p["serviceAccountName"]].append(p)
 
+    # Helper function to get highest risk for a service account
+    def get_highest_risk(sa_name: str) -> int:
+        risks = {p["riskLevel"] for p in perms_by_sa[sa_name]}
+        return min((risk_order.get(r, 4) for r in risks), default=4)
+
+    # Sort service accounts by risk level (highest risk first) then by name
+    sa_data = sorted(data.get("serviceAccountData", []),
+                    key=lambda x: (get_highest_risk(x.get("serviceAccountName", "")),
+                                 x.get("serviceAccountName", "")))
     wl_by_sa: Dict[str, List[Dict[str, Any]]] = defaultdict(list)
     for w in workloads:
         wl_by_sa[w["serviceAccountName"]].append(w)
@@ -134,6 +142,13 @@ def build_markdown(data: Dict[str, Any]) -> str:
     for sa in sa_data:
         sa_name = sa["serviceAccountName"]
         anchor  = slug(sa_name)
+        # Get highest risk for this service account
+        highest_risk = get_highest_risk(sa_name)
+        risk_map = {0: "Critical", 1: "High", 2: "Medium", 3: "Low", 4: "—"}
+        risk_display = risk_map[highest_risk]
+        risk_class = risk_display.lower() if risk_display != "—" else ""
+        risk_cell = f'{{{{< risk "{risk_display}" >}}}}' if risk_display != "—" else "—"
+
         overview_rows.append([
             f"[`{sa_name or '—'}`](#{anchor})",
             sa["namespace"],
@@ -141,10 +156,11 @@ def build_markdown(data: Dict[str, Any]) -> str:
             ", ".join(sa["secrets"] or []) or "—",
             str(perm_counts.get(sa_name, 0)),
             str(wl_counts.get(sa_name, 0)),
+            risk_cell
         ])
     out += table(
-        ["ServiceAccount", "Namespace", "Automount", "Secrets",
-         "Permissions", "Workloads"],
+        ["Identity", "Namespace", "Automount", "Secrets",
+         "Permissions", "Workloads", "Risk"],
         overview_rows,
     )
     out += (
