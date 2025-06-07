@@ -5,13 +5,10 @@
   <div class="index-content">{{ . }}</div>
   {{ end }}
   <ul>
-    {{ $type := .Type }} {{ range $key, $value := .Data.Terms.ByCount }} {{
-    $name := .Name }} {{ $count := .Count }} {{ with $.Site.GetPage (printf
-    "/%s/%s" $type $name) }}
+    {{ $type := .Type }} {{ range $key, $value := .Data.Terms.ByCount }} {{ $name := .Name }} {{ $count := .Count }} {{
+    with $.Site.GetPage (printf "/%s/%s" $type $name) }}
     <li>
-      <a class="terms-title" href="{{ .Permalink }}"
-        >{{ .Name }} [{{ $count }}]</a
-      >
+      <a class="terms-title" href="{{ .Permalink }}">{{ .Name }} [{{ $count }}]</a>
     </li>
     {{ end }} {{ end }}
   </ul>
