@@ -191,10 +191,11 @@ def build_markdown(data: Dict[str, Any]) -> str:
                     f"{p['apiGroup'] or 'core'}/{p['resource']}",
                     " · ".join(p["verbs"]),
                     "{{< risk " + p['riskLevel'] + " >}}",
+                    " ".join(["{{< tag \"" + tag + "\" >}}" for tag in p.get("tags", [])])
                 ]
                 for p in sorted_perms
             ]
-            out += table(["Role", "Resource", "Verbs", "Risk"], perm_rows)
+            out += table(["Role", "Resource", "Verbs", "Risk", "Tags"], perm_rows)
         else:
             out += "_No explicit RBAC bindings._\n\n"
 
