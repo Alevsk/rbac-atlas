@@ -190,7 +190,7 @@ def build_markdown(data: Dict[str, Any]) -> str:
                     p["roleType"] + f" `{p['roleName']}`",
                     f"{p['apiGroup'] or 'core'}/{p['resource']}",
                     " · ".join(p["verbs"]),
-                    p["riskLevel"],
+                    "{{< risk " + p['riskLevel'] + " >}}",
                 ]
                 for p in sorted_perms
             ]
