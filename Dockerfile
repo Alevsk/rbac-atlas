@@ -1,5 +1,5 @@
 # Build stage
-FROM klakegg/hugo:latest AS builder
+FROM klakegg/hugo:alpine AS builder
 
 # Install Python, pip, Node.js and npm
 RUN apk add --no-cache python3 py3-pip nodejs npm
