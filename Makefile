@@ -19,7 +19,7 @@ prebuild:
 
 build: prebuild fmt lint
 
-docker: build
+docker:
 	@echo "Building Docker image..."
 	docker build -t $(DOCKER_IMAGE):$(DOCKER_TAG) .
 
