@@ -34,14 +34,17 @@ RUN hugo --gc --minify
 RUN python3 -m pagefind --site public
 
 # Production stage
-FROM nginx:alpine
+FROM docker.io/library/nginx:alpine
 
-# Copy the built site
+# Copy the built site and set permissions
 COPY --from=builder /src/public /usr/share/nginx/html
 
 # Copy nginx configuration
-COPY nginx.conf /etc/nginx/conf.d/default.conf
+COPY --from=builder  /src/nginx.conf /etc/nginx/nginx.conf
 
-EXPOSE 80
+# Switch to non-root user
+USER nginx
+
+EXPOSE 8080
 
 CMD ["nginx", "-g", "daemon off;"]
