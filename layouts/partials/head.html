@@ -49,3 +49,15 @@ $styles := $customCSS | minify | fingerprint }}
 {{ if (fileExists "static/style.css") -}}
 <link rel="stylesheet" href="{{ "style.css" | absURL }}">
 {{- end }}
+
+<!-- Tags toggle functionality -->
+<script>
+  function toggleTags(button) {
+    const extraTags = button.previousElementSibling;
+    const isExpanded = extraTags.style.display !== 'none';
+    
+    extraTags.style.display = isExpanded ? 'none' : 'inline';
+    const count = button.getAttribute('data-count');
+    button.textContent = isExpanded ? `(+${count} more)` : 'Show less';
+  }
+</script>

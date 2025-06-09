@@ -88,14 +88,25 @@
     <p>
       {{ $tags := .Params.tags }}
       {{ $tagCount := len $tags }}
-      {{ range first 10 $tags }}
-      <a href="{{ (urlize (printf "tags/%s/" .)) | absLangURL }}">{{ . }}</a>
-      {{ end }}
+      <span class="initial-tags">
+        {{ range first 10 $tags }}
+        <a href="{{ (urlize (printf "tags/%s/" .)) | absLangURL }}">{{ . }}</a>
+        {{ end }}
+      </span>
       {{ if gt $tagCount 10 }}
-      <span>(+{{ sub $tagCount 10 }} more)</span>
+      <span class="extra-tags" style="display: none;">
+        {{ range after 10 $tags }}
+        <a href="{{ (urlize (printf "tags/%s/" .)) | absLangURL }}">{{ . }}</a>
+        {{ end }}
+      </span>
+      <button class="toggle-tags"
+              onclick="toggleTags(this)"
+              data-count="{{ sub $tagCount 10 }}">(+{{ sub $tagCount 10 }} more)</button>
       {{ end }}
     </p>
   </div>
+
+
   {{ end }}
   {{ partial "cover.html" . }}
 
