@@ -86,8 +86,13 @@
   {{ if .Params.tags }}
   <div class="tags-list">
     <p>
-      {{ range .Params.tags }}
+      {{ $tags := .Params.tags }}
+      {{ $tagCount := len $tags }}
+      {{ range first 10 $tags }}
       <a href="{{ (urlize (printf "tags/%s/" .)) | absLangURL }}">{{ . }}</a>
+      {{ end }}
+      {{ if gt $tagCount 10 }}
+      <span>(+{{ sub $tagCount 10 }} more)</span>
       {{ end }}
     </p>
   </div>

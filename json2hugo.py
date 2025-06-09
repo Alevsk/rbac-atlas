@@ -23,7 +23,7 @@ def h(level: int, text: str) -> str:
 
 
 def bullet(text: str) -> str:
-    return f"* {text}\n"
+    return f"- {text}\n"
 
 
 def table(headers: List[str], rows: List[List[str]]) -> str:
@@ -136,6 +136,16 @@ def build_markdown(data: Dict[str, Any]) -> str:
     out += f"tags: [{', '.join(sorted(tags))}]\n"
     out += "---\n\n"
 
+    # ── Description ──
+    out += h(2, "Description")
+    out += description + "\n\n"
+
+    # Add sources if available
+    if 'extra' in meta and 'helm' in meta['extra'] and 'sources' in meta['extra']['helm']:
+        for source in meta['extra']['helm']['sources']:
+            out += bullet(source)
+        out += "\n"
+
     # ── Overview table ──
     out += h(2, "Overview")
     overview_rows = []
@@ -207,7 +217,8 @@ def build_markdown(data: Dict[str, Any]) -> str:
                     f"{p['apiGroup'] or 'core'}/{p['resource']}",
                     " · ".join(p["verbs"]),
                     "{{< risk " + p['riskLevel'] + " >}}",
-                    " ".join(["{{< tag \"" + tag + "\" >}}" for tag in sorted(p.get("tags", []))])
+                    " ".join(["{{< tag \"" + tag + "\" >}}" for tag in sorted(p.get("tags", []))[:5]] +
+                        [(f"(+{len(p.get('tags', [])) - 5} more)" if len(p.get('tags', [])) > 5 else "")])
                 ]
                 for p in sorted_perms
             ]
@@ -264,7 +275,7 @@ def write_markdown(markdown: str, meta: Dict[str, str], output_dir: str) -> str:
     if 'extra' in meta and 'helm' in meta['extra'] and 'sources' in meta['extra']['helm']:
         index_content += "## Sources\n\n"
         for source in meta['extra']['helm']['sources']:
-            index_content += f"* {source}\n"
+            index_content += f"- {source}\n"
         index_content += "\n"
 
     with open(index_path, "w", encoding="utf-8") as fh:
