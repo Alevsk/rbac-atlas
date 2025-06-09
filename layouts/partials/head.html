@@ -60,4 +60,19 @@ $styles := $customCSS | minify | fingerprint }}
     const count = button.getAttribute('data-count');
     button.textContent = isExpanded ? `(+${count} more)` : 'Show less';
   }
+
+  // Add data-label attributes to table cells for responsive display
+  document.addEventListener('DOMContentLoaded', function() {
+    const tables = document.querySelectorAll('table');
+    tables.forEach(table => {
+      const headerCells = table.querySelectorAll('thead th');
+      const headers = Array.from(headerCells).map(th => th.textContent.trim());
+      
+      const bodyCells = table.querySelectorAll('tbody td');
+      bodyCells.forEach((cell, index) => {
+        const headerIndex = index % headers.length;
+        cell.setAttribute('data-label', headers[headerIndex]);
+      });
+    });
+  });
 </script>

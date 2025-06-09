@@ -268,9 +268,64 @@ table {
   font-size: 0.9rem;
 }
 
+/* Base table styles */
 th, td {
   border: 1px solid var(--accent);
   padding: 6px 8px;
+}
+
+/* Responsive table styles */
+@media screen and (max-width: 768px) {
+  table {
+    display: block;
+    width: 100%;
+  }
+
+  thead {
+    display: none; /* Hide the header row */
+  }
+
+  tbody {
+    display: block;
+    width: 100%;
+  }
+
+  tr {
+    display: block;
+    margin-bottom: 1.5rem;
+    border: 1px solid var(--accent);
+  }
+
+  td {
+    display: grid;
+    grid-template-columns: 40% 60%;
+    align-items: center;
+    border: none;
+    border-bottom: 1px solid var(--accent);
+    padding: 8px;
+  }
+
+  td:last-child {
+    border-bottom: none;
+  }
+
+  /* Add header labels */
+  td::before {
+    content: attr(data-label);
+    font-weight: bold;
+    text-align: left;
+    padding-right: 1rem;
+  }
+
+  /* Special handling for tag-heavy cells */
+  td:has(a), td:has(span[class^="tag-"]) {
+    display: block;
+  }
+
+  td:has(a)::before, td:has(span[class^="tag-"])::before {
+    display: block;
+    margin-bottom: 0.5rem;
+  }
 }
 
 /* Tags list styles */
