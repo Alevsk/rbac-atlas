@@ -4,13 +4,11 @@
   {{ with .Content }}
   <div class="index-content">{{ . }}</div>
   {{ end }}
-  <ul>
+  <div class="tags-list">
     {{ $type := .Type }} {{ range $key, $value := .Data.Terms.ByCount }} {{ $name := .Name }} {{ $count := .Count }} {{
     with $.Site.GetPage (printf "/%s/%s" $type $name) }}
-    <li>
-      <a class="terms-title" href="{{ .Permalink }}">{{ .Name }} [{{ $count }}]</a>
-    </li>
+    <a class="terms-title" href="{{ .Permalink }}">{{ .Name }} [{{ $count }}]</a>
     {{ end }} {{ end }}
-  </ul>
+  </div>
 </div>
 {{ end }}

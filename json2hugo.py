@@ -13,9 +13,10 @@ import argparse
 import json
 import os
 import re
+import yaml
 from collections import Counter, defaultdict
 from datetime import datetime
-from typing import Any, Dict, List
+from typing import Any, Dict, List, TypedDict
 
 # ───────────────────────────── Markdown helpers ──────────────────────────────
 def h(level: int, text: str) -> str:
@@ -123,15 +124,14 @@ def build_markdown(data: Dict[str, Any]) -> str:
     # Extract categories from metadata.extra.helm.keywords if available
     categories = []
     if 'extra' in meta and 'helm' in meta['extra'] and 'keywords' in meta['extra']['helm']:
-        categories = meta['extra']['helm']['keywords']
+        categories = meta['extra']['helm']['keywords'] or []
     out += f"categories: [{', '.join(categories)}]\n"
 
     # Extract and deduplicate tags from all service account permissions
     tags = set()
     for p in perms:
-        perm_tags = p.get("tags", [])
-        if perm_tags is not None:
-            tags.update(perm_tags)
+        perm_tags = p.get("tags", []) or []
+        tags.update(perm_tags)
 
     out += f"tags: [{', '.join(sorted(tags))}]\n"
     out += "---\n\n"
@@ -142,7 +142,8 @@ def build_markdown(data: Dict[str, Any]) -> str:
 
     # Add sources if available
     if 'extra' in meta and 'helm' in meta['extra'] and 'sources' in meta['extra']['helm']:
-        for source in meta['extra']['helm']['sources']:
+        sources = meta['extra']['helm']['sources'] or []
+        for source in sources:
             out += bullet(source)
         out += "\n"
 
@@ -273,10 +274,12 @@ def write_markdown(markdown: str, meta: Dict[str, str], output_dir: str) -> str:
 
     # Add sources if available
     if 'extra' in meta and 'helm' in meta['extra'] and 'sources' in meta['extra']['helm']:
-        index_content += "## Sources\n\n"
-        for source in meta['extra']['helm']['sources']:
-            index_content += f"- {source}\n"
-        index_content += "\n"
+        sources = meta['extra']['helm']['sources'] or []
+        if sources:
+            index_content += "## Sources\n\n"
+            for source in sources:
+                index_content += f"- {source}\n"
+            index_content += "\n"
 
     with open(index_path, "w", encoding="utf-8") as fh:
         fh.write(index_content)
@@ -285,24 +288,103 @@ def write_markdown(markdown: str, meta: Dict[str, str], output_dir: str) -> str:
 
 
 # ──────────────────────────────── CLI ────────────────────────────────────────
+def parse_rules_yaml(yaml_path: str) -> Dict[int, Dict[str, Any]]:
+    """Parse the rules YAML file and return a dictionary with rule IDs as keys."""
+    try:
+        with open(yaml_path, encoding="utf-8") as fh:
+            rules = yaml.safe_load(fh)
+
+        # Convert list to dictionary with rule IDs as keys
+        rules_dict = {rule['id']: rule for rule in rules}
+
+        # Generate markdown files for each rule
+        for rule_id, rule in rules_dict.items():
+            content = f"---\n"
+            content += f"title: \"{rule['name']}\"\n"
+            content += f"description: \"{rule['description']}\"\n"
+            content += f"category: {rule['category']}\n"
+            content += f"risk_level: {rule['risk_level']}\n"
+            content += f"date: {datetime.now().strftime('%Y-%m-%d')}\n"
+            content += "---\n\n"
+
+            # Add rule information in a table format
+            content += "| Field | Value |\n"
+            content += "|-------|-------|\n"
+            content += f"| ID | {rule['id']} |\n"
+            content += f"| Name | {rule['name']} |\n"
+            content += f"| Risk Category | {rule['category']} |\n"
+            content += f"| Risk Level | {rule['risk_level']} |\n"
+            content += f"| Role Type | {rule['role_type']} |\n"
+            content += f"| API Groups | {', '.join(rule['api_groups'])} |\n"
+            content += f"| Resources | {', '.join(rule['resources'])} |\n"
+            content += f"| Verbs | {', '.join(rule['verbs'])} |\n"
+            content += f"| Tags | {', '.join(rule['tags'])} |\n\n"
+
+            # Add description section
+            content += "## Description\n\n"
+            content += f"{rule['description']}\n"
+
+            # Create rules directory if it doesn't exist
+            rules_dir = os.path.join("content", "rules")
+            os.makedirs(rules_dir, exist_ok=True)
+
+            # Write the markdown file
+            rule_file = os.path.join(rules_dir, f"{rule_id}.md")
+            with open(rule_file, "w", encoding="utf-8") as f:
+                f.write(content)
+
+            print(f"Generated {rule_file}")
+
+        return rules_dict
+    except (IOError, yaml.YAMLError) as exc:
+        raise Exception(f"Unable to read YAML file: {exc}")
+
+def process_json_file(json_file: str, output_dir: str) -> None:
+    """Process a single JSON file and generate its markdown."""
+    try:
+        with open(json_file, encoding="utf-8") as fh:
+            data = json.load(fh)
+        md = build_markdown(data)
+        dest = write_markdown(md, data["metadata"], output_dir)
+        print(f"Wrote {dest}")
+    except (IOError, json.JSONDecodeError) as exc:
+        print(f"Warning: Unable to process {json_file}: {exc}")
+
 def main() -> None:
-    ap = argparse.ArgumentParser(description="Convert JSON to Hugo markdown")
-    ap.add_argument("json_file", help="Path to the input JSON file")
+    ap = argparse.ArgumentParser(description="Convert JSON manifests to Hugo markdown")
+    ap.add_argument(
+        "-f", "--folder", required=True,
+        help="Path to the folder containing JSON manifests"
+    )
+    ap.add_argument(
+        "-r", "--rules",
+        default="/home/alevsk/Development/rbac-ops/internal/policyevaluation/risks.yaml",
+        help="Path to the rules YAML file"
+    )
     ap.add_argument(
         "-o", "--output-dir", default=".",
         help="Site root (directory that contains 'content/')"
     )
     args = ap.parse_args()
 
+    # First parse the rules YAML (only once)
     try:
-        with open(args.json_file, encoding="utf-8") as fh:
-            data = json.load(fh)
-    except (IOError, json.JSONDecodeError) as exc:
-        ap.error(f"Unable to read JSON file: {exc}")
+        rules_dict = parse_rules_yaml(args.rules)
+        print(f"Parsed {len(rules_dict)} rules from {args.rules}")
+    except Exception as exc:
+        ap.error(str(exc))
 
-    md = build_markdown(data)
-    dest = write_markdown(md, data["metadata"], args.output_dir)
-    print(f"Wrote {dest}")
+    # Process all JSON files in the specified folder
+    if not os.path.isdir(args.folder):
+        ap.error(f"Folder not found: {args.folder}")
+
+    json_files = [f for f in os.listdir(args.folder) if f.endswith('.json')]
+    if not json_files:
+        ap.error(f"No JSON files found in {args.folder}")
+
+    for json_file in json_files:
+        full_path = os.path.join(args.folder, json_file)
+        process_json_file(full_path, args.output_dir)
 
 
 if __name__ == "__main__":
