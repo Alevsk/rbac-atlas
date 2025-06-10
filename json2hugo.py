@@ -227,6 +227,23 @@ def build_markdown(data: Dict[str, Any]) -> str:
         else:
             out += "_No explicit RBAC bindings._\n\n"
 
+        # Abuse
+        if sa_perms:
+            # Collect all unique rule IDs from all permissions
+            all_risk_rules = set()
+            for perm in sa_perms:
+                risk_rules = perm.get('riskRules', [])
+                all_risk_rules.update(risk_rules)
+
+            if all_risk_rules:
+                out += h(4, f"Potential Abuse ({len(all_risk_rules)})").rstrip() + "\n"
+                out += "The following security risks were detected based on the above permissions:\n\n"
+                for rule_id in sorted(all_risk_rules):
+                    if rule_id in rules_dict:
+                        rule = rules_dict[rule_id]
+                        out += f"- [{rule['name']}](/rules/{rule_id})\n"
+                out += "\n"
+
         # Workloads
         sa_wl = wl_by_sa[sa_name]
         out += h(4, f"Workloads ({len(sa_wl)})").rstrip() + "\n"
@@ -288,8 +305,12 @@ def write_markdown(markdown: str, meta: Dict[str, str], output_dir: str) -> str:
 
 
 # ──────────────────────────────── CLI ────────────────────────────────────────
+# Global rules dictionary
+rules_dict: Dict[int, Dict[str, Any]] = {}
+
 def parse_rules_yaml(yaml_path: str) -> Dict[int, Dict[str, Any]]:
     """Parse the rules YAML file and return a dictionary with rule IDs as keys."""
+    global rules_dict
     try:
         with open(yaml_path, encoding="utf-8") as fh:
             rules = yaml.safe_load(fh)
