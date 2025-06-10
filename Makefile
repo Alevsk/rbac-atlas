@@ -64,6 +64,9 @@ get-manifests:
 		rbac-ops ingest "$$f" -o json > "manifests/$$filename.json"; \
 	done
 
-generate-pages:
+
+json2markdown:
 	@echo "Generating pages..."
 	python json2hugo.py -f manifests/ -o content/charts/
+
+generate-pages: json2markdown fmt lint
