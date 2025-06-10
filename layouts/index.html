@@ -69,7 +69,10 @@
       {{ $groupedPages = $groupedPages | append $latestPage }}
     {{ end }}
 
-    {{ $paginator := .Paginate $groupedPages }}
+    {{ partial "alphabet-pagination.html" (dict "RelPermalink" .RelPermalink "GroupedPages" $groupedPages) }}
+
+    <div id="projects-list">
+      {{ $paginator := .Paginate $groupedPages }}
 
     {{ range $paginator.Pages }}
       {{ $page := . }}

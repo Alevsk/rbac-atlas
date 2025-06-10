@@ -8,6 +8,7 @@
     {{ $type := .Type }}
     {{ range $key, $value := .Data.Terms.ByCount }}
     {{ $name := .Name }}
+    {{ if not (hasPrefix $name "letter-") }}
     {{ $uniqueCharts := slice }}
     {{ range .Pages }}
     {{ $path := .File.Path }}
@@ -18,7 +19,9 @@
     {{ end }}
     {{ with $.Site.GetPage (printf "/%s/%s" $type $name) }}
     <a class="terms-title" href="{{ .Permalink }}">{{ .Name }} [{{ len $uniqueCharts }}]</a>
-    {{ end }} {{ end }}
+    {{ end }}
+    {{ end }}
+    {{ end }}
   </div>
 </div>
 {{ end }}

@@ -133,6 +133,10 @@ def build_markdown(data: Dict[str, Any]) -> str:
         perm_tags = p.get("tags", []) or []
         tags.update(perm_tags)
 
+    # Get the first letter of the name
+    letter = name[0].upper() if name else ""
+    tags.add(f"letter-{letter}")
+
     out += f"tags: [{', '.join(sorted(tags))}]\n"
     out += "---\n\n"
 

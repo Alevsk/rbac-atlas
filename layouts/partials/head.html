@@ -55,7 +55,6 @@ $styles := $customCSS | minify | fingerprint }}
   function toggleTags(button) {
     const extraTags = button.previousElementSibling;
     const isExpanded = extraTags.style.display !== 'none';
-    
     extraTags.style.display = isExpanded ? 'none' : 'inline';
     const count = button.getAttribute('data-count');
     button.textContent = isExpanded ? `(+${count} more)` : 'Show less';
@@ -63,11 +62,11 @@ $styles := $customCSS | minify | fingerprint }}
 
   // Add data-label attributes to table cells for responsive display
   document.addEventListener('DOMContentLoaded', function() {
+    // Make tables responsive
     const tables = document.querySelectorAll('table');
     tables.forEach(table => {
       const headerCells = table.querySelectorAll('thead th');
       const headers = Array.from(headerCells).map(th => th.textContent.trim());
-      
       const bodyCells = table.querySelectorAll('tbody td');
       bodyCells.forEach((cell, index) => {
         const headerIndex = index % headers.length;

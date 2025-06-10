@@ -1,0 +1,21 @@
+{{/* Create alphabet pagination */}}
+<div class="alphabet-pagination">
+  <a href="/"
+     class="letter-link {{ if eq $.RelPermalink "/" }}active{{ end }}">All</a>
+  {{ $alphabet := split "ABCDEFGHIJKLMNOPQRSTUVWXYZ" "" }}
+  {{ range $letter := $alphabet }}
+  {{ $hasProjects := false }}
+  {{ range $.GroupedPages }}
+  {{ range .Params.tags }}
+  {{ if eq . (printf "letter-%s" $letter) }}
+  {{ $hasProjects = true }}
+  {{ end }}
+  {{ end }}
+  {{ end }}
+  {{ if $hasProjects }}
+  <a href="/tags/letter-{{ lower $letter }}/" class="letter-link">{{ $letter }}</a>
+{{ else }}
+  <span class="letter-link disabled">{{ $letter }}</span>
+  {{ end }}
+  {{ end }}
+</div>
