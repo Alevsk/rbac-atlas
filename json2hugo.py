@@ -195,7 +195,7 @@ def build_markdown(data: Dict[str, Any]) -> str:
         sa_name = sa["serviceAccountName"]
         anchor  = slug(sa_name)
 
-        header  = f"### `{sa_name or '—'}` {{#{anchor}}}\n"
+        header  = f"### 🤖 `{sa_name or '—'}` {{#{anchor}}}\n"
         header += (
             f"**Namespace:** `{sa['namespace']}` &nbsp;|&nbsp; "
             f"**Automount:** {'✅' if sa['automountToken'] else '❌'}"
@@ -208,7 +208,7 @@ def build_markdown(data: Dict[str, Any]) -> str:
 
         # Permissions
         sa_perms = perms_by_sa[sa_name]
-        out += h(4, f"Permissions ({len(sa_perms)})").rstrip() + "\n"
+        out += h(4, f"🔑 Permissions ({len(sa_perms)})").rstrip() + "\n"
         if sa_perms:
             # Sort permissions by risk level
             sorted_perms = sorted(sa_perms, key=lambda p: (risk_order.get(p["riskLevel"], 4), p["roleType"], p["roleName"]))
@@ -236,7 +236,7 @@ def build_markdown(data: Dict[str, Any]) -> str:
                 all_risk_rules.update(risk_rules)
 
             if all_risk_rules:
-                out += h(4, f"Potential Abuse ({len(all_risk_rules)})").rstrip() + "\n"
+                out += h(4, f"⚠️ Potential Abuse ({len(all_risk_rules)})").rstrip() + "\n"
                 out += "The following security risks were detected based on the above permissions:\n\n"
                 for rule_id in sorted(all_risk_rules):
                     if rule_id in rules_dict:
@@ -246,7 +246,7 @@ def build_markdown(data: Dict[str, Any]) -> str:
 
         # Workloads
         sa_wl = wl_by_sa[sa_name]
-        out += h(4, f"Workloads ({len(sa_wl)})").rstrip() + "\n"
+        out += h(4, f"📦 Workloads ({len(sa_wl)})").rstrip() + "\n"
         if sa_wl:
             wl_rows = [
                 [w["workloadType"], w["workloadName"],

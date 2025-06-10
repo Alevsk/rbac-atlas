@@ -50,7 +50,7 @@ clean:
 	rm -rf node_modules
 	rm -rf playwright-report
 
-serve: build
+serve:
 	@echo "Starting Hugo server..."
 	hugo server -D --bind 0.0.0.0 -p $(HUGO_PORT)
 
