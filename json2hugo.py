@@ -215,7 +215,7 @@ def build_markdown(data: Dict[str, Any]) -> str:
         out += h(4, f"🔑 Permissions ({len(sa_perms)})").rstrip() + "\n"
         if sa_perms:
             # Sort permissions by risk level
-            sorted_perms = sorted(sa_perms, key=lambda p: (risk_order.get(p["riskLevel"], 4), p["roleType"], p["roleName"]))
+            sorted_perms = sorted(sa_perms, key=lambda p: (risk_order.get(p["riskLevel"], 4), p["resource"], p["apiGroup"] or "core", p["roleType"], p["roleName"]))
             perm_rows = [
                 [
                     p["roleType"] + f" `{p['roleName']}`",
