@@ -313,12 +313,16 @@ def parse_rules_yaml(yaml_path: str) -> Dict[int, Dict[str, Any]]:
             content += f"| ID | {rule['id']} |\n"
             content += f"| Name | {rule['name']} |\n"
             content += f"| Risk Category | {rule['category']} |\n"
-            content += f"| Risk Level | {rule['risk_level']} |\n"
+            risk_level = rule['risk_level'].replace('RiskLevel', '')
+            content += f"| Risk Level | {{{{< risk {risk_level} >}}}} |\n"
             content += f"| Role Type | {rule['role_type']} |\n"
-            content += f"| API Groups | {', '.join(rule['api_groups'])} |\n"
+            api_groups = ['core' if group == '' else group for group in rule['api_groups']]
+            content += f"| API Groups | {', '.join(api_groups)} |\n"
             content += f"| Resources | {', '.join(rule['resources'])} |\n"
             content += f"| Verbs | {', '.join(rule['verbs'])} |\n"
-            content += f"| Tags | {', '.join(rule['tags'])} |\n\n"
+            tags_formatted = " ".join(["{{< tag \"" + tag + "\" >}}" for tag in sorted(rule['tags'])[:5]] +
+                [(f"(+{len(rule['tags']) - 5} more)" if len(rule['tags']) > 5 else "")])
+            content += f"| Tags | {tags_formatted} |\n\n"
 
             # Add description section
             content += "## Description\n\n"
