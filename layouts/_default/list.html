@@ -37,52 +37,61 @@
 {{ range .pages }}
 {{ $page := . }}
 <article class="post on-list">
-  <h3 class="post-title">
-    <a href="{{ $page.Permalink }}">{{ $page.Title | markdownify }} {{ $page.Params.version }}</a>
-  </h3>
-
-  <div class="post-meta">
+  <div class="title-card-wrapper">
+    <h2>
+      <a href="{{ $page.Permalink }}">{{ $page.Title | markdownify }}</a>
+    </h2>
     {{- if $page.Params.version -}}
     <span class="post-version">{{- $page.Params.version -}}</span>
     {{- end -}}
   </div>
 
-  {{ partial "cover.html" $page }}
+  {{ partial "cover.html" . }}
 
   <div class="post-stats">
-    {{ if gt (int $page.Params.critical_findings) 0 }}
+    {{ if gt (int .Params.critical_findings) 0 }}
     <span class="stat-item risk-critical">
       <i class="fas fa-skull"></i>
-      {{ $page.Params.critical_findings }} Critical
+      {{ .Params.critical_findings }} Critical
     </span>
     {{ end }}
-    {{ if gt (int $page.Params.high_findings) 0 }}
+    {{ if gt (int .Params.high_findings) 0 }}
     <span class="stat-item risk-high">
       <i class="fas fa-exclamation-triangle"></i>
-      {{ $page.Params.high_findings }} High
+      {{ .Params.high_findings }} High
     </span>
     {{ end }}
-    {{ if gt (int $page.Params.medium_findings) 0 }}
+    {{ if gt (int .Params.medium_findings) 0 }}
     <span class="stat-item risk-medium">
       <i class="fas fa-exclamation-circle"></i>
-      {{ $page.Params.medium_findings }} Medium
+      {{ .Params.medium_findings }} Medium
     </span>
     {{ end }}
-    {{ if gt (int $page.Params.low_findings) 0 }}
+    {{ if gt (int .Params.low_findings) 0 }}
     <span class="stat-item risk-low">
       <i class="fas fa-info-circle"></i>
-      {{ $page.Params.low_findings }} Low
+      {{ .Params.low_findings }} Low
     </span>
     {{ end }}
 
-    <span class="stat-item"><i class="fa-solid fa-robot"></i> {{ default "0" $page.Params.service_accounts }}</span>
-    <span class="stat-item"><i class="fa-solid fa-cube"></i> {{ default "0" $page.Params.workloads }}</span>
-    <span class="stat-item"><i class="fa-solid fa-link"></i> {{ default "0" $page.Params.bindings }}</span>
+    <span class="stat-item"><i class="fa-solid fa-robot"></i> {{ default "0" .Params.service_accounts }}</span>
+    <span class="stat-item"><i class="fa-solid fa-cube"></i> {{ default "0" .Params.workloads }}</span>
+    <span class="stat-item"><i class="fa-solid fa-link"></i> {{ default "0" .Params.bindings }}</span>
   </div>
 
-  {{ if $page.Params.tags }}
+  <div class="post-content">
+    {{ if .Params.showFullContent }}
+    {{ .Content }}
+    {{ else if .Description }}
+    <p>{{ .Description | markdownify }}</p>
+  {{ else }}
+    {{ .Summary }}
+    {{ end }}
+  </div>
+
+  {{ if .Params.tags }}
   <span class="post-tags">
-    {{ $tags := $page.Params.tags }}
+    {{ $tags := .Params.tags }}
     {{ $tagCount := len $tags }}
     {{ range first 3 $tags }}
     #<a href="{{ (urlize (printf "tags/%s/" . )) | absLangURL }}">{{- . -}}</a>&nbsp;
@@ -93,9 +102,9 @@
   </span>
   {{ end }}
 
-  {{ if not $page.Params.showFullContent }}
+  {{ if not .Params.showFullContent }}
   <div>
-    <a class="read-more button" href="{{ $page.RelPermalink }}">[{{ $.Site.Params.ReadMore }}]</a>
+    <a class="read-more button inline" href="{{ .RelPermalink }}">{{ $.Site.Params.ReadMore }} ›</a>
   </div>
   {{ end }}
 </article>

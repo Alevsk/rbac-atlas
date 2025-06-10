@@ -237,7 +237,7 @@ def build_markdown(data: Dict[str, Any]) -> str:
 
             if all_risk_rules:
                 out += h(4, f"⚠️ Potential Abuse ({len(all_risk_rules)})").rstrip() + "\n"
-                out += "The following security risks were detected based on the above permissions:\n\n"
+                out += "The following security risks were found based on the above permissions:\n\n"
                 for rule_id in sorted(all_risk_rules):
                     if rule_id in rules_dict:
                         rule = rules_dict[rule_id]
