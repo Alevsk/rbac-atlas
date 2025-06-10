@@ -1,0 +1,49 @@
+{{ define "main" }}
+<article class="post">
+  <h1 class="post-title">Security Rules</h1>
+  <p class="page-description">
+    A comprehensive list of security rules for Kubernetes RBAC configurations. Each rule identifies potential security risks.
+  </p>
+
+  <table class="rules-table">
+    <thead>
+      <tr>
+        <th>Rule ID</th>
+        <th>Category</th>
+        <th>Name</th>
+        <th>Risk Level</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{ $pages := where .Site.RegularPages "Section" "rules" }}
+      {{ $sortedPages := sort $pages "Params.id" }}
+      {{ range $sortedPages }}
+      <tr>
+        <td>
+          <a href="{{ .RelPermalink }}">{{ .Params.id }}</a>
+        </td>
+        <td>{{ .Params.category }}</td>
+        <td>{{ .Title }}</td>
+        <td>
+          {{ with .Params.risk_level }}
+          {{ $level := replace . "RiskLevel" "" }}
+          <span class="risk-{{ lower $level }}">
+            {{ if eq $level "Critical" }}
+            <i class="fas fa-skull"></i>
+            {{ else if eq $level "High" }}
+            <i class="fas fa-exclamation-triangle"></i>
+            {{ else if eq $level "Medium" }}
+            <i class="fas fa-exclamation-circle"></i>
+          {{ else }}
+            <i class="fas fa-info-circle"></i>
+            {{ end }}
+            {{ $level }}
+          </span>
+          {{ end }}
+        </td>
+      </tr>
+      {{ end }}
+    </tbody>
+  </table>
+</article>
+{{ end }}

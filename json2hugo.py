@@ -321,6 +321,7 @@ def parse_rules_yaml(yaml_path: str) -> Dict[int, Dict[str, Any]]:
         # Generate markdown files for each rule
         for rule_id, rule in rules_dict.items():
             content = f"---\n"
+            content += f"id: {rule['id']}\n"
             content += f"title: \"{rule['name']}\"\n"
             content += f"description: \"{rule['description']}\"\n"
             content += f"category: {rule['category']}\n"
