@@ -304,9 +304,10 @@ def parse_rules_yaml(yaml_path: str) -> Dict[int, Dict[str, Any]]:
             content += f"description: \"{rule['description']}\"\n"
             content += f"category: {rule['category']}\n"
             content += f"risk_level: {rule['risk_level']}\n"
-            content += f"date: {datetime.now().strftime('%Y-%m-%d')}\n"
+            content += f"date: \"\"\n"
             content += "---\n\n"
 
+            content += "## Overview\n\n"
             # Add rule information in a table format
             content += "| Field | Value |\n"
             content += "|-------|-------|\n"

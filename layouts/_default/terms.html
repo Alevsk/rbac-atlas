@@ -7,17 +7,17 @@
   <div class="tags-list">
     {{ $type := .Type }}
     {{ range $key, $value := .Data.Terms.ByCount }}
-      {{ $name := .Name }}
-      {{ $uniqueCharts := slice }}
-      {{ range .Pages }}
-        {{ $path := .File.Path }}
-        {{ $chartName := index (split $path "/") 1 }}
-        {{ if and (not (in $uniqueCharts $chartName)) (ne $chartName "") }}
-          {{ $uniqueCharts = $uniqueCharts | append $chartName }}
-        {{ end }}
-      {{ end }}
-      {{ with $.Site.GetPage (printf "/%s/%s" $type $name) }}
-      <a class="terms-title" href="{{ .Permalink }}">{{ .Name }} [{{ len $uniqueCharts }}]</a>
+    {{ $name := .Name }}
+    {{ $uniqueCharts := slice }}
+    {{ range .Pages }}
+    {{ $path := .File.Path }}
+    {{ $chartName := index (split $path "/") 1 }}
+    {{ if and (not (in $uniqueCharts $chartName)) (ne $chartName "") }}
+    {{ $uniqueCharts = $uniqueCharts | append $chartName }}
+    {{ end }}
+    {{ end }}
+    {{ with $.Site.GetPage (printf "/%s/%s" $type $name) }}
+    <a class="terms-title" href="{{ .Permalink }}">{{ .Name }} [{{ len $uniqueCharts }}]</a>
     {{ end }} {{ end }}
   </div>
 </div>

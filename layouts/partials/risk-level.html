@@ -1,0 +1,13 @@
+{{ $level := lower (replace . "RiskLevel" "") }}
+<div class="stat-item risk-{{ $level }}">
+  {{ if eq $level "critical" }}
+    <i class="fas fa-skull"></i>
+  {{ else if eq $level "high" }}
+    <i class="fas fa-exclamation-triangle"></i>
+  {{ else if eq $level "medium" }}
+    <i class="fas fa-exclamation-circle"></i>
+  {{ else }}
+    <i class="fas fa-info-circle"></i>
+  {{ end }}
+  {{ title $level }}
+</div>
