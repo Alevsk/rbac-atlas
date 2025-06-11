@@ -1,0 +1,44 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches:
+      - master  # Using master branch as per your setup
+  workflow_dispatch:
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout source repo
+        uses: actions/checkout@v4
+
+      - name: Setup Hugo
+        uses: peaceiris/actions-hugo@v2
+        with:
+          hugo-version: 'latest'
+          extended: true
+
+      - name: Install dependencies
+        run: make install-deps
+
+      - name: Build site
+        run: make build-prod
+
+      - name: Checkout target repo
+        uses: actions/checkout@v4
+        with:
+          repository: rbac-atlas/rbac-atlas.github.io
+          token: ${{ secrets.DEPLOY_TOKEN }}  # You'll need to set this up
+          path: target-repo
+
+      - name: Copy and commit
+        run: |
+          rm -rf target-repo/*  # Clean the target repo
+          cp -r public/* target-repo/  # Copy new content
+          cd target-repo
+          git config user.name "GitHub Actions"
+          git config user.email "actions@github.com"
+          git add .
+          git commit -m "Deploy site from alevsk/rbac-atlas@${{ github.sha }}" || echo "No changes to commit"
+          git push
