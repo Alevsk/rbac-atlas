@@ -257,7 +257,7 @@ def build_markdown(data: Dict[str, Any], rules_data: Dict[int, Dict[str, Any]]) 
 
         # Identity header
         header_parts = [
-            f"### 🤖 `{sa_name or '—'}` {{#{anchor}}}",
+            f"### 🤖 `{sa_name or '—'}` {{#{anchor}}}\n",
             f"**Namespace:** `{sa['namespace']}`  |  "
             f"**Automount:** {'✅' if sa['automountToken'] else '❌'}"
         ]
