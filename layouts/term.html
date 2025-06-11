@@ -35,24 +35,22 @@
       {{ $groupedPages = $groupedPages | append $latestPage }}
     {{ end }}
 
-    {{ $paginator := .Paginate $groupedPages }}
+    <div id="projects-list">
+      {{ $paginator := .Paginate $groupedPages }}
 
     {{ range $paginator.Pages }}
       {{ $page := . }}
       <article class="post on-list">
-        <h2 class="post-title">
-          <a href="{{ $page.Permalink }}">{{ $page.Title | markdownify }}</a>
-        </h2>
-
-        <div class="post-meta">
+        <div class="title-card-wrapper">
+          <h2>
+            <a href="{{ $page.Permalink }}">{{ $page.Title | markdownify }}</a>
+          </h2>
           {{- if $page.Params.version -}}
             <span class="post-version">
               {{- $page.Params.version -}}
             </span>
           {{- end -}}
         </div>
-
-
 
         {{ partial "cover.html" . }}
 
@@ -99,7 +97,13 @@
 
         {{ if .Params.tags }}
         <span class="post-tags">
-          {{ $tags := .Params.tags }}
+          {{ $filteredTags := slice }}
+          {{ range .Params.tags }}
+            {{ if not (hasPrefix . "letter-") }}
+              {{ $filteredTags = $filteredTags | append . }}
+            {{ end }}
+          {{ end }}
+          {{ $tags := $filteredTags }}
           {{ $tagCount := len $tags }}
           {{ range first 3 $tags }}
           #<a href="{{ (urlize (printf "tags/%s/" . )) | absLangURL }}">
@@ -114,7 +118,7 @@
 
         {{ if not .Params.showFullContent }}
           <div>
-            <a class="read-more button inline" href="{{ .RelPermalink }}">[{{ $.Site.Params.ReadMore }}]</a>
+            <a class="read-more button inline" href="{{ .RelPermalink }}">{{ $.Site.Params.ReadMore }} ›</a>
           </div>
         {{ end }}
       </article>
