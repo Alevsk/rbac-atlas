@@ -67,6 +67,6 @@ get-manifests:
 
 json2markdown:
 	@echo "Generating pages..."
-	python json2hugo.py -f manifests/ -o content/charts/
+	python json2hugo.py -f manifests/ -o content/
 
 generate-pages: json2markdown fmt lint
