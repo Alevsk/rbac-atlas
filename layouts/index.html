@@ -16,9 +16,11 @@
   <div class="tags-list">
     <p>
     {{ range $taxonomy := first 10 .Site.Taxonomies.tags.ByCount }}
+      {{ if not (hasPrefix $taxonomy.Name "letter-") }}
       <a href="{{ "/tags/" | relLangURL }}{{ $taxonomy.Name | urlize }}">
         {{ $taxonomy.Name }}
       </a>
+      {{ end }}
     {{ end }}
     <a class="see-all" href="{{ "/tags/" | relLangURL }}">See All →</a>
     </p>
@@ -133,7 +135,13 @@
 
         {{ if .Params.tags }}
         <span class="post-tags">
-          {{ $tags := .Params.tags }}
+          {{ $filteredTags := slice }}
+          {{ range .Params.tags }}
+            {{ if not (hasPrefix . "letter-") }}
+              {{ $filteredTags = $filteredTags | append . }}
+            {{ end }}
+          {{ end }}
+          {{ $tags := $filteredTags }}
           {{ $tagCount := len $tags }}
           {{ range first 3 $tags }}
           #<a href="{{ (urlize (printf "tags/%s/" . )) | absLangURL }}">
