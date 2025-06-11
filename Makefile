@@ -1,7 +1,7 @@
 .PHONY: build docker fmt lint test cover clean install-deps serve
 
 # Variables
-DOCKER_IMAGE := alevsk/rbac-atlas
+DOCKER_IMAGE := rbac-atlas
 DOCKER_TAG := latest
 HUGO_PORT := 1313
 
@@ -13,11 +13,14 @@ install-deps:
 
 prebuild:
 	@echo "Building site..."
-	hugo --minify
+	hugo --minify $(HUGO_ARGS)
 	@echo "Building Pagefind index..."
 	python3 -m pagefind --site public
 
 build: prebuild fmt lint
+
+build-prod:
+	$(MAKE) build HUGO_ARGS="--config config.toml,config.production.toml"
 
 docker:
 	@echo "Building Docker image..."
