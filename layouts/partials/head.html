@@ -84,5 +84,29 @@ $styles := $customCSS | minify | fingerprint }}
         cell.setAttribute('data-label', headers[headerIndex]);
       });
     });
+
+    // Add copy buttons to code blocks
+    document.querySelectorAll('.highlight').forEach((codeBlock) => {
+      const copyButton = document.createElement('button');
+      copyButton.className = 'copy-button';
+      copyButton.setAttribute('aria-label', 'Copy code to clipboard');
+      
+      codeBlock.appendChild(copyButton);
+
+      copyButton.addEventListener('click', async () => {
+        const code = codeBlock.querySelector('pre').textContent;
+        
+        try {
+          await navigator.clipboard.writeText(code);
+          copyButton.classList.add('copied');
+          
+          setTimeout(() => {
+            copyButton.classList.remove('copied');
+          }, 2000);
+        } catch (err) {
+          console.error('Failed to copy code:', err);
+        }
+      });
+    });
   });
 </script>
