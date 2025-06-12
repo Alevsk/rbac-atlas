@@ -461,8 +461,9 @@ def generate_rule_markdown_files(rules_data: Dict[int, Dict[str, Any]], output_d
                 if 'description' in cmd:
                     content += f"{i}. {cmd['description']}\n\n"
                 if 'command' in cmd:
-                    # Use Hugo's built-in copy button functionality with ```bash {copy=true}
-                    content += f"```bash {{copy=true}}\n{cmd['command']}\n```\n\n"
+                    content += '```bash\n'
+                    content += f"{cmd['command']}\n"
+                    content += '```\n\n'
 
         # Write the markdown file for the rule
         rule_file_path = os.path.join(rules_dir, f"{rule_id}.md")
