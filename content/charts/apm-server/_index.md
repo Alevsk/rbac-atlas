@@ -1,6 +1,6 @@
 ---
-title: apm-server
-description: Official Elastic helm chart for Elastic APM Server
+title: "apm-server"
+description: "Official Elastic helm chart for Elastic APM Server"
 ---
 
 ## apm-server

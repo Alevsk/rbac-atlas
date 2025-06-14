@@ -1,6 +1,6 @@
 ---
-title: elasticsearch
-description: Official Elastic helm chart for Elasticsearch
+title: "elasticsearch"
+description: "Official Elastic helm chart for Elasticsearch"
 ---
 
 ## elasticsearch

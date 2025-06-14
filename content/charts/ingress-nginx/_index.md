@@ -1,6 +1,6 @@
 ---
-title: ingress-nginx
-description: Ingress controller for Kubernetes using NGINX as a reverse proxy and load balancer
+title: "ingress-nginx"
+description: "Ingress controller for Kubernetes using NGINX as a reverse proxy and load balancer"
 ---
 
 ## ingress-nginx

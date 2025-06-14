@@ -1,6 +1,6 @@
 ---
-title: vault
-description: Official HashiCorp Vault Chart
+title: "vault"
+description: "Official HashiCorp Vault Chart"
 ---
 
 ## vault

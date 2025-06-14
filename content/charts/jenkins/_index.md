@@ -1,6 +1,6 @@
 ---
-title: jenkins
-description: Jenkins - Build great things at any scale! As the leading open source automation server, Jenkins provides over 2000 plugins to support building, deploying and automating any project.
+title: "jenkins"
+description: "Jenkins - Build great things at any scale! As the leading open source automation server, Jenkins provides over 2000 plugins to support building, deploying and automating any project. "
 ---
 
 ## jenkins

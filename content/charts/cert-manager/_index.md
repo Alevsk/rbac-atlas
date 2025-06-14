@@ -1,6 +1,6 @@
 ---
-title: cert-manager
-description: A Helm chart for cert-manager
+title: "cert-manager"
+description: "A Helm chart for cert-manager"
 ---
 
 ## cert-manager

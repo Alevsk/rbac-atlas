@@ -1,6 +1,6 @@
 ---
-title: harbor
-description: An open source trusted cloud native registry that stores, signs, and scans content
+title: "harbor"
+description: "An open source trusted cloud native registry that stores, signs, and scans content"
 ---
 
 ## harbor

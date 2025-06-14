@@ -1,6 +1,6 @@
 ---
-title: kyverno
-description: Kubernetes Native Policy Management
+title: "kyverno"
+description: "Kubernetes Native Policy Management"
 ---
 
 ## kyverno

@@ -1,6 +1,6 @@
 ---
-title: cilium
-description: eBPF-based Networking, Security, and Observability
+title: "cilium"
+description: "eBPF-based Networking, Security, and Observability"
 ---
 
 ## cilium

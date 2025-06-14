@@ -1,6 +1,6 @@
 ---
-title: keda
-description: Event-based autoscaler for workloads on Kubernetes
+title: "keda"
+description: "Event-based autoscaler for workloads on Kubernetes"
 ---
 
 ## keda

@@ -193,6 +193,18 @@ def _pull_single_chart(repo_name: str, chart_config: Dict[str, Any], output_base
             if os.path.exists(final_chart_path):
                 logger.info(f"⚠️ Chart '{full_chart_ref}' (detected version '{target_version}') already exists at '{final_chart_path}'. Removing newly pulled temporary chart and skipping.")
                 shutil.rmtree(temp_chart_dir) # Clean up the newly pulled temp folder
+                # Copy the custom values file to the final chart path if it doesn't exist
+                custom_values_path = chart_config.get("values")
+                if custom_values_path and os.path.exists(custom_values_path) and final_chart_path:
+                    target_values_path = os.path.join(final_chart_path, "custom-values.yaml")
+                    if not os.path.exists(target_values_path):
+                        try:
+                            shutil.copy2(custom_values_path, target_values_path)
+                            logger.info(f"Copied custom values from '{custom_values_path}' to '{target_values_path}'")
+                        except Exception as e:
+                            logger.error(f"❌ Failed to copy custom values file: {e}")
+                    else:
+                        logger.info(f"Custom values file already exists at '{target_values_path}', skipping copy")
                 return
 
         # Rename the temporary untarred folder to its final, versioned name
@@ -200,6 +212,16 @@ def _pull_single_chart(repo_name: str, chart_config: Dict[str, Any], output_base
             logger.info(f"Renaming '{temp_chart_dir}' to '{final_chart_path}'.")
             os.rename(temp_chart_dir, final_chart_path)
             logger.info(f"📦 Saved chart '{full_chart_ref}' version '{target_version}' to '{final_chart_path}'.")
+
+            # If a custom values file path is defined in the chart config, copy it to the final chart path
+            custom_values_path = chart_config.get("values")
+            if custom_values_path and os.path.exists(custom_values_path) and final_chart_path:
+                target_values_path = os.path.join(final_chart_path, "custom-values.yaml")
+                try:
+                    shutil.copy2(custom_values_path, target_values_path)
+                    logger.info(f"Copied custom values from '{custom_values_path}' to '{target_values_path}'")
+                except Exception as e:
+                    logger.error(f"❌ Failed to copy custom values file: {e}")
         else:
             logger.error(f"❌ Expected temporary chart directory '{temp_chart_dir}' not found after pull for '{full_chart_ref}'. This indicates an issue with the Helm pull or file system.")
 

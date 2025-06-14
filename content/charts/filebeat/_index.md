@@ -1,6 +1,6 @@
 ---
-title: filebeat
-description: Official Elastic helm chart for Filebeat
+title: "filebeat"
+description: "Official Elastic helm chart for Filebeat"
 ---
 
 ## filebeat

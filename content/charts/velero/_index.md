@@ -1,6 +1,6 @@
 ---
-title: velero
-description: A Helm chart for velero
+title: "velero"
+description: "A Helm chart for velero"
 ---
 
 ## velero

@@ -1,6 +1,6 @@
 ---
-title: trivy-operator
-description: Keeps security report resources updated
+title: "trivy-operator"
+description: "Keeps security report resources updated"
 ---
 
 ## trivy-operator

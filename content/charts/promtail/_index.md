@@ -1,6 +1,6 @@
 ---
-title: promtail
-description: Promtail is an agent which ships the contents of local logs to a Loki instance
+title: "promtail"
+description: "Promtail is an agent which ships the contents of local logs to a Loki instance"
 ---
 
 ## promtail

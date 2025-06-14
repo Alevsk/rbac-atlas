@@ -1,6 +1,6 @@
 ---
-title: istiod
-description: Helm chart for istio control plane
+title: "istiod"
+description: "Helm chart for istio control plane"
 ---
 
 ## istiod

@@ -1,6 +1,6 @@
 ---
-title: cloudnative-pg
-description: CloudNativePG Operator Helm Chart
+title: "cloudnative-pg"
+description: "CloudNativePG Operator Helm Chart"
 ---
 
 ## cloudnative-pg

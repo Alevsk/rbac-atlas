@@ -1,6 +1,6 @@
 ---
-title: gitlab-runner
-description: GitLab Runner
+title: "gitlab-runner"
+description: "GitLab Runner"
 ---
 
 ## gitlab-runner

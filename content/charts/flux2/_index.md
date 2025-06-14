@@ -1,6 +1,6 @@
 ---
-title: flux2
-description: A Helm chart for flux2
+title: "flux2"
+description: "A Helm chart for flux2"
 ---
 
 ## flux2

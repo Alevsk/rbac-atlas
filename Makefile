@@ -64,9 +64,12 @@ get-manifests:
 		filename="$${f#charts/}" && \
 		filename="$${filename%\/}" && \
 		echo "Processing $$filename" && \
-		rbac-ops ingest "$$f" -o json > "manifests/$$filename.json"; \
+		if [ -f "$$f/custom-values.yaml" ]; then \
+			rbac-ops ingest "$$f" -f "$$f/custom-values.yaml" -o json > "manifests/$$filename.json"; \
+		else \
+			rbac-ops ingest "$$f" -o json > "manifests/$$filename.json"; \
+		fi; \
 	done
-
 
 json2markdown:
 	@echo "Generating pages..."

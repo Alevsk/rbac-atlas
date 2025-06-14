@@ -1,6 +1,6 @@
 ---
-title: rook-ceph
-description: File, Block, and Object Storage Services for your Cloud-Native Environment
+title: "rook-ceph"
+description: "File, Block, and Object Storage Services for your Cloud-Native Environment"
 ---
 
 ## rook-ceph

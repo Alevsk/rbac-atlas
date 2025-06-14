@@ -1,6 +1,6 @@
 ---
-title: grafana-operator
-description: Grafana Operator is a Kubernetes operator that enables the installation and management of Grafana instances, dashboards and plugins.
+title: "grafana-operator"
+description: "Grafana Operator is a Kubernetes operator that enables the installation and management of Grafana instances, dashboards and plugins."
 ---
 
 ## grafana-operator

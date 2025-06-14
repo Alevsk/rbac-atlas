@@ -1,6 +1,6 @@
 ---
-title: metricbeat
-description: Official Elastic helm chart for Metricbeat
+title: "metricbeat"
+description: "Official Elastic helm chart for Metricbeat"
 ---
 
 ## metricbeat

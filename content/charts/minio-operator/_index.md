@@ -1,6 +1,6 @@
 ---
-title: minio-operator
-description: A Helm chart for MinIO Operator
+title: "minio-operator"
+description: "A Helm chart for MinIO Operator"
 ---
 
 ## minio-operator

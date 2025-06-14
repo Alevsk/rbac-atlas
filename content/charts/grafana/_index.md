@@ -1,6 +1,6 @@
 ---
-title: grafana
-description: The leading tool for querying and visualizing time series and metrics.
+title: "grafana"
+description: "The leading tool for querying and visualizing time series and metrics."
 ---
 
 ## grafana

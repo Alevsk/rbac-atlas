@@ -1,6 +1,6 @@
 ---
-title: tenant
-description: A Helm chart for MinIO Operator
+title: "tenant"
+description: "A Helm chart for MinIO Operator"
 ---
 
 ## tenant

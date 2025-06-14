@@ -1,6 +1,6 @@
 ---
-title: kured
-description: A Helm chart for kured
+title: "kured"
+description: "A Helm chart for kured"
 ---
 
 ## kured

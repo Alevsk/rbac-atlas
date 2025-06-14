@@ -1,6 +1,6 @@
 ---
-title: base
-description: Helm chart for deploying Istio cluster resources and CRDs
+title: "base"
+description: "Helm chart for deploying Istio cluster resources and CRDs"
 ---
 
 ## base

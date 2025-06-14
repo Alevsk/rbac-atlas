@@ -1,6 +1,6 @@
 ---
-title: longhorn
-description: Longhorn is a distributed block storage system for Kubernetes.
+title: "longhorn"
+description: "Longhorn is a distributed block storage system for Kubernetes."
 ---
 
 ## longhorn

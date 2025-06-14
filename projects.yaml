@@ -70,6 +70,7 @@ helm_repos:
     url: http://charts.gitlab.io/
     charts:
       - name: gitlab
+        values: charts/custom-values/gitlab.yaml
       - name: gitlab-runner
 
   - name: jenkins
@@ -102,11 +103,13 @@ helm_repos:
     url: https://devops-nirvana.s3.amazonaws.com/helm-charts/
     charts:
       - name: deployment
+        values: charts/custom-values/deployment.yaml # relative to the project.yaml file
 
   - name: nvidia
     url: https://nvidia.github.io/k8s-device-plugin
     charts:
       - name: nvidia-device-plugin
+        values: charts/custom-values/nvidia-device-plugin.yml
 
   - name: elastic
     url: https://helm.elastic.co
@@ -195,6 +198,13 @@ helm_repos:
     url: https://helm.linkerd.io/stable
     charts:
       - name: linkerd2
+        values: charts/custom-values/linkerd2.yaml # relative to the project.yaml file
+
+  - name: linkerd-edge
+    url: https://helm.linkerd.io/edge
+    charts:
+      - name: linkerd-control-plane
+        values: charts/custom-values/linkerd-control-plane.yaml
 
   # OpenEBS (container storage) – official Helm chart:contentReference[oaicite:14]{index=14}
   - name: openebs

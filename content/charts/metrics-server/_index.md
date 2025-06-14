@@ -1,6 +1,6 @@
 ---
-title: metrics-server
-description: Metrics Server is a scalable, efficient source of container resource metrics for Kubernetes built-in autoscaling pipelines.
+title: "metrics-server"
+description: "Metrics Server is a scalable, efficient source of container resource metrics for Kubernetes built-in autoscaling pipelines."
 ---
 
 ## metrics-server

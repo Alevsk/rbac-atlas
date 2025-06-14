@@ -1,6 +1,6 @@
 ---
-title: gatekeeper
-description: A Helm chart for Gatekeeper
+title: "gatekeeper"
+description: "A Helm chart for Gatekeeper"
 ---
 
 ## gatekeeper

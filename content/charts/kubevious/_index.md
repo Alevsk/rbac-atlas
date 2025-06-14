@@ -1,6 +1,6 @@
 ---
-title: kubevious
-description: A Helm chart for Kubevious
+title: "kubevious"
+description: "A Helm chart for Kubevious"
 ---
 
 ## kubevious

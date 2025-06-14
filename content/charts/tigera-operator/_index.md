@@ -1,6 +1,6 @@
 ---
-title: tigera-operator
-description: Installs the Tigera operator for Calico
+title: "tigera-operator"
+description: "Installs the Tigera operator for Calico"
 ---
 
 ## tigera-operator

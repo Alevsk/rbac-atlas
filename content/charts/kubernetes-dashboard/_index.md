@@ -1,6 +1,6 @@
 ---
-title: kubernetes-dashboard
-description: General-purpose web UI for Kubernetes clusters
+title: "kubernetes-dashboard"
+description: "General-purpose web UI for Kubernetes clusters"
 ---
 
 ## kubernetes-dashboard

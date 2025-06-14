@@ -1,6 +1,6 @@
 ---
-title: kibana
-description: Official Elastic helm chart for Kibana
+title: "kibana"
+description: "Official Elastic helm chart for Kibana"
 ---
 
 ## kibana

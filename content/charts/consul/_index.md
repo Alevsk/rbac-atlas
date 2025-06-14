@@ -1,6 +1,6 @@
 ---
-title: consul
-description: Official HashiCorp Consul Chart
+title: "consul"
+description: "Official HashiCorp Consul Chart"
 ---
 
 ## consul

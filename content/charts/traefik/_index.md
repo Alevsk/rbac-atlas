@@ -1,6 +1,6 @@
 ---
-title: traefik
-description: A Traefik based Kubernetes ingress controller
+title: "traefik"
+description: "A Traefik based Kubernetes ingress controller"
 ---
 
 ## traefik

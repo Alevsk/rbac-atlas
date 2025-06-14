@@ -179,8 +179,8 @@ def build_markdown(data: Dict[str, Any], rules_data: Dict[int, Dict[str, Any]]) 
 
     front_matter_lines = [
         "---",
-        f"title: {name}",
-        f"description: {description}",
+        f"title: \"{name}\"",
+        f"description: \"{description}\"",
         f"version: {version}",
         f"version_order: {get_version_order(version)}",
         "date: \"\"", # Keep as empty string as per original
@@ -358,8 +358,8 @@ def write_markdown(markdown_content: str, meta_data: Dict[str, Any], output_dir:
 
     index_front_matter_lines = [
         "---",
-        f"title: {meta_data['name']}",
-        f"description: {index_description}",
+        f"title: \"{meta_data['name']}\"",
+        f"description: \"{index_description}\"",
         "---",
         "" # For the extra newline
     ]
