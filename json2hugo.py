@@ -538,6 +538,8 @@ def main() -> None:
         ap.error(f"No JSON files found in '{args.folder}'.")
 
     for json_file_name in json_files:
+        if json_file_name == "custom-values.json":
+            continue # Skip custom values
         full_path = os.path.join(args.folder, json_file_name)
         process_json_file(full_path, args.output_dir, rules_data)
 
