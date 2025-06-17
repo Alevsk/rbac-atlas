@@ -132,9 +132,47 @@ def _update_helm_repos() -> None:
     except Exception as e:
         logger.error(f"❌ An unexpected error occurred during repo update: {e}")
 
+def _get_latest_chart_version(repo_name: str, chart_name: str) -> str:
+    """
+    Gets the latest version of a chart from the Helm repository.
+
+    Args:
+        repo_name: The name of the Helm repository.
+        chart_name: The name of the chart.
+
+    Returns:
+        The latest version string of the chart.
+
+    Raises:
+        ValueError: If the version cannot be determined.
+    """
+    try:
+        # Use helm search repo with --versions to get all versions
+        full_chart_ref = f"{repo_name}/{chart_name}"
+        search_output = _run_helm_command(
+            ["helm", "search", "repo", full_chart_ref, "--output", "yaml"],
+            capture_output=True
+        )
+        if not search_output:
+            raise ValueError(f"No versions found for chart {full_chart_ref}")
+
+        search_results = yaml.safe_load(search_output)
+        if not search_results or not isinstance(search_results, list) or len(search_results) == 0:
+            raise ValueError(f"Invalid search results for chart {full_chart_ref}")
+
+        # The first result should be the latest version
+        latest_version = search_results[0].get('version')
+        if not latest_version:
+            raise ValueError(f"Version not found in search results for {full_chart_ref}")
+
+        return latest_version
+    except Exception as e:
+        raise ValueError(f"Failed to get latest version for {repo_name}/{chart_name}: {e}")
+
 def _pull_single_chart(repo_name: str, chart_config: Dict[str, Any], output_base_dir: str) -> None:
     """
     Pulls a single Helm chart, untars it, and renames the resulting folder.
+    First checks if the desired version is already downloaded.
     Handles cases where the target folder already exists.
 
     Args:
@@ -150,21 +188,21 @@ def _pull_single_chart(repo_name: str, chart_config: Dict[str, Any], output_base
     version_specified = chart_config.get("version")
     full_chart_ref = f"{repo_name}/{chart_name}"
 
-    # The temporary directory where helm untars the chart (e.g., 'mychart' in 'charts/')
-    temp_chart_dir = os.path.join(output_base_dir, chart_name)
+    # Determine target version - either specified or latest
+    try:
+        if version_specified:
+            target_version = version_specified
+        else:
+            target_version = _get_latest_chart_version(repo_name, chart_name)
+            logger.info(f"Latest version for '{full_chart_ref}' is '{target_version}'")
+    except ValueError as e:
+        logger.error(f"❌ {str(e)}")
+        return
 
-    target_version: Optional[str] = None # The version we aim to save
-    output_folder_name: Optional[str] = None # The final name for the chart directory (e.g., 'mychart-1.2.3')
-
-    # If a version is specified in the config, use it directly for the target name
-    if version_specified:
-        target_version = version_specified
-        output_folder_name = f"{chart_name}-{target_version}"
-    # If no version is specified, we'll pull the latest and detect its version later
-    # The output_folder_name will be determined after pulling
-
-    # Construct the full path for the final chart directory
-    final_chart_path = os.path.join(output_base_dir, output_folder_name) if output_folder_name else None
+    # Set up paths for temporary and final locations
+    temp_chart_dir = os.path.join(output_base_dir, chart_name)  # Temporary location where helm untars
+    output_folder_name = f"{chart_name}-{target_version}"  # Final versioned name
+    final_chart_path = os.path.join(output_base_dir, output_folder_name)
 
     # Check if the final target folder already exists before attempting to pull
     if final_chart_path and os.path.exists(final_chart_path):
@@ -180,12 +218,11 @@ def _pull_single_chart(repo_name: str, chart_config: Dict[str, Any], output_base
         _run_helm_command(pull_cmd)
         logger.info(f"Successfully pulled '{full_chart_ref}' to temporary location '{temp_chart_dir}'.")
 
-        # If version was not specified in config, detect it now from the pulled chart
-        if not version_specified:
-            detected_version = _get_chart_version_from_folder(temp_chart_dir)
-            target_version = detected_version # Update target_version with the detected one
-            output_folder_name = f"{chart_name}-{target_version}"
-            final_chart_path = os.path.join(output_base_dir, output_folder_name)
+        # We already know the version, no need to detect it again
+        # Just verify the version matches what we expect
+        detected_version = _get_chart_version_from_folder(temp_chart_dir)
+        if detected_version != target_version:
+            logger.warning(f"⚠️ Pulled chart version '{detected_version}' does not match expected version '{target_version}'")
 
             # After detecting the version, re-check if the *final* target folder already exists.
             # This handles the case where 'latest' was pulled, but that specific version
