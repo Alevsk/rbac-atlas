@@ -4,6 +4,7 @@ import yaml
 import shutil
 import logging
 import argparse
+import time
 from typing import List, Dict, Any, Optional
 
 # --- Configuration Constants ---
@@ -86,10 +87,17 @@ def _get_chart_version_from_folder(chart_folder_path: str) -> str:
     """
     logger.debug(f"Attempting to get chart version from: {chart_folder_path}")
     try:
-        chart_yaml_output = _run_helm_command(
-            ["helm", "show", "chart", chart_folder_path],
-            capture_output=True
-        )
+        # Check if Chart.yaml exists directly and read it
+        chart_yaml_path = os.path.join(chart_folder_path, 'Chart.yaml')
+        if os.path.exists(chart_yaml_path):
+            with open(chart_yaml_path, 'r') as f:
+                chart_yaml_output = f.read()
+        else:
+            # Fallback to helm show chart if Chart.yaml doesn't exist
+            chart_yaml_output = _run_helm_command(
+                ["helm", "show", "chart", chart_folder_path],
+                capture_output=True
+            )
         if not chart_yaml_output:
             raise ValueError(f"Helm show chart returned empty output for {chart_folder_path}")
 
@@ -199,15 +207,29 @@ def _pull_single_chart(repo_name: str, chart_config: Dict[str, Any], output_base
         logger.error(f"❌ {str(e)}")
         return
 
-    # Set up paths for temporary and final locations
-    temp_chart_dir = os.path.join(output_base_dir, chart_name)  # Temporary location where helm untars
-    output_folder_name = f"{chart_name}-{target_version}"  # Final versioned name
+    # Set up paths with repository prefix
+    sanitized_repo_name = repo_name.replace('/', '_').replace('-', '_')  # Sanitize repo name for file system
+    output_folder_name = f"{sanitized_repo_name}_{chart_name}-{target_version}"  # Final versioned name with repo prefix
     final_chart_path = os.path.join(output_base_dir, output_folder_name)
+    helm_extracted_dir = os.path.join(output_base_dir, chart_name)  # Where Helm will initially extract
 
-    # Check if the final target folder already exists before attempting to pull
-    if final_chart_path and os.path.exists(final_chart_path):
-        logger.info(f"⚠️ Chart '{full_chart_ref}' version '{target_version or 'latest'}' already exists at '{final_chart_path}'. Skipping.")
+    # Check if the final target folder already exists
+    if os.path.exists(final_chart_path):
+        logger.info(f"⚠️ Chart '{full_chart_ref}' version '{target_version}' already exists at '{final_chart_path}'. Skipping.")
+        # Copy custom values file if specified
+        custom_values_path = chart_config.get("values")
+        if custom_values_path and os.path.exists(custom_values_path):
+            target_values_path = os.path.join(final_chart_path, "custom-values.yaml")
+            try:
+                shutil.copy2(custom_values_path, target_values_path)
+                logger.info(f"Copied custom values from '{custom_values_path}' to '{target_values_path}'")
+            except Exception as e:
+                logger.error(f"❌ Failed to copy custom values file: {e}")
         return
+
+    # Clean up any existing extracted directory to avoid helm pull errors
+    if os.path.exists(helm_extracted_dir):
+        shutil.rmtree(helm_extracted_dir)
 
     # Construct the helm pull command
     pull_cmd = ["helm", "pull", full_chart_ref, "--untar", "--destination", output_base_dir]
@@ -216,73 +238,42 @@ def _pull_single_chart(repo_name: str, chart_config: Dict[str, Any], output_base
 
     try:
         _run_helm_command(pull_cmd)
-        logger.info(f"Successfully pulled '{full_chart_ref}' to temporary location '{temp_chart_dir}'.")
+        logger.info(f"Successfully pulled '{full_chart_ref}' to temporary location '{helm_extracted_dir}'.")
 
-        # We already know the version, no need to detect it again
-        # Just verify the version matches what we expect
-        detected_version = _get_chart_version_from_folder(temp_chart_dir)
-        if detected_version != target_version:
-            logger.warning(f"⚠️ Pulled chart version '{detected_version}' does not match expected version '{target_version}'")
+        # Verify the chart was extracted correctly
+        chart_yaml_path = os.path.join(helm_extracted_dir, 'Chart.yaml')
+        if not os.path.exists(chart_yaml_path):
+            raise ValueError(f"Chart.yaml not found at {helm_extracted_dir}")
 
-            # After detecting the version, re-check if the *final* target folder already exists.
-            # This handles the case where 'latest' was pulled, but that specific version
-            # was already present from a previous run.
-            if os.path.exists(final_chart_path):
-                logger.info(f"⚠️ Chart '{full_chart_ref}' (detected version '{target_version}') already exists at '{final_chart_path}'. Removing newly pulled temporary chart and skipping.")
-                shutil.rmtree(temp_chart_dir) # Clean up the newly pulled temp folder
-                # Copy the custom values file to the final chart path if it doesn't exist
-                custom_values_path = chart_config.get("values")
-                if custom_values_path and os.path.exists(custom_values_path) and final_chart_path:
-                    target_values_path = os.path.join(final_chart_path, "custom-values.yaml")
-                    if not os.path.exists(target_values_path):
-                        try:
-                            shutil.copy2(custom_values_path, target_values_path)
-                            logger.info(f"Copied custom values from '{custom_values_path}' to '{target_values_path}'")
-                        except Exception as e:
-                            logger.error(f"❌ Failed to copy custom values file: {e}")
-                    else:
-                        logger.info(f"Custom values file already exists at '{target_values_path}', skipping copy")
-                return
+        # Rename the extracted directory to include the repo prefix
+        os.rename(helm_extracted_dir, final_chart_path)
+        logger.info(f"📦 Saved chart '{full_chart_ref}' version '{target_version}' to '{final_chart_path}'.")
 
-        # Rename the temporary untarred folder to its final, versioned name
-        if os.path.exists(temp_chart_dir): # Ensure temp_chart_dir exists before renaming
-            logger.info(f"Renaming '{temp_chart_dir}' to '{final_chart_path}'.")
-            os.rename(temp_chart_dir, final_chart_path)
-            logger.info(f"📦 Saved chart '{full_chart_ref}' version '{target_version}' to '{final_chart_path}'.")
+        # Copy custom values file if specified
+        custom_values_path = chart_config.get("values")
+        if custom_values_path and os.path.exists(custom_values_path):
+            target_values_path = os.path.join(final_chart_path, "custom-values.yaml")
+            try:
+                shutil.copy2(custom_values_path, target_values_path)
+                logger.info(f"Copied custom values from '{custom_values_path}' to '{target_values_path}'")
+            except Exception as e:
+                logger.error(f"❌ Failed to copy custom values file: {e}")
 
-            # If a custom values file path is defined in the chart config, copy it to the final chart path
-            custom_values_path = chart_config.get("values")
-            if custom_values_path and os.path.exists(custom_values_path) and final_chart_path:
-                target_values_path = os.path.join(final_chart_path, "custom-values.yaml")
-                try:
-                    shutil.copy2(custom_values_path, target_values_path)
-                    logger.info(f"Copied custom values from '{custom_values_path}' to '{target_values_path}'")
-                except Exception as e:
-                    logger.error(f"❌ Failed to copy custom values file: {e}")
-        else:
-            logger.error(f"❌ Expected temporary chart directory '{temp_chart_dir}' not found after pull for '{full_chart_ref}'. This indicates an issue with the Helm pull or file system.")
+
 
     except subprocess.CalledProcessError:
         logger.error(f"❌ Failed to pull chart '{full_chart_ref}' (version: {version_specified or 'latest'}). See previous logs for details.")
-        # Clean up temp_chart_dir if it was created but something went wrong
-        if os.path.exists(temp_chart_dir):
-            shutil.rmtree(temp_chart_dir)
-            logger.debug(f"Cleaned up partial pull: {temp_chart_dir}")
     except ValueError as e:
         logger.error(f"❌ Error processing chart '{full_chart_ref}': {e}")
-        if os.path.exists(temp_chart_dir):
-            shutil.rmtree(temp_chart_dir)
-            logger.debug(f"Cleaned up partial pull: {temp_chart_dir}")
     except OSError as e:
         logger.error(f"❌ File system error while processing chart '{full_chart_ref}': {e}")
-        if os.path.exists(temp_chart_dir):
-            shutil.rmtree(temp_chart_dir)
-            logger.debug(f"Cleaned up partial pull: {temp_chart_dir}")
     except Exception as e:
         logger.error(f"❌ An unexpected error occurred while pulling chart '{full_chart_ref}': {e}")
-        if os.path.exists(temp_chart_dir):
-            shutil.rmtree(temp_chart_dir)
-            logger.debug(f"Cleaned up partial pull: {temp_chart_dir}")
+    finally:
+        # Clean up extracted directory if it exists after any error
+        if os.path.exists(helm_extracted_dir):
+            shutil.rmtree(helm_extracted_dir)
+            logger.debug(f"Cleaned up partial pull: {helm_extracted_dir}")
 
 
 def main():
