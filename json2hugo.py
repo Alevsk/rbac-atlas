@@ -211,6 +211,24 @@ def build_markdown(data: Dict[str, Any], rules_data: Dict[int, Dict[str, Any]]) 
     # ── Overview Table Section ──
     out += h(2, "Overview")
     overview_rows = []
+
+    # Handle orphaned bindings if there are permissions but no service accounts
+    orphaned_bindings = [p for p in perms if not any(sa.get("serviceAccountName") == p["serviceAccountName"] for sa in sa_data)]
+    if orphaned_bindings and not sa_data:
+        highest_risk_val = min((RISK_ORDER.get(p["riskLevel"], DEFAULT_RISK_SORT_VALUE) for p in orphaned_bindings))
+        risk_display = RISK_DISPLAY_MAP[highest_risk_val]
+        risk_cell = f'{{{{< risk "{risk_display}" >}}}}' if risk_display != "—" else "—"
+
+        overview_rows.append([
+            "`(orphaned-bindings)`",
+            "—",  # namespace
+            "—",  # automount
+            "—",  # secrets
+            str(len(orphaned_bindings)),  # permissions count
+            "0",  # workloads count
+            risk_cell
+        ])
+
     for sa in sa_data:
         sa_name = sa["serviceAccountName"]
         anchor  = slug(sa_name)
@@ -240,6 +258,51 @@ def build_markdown(data: Dict[str, Any], rules_data: Dict[int, Dict[str, Any]]) 
 
     # ── Per-identity Sections ──
     out += h(2, "Identities")
+
+    # Handle orphaned bindings section if there are permissions but no service accounts
+    orphaned_bindings = [p for p in perms if not any(sa.get("serviceAccountName") == p["serviceAccountName"] for sa in sa_data)]
+    if orphaned_bindings and not sa_data:
+        out += "### ⚠️ `(orphaned-bindings)` {#orphaned-bindings}\n\n"
+        out += "**Warning:** The following RBAC bindings exist but are not associated with any active service accounts in the cluster.\n\n"
+
+        # Sort orphaned permissions by risk level, then resource, apiGroup, roleType, roleName
+        sorted_perms = sorted(orphaned_bindings, key=lambda p: (
+            RISK_ORDER.get(p["riskLevel"], DEFAULT_RISK_SORT_VALUE),
+            p["resource"],
+            p["apiGroup"] or CORE_API_GROUP,
+            p["roleType"],
+            p["roleName"]
+        ))
+
+        out += h(4, f"🔑 Permissions ({len(sorted_perms)})").rstrip() + "\n"
+        perm_rows = [
+            [
+                f"{p['roleType']} `{p['roleName']}`",
+                (lambda x: "*" if x == "*/*" else x)(f"{p['apiGroup'] or CORE_API_GROUP}/{p['resource']}"),
+                " · ".join(p["verbs"]),
+                f'{{{{< risk "{p["riskLevel"]}" >}}}}',
+                format_tags_for_markdown(p.get("tags"))
+            ]
+            for p in sorted_perms
+        ]
+        out += table(["Role", "Resource", "Verbs", "Risk", "Tags"], perm_rows)
+
+        # Add potential abuse section for orphaned bindings
+        all_risk_rules = set()
+        for perm in sorted_perms:
+            risk_rules = perm.get('riskRules', [])
+            all_risk_rules.update(risk_rules)
+
+        if all_risk_rules:
+            out += h(4, f"⚠️ Potential Abuse ({len(all_risk_rules)})").rstrip() + "\n"
+            out += "The following security risks were found based on the above permissions:\n\n"
+            for rule_id in sorted(all_risk_rules):
+                if rule_id in rules_data:
+                    rule = rules_data[rule_id]
+                    out += f"- [{rule['name']}](/rules/{rule_id})\n"
+            out += "\n"
+
+        out += "---\n\n"
 
     def sort_sa_identities_key(sa: Dict[str, Any]) -> tuple:
         """
@@ -281,7 +344,7 @@ def build_markdown(data: Dict[str, Any], rules_data: Dict[int, Dict[str, Any]]) 
             perm_rows = [
                 [
                     f"{p['roleType']} `{p['roleName']}`",
-                    f"{p['apiGroup'] or CORE_API_GROUP}/{p['resource']}",
+                    (lambda x: "*" if x == "*/*" else x)(f"{p['apiGroup'] or CORE_API_GROUP}/{p['resource']}"),
                     " · ".join(p["verbs"]),
                     f"{{{{< risk {p['riskLevel']} >}}}}",
                     format_tags_for_markdown(p.get("tags"))
