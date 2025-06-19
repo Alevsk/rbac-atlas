@@ -18,25 +18,33 @@
     {{ $allPages := where $PageContext.RegularPages "Type" $contentTypeName }}
     {{ $groupedPages := slice }}
 
-    {{/* First, get unique project names */}}
-    {{ $projectNames := slice }}
+    {{/* First, get unique repo/chart combinations */}}
+    {{ $projects := slice }}
     {{ range $allPages }}
-      {{ $projectName := index (split .File.Dir "/") 1 }}
-      {{ $projectNames = $projectNames | append $projectName }}
+      {{ $pathParts := split .File.Dir "/" }}
+      {{ if ge (len $pathParts) 3 }}
+        {{ $repoName := index $pathParts 1 }}
+        {{ $chartName := index $pathParts 2 }}
+        {{ $projects = $projects | append (printf "%s/%s" $repoName $chartName) }}
+      {{ end }}
     {{ end }}
-    {{ $projectNames = uniq (sort $projectNames) }}
+    {{ $projects = uniq (sort $projects) }}
 
-    {{/* For each project, find its latest version */}}
-    {{ range $projectNames }}
-      {{ $projectName := . }}
-      {{ $projectPages := where $allPages "File.Dir" (printf "charts/%s/" $projectName) }}
+    {{/* For each repo/chart, find its latest version */}}
+    {{ range $projects }}
+      {{ $pathParts := split . "/" }}
+      {{ $repoName := index $pathParts 0 }}
+      {{ $chartName := index $pathParts 1 }}
+      {{ $projectPages := where $allPages "File.Dir" (printf "charts/%s/%s/" $repoName $chartName) }}
       {{ $sortedPages := sort $projectPages "Params.version_order" "desc" }}
-      {{ $latestPage := index $sortedPages 0 }}
-      {{ $groupedPages = $groupedPages | append $latestPage }}
+      {{ with index $sortedPages 0 }}
+        {{ $groupedPages = $groupedPages | append . }}
+      {{ end }}
     {{ end }}
 
     <div id="projects-list">
-      {{ $paginator := .Paginate $groupedPages }}
+      {{ $pagesSlice := $groupedPages }}
+      {{ $paginator := .Paginate $pagesSlice }}
 
     {{ range $paginator.Pages }}
       {{ $page := . }}

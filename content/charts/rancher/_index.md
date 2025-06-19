@@ -1,12 +1,8 @@
 ---
 title: "rancher"
-description: "Install Rancher Server to manage Kubernetes clusters across providers."
+description: "Security analysis for rancher charts"
 ---
 
 ## rancher
 
-Install Rancher Server to manage Kubernetes clusters across providers.
-
-## Sources
-
-- https://github.com/rancher/rancher
+Security analysis for rancher charts

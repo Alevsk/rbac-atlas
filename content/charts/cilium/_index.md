@@ -1,12 +1,8 @@
 ---
 title: "cilium"
-description: "eBPF-based Networking, Security, and Observability"
+description: "Security analysis for cilium charts"
 ---
 
 ## cilium
 
-eBPF-based Networking, Security, and Observability
-
-## Sources
-
-- https://github.com/cilium/cilium
+Security analysis for cilium charts

@@ -1,12 +1,8 @@
 ---
 title: "kyverno"
-description: "Kubernetes Native Policy Management"
+description: "Security analysis for kyverno charts"
 ---
 
 ## kyverno
 
-Kubernetes Native Policy Management
-
-## Sources
-
-- https://github.com/kyverno/kyverno
+Security analysis for kyverno charts

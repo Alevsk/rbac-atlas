@@ -1,13 +1,8 @@
 ---
 title: "datadog"
-description: "Datadog Agent"
+description: "Security analysis for datadog charts"
 ---
 
 ## datadog
 
-Datadog Agent
-
-## Sources
-
-- https://app.datadoghq.com/account/settings#agent/kubernetes
-- https://github.com/DataDog/datadog-agent
+Security analysis for datadog charts

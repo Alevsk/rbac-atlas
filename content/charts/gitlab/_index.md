@@ -1,12 +1,8 @@
 ---
 title: "gitlab"
-description: "GitLab is the most comprehensive AI-powered DevSecOps Platform."
+description: "Security analysis for gitlab charts"
 ---
 
 ## gitlab
 
-GitLab is the most comprehensive AI-powered DevSecOps Platform.
-
-## Sources
-
-- https://gitlab.com/gitlab-org/charts/gitlab
+Security analysis for gitlab charts

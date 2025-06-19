@@ -1,12 +1,8 @@
 ---
 title: "kubernetes-dashboard"
-description: "General-purpose web UI for Kubernetes clusters"
+description: "Security analysis for kubernetes-dashboard charts"
 ---
 
 ## kubernetes-dashboard
 
-General-purpose web UI for Kubernetes clusters
-
-## Sources
-
-- https://github.com/kubernetes/dashboard
+Security analysis for kubernetes-dashboard charts

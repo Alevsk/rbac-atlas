@@ -1,12 +1,8 @@
 ---
 title: "metallb"
-description: "A network load-balancer implementation for Kubernetes using standard routing protocols"
+description: "Security analysis for metallb charts"
 ---
 
 ## metallb
 
-A network load-balancer implementation for Kubernetes using standard routing protocols
-
-## Sources
-
-- https://github.com/metallb/metallb
+Security analysis for metallb charts

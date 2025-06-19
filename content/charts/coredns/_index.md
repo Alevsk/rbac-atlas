@@ -1,12 +1,8 @@
 ---
 title: "coredns"
-description: "CoreDNS is a DNS server that chains plugins and provides Kubernetes DNS Services"
+description: "Security analysis for coredns charts"
 ---
 
 ## coredns
 
-CoreDNS is a DNS server that chains plugins and provides Kubernetes DNS Services
-
-## Sources
-
-- https://github.com/coredns/coredns
+Security analysis for coredns charts

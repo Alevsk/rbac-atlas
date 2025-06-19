@@ -1,12 +1,8 @@
 ---
 title: "cert-manager"
-description: "A Helm chart for cert-manager"
+description: "Security analysis for cert-manager charts"
 ---
 
 ## cert-manager
 
-A Helm chart for cert-manager
-
-## Sources
-
-- https://github.com/cert-manager/cert-manager
+Security analysis for cert-manager charts

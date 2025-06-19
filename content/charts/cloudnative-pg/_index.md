@@ -1,12 +1,8 @@
 ---
 title: "cloudnative-pg"
-description: "CloudNativePG Operator Helm Chart"
+description: "Security analysis for cloudnative-pg charts"
 ---
 
 ## cloudnative-pg
 
-CloudNativePG Operator Helm Chart
-
-## Sources
-
-- https://github.com/cloudnative-pg/charts
+Security analysis for cloudnative-pg charts

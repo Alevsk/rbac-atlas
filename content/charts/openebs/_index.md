@@ -1,12 +1,8 @@
 ---
 title: "openebs"
-description: "Containerized Attached Storage for Kubernetes"
+description: "Security analysis for openebs charts"
 ---
 
 ## openebs
 
-Containerized Attached Storage for Kubernetes
-
-## Sources
-
-- https://github.com/openebs/openebs
+Security analysis for openebs charts

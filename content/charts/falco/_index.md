@@ -1,12 +1,8 @@
 ---
 title: "falco"
-description: "Falco"
+description: "Security analysis for falco charts"
 ---
 
 ## falco
 
-Falco
-
-## Sources
-
-- https://github.com/falcosecurity/falco
+Security analysis for falco charts

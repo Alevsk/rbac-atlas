@@ -1,8 +1,8 @@
 ---
 title: "external-secrets"
-description: "External secret management for Kubernetes"
+description: "Security analysis for external-secrets charts"
 ---
 
 ## external-secrets
 
-External secret management for Kubernetes
+Security analysis for external-secrets charts

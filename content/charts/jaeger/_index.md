@@ -1,12 +1,8 @@
 ---
 title: "jaeger"
-description: "A Jaeger Helm chart for Kubernetes"
+description: "Security analysis for jaeger charts"
 ---
 
 ## jaeger
 
-A Jaeger Helm chart for Kubernetes
-
-## Sources
-
-- https://hub.docker.com/u/jaegertracing/
+Security analysis for jaeger charts

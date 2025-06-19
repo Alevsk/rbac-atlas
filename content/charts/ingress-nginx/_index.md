@@ -1,12 +1,8 @@
 ---
 title: "ingress-nginx"
-description: "Ingress controller for Kubernetes using NGINX as a reverse proxy and load balancer"
+description: "Security analysis for ingress-nginx charts"
 ---
 
 ## ingress-nginx
 
-Ingress controller for Kubernetes using NGINX as a reverse proxy and load balancer
-
-## Sources
-
-- https://github.com/kubernetes/ingress-nginx
+Security analysis for ingress-nginx charts

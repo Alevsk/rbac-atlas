@@ -1,12 +1,8 @@
 ---
 title: "pgadmin4"
-description: "pgAdmin4 is a web based administration tool for PostgreSQL database"
+description: "Security analysis for pgadmin4 charts"
 ---
 
 ## pgadmin4
 
-pgAdmin4 is a web based administration tool for PostgreSQL database
-
-## Sources
-
-- https://github.com/rowanruseler/helm-charts
+Security analysis for pgadmin4 charts

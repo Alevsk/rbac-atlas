@@ -1,12 +1,8 @@
 ---
 title: "kong"
-description: "The Cloud-Native Ingress and API-management"
+description: "Security analysis for kong charts"
 ---
 
 ## kong
 
-The Cloud-Native Ingress and API-management
-
-## Sources
-
-- https://github.com/Kong/charts/tree/main/charts/kong
+Security analysis for kong charts

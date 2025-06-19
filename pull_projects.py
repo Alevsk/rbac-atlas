@@ -208,8 +208,9 @@ def _pull_single_chart(repo_name: str, chart_config: Dict[str, Any], output_base
         return
 
     # Set up paths with repository prefix
-    sanitized_repo_name = repo_name.replace('/', '_').replace('-', '_')  # Sanitize repo name for file system
-    output_folder_name = f"{sanitized_repo_name}_{chart_name}-{target_version}"  # Final versioned name with repo prefix
+    sanitized_repo_name = repo_name.replace('/', '_')  # Sanitize repo name for file system
+    # Use double underscore as separator for easier parsing while maintaining readability
+    output_folder_name = f"{sanitized_repo_name}__{chart_name}__{target_version}"  # Final versioned name with repo prefix
     final_chart_path = os.path.join(output_base_dir, output_folder_name)
     helm_extracted_dir = os.path.join(output_base_dir, chart_name)  # Where Helm will initially extract
 

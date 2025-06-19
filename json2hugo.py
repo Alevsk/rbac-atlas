@@ -328,57 +328,92 @@ def build_markdown(data: Dict[str, Any], rules_data: Dict[int, Dict[str, Any]]) 
 
 
 # ────────────────────────────── File writer ──────────────────────────────────
-def write_markdown(markdown_content: str, meta_data: Dict[str, Any], output_dir: str) -> str:
+def create_index_md(path: str, title: str, description: str = "", sources: List[str] = None) -> None:
+    """Creates an _index.md file in the specified directory.
+
+    Args:
+        path: Directory path where to create the _index.md file
+        title: Title for the index page
+        description: Optional description text
+        sources: Optional list of source URLs
+    """
+    index_front_matter = [
+        "---",
+        f'title: "{title}"',
+        f'description: "{description}"',
+        "---",
+        "" # Extra newline
+    ]
+
+    content = "\n".join(index_front_matter)
+    content += f"## {title}\n\n"
+
+    if description:
+        content += f"{description}\n\n"
+
+    if sources:
+        content += "## Sources\n\n"
+        for source in sources:
+            content += f"- {source}\n"
+        content += "\n"
+
+    os.makedirs(path, exist_ok=True)
+    with open(os.path.join(path, "_index.md"), "w", encoding="utf-8") as fh:
+        fh.write(content)
+
+def parse_chart_info(json_file_path: str) -> Tuple[str, str]:
+    """Parse repo and chart name from the JSON filename.
+
+    Args:
+        json_file_path: Path to the JSON file (e.g., 'elastic__eck-operator-crds__3.0.0.json')
+
+    Returns:
+        Tuple of (repo_name, chart_name)
+    """
+    base_name = os.path.basename(json_file_path)
+    name_parts = base_name.split('__')
+    if len(name_parts) >= 2:
+        return name_parts[0], name_parts[1]
+    raise ValueError(f"Invalid filename format: {json_file_path}. Expected format: repo__chart__version.json")
+
+def write_markdown(markdown_content: str, meta_data: Dict[str, Any], output_dir: str, json_file_path: str) -> str:
     """
     Writes the generated Markdown content for an application to a file
-    and creates an _index.md file in the application's directory.
+    and creates _index.md files at each directory level.
 
     Args:
         markdown_content: The main Markdown content for the application page.
         meta_data: The metadata dictionary from the JSON input.
         output_dir: The base output directory (site root).
+        json_file_path: Path to the source JSON file for repo/chart info.
 
     Returns:
         The full path to the generated main Markdown file.
     """
-    # Path for the main markdown file (e.g., content/app-name/v1.0.0.md)
-    file_path = os.path.join(
-        output_dir, "charts", meta_data["name"], f"{meta_data['version']}.md"
-    )
+    repo_name, chart_name = parse_chart_info(json_file_path)
+
+    # Create directory structure
+    charts_dir = os.path.join(output_dir, "charts")
+    repo_dir = os.path.join(charts_dir, repo_name)
+    chart_dir = os.path.join(repo_dir, chart_name)
+
+    # Create repo-level _index.md
+    create_index_md(repo_dir, repo_name, f"Security analysis for {repo_name} charts")
+
+    # Create chart-level _index.md with metadata
+    index_description = get_nested_value(meta_data, ['extra', 'helm', 'description'], "")
+    index_sources = get_nested_value(meta_data, ['extra', 'helm', 'sources'], [])
+    create_index_md(chart_dir, chart_name, index_description, index_sources)
+
+    # Remove leading 'v' from version if present
+    version = meta_data['version']
+    if version.startswith("v"):
+        version = version[1:]
+    # Write the main content file
+    file_path = os.path.join(chart_dir, f"{version}.md")
     os.makedirs(os.path.dirname(file_path), exist_ok=True)
     with open(file_path, "w", encoding="utf-8") as fh:
         fh.write(markdown_content)
-
-    # Create _index.md file with metadata inside the folder_path
-    folder_path = os.path.join(output_dir, "charts", meta_data["name"])
-    index_path = os.path.join(folder_path, "_index.md")
-
-    index_description = get_nested_value(meta_data, ['extra', 'helm', 'description'], "")
-    index_sources = get_nested_value(meta_data, ['extra', 'helm', 'sources'], [])
-
-    index_front_matter_lines = [
-        "---",
-        f"title: \"{meta_data['name']}\"",
-        f"description: \"{index_description}\"",
-        "---",
-        "" # For the extra newline
-    ]
-    index_content = "\n".join(index_front_matter_lines)
-
-    # Add title and description to the body of _index.md
-    index_content += f"## {meta_data['name']}\n\n"
-    if index_description:
-        index_content += f"{index_description}\n\n"
-
-    # Add sources if available
-    if index_sources:
-        index_content += "## Sources\n\n"
-        for source in index_sources:
-            index_content += f"- {source}\n"
-        index_content += "\n"
-
-    with open(index_path, "w", encoding="utf-8") as fh:
-        fh.write(index_content)
 
     return file_path
 
@@ -475,6 +510,7 @@ def generate_rule_markdown_files(rules_data: Dict[int, Dict[str, Any]], output_d
 def process_json_file(json_file_path: str, output_dir: str, rules_data: Dict[int, Dict[str, Any]]) -> None:
     """
     Processes a single JSON file, generates its markdown content, and writes it to disk.
+    Skips generation if the chart has no service accounts, workloads, or bindings.
 
     Args:
         json_file_path: The full path to the JSON input file.
@@ -484,8 +520,17 @@ def process_json_file(json_file_path: str, output_dir: str, rules_data: Dict[int
     try:
         with open(json_file_path, encoding="utf-8") as fh:
             data = json.load(fh)
+
+        # Skip if chart has no service accounts, workloads, or bindings
+        sa_data = data.get("serviceAccountData", {})
+        perms = data.get("serviceAccountPermissions", [])
+        workloads = data.get("serviceAccountWorkloads", [])
+        if not perms and not workloads and not sa_data:
+            print(f"Skipping empty chart: {json_file_path}")
+            return
+
         markdown_content = build_markdown(data, rules_data)
-        destination_path = write_markdown(markdown_content, data["metadata"], output_dir)
+        destination_path = write_markdown(markdown_content, data["metadata"], output_dir, json_file_path)
         print(f"Wrote application markdown: {destination_path}")
     except (IOError, json.JSONDecodeError) as exc:
         print(f"Warning: Unable to process JSON file '{json_file_path}': {exc}")

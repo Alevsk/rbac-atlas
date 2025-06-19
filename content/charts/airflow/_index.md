@@ -1,12 +1,8 @@
 ---
 title: "airflow"
-description: "The official Helm chart to deploy Apache Airflow, a platform to programmatically author, schedule, and monitor workflows"
+description: "Security analysis for airflow charts"
 ---
 
 ## airflow
 
-The official Helm chart to deploy Apache Airflow, a platform to programmatically author, schedule, and monitor workflows
-
-## Sources
-
-- https://github.com/apache/airflow
+Security analysis for airflow charts

@@ -1,12 +1,8 @@
 ---
 title: "minio-operator"
-description: "A Helm chart for MinIO Operator"
+description: "Security analysis for minio-operator charts"
 ---
 
 ## minio-operator
 
-A Helm chart for MinIO Operator
-
-## Sources
-
-- https://github.com/minio/operator
+Security analysis for minio-operator charts

@@ -6,9 +6,13 @@
   {{ range $letter := $alphabet }}
   {{ $hasProjects := false }}
   {{ range $.GroupedPages }}
+  {{ if .Params }}
+  {{ if .Params.tags }}
   {{ range .Params.tags }}
   {{ if eq . (printf "letter-%s" $letter) }}
   {{ $hasProjects = true }}
+  {{ end }}
+  {{ end }}
   {{ end }}
   {{ end }}
   {{ end }}

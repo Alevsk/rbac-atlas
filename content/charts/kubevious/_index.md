@@ -1,8 +1,8 @@
 ---
 title: "kubevious"
-description: "A Helm chart for Kubevious"
+description: "Security analysis for kubevious charts"
 ---
 
 ## kubevious
 
-A Helm chart for Kubevious
+Security analysis for kubevious charts
