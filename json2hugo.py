@@ -278,7 +278,10 @@ def build_markdown(data: Dict[str, Any], rules_data: Dict[int, Dict[str, Any]]) 
         perm_rows = [
             [
                 f"{p['roleType']} `{p['roleName']}`",
-                (lambda x: "*" if x == "*/*" else x)(f"{p['apiGroup'] or CORE_API_GROUP}/{p['resource']}"),
+                (lambda x, rn: f"{x} (restricted to: {rn})" if rn and rn != "*" else x)(
+                    (lambda x: "*" if x == "*/*" else x)(f"{p['apiGroup'] or CORE_API_GROUP}/{p['resource']}"),
+                    p.get('resourceName', '')
+                ),
                 " · ".join(p["verbs"]),
                 f'{{{{< risk "{p["riskLevel"]}" >}}}}',
                 format_tags_for_markdown(p.get("tags"))
@@ -344,7 +347,10 @@ def build_markdown(data: Dict[str, Any], rules_data: Dict[int, Dict[str, Any]]) 
             perm_rows = [
                 [
                     f"{p['roleType']} `{p['roleName']}`",
-                    (lambda x: "*" if x == "*/*" else x)(f"{p['apiGroup'] or CORE_API_GROUP}/{p['resource']}"),
+                    (lambda x, rn: f"{x} (restricted to: {rn})" if rn and rn != "*" else x)(
+                        (lambda x: "*" if x == "*/*" else x)(f"{p['apiGroup'] or CORE_API_GROUP}/{p['resource']}"),
+                        p.get('resourceName', '')
+                    ),
                     " · ".join(p["verbs"]),
                     f"{{{{< risk {p['riskLevel']} >}}}}",
                     format_tags_for_markdown(p.get("tags"))
