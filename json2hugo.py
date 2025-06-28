@@ -268,6 +268,7 @@ def build_markdown(data: Dict[str, Any], rules_data: Dict[int, Dict[str, Any]]) 
         # Sort orphaned permissions by risk level, then resource, apiGroup, roleType, roleName
         sorted_perms = sorted(orphaned_bindings, key=lambda p: (
             RISK_ORDER.get(p["riskLevel"], DEFAULT_RISK_SORT_VALUE),
+            p["resourceName"],
             p["resource"],
             p["apiGroup"] or CORE_API_GROUP,
             p["roleType"],
@@ -339,6 +340,7 @@ def build_markdown(data: Dict[str, Any], rules_data: Dict[int, Dict[str, Any]]) 
             # Sort permissions by risk level, then resource, apiGroup, roleType, roleName
             sorted_perms = sorted(sa_perms, key=lambda p: (
                 RISK_ORDER.get(p["riskLevel"], DEFAULT_RISK_SORT_VALUE),
+                p["resourceName"],
                 p["resource"],
                 p["apiGroup"] or CORE_API_GROUP,
                 p["roleType"],
