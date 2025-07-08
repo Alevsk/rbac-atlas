@@ -65,9 +65,9 @@ get-manifests:
 		filename="$${filename%\/}" && \
 		echo "Processing $$filename" && \
 		if [ -f "$$f/custom-values.yaml" ]; then \
-			rbac-ops analyze "$$f" -f "$$f/custom-values.yaml" -o json > "manifests/$$filename.json"; \
+			rbac-scope analyze "$$f" -f "$$f/custom-values.yaml" -o json > "manifests/$$filename.json"; \
 		else \
-			rbac-ops analyze "$$f" -o json > "manifests/$$filename.json"; \
+			rbac-scope analyze "$$f" -o json > "manifests/$$filename.json"; \
 		fi; \
 	done
 

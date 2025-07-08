@@ -294,7 +294,7 @@ def build_markdown(data: Dict[str, Any], rules_data: Dict[int, Dict[str, Any]]) 
         # Add potential abuse section for orphaned bindings
         all_risk_rules = set()
         for perm in sorted_perms:
-            risk_rules = perm.get('riskRules', [])
+            risk_rules = [rule['id'] for rule in perm.get('matchedRiskRules', [])]
             all_risk_rules.update(risk_rules)
 
         if all_risk_rules:
@@ -368,7 +368,7 @@ def build_markdown(data: Dict[str, Any], rules_data: Dict[int, Dict[str, Any]]) 
             # Collect all unique rule IDs from all permissions
             all_risk_rules = set()
             for perm in sa_perms:
-                risk_rules = perm.get('riskRules', [])
+                risk_rules = [rule['id'] for rule in perm.get('matchedRiskRules', [])]
                 all_risk_rules.update(risk_rules)
 
             if all_risk_rules:
@@ -623,7 +623,7 @@ def main() -> None:
     )
     ap.add_argument(
         "-r", "--rules",
-        default="/home/alevsk/Development/rbac-ops/internal/policyevaluation/risks.yaml",
+        default="/home/alevsk/Development/rbac-scope/internal/policyevaluation/risks.yaml",
         help="Path to the rules YAML file (e.g., risks.yaml)."
     )
     ap.add_argument(
