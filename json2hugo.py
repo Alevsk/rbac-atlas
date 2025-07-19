@@ -552,7 +552,16 @@ def generate_rule_markdown_files(rules_data: Dict[int, Dict[str, Any]], output_d
         api_groups_formatted = [CORE_API_GROUP if group == '' else group for group in rule['api_groups']]
         content += f"| API Groups | {', '.join(api_groups_formatted)} |\n"
         content += f"| Resources | {', '.join(rule['resources'])} |\n"
-        content += f"| Verbs | {', '.join(rule['verbs'])} |\n"
+        # Combine individual verbs and verb groups
+        all_verb_groups = []
+        if 'verb_groups' in rule and rule['verb_groups']:
+            all_verb_groups.extend(rule['verb_groups'])
+        if 'verbs' in rule and rule['verbs']:
+            # Convert each individual verb to a single-item group
+            all_verb_groups.extend([[verb] for verb in rule['verbs']])
+        # Format all groups consistently
+        formatted_groups = [f"[{', '.join(group)}]" for group in all_verb_groups]
+        content += f"| Risky Verb Combinations | {' · '.join(formatted_groups)} |\n"
         content += f"| Tags | {format_tags_for_markdown(rule.get('tags'))} |\n\n"
 
         # Description section for the rule
