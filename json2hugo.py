@@ -265,14 +265,15 @@ def build_markdown(data: Dict[str, Any], rules_data: Dict[int, Dict[str, Any]]) 
         out += "### ⚠️ `(orphaned-bindings)` {#orphaned-bindings}\n\n"
         out += "**Warning:** The following RBAC bindings exist but are not associated with any active service accounts in the cluster.\n\n"
 
-        # Sort orphaned permissions by risk level, then resource, apiGroup, roleType, roleName
+        # Sort orphaned permissions by risk level, then resource, apiGroup, roleType, roleName and verbs
         sorted_perms = sorted(orphaned_bindings, key=lambda p: (
             RISK_ORDER.get(p["riskLevel"], DEFAULT_RISK_SORT_VALUE),
             p["resourceName"],
             p["resource"],
             p["apiGroup"] or CORE_API_GROUP,
             p["roleType"],
-            p["roleName"]
+            p["roleName"],
+            ",".join(p.get("verbs", [])) # Join the verbs array with commas, to make it a single string
         ))
 
         out += h(4, f"🔑 Permissions ({len(sorted_perms)})").rstrip() + "\n"
@@ -337,14 +338,15 @@ def build_markdown(data: Dict[str, Any], rules_data: Dict[int, Dict[str, Any]]) 
         sa_perms = perms_by_sa[sa_name]
         out += h(4, f"🔑 Permissions ({len(sa_perms)})").rstrip() + "\n"
         if sa_perms:
-            # Sort permissions by risk level, then resource, apiGroup, roleType, roleName
+            # Sort permissions by risk level, then resource, apiGroup, roleType, roleName and verbs
             sorted_perms = sorted(sa_perms, key=lambda p: (
                 RISK_ORDER.get(p["riskLevel"], DEFAULT_RISK_SORT_VALUE),
                 p["resourceName"],
                 p["resource"],
                 p["apiGroup"] or CORE_API_GROUP,
                 p["roleType"],
-                p["roleName"]
+                p["roleName"],
+                ",".join(p.get("verbs", [])) # Join the verbs array with commas, to make it a single string
             ))
             perm_rows = [
                 [
