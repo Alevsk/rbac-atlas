@@ -81,11 +81,12 @@ helm_repos:
           - disaster recovery
           - replication
           - storage
-  - name: backup-operator
-    url: https://helm-charts.backup-operator.io/
+  - name: k8up-io
+    url: https://k8up-io.github.io/k8up
     charts:
-      - name: backup-operator
-        keywords: []
+      - name: k8up
+        keywords:
+          - backup-operator
   - name: bitnami
     url: https://charts.bitnami.com/bitnami
     charts:
@@ -131,31 +132,6 @@ helm_repos:
           - operator
           - prometheus
           - kube-prometheus
-  - name: capsule
-    url: oci://ghcr.io/projectcapsule/charts/capsule
-    charts:
-      - name: capsule
-        keywords:
-          - kubernetes
-          - operator
-          - multi-tenancy
-          - multi-tenant
-          - multitenancy
-          - multitenant
-          - namespace
-  - name: capsule-proxy
-    url: oci://ghcr.io/projectcapsule/charts/capsule-proxy
-    charts:
-      - name: capsule-proxy
-        keywords:
-          - kubernetes
-          - operator
-          - multi-tenancy
-          - multi-tenant
-          - multitenancy
-          - multitenant
-          - namespace
-          - proxy
   - name: cert-manager
     url: https://charts.jetstack.io
     charts:
@@ -210,13 +186,6 @@ helm_repos:
     url: https://charts.crossplane.io/stable
     charts:
       - name: crossplane
-  - name: cyphernetes-operator
-    url: oci://ghcr.io/avitaltamir/cyphernetes/cyphernetes-operator
-    charts:
-      - name: cyphernetes-operator
-        keywords:
-          - cyphernetes
-          - operator
   - name: dash0-operator
     url: https://dash0hq.github.io/dash0-operator
     charts:
@@ -239,16 +208,6 @@ helm_repos:
           - monitoring
           - alerting
           - metric
-  - name: developer-operator
-    url: oci://registry.gitlab.com/xrow-public/developer-operator/charts/developer-operator
-    charts:
-      - name: developer-operator
-        keywords:
-          - www
-          - web
-          - development
-          - ssh
-          - workspace
   - name: doris
     url: https://charts.selectdb.com/
     charts:
@@ -258,17 +217,8 @@ helm_repos:
           - database
           - olap
           - sharding
-  - name: dyff-operator
-    url: oci://registry.gitlab.com/dyff/charts/dyff-operator
-    charts:
-      - name: dyff-operator
-        keywords:
-          - ai
-          - audit
-          - safety
-          - evaluation
   - name: dynatrace
-    url: oci://public.ecr.aws/dynatrace/dynatrace-operator
+    url: https://raw.githubusercontent.com/Dynatrace/dynatrace-operator/main/config/helm/repos/stable
     charts:
       - name: dynatrace-operator
         keywords: []
@@ -630,11 +580,6 @@ helm_repos:
           - kubernetes-operator
           - balancer
           - multi-cluster
-  - name: k8s-event-logger-operator-oci
-    url: oci://ghcr.io/bakito/helm-charts/k8s-event-logger-operator
-    charts:
-      - name: k8s-event-logger-operator
-        keywords: []
   - name: k8sgpt
     url: https://charts.k8sgpt.ai
     charts:
@@ -973,14 +918,6 @@ helm_repos:
     url: https://helm.runix.net/
     charts:
       - name: pgadmin4
-  - name: piedeck
-    url: oci://quay.io/maxiv/helm/piedeck
-    charts:
-      - name: piedeck
-        keywords:
-          - kubernetes
-          - OIDC
-          - data access
   - name: portefaix-hub
     url: https://charts.portefaix.xyz/
     charts:
@@ -1047,14 +984,6 @@ helm_repos:
         keywords:
           - prometheus
           - crds
-  - name: pulumi-kubernetes-operator
-    url: oci://ghcr.io/pulumi/helm-charts/pulumi-kubernetes-operator
-    charts:
-      - name: pulumi-kubernetes-operator
-        keywords:
-          - pulumi
-          - kubernetes
-          - operator
   - name: rancher
     url: https://releases.rancher.com/server-charts/stable
     charts:
@@ -1117,22 +1046,6 @@ helm_repos:
     url: https://SonarSource.github.io/helm-chart-sonarqube
     charts:
       - name: sonarqube
-  - name: sops-operator
-    url: oci://ghcr.io/peak-scale/charts/sops-operator
-    charts:
-      - name: sops-operator
-        keywords:
-          - kubernetes
-          - operator
-          - security
-          - secrets
-          - sealed
-          - mozilla
-          - sops
-          - argocd
-          - argo-cd
-          - argo
-          - gitops
   - name: sops-secrets-operator
     url: https://isindir.github.io/sops-secrets-operator/
     charts:
@@ -1184,29 +1097,6 @@ helm_repos:
           - network
           - policy
           - plugin
-  - name: stevehipwell-helm-charts-tigera-operator
-    url: oci://ghcr.io/stevehipwell/helm-charts/tigera-operator
-    charts:
-      - name: tigera-operator
-        keywords:
-          - kubernetes
-          - cni
-          - calico
-          - tigera
-          - operator
-          - network
-          - policy
-          - plugin
-  - name: symfony-operator
-    url: oci://registry.gitlab.com/xrow-public/symfony-operator/charts/symfony-operator
-    charts:
-      - name: symfony-operator
-        keywords:
-          - www
-          - web
-          - development
-          - ssh
-          - workspace
   - name: traefik
     url: https://traefik.github.io/charts
     charts:
@@ -1221,15 +1111,6 @@ helm_repos:
     charts:
       - name: vals-operator
         keywords: []
-  - name: vault-operator
-    url: oci://ghcr.io/bank-vaults/helm-charts/vault-operator
-    charts:
-      - name: vault-operator
-        keywords:
-          - vault
-          - hashicorp
-          - secret
-          - operator
   - name: victoriametrics
     url: https://victoriametrics.github.io/helm-charts/
     charts:
@@ -1297,3 +1178,37 @@ helm_repos:
 # - Argo Rollouts & Argo Workflows – Helm charts are available in the Argo Helm repo (argoproj/argo-helm) if not already included.
 # - ExternalDNS (DNS controller) – use Bitnami’s external-dns chart:contentReference[oaicite:26]{index=26} (no official chart from the project).
 # - Metrics Server (resource metrics API) – available via Bitnami metrics-server chart:contentReference[oaicite:27]{index=27}.
+
+# OCI-based Helm repositories that contain multiple charts and can be aliased
+oci_repos:
+  - name: capsule
+    url: oci://ghcr.io/projectcapsule/charts
+    charts:
+      - name: capsule
+      - name: capsule-proxy
+  - name: k8s-event-logger-operator-oci
+    url: oci://ghcr.io/bakito/helm-charts
+    charts:
+      - name: k8s-event-logger-operator
+
+# Direct references to single OCI chart artifacts.
+# 'name' is the desired output folder name. 'uri' is the full Helm reference.
+oci_charts:
+  - name: pulumi-kubernetes-operator
+    uri: oci://ghcr.io/pulumi/helm-charts/pulumi-kubernetes-operator
+  - name: cyphernetes-operator
+    uri: oci://ghcr.io/avitaltamir/cyphernetes/cyphernetes-operator
+  - name: developer-operator
+    uri: oci://registry.gitlab.com/xrow-public/developer-operator/charts/developer-operator
+  - name: dyff-operator
+    uri: oci://registry.gitlab.com/dyff/charts/dyff-operator
+  - name: dynatrace-operator
+    uri: oci://public.ecr.aws/dynatrace/dynatrace-operator
+  - name: piedeck
+    uri: oci://quay.io/maxiv/helm/piedeck
+  - name: sops-operator
+    uri: oci://ghcr.io/peak-scale/charts/sops-operator
+  - name: symfony-operator
+    uri: oci://registry.gitlab.com/xrow-public/symfony-operator/charts/symfony-operator
+  - name: vault-operator
+    uri: oci://ghcr.io/bank-vaults/helm-charts/vault-operator

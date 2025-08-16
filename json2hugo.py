@@ -153,9 +153,9 @@ def build_markdown(data: Dict[str, Any], rules_data: Dict[int, Dict[str, Any]]) 
         Pads version parts with zeros and converts to hex for consistent length.
         The 'f' prefix ensures lexicographical sorting in Hugo.
         """
+        v = v.split('-')[0]  # Ignore any additional info after the version number
         v = v.lstrip('v')
-        parts = v.split('.')
-        # Pad with zeros if needed to ensure 3 parts (major.minor.patch)
+        parts = v.split('.')[:3]  # Only consider the first 3 parts (major.minor.patch)
         while len(parts) < 3:
             parts.append('0')
         try:

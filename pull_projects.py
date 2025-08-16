@@ -6,59 +6,41 @@ import logging
 import argparse
 import time
 from typing import List, Dict, Any, Optional
+from pathlib import Path
+from concurrent.futures import ThreadPoolExecutor, as_completed
 
 # --- Configuration Constants ---
 DEFAULT_CONFIG_FILE = "projects.yaml"
-DEFAULT_OUTPUT_DIR = "charts" # A dedicated directory for pulled charts
+DEFAULT_OUTPUT_DIR = "charts"
 
 # --- Setup Logging ---
-# Configure logging to output to console with a specific format
 logging.basicConfig(
-    level=logging.INFO, # Set default logging level to INFO
+    level=logging.INFO,
     format='%(asctime)s - %(levelname)s - %(message)s',
     datefmt='%Y-%m-%d %H:%M:%S'
 )
-logger = logging.getLogger(__name__) # Get a logger for this module
+logger = logging.getLogger(__name__)
 
-# --- Helper Functions ---
+# --- Helper Functions (Largely Unchanged but with Pathlib integration) ---
 
 def _run_helm_command(cmd: List[str], capture_output: bool = False) -> Optional[str]:
-    """
-    Executes a Helm command, logs its execution, and handles errors.
-
-    Args:
-        cmd: A list of strings representing the Helm command and its arguments.
-        capture_output: If True, captures and returns stdout. Otherwise, prints stdout/stderr directly.
-
-    Returns:
-        The captured stdout as a string if capture_output is True, otherwise None.
-
-    Raises:
-        subprocess.CalledProcessError: If the command returns a non-zero exit code.
-        FileNotFoundError: If the 'helm' executable is not found.
-    """
+    """Executes a Helm command, logs its execution, and handles errors."""
     full_cmd_str = " ".join(cmd)
     logger.info(f"🏃 Running: {full_cmd_str}")
     try:
         result = subprocess.run(
             cmd,
             capture_output=capture_output,
-            text=True, # Decode stdout/stderr as text
-            check=True, # Raise CalledProcessError on non-zero exit code
-            encoding='utf-8' # Explicitly set encoding for text output
+            text=True,
+            check=True,
+            encoding='utf-8'
         )
         if capture_output:
             return result.stdout.strip()
-        else:
-            # Log stdout/stderr at DEBUG level if not capturing
-            if result.stdout:
-                logger.debug(f"STDOUT:\n{result.stdout.strip()}")
-            if result.stderr:
-                logger.debug(f"STDERR:\n{result.stderr.strip()}")
         return None
     except FileNotFoundError:
-        logger.critical(f"❌ Error: 'helm' command not found. Please ensure Helm is installed and in your PATH.")
-        raise # Re-raise to stop execution if helm isn't found
+        logger.critical("❌ Error: 'helm' command not found. Please ensure Helm is installed and in your PATH.")
+        raise
     except subprocess.CalledProcessError as e:
         logger.error(f"❌ Command failed: {full_cmd_str}")
         logger.error(f"Return Code: {e.returncode}")
@@ -66,52 +48,78 @@ def _run_helm_command(cmd: List[str], capture_output: bool = False) -> Optional[
             logger.error(f"STDOUT:\n{e.stdout.strip()}")
         if e.stderr:
             logger.error(f"STDERR:\n{e.stderr.strip()}")
-        raise # Re-raise to allow calling function to handle or for script to terminate
+        raise
     except Exception as e:
         logger.error(f"❌ An unexpected error occurred while running '{full_cmd_str}': {e}")
         raise
 
-def _get_chart_version_from_folder(chart_folder_path: str) -> str:
-    """
-    Retrieves the chart version from a local Helm chart folder using 'helm show chart'.
+# --- OPTIMIZATION: New functions for direct index parsing ---
 
-    Args:
-        chart_folder_path: The path to the untarred Helm chart folder.
-
-    Returns:
-        The version string of the chart.
-
-    Raises:
-        ValueError: If the version cannot be found in the chart metadata or if YAML parsing fails.
-        subprocess.CalledProcessError: If 'helm show chart' command fails.
-    """
-    logger.debug(f"Attempting to get chart version from: {chart_folder_path}")
+def _get_helm_cache_dir() -> Path:
+    """Finds the Helm repository cache directory."""
     try:
-        # Check if Chart.yaml exists directly and read it
-        chart_yaml_path = os.path.join(chart_folder_path, 'Chart.yaml')
-        if os.path.exists(chart_yaml_path):
-            with open(chart_yaml_path, 'r') as f:
-                chart_yaml_output = f.read()
-        else:
-            # Fallback to helm show chart if Chart.yaml doesn't exist
-            chart_yaml_output = _run_helm_command(
-                ["helm", "show", "chart", chart_folder_path],
-                capture_output=True
-            )
-        if not chart_yaml_output:
-            raise ValueError(f"Helm show chart returned empty output for {chart_folder_path}")
+        # Ask helm where its cache is to be robust
+        helm_env_output = _run_helm_command(["helm", "env"], capture_output=True)
+        for line in helm_env_output.splitlines():
+            if line.startswith('HELM_CACHE_HOME='):
+                # Format is HELM_CACHE_HOME="<path>"
+                cache_path_str = line.split('=')[1].strip('"')
+                return Path(cache_path_str) / "repository"
+    except Exception:
+        logger.warning("⚠️ Could not determine Helm cache path from 'helm env'. Falling back to default.")
+        return Path.home() / ".cache" / "helm" / "repository"
 
-        chart_metadata = yaml.safe_load(chart_yaml_output)
-        version = chart_metadata.get("version")
-        if not version:
-            raise ValueError(f"Version not found in chart metadata for {chart_folder_path}")
-        logger.debug(f"Detected version for {chart_folder_path}: {version}")
-        return version
-    except yaml.YAMLError as e:
-        raise ValueError(f"Failed to parse chart YAML for {chart_folder_path}: {e}")
-    except subprocess.CalledProcessError:
-        # _run_helm_command already logs the error, just re-raise as ValueError for consistency
-        raise ValueError(f"Failed to execute 'helm show chart' for {chart_folder_path}")
+
+def _load_repo_indices(repos: List[Dict[str, str]], helm_cache_dir: Path) -> Dict[str, Any]:
+    """
+    Parses all repository index.yaml files into an in-memory dictionary.
+    This is the core of the performance improvement.
+    """
+    logger.info("Pre-loading Helm repository indices for fast version lookups...")
+    repo_indices = {}
+    for repo in repos:
+        repo_name = repo.get("name")
+        if not repo_name:
+            continue
+
+        # Helm saves index files as <repo-name>-index.yaml
+        index_file = helm_cache_dir / f"{repo_name}-index.yaml"
+
+        if not index_file.is_file():
+            logger.warning(f"⚠️ Index file not found for repo '{repo_name}' at {index_file}. Did 'helm repo update' fail?")
+            continue
+
+        try:
+            with open(index_file, "r", encoding='utf-8') as f:
+                index_data = yaml.safe_load(f)
+                # We only care about the 'entries' key which contains chart info
+                repo_indices[repo_name] = index_data.get("entries", {})
+            logger.debug(f"Successfully loaded index for '{repo_name}'.")
+        except (yaml.YAMLError, OSError) as e:
+            logger.error(f"❌ Failed to load or parse index for repo '{repo_name}': {e}")
+
+    logger.info("✅ Repository indices loaded.")
+    return repo_indices
+
+
+def _get_latest_version_from_index(chart_name: str, repo_index: Dict[str, Any]) -> str:
+    """
+    Gets the latest chart version directly from the parsed index data.
+    This replaces the slow 'helm search repo' command.
+    """
+    chart_entries = repo_index.get(chart_name)
+    if not chart_entries or not isinstance(chart_entries, list):
+        raise ValueError(f"Chart '{chart_name}' not found in the repository index.")
+
+    # The first entry in the list is the latest version as per Helm's index file structure.
+    latest_chart = chart_entries[0]
+    version = latest_chart.get("version")
+    if not version:
+        raise ValueError(f"Could not find a version for chart '{chart_name}' in the index.")
+
+    return version
+
+# --- End of Optimization Functions ---
 
 
 def _add_helm_repos(repos: List[Dict[str, str]]) -> None:
@@ -124,11 +132,10 @@ def _add_helm_repos(repos: List[Dict[str, str]]) -> None:
             logger.warning(f"⚠️ Skipping malformed repository entry: {repo}. 'name' and 'url' are required.")
             continue
         try:
-            _run_helm_command(["helm", "repo", "add", name, url])
+            # Add --force-update to ensure the repo is fresh if it exists
+            _run_helm_command(["helm", "repo", "add", "--force-update", name, url])
         except subprocess.CalledProcessError:
-            logger.warning(f"⚠️ Failed to add repository '{name}' from '{url}'. Continuing with other repos.")
-        except Exception as e:
-            logger.warning(f"⚠️ An unexpected error occurred while adding repo '{name}': {e}")
+            logger.warning(f"⚠️ Failed to add repository '{name}' from '{url}'. Continuing.")
 
 def _update_helm_repos() -> None:
     """Updates all added Helm repositories."""
@@ -136,227 +143,142 @@ def _update_helm_repos() -> None:
     try:
         _run_helm_command(["helm", "repo", "update"])
     except subprocess.CalledProcessError:
-        logger.error("❌ Failed to update Helm repositories. This might affect chart pulling.")
-    except Exception as e:
-        logger.error(f"❌ An unexpected error occurred during repo update: {e}")
+        logger.error("❌ Failed to update Helm repositories. This will prevent version checks.")
+        raise # Critical error, script cannot proceed reliably
 
-def _get_latest_chart_version(repo_name: str, chart_name: str) -> str:
+def _pull_single_chart(repo_name: str, chart_config: Dict[str, Any], output_base_dir: Path, repo_indices: Dict[str, Any]) -> str:
     """
-    Gets the latest version of a chart from the Helm repository.
-
-    Args:
-        repo_name: The name of the Helm repository.
-        chart_name: The name of the chart.
-
-    Returns:
-        The latest version string of the chart.
-
-    Raises:
-        ValueError: If the version cannot be determined.
-    """
-    try:
-        # Use helm search repo with --versions to get all versions
-        full_chart_ref = f"{repo_name}/{chart_name}"
-        search_output = _run_helm_command(
-            ["helm", "search", "repo", full_chart_ref, "--output", "yaml"],
-            capture_output=True
-        )
-        if not search_output:
-            raise ValueError(f"No versions found for chart {full_chart_ref}")
-
-        search_results = yaml.safe_load(search_output)
-        if not search_results or not isinstance(search_results, list) or len(search_results) == 0:
-            raise ValueError(f"Invalid search results for chart {full_chart_ref}")
-
-        # The first result should be the latest version
-        latest_version = search_results[0].get('version')
-        if not latest_version:
-            raise ValueError(f"Version not found in search results for {full_chart_ref}")
-
-        return latest_version
-    except Exception as e:
-        raise ValueError(f"Failed to get latest version for {repo_name}/{chart_name}: {e}")
-
-def _pull_single_chart(repo_name: str, chart_config: Dict[str, Any], output_base_dir: str) -> None:
-    """
-    Pulls a single Helm chart, untars it, and renames the resulting folder.
-    First checks if the desired version is already downloaded.
-    Handles cases where the target folder already exists.
-
-    Args:
-        repo_name: The name of the Helm repository.
-        chart_config: A dictionary containing chart details (name, optional version).
-        output_base_dir: The base directory where charts should be pulled into.
+    Pulls a single Helm chart. Determines version from pre-loaded index if not specified.
+    Returns the final path of the pulled chart for logging.
     """
     chart_name = chart_config.get("name")
     if not chart_name:
-        logger.warning(f"⚠️ Skipping malformed chart entry in repo '{repo_name}': {chart_config}. 'name' is required.")
-        return
+        logger.warning(f"⚠️ Skipping malformed chart entry in repo '{repo_name}': {chart_config}.")
+        return ""
 
     version_specified = chart_config.get("version")
     full_chart_ref = f"{repo_name}/{chart_name}"
 
-    # Determine target version - either specified or latest
     try:
         if version_specified:
             target_version = version_specified
         else:
-            target_version = _get_latest_chart_version(repo_name, chart_name)
-            logger.info(f"Latest version for '{full_chart_ref}' is '{target_version}'")
+            repo_index = repo_indices.get(repo_name)
+            if not repo_index:
+                raise ValueError(f"No index data found for repo '{repo_name}'. Cannot determine latest version.")
+            target_version = _get_latest_version_from_index(chart_name, repo_index)
+            logger.info(f"Latest version for '{full_chart_ref}' is '{target_version}' (from local index).")
+
     except ValueError as e:
-        logger.error(f"❌ {str(e)}")
-        return
+        logger.error(f"❌ Failed to determine version for {full_chart_ref}: {e}")
+        return ""
 
-    # Set up paths with repository prefix
-    sanitized_repo_name = repo_name.replace('/', '_')  # Sanitize repo name for file system
-    # Use double underscore as separator for easier parsing while maintaining readability
-    output_folder_name = f"{sanitized_repo_name}__{chart_name}__{target_version}"  # Final versioned name with repo prefix
-    final_chart_path = os.path.join(output_base_dir, output_folder_name)
-    helm_extracted_dir = os.path.join(output_base_dir, chart_name)  # Where Helm will initially extract
+    sanitized_repo_name = repo_name.replace('/', '_')
+    output_folder_name = f"{sanitized_repo_name}__{chart_name}__{target_version}"
+    final_chart_path = output_base_dir / output_folder_name
+    helm_extracted_dir = output_base_dir / chart_name
 
-    # Check if the final target folder already exists
-    if os.path.exists(final_chart_path):
-        logger.info(f"⚠️ Chart '{full_chart_ref}' version '{target_version}' already exists at '{final_chart_path}'. Skipping.")
-        # Copy custom values file if specified
-        custom_values_path = chart_config.get("values")
-        if custom_values_path and os.path.exists(custom_values_path):
-            target_values_path = os.path.join(final_chart_path, "custom-values.yaml")
-            try:
-                shutil.copy2(custom_values_path, target_values_path)
-                logger.info(f"Copied custom values from '{custom_values_path}' to '{target_values_path}'")
-            except Exception as e:
-                logger.error(f"❌ Failed to copy custom values file: {e}")
-        return
+    if final_chart_path.exists():
+        logger.info(f"✅ Chart '{full_chart_ref}' version '{target_version}' already exists. Skipping pull.")
+        return f"Skipped (already exists): {final_chart_path}"
 
-    # Clean up any existing extracted directory to avoid helm pull errors
-    if os.path.exists(helm_extracted_dir):
+    # Clean up any leftover extracted directory from a previous failed run
+    if helm_extracted_dir.exists():
         shutil.rmtree(helm_extracted_dir)
 
-    # Construct the helm pull command
-    pull_cmd = ["helm", "pull", full_chart_ref, "--untar", "--destination", output_base_dir]
-    if version_specified:
-        pull_cmd.extend(["--version", version_specified])
+    pull_cmd = ["helm", "pull", full_chart_ref, "--untar", "--destination", str(output_base_dir)]
+    # Always specify the version for deterministic pulls
+    pull_cmd.extend(["--version", target_version])
 
     try:
         _run_helm_command(pull_cmd)
-        logger.info(f"Successfully pulled '{full_chart_ref}' to temporary location '{helm_extracted_dir}'.")
 
-        # Verify the chart was extracted correctly
-        chart_yaml_path = os.path.join(helm_extracted_dir, 'Chart.yaml')
-        if not os.path.exists(chart_yaml_path):
-            raise ValueError(f"Chart.yaml not found at {helm_extracted_dir}")
+        if not helm_extracted_dir.exists():
+             raise ValueError(f"Helm pull completed but expected directory '{helm_extracted_dir}' was not created.")
 
-        # Rename the extracted directory to include the repo prefix
+        # Rename to the final versioned folder name
         os.rename(helm_extracted_dir, final_chart_path)
-        logger.info(f"📦 Saved chart '{full_chart_ref}' version '{target_version}' to '{final_chart_path}'.")
+        logger.info(f"📦 Saved chart '{full_chart_ref}' v'{target_version}' to '{final_chart_path}'.")
 
-        # Copy custom values file if specified
-        custom_values_path = chart_config.get("values")
-        if custom_values_path and os.path.exists(custom_values_path):
-            target_values_path = os.path.join(final_chart_path, "custom-values.yaml")
-            try:
-                shutil.copy2(custom_values_path, target_values_path)
-                logger.info(f"Copied custom values from '{custom_values_path}' to '{target_values_path}'")
-            except Exception as e:
-                logger.error(f"❌ Failed to copy custom values file: {e}")
+        custom_values_path_str = chart_config.get("values")
+        if custom_values_path_str and Path(custom_values_path_str).exists():
+            shutil.copy2(custom_values_path_str, final_chart_path / "custom-values.yaml")
+            logger.info(f"Copied custom values to '{final_chart_path / 'custom-values.yaml'}'")
 
+        return f"Successfully pulled: {final_chart_path}"
 
-
-    except subprocess.CalledProcessError:
-        logger.error(f"❌ Failed to pull chart '{full_chart_ref}' (version: {version_specified or 'latest'}). See previous logs for details.")
-    except ValueError as e:
-        logger.error(f"❌ Error processing chart '{full_chart_ref}': {e}")
-    except OSError as e:
-        logger.error(f"❌ File system error while processing chart '{full_chart_ref}': {e}")
-    except Exception as e:
-        logger.error(f"❌ An unexpected error occurred while pulling chart '{full_chart_ref}': {e}")
-    finally:
-        # Clean up extracted directory if it exists after any error
-        if os.path.exists(helm_extracted_dir):
+    except (subprocess.CalledProcessError, ValueError, OSError) as e:
+        logger.error(f"❌ Failed processing chart '{full_chart_ref}': {e}")
+        # Clean up partial pull
+        if helm_extracted_dir.exists():
             shutil.rmtree(helm_extracted_dir)
-            logger.debug(f"Cleaned up partial pull: {helm_extracted_dir}")
-
+        return ""
 
 def main():
-    """
-    Main function to parse arguments, load configuration, and orchestrate
-    the Helm chart pulling process.
-    """
-    parser = argparse.ArgumentParser(
-        description="Automate pulling Helm charts from a YAML configuration file."
-    )
-    parser.add_argument(
-        "-c", "--config",
-        default=DEFAULT_CONFIG_FILE,
-        help=f"Path to the YAML configuration file (default: '{DEFAULT_CONFIG_FILE}')."
-    )
-    parser.add_argument(
-        "-o", "--output-dir",
-        default=DEFAULT_OUTPUT_DIR,
-        help=f"Directory to save the untarred Helm charts (default: '{DEFAULT_OUTPUT_DIR}')."
-    )
+    """Main function to orchestrate the Helm chart pulling process."""
+    parser = argparse.ArgumentParser(description="Automate pulling Helm charts from a YAML configuration file.")
+    parser.add_argument("-c", "--config", default=DEFAULT_CONFIG_FILE, help=f"Path to YAML config (default: {DEFAULT_CONFIG_FILE}).")
+    parser.add_argument("-o", "--output-dir", default=DEFAULT_OUTPUT_DIR, help=f"Directory for untarred charts (default: {DEFAULT_OUTPUT_DIR}).")
+    parser.add_argument("--max-workers", type=int, default=10, help="Max concurrent helm pull operations.")
     args = parser.parse_args()
 
-    config_file_path = args.config
-    output_base_dir = args.output_dir
+    config_file_path = Path(args.config)
+    output_base_dir = Path(args.output_dir)
 
-    # Ensure the output directory exists
     try:
-        os.makedirs(output_base_dir, exist_ok=True)
+        output_base_dir.mkdir(parents=True, exist_ok=True)
         logger.info(f"Ensured output directory exists: '{output_base_dir}'")
     except OSError as e:
-        logger.critical(f"❌ Critical: Could not create output directory '{output_base_dir}': {e}")
-        exit(1) # Exit if we can't even create the output directory
+        logger.critical(f"❌ Could not create output directory '{output_base_dir}': {e}")
+        exit(1)
 
-    # Load configuration from YAML file
-    config: Dict[str, Any] = {} # Initialize config to an empty dict
     try:
         with open(config_file_path, "r", encoding='utf-8') as f:
             config = yaml.safe_load(f)
-        if not isinstance(config, dict):
-            raise ValueError("YAML configuration root must be a dictionary.")
         logger.info(f"Successfully loaded configuration from '{config_file_path}'.")
-    except FileNotFoundError:
-        logger.critical(f"❌ Critical: Configuration file not found: '{config_file_path}'.")
-        exit(1)
-    except yaml.YAMLError as e:
-        logger.critical(f"❌ Critical: Error parsing YAML configuration file '{config_file_path}': {e}")
-        exit(1)
-    except ValueError as e:
-        logger.critical(f"❌ Critical: Invalid configuration format in '{config_file_path}': {e}")
-        exit(1)
-    except Exception as e:
-        logger.critical(f"❌ Critical: An unexpected error occurred while loading config: {e}")
+    except (FileNotFoundError, yaml.YAMLError, Exception) as e:
+        logger.critical(f"❌ Critical error loading config file '{config_file_path}': {e}")
         exit(1)
 
     helm_repos = config.get("helm_repos", [])
     if not isinstance(helm_repos, list):
-        logger.critical(f"❌ Critical: 'helm_repos' in config must be a list. Found: {type(helm_repos).__name__}.")
+        logger.critical("❌ 'helm_repos' in config must be a list.")
         exit(1)
 
-    # Add all repos
+    # --- Orchestration ---
     _add_helm_repos(helm_repos)
-
-    # Update all repos
     _update_helm_repos()
 
-    # Pull all charts
-    logger.info("Starting Helm chart pulling process...")
-    for repo in helm_repos:
-        repo_name = repo.get("name")
-        if not repo_name:
-            logger.warning(f"⚠️ Skipping repository entry with no 'name': {repo}")
-            continue
+    # OPTIMIZATION: Load all indices into memory at once
+    helm_cache_dir = _get_helm_cache_dir()
+    repo_indices = _load_repo_indices(helm_repos, helm_cache_dir)
 
-        charts = repo.get("charts", [])
-        if not isinstance(charts, list):
-            logger.warning(f"⚠️ Skipping charts for repo '{repo_name}': 'charts' must be a list. Found: {type(charts).__name__}.")
-            continue
+    logger.info(f"Starting concurrent Helm chart pulling (max workers: {args.max_workers})...")
 
-        for chart_config in charts:
-            _pull_single_chart(repo_name, chart_config, output_base_dir)
+    # OPTIMIZATION: Use a ThreadPoolExecutor to pull charts concurrently
+    tasks = []
+    with ThreadPoolExecutor(max_workers=args.max_workers) as executor:
+        for repo in helm_repos:
+            repo_name = repo.get("name")
+            if not repo_name:
+                continue
 
-    logger.info("Helm chart pulling process completed.")
+            for chart_config in repo.get("charts", []):
+                # Submit the task to the pool
+                future = executor.submit(_pull_single_chart, repo_name, chart_config, output_base_dir, repo_indices)
+                tasks.append(future)
+
+        # Process results as they complete
+        for future in as_completed(tasks):
+            try:
+                result = future.result()
+                # Logging is handled inside the function, so we don't need to log success here
+                if not result:
+                     logger.warning("A chart pull task failed. See logs above for details.")
+            except Exception as e:
+                logger.error(f"❌ A chart pull task raised an unexpected exception: {e}")
+
+    logger.info("✅ Helm chart pulling process completed.")
 
 if __name__ == "__main__":
     main()
