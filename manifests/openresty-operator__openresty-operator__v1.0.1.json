@@ -1,0 +1,402 @@
+{
+  "metadata": {
+    "version": "v1.0.1",
+    "name": "openresty-operator",
+    "source": "charts/openresty-operator__openresty-operator__v1.0.1/",
+    "timestamp": 1755494962,
+    "extra": {
+      "helm": {
+        "description": "Kubernetes Operator for managing OpenResty with custom CRDs (OpenResty, Server, Location, Upstream, RateLimitPolicy)",
+        "home": "https://huangzehong.me/openresty-operator",
+        "icon": "https://raw.githubusercontent.com/zehonghuang/openresty-operator/main/logo.png",
+        "keywords": [
+          "openresty",
+          "operator",
+          "kubernetes",
+          "crd",
+          "nginx",
+          "metrics"
+        ],
+        "kubeVersion": "",
+        "maintainers": [
+          {
+            "name": "zehong.huang",
+            "email": "zehong.hongframe.huang@gmail.com"
+          }
+        ],
+        "sources": [
+          "https://github.com/zehonghuang/openresty-operator"
+        ]
+      }
+    }
+  },
+  "serviceAccountData": [
+    {
+      "serviceAccountName": "openresty-operator",
+      "namespace": "default",
+      "automountToken": false,
+      "secrets": null,
+      "imagePullSecrets": null
+    }
+  ],
+  "serviceAccountPermissions": [
+    {
+      "serviceAccountName": "openresty-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "openresty-operator",
+      "apiGroup": "",
+      "resource": "configmaps",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "Tampering",
+        "ConfigMapAccess",
+        "PotentialPrivilegeEscalation",
+        "InformationDisclosure",
+        "DataExposure",
+        "ClusterWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1024,
+          "name": "Modify ConfigMaps cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1024/"
+        },
+        {
+          "id": 1022,
+          "name": "Read ConfigMaps cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1022/"
+        },
+        {
+          "id": 1025,
+          "name": "Modify ConfigMaps in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1025/"
+        },
+        {
+          "id": 1023,
+          "name": "Read ConfigMaps in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1023/"
+        },
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "openresty-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "openresty-operator",
+      "apiGroup": "",
+      "resource": "secrets",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "ClusterWideSecretAccess",
+        "DataExposure",
+        "SecretAccess",
+        "Tampering",
+        "PrivilegeEscalation",
+        "Persistence",
+        "PotentialPrivilegeEscalation",
+        "ClusterWideAccess",
+        "CredentialAccess",
+        "InformationDisclosure",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1010,
+          "name": "Read secrets cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1010/"
+        },
+        {
+          "id": 1011,
+          "name": "Read secrets in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1011/"
+        },
+        {
+          "id": 1012,
+          "name": "Modify secrets cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1012/"
+        },
+        {
+          "id": 1013,
+          "name": "Modify secrets in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1013/"
+        },
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "openresty-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "openresty-operator",
+      "apiGroup": "",
+      "resource": "pods",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "LateralMovement",
+        "Persistence",
+        "Tampering",
+        "PotentialPrivilegeEscalation",
+        "ClusterWideAccess",
+        "WildcardPermission",
+        "WorkloadExecution",
+        "PrivilegeEscalation"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1006,
+          "name": "Create pods cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1006/"
+        },
+        {
+          "id": 1008,
+          "name": "Update/Patch pods cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1008/"
+        },
+        {
+          "id": 1007,
+          "name": "Create pods in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1007/"
+        },
+        {
+          "id": 1009,
+          "name": "Update/Patch pods in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1009/"
+        },
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "openresty-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "openresty-operator",
+      "apiGroup": "",
+      "resource": "services",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "NetworkManipulation",
+        "ServiceExposure",
+        "DenialOfService",
+        "Tampering",
+        "ClusterWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1075,
+          "name": "Manage Services cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1075/"
+        },
+        {
+          "id": 1076,
+          "name": "Manage Services in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1076/"
+        },
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "openresty-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "openresty-operator",
+      "apiGroup": "",
+      "resource": "events",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "Medium",
+      "tags": [
+        "InformationDisclosure",
+        "Reconnaissance",
+        "OperationalData",
+        "ClusterWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1070,
+          "name": "Read events cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1070/"
+        },
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "openresty-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "openresty-operator",
+      "apiGroup": "apps",
+      "resource": "deployments",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "ClusterWideAccess",
+        "WildcardPermission",
+        "WorkloadLifecycle",
+        "PrivilegeEscalation",
+        "Persistence",
+        "Tampering",
+        "PotentialPrivilegeEscalation"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1033,
+          "name": "Manage Deployments cluster-wide (potential for privileged pod execution)",
+          "link": "https://rbac-atlas.github.io/rules/1033/"
+        },
+        {
+          "id": 1034,
+          "name": "Manage Deployments in a namespace (potential for privileged pod execution)",
+          "link": "https://rbac-atlas.github.io/rules/1034/"
+        },
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "openresty-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "openresty-operator",
+      "apiGroup": "openresty.huangzehong.me",
+      "resource": "*",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "ClusterWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "openresty-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "openresty-operator",
+      "apiGroup": "coordination.k8s.io",
+      "resource": "leases",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "ClusterWideAccess",
+        "WildcardPermission",
+        "Tampering",
+        "DenialOfService",
+        "ControlPlaneDisruption",
+        "LeaderElectionAbuse",
+        "CriticalNamespace"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1080,
+          "name": "Manage Leases cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1080/"
+        },
+        {
+          "id": 1081,
+          "name": "Manage Leases in kube-system or kube-node-lease namespace",
+          "link": "https://rbac-atlas.github.io/rules/1081/"
+        },
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "openresty-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "openresty-operator",
+      "apiGroup": "monitoring.coreos.com",
+      "resource": "servicemonitors",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "ClusterWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    }
+  ],
+  "serviceAccountWorkloads": [
+    {
+      "serviceAccountName": "openresty-operator",
+      "namespace": "default",
+      "workloadType": "Deployment",
+      "workloadName": "openresty-operator",
+      "containerName": "manager",
+      "image": "gintonic1glass/openresty-operator:v1.0.1"
+    }
+  ]
+}

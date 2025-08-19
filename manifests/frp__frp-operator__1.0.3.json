@@ -1,0 +1,473 @@
+{
+  "metadata": {
+    "version": "1.0.3",
+    "name": "frp-operator",
+    "source": "charts/frp__frp-operator__1.0.3/",
+    "timestamp": 1755494918,
+    "extra": {
+      "helm": {
+        "description": "Helm chart for frp Operator",
+        "home": "https://github.com/Aureum-Cloud/frp-Operator",
+        "icon": "https://raw.githubusercontent.com/Aureum-Cloud/frp-Operator/refs/heads/main/logo.png",
+        "keywords": [
+          "reverse-proxy",
+          "tunnel",
+          "operator"
+        ],
+        "kubeVersion": "",
+        "maintainers": [
+          {
+            "name": "Aureum Cloud",
+            "url": "https://www.aureum.cloud"
+          },
+          {
+            "name": "N-Bit",
+            "email": "cloud@n-bit.nl",
+            "url": "https://www.n-bit.nl"
+          },
+          {
+            "name": "Niek Berenschot"
+          }
+        ],
+        "sources": null
+      }
+    }
+  },
+  "serviceAccountData": [
+    {
+      "serviceAccountName": "controller-manager",
+      "namespace": "default",
+      "automountToken": false,
+      "secrets": null,
+      "imagePullSecrets": null
+    }
+  ],
+  "serviceAccountPermissions": [
+    {
+      "serviceAccountName": "controller-manager",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "manager-role",
+      "apiGroup": "",
+      "resource": "pods",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "LateralMovement",
+        "Persistence",
+        "Tampering",
+        "PotentialPrivilegeEscalation",
+        "WorkloadExecution",
+        "PrivilegeEscalation"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1006,
+          "name": "Create pods cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1006/"
+        },
+        {
+          "id": 1008,
+          "name": "Update/Patch pods cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1008/"
+        },
+        {
+          "id": 1007,
+          "name": "Create pods in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1007/"
+        },
+        {
+          "id": 1009,
+          "name": "Update/Patch pods in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1009/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "controller-manager",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "manager-role",
+      "apiGroup": "",
+      "resource": "secrets",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "Persistence",
+        "PotentialPrivilegeEscalation",
+        "DataExposure",
+        "SecretAccess",
+        "ClusterWideSecretAccess",
+        "CredentialAccess",
+        "InformationDisclosure",
+        "Tampering",
+        "PrivilegeEscalation"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1010,
+          "name": "Read secrets cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1010/"
+        },
+        {
+          "id": 1011,
+          "name": "Read secrets in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1011/"
+        },
+        {
+          "id": 1012,
+          "name": "Modify secrets cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1012/"
+        },
+        {
+          "id": 1013,
+          "name": "Modify secrets in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1013/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "controller-manager",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "manager-role",
+      "apiGroup": "",
+      "resource": "services",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "NetworkManipulation",
+        "ServiceExposure",
+        "DenialOfService",
+        "Tampering"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1075,
+          "name": "Manage Services cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1075/"
+        },
+        {
+          "id": 1076,
+          "name": "Manage Services in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1076/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "controller-manager",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "manager-role",
+      "apiGroup": "frp.aureum.cloud",
+      "resource": "exitservers",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "controller-manager",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "manager-role",
+      "apiGroup": "frp.aureum.cloud",
+      "resource": "exitservers/finalizers",
+      "resourceName": "",
+      "verbs": [
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "controller-manager",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "manager-role",
+      "apiGroup": "frp.aureum.cloud",
+      "resource": "exitservers/status",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "patch",
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "controller-manager",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "manager-role",
+      "apiGroup": "frp.aureum.cloud",
+      "resource": "tunnels",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "controller-manager",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "leader-election-role",
+      "apiGroup": "coordination.k8s.io",
+      "resource": "leases",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "DenialOfService",
+        "ControlPlaneDisruption",
+        "CriticalNamespace",
+        "Tampering"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1081,
+          "name": "Manage Leases in kube-system or kube-node-lease namespace",
+          "link": "https://rbac-atlas.github.io/rules/1081/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "controller-manager",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "leader-election-role",
+      "apiGroup": "",
+      "resource": "configmaps",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "DataExposure",
+        "Tampering",
+        "ConfigMapAccess",
+        "PotentialPrivilegeEscalation",
+        "InformationDisclosure"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1025,
+          "name": "Modify ConfigMaps in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1025/"
+        },
+        {
+          "id": 1023,
+          "name": "Read ConfigMaps in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1023/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "controller-manager",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "leader-election-role",
+      "apiGroup": "",
+      "resource": "events",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "patch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "controller-manager",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "proxy-role",
+      "apiGroup": "authentication.k8s.io",
+      "resource": "tokenreviews",
+      "resourceName": "",
+      "verbs": [
+        "create"
+      ],
+      "riskLevel": "Medium",
+      "tags": [
+        "InformationDisclosure",
+        "CredentialAccess",
+        "RBACQuery"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1049,
+          "name": "Create TokenReviews (validate arbitrary tokens)",
+          "link": "https://rbac-atlas.github.io/rules/1049/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "controller-manager",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "proxy-role",
+      "apiGroup": "authorization.k8s.io",
+      "resource": "subjectaccessreviews",
+      "resourceName": "",
+      "verbs": [
+        "create"
+      ],
+      "riskLevel": "Medium",
+      "tags": [
+        "InformationDisclosure",
+        "RBACQuery"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1050,
+          "name": "Create SubjectAccessReviews (check arbitrary permissions)",
+          "link": "https://rbac-atlas.github.io/rules/1050/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    }
+  ],
+  "serviceAccountWorkloads": [
+    {
+      "serviceAccountName": "controller-manager",
+      "namespace": "default",
+      "workloadType": "Deployment",
+      "workloadName": "frp-operator",
+      "containerName": "kube-rbac-proxy",
+      "image": "gcr.io/kubebuilder/kube-rbac-proxy:v0.8.0"
+    },
+    {
+      "serviceAccountName": "controller-manager",
+      "namespace": "default",
+      "workloadType": "Deployment",
+      "workloadName": "frp-operator",
+      "containerName": "manager",
+      "image": "ghcr.io/aureum-cloud/frp-operator:v1.0.0"
+    }
+  ]
+}

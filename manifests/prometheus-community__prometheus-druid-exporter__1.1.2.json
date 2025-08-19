@@ -1,0 +1,63 @@
+{
+  "metadata": {
+    "version": "1.1.2",
+    "name": "prometheus-druid-exporter",
+    "source": "charts/prometheus-community__prometheus-druid-exporter__1.1.2/",
+    "timestamp": 1755494966,
+    "extra": {
+      "helm": {
+        "description": "Druid exporter to monitor druid metrics with Prometheus",
+        "home": "https://github.com/opstree/druid-exporter",
+        "icon": "https://github.com/opstree/druid-exporter/blob/master/static/druid-exporter-logo.svg",
+        "keywords": [
+          "kubernetes",
+          "apache",
+          "druid",
+          "exporter",
+          "prometheus",
+          "grafana"
+        ],
+        "kubeVersion": "\u003e=1.16.0-0",
+        "maintainers": [
+          {
+            "name": "iamabhishek-dubey",
+            "email": "abhishekbhardwaj510@gmail.com",
+            "url": "https://github.com/iamabhishek-dubey"
+          }
+        ],
+        "sources": [
+          "https://github.com/prometheus-community/helm-charts/tree/main/charts/prometheus-druid-exporter",
+          "https://github.com/opstree/druid-exporter"
+        ]
+      }
+    }
+  },
+  "serviceAccountData": [
+    {
+      "serviceAccountName": "prometheus-druid-exporter",
+      "namespace": "default",
+      "automountToken": false,
+      "secrets": null,
+      "imagePullSecrets": null
+    }
+  ],
+  "serviceAccountPermissions": [],
+  "serviceAccountWorkloads": [
+    {
+      "serviceAccountName": "prometheus-druid-exporter",
+      "namespace": "default",
+      "workloadType": "Deployment",
+      "workloadName": "prometheus-druid-exporter",
+      "containerName": "prometheus-druid-exporter",
+      "image": "quay.io/opstree/druid-exporter:v0.11"
+    },
+    {
+      "serviceAccountName": "",
+      "namespace": "default",
+      "workloadType": "Pod",
+      "workloadName": "prometheus-druid-exporter-test-connection",
+      "containerName": "wget",
+      "image": "busybox"
+    }
+  ]
+}

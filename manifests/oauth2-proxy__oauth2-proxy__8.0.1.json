@@ -1,0 +1,102 @@
+{
+  "metadata": {
+    "version": "8.0.1",
+    "name": "oauth2-proxy",
+    "source": "charts/oauth2-proxy__oauth2-proxy__8.0.1/",
+    "timestamp": 1755494955,
+    "extra": {
+      "helm": {
+        "description": "A reverse proxy that provides authentication with Google, Github or other providers",
+        "home": "https://oauth2-proxy.github.io/oauth2-proxy/",
+        "icon": "",
+        "keywords": [
+          "kubernetes",
+          "oauth",
+          "oauth2",
+          "authentication",
+          "google",
+          "github",
+          "redis"
+        ],
+        "kubeVersion": "\u003e=1.16.0-0",
+        "maintainers": [
+          {
+            "name": "pierluigilenoci",
+            "email": "pierluigi.lenoci@gmail.com"
+          },
+          {
+            "name": "tuunit",
+            "email": "jan@larwig.com"
+          },
+          {
+            "name": "JoelSpeed",
+            "email": "joel.speed@hotmail.co.uk"
+          }
+        ],
+        "sources": [
+          "https://github.com/oauth2-proxy/oauth2-proxy",
+          "https://github.com/oauth2-proxy/manifests"
+        ]
+      }
+    }
+  },
+  "serviceAccountData": [
+    {
+      "serviceAccountName": "oauth2-proxy",
+      "namespace": "default",
+      "automountToken": true,
+      "secrets": null,
+      "imagePullSecrets": null
+    },
+    {
+      "serviceAccountName": "oauth2-proxy-redis-ha",
+      "namespace": "default",
+      "automountToken": false,
+      "secrets": null,
+      "imagePullSecrets": null
+    }
+  ],
+  "serviceAccountPermissions": [],
+  "serviceAccountWorkloads": [
+    {
+      "serviceAccountName": "",
+      "namespace": "default",
+      "workloadType": "Pod",
+      "workloadName": "oauth2-proxy-redis-ha-configmap-test",
+      "containerName": "check-init",
+      "image": "koalaman/shellcheck:v0.10.0"
+    },
+    {
+      "serviceAccountName": "oauth2-proxy-redis-ha",
+      "namespace": "default",
+      "workloadType": "StatefulSet",
+      "workloadName": "oauth2-proxy-redis-ha-server",
+      "containerName": "redis",
+      "image": "public.ecr.aws/docker/library/redis:7.2.7-alpine"
+    },
+    {
+      "serviceAccountName": "oauth2-proxy-redis-ha",
+      "namespace": "default",
+      "workloadType": "StatefulSet",
+      "workloadName": "oauth2-proxy-redis-ha-server",
+      "containerName": "sentinel",
+      "image": "public.ecr.aws/docker/library/redis:7.2.7-alpine"
+    },
+    {
+      "serviceAccountName": "oauth2-proxy-redis-ha",
+      "namespace": "default",
+      "workloadType": "StatefulSet",
+      "workloadName": "oauth2-proxy-redis-ha-server",
+      "containerName": "split-brain-fix",
+      "image": "public.ecr.aws/docker/library/redis:7.2.7-alpine"
+    },
+    {
+      "serviceAccountName": "oauth2-proxy",
+      "namespace": "default",
+      "workloadType": "Deployment",
+      "workloadName": "oauth2-proxy",
+      "containerName": "oauth2-proxy",
+      "image": "quay.io/oauth2-proxy/oauth2-proxy:v7.11.0"
+    }
+  ]
+}

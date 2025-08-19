@@ -1,0 +1,875 @@
+{
+  "metadata": {
+    "version": "0.1.19",
+    "name": "netchecks",
+    "source": "charts/netchecks__netchecks__0.1.19/",
+    "timestamp": 1755494953,
+    "extra": {
+      "helm": {
+        "description": "Netchecks proactively verifies whether your security controls are working as intended.",
+        "home": "",
+        "icon": "https://raw.githubusercontent.com/hardbyte/netchecks/main/.github/logo.png",
+        "keywords": null,
+        "kubeVersion": "",
+        "maintainers": [
+          {
+            "name": "Brian Thorne",
+            "email": "brian@hardbyte.nz",
+            "url": "hardbyte.nz"
+          }
+        ],
+        "sources": [
+          "https://github.com/hardbyte/netchecks"
+        ]
+      }
+    }
+  },
+  "serviceAccountData": [
+    {
+      "serviceAccountName": "netchecks-kyverno-plugin",
+      "namespace": "default",
+      "automountToken": false,
+      "secrets": null,
+      "imagePullSecrets": null
+    },
+    {
+      "serviceAccountName": "netcheck-operator",
+      "namespace": "default",
+      "automountToken": false,
+      "secrets": null,
+      "imagePullSecrets": null
+    },
+    {
+      "serviceAccountName": "netchecks-ui",
+      "namespace": "default",
+      "automountToken": false,
+      "secrets": null,
+      "imagePullSecrets": null
+    },
+    {
+      "serviceAccountName": "netchecks-policy-reporter",
+      "namespace": "default",
+      "automountToken": false,
+      "secrets": null,
+      "imagePullSecrets": null
+    }
+  ],
+  "serviceAccountPermissions": [
+    {
+      "serviceAccountName": "netchecks-kyverno-plugin",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "netchecks-kyverno-plugin-secret-reader",
+      "apiGroup": "",
+      "resource": "secrets",
+      "resourceName": "",
+      "verbs": [
+        "get"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "netchecks-kyverno-plugin",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "netchecks-kyverno-plugin",
+      "apiGroup": "*",
+      "resource": "policies",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "ClusterWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "netchecks-kyverno-plugin",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "netchecks-kyverno-plugin",
+      "apiGroup": "*",
+      "resource": "policies/status",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "ClusterWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "netchecks-kyverno-plugin",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "netchecks-kyverno-plugin",
+      "apiGroup": "*",
+      "resource": "clusterpolicies",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "WildcardPermission",
+        "ClusterWideAccess"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "netchecks-kyverno-plugin",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "netchecks-kyverno-plugin",
+      "apiGroup": "*",
+      "resource": "clusterpolicies/status",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "ClusterWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "netchecks-kyverno-plugin",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "netchecks-kyverno-plugin",
+      "apiGroup": "*",
+      "resource": "policyreports",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "ClusterWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "netchecks-kyverno-plugin",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "netchecks-kyverno-plugin",
+      "apiGroup": "*",
+      "resource": "clusterpolicyreports",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "WildcardPermission",
+        "ClusterWideAccess"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "netchecks-policy-reporter",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "netchecks-policy-reporter-secret-reader",
+      "apiGroup": "",
+      "resource": "secrets",
+      "resourceName": "",
+      "verbs": [
+        "get"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "netchecks-policy-reporter",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "netchecks-policy-reporter",
+      "apiGroup": "*",
+      "resource": "policyreports",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "ClusterWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "netchecks-policy-reporter",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "netchecks-policy-reporter",
+      "apiGroup": "*",
+      "resource": "policyreports/status",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "ClusterWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "netchecks-policy-reporter",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "netchecks-policy-reporter",
+      "apiGroup": "*",
+      "resource": "clusterpolicyreports",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "ClusterWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "netchecks-policy-reporter",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "netchecks-policy-reporter",
+      "apiGroup": "*",
+      "resource": "clusterpolicyreports/status",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "ClusterWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "netcheck-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "netchecks",
+      "apiGroup": "",
+      "resource": "configmaps",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "Tampering",
+        "ConfigMapAccess",
+        "PotentialPrivilegeEscalation"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1024,
+          "name": "Modify ConfigMaps cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1024/"
+        },
+        {
+          "id": 1025,
+          "name": "Modify ConfigMaps in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1025/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "netcheck-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "netchecks",
+      "apiGroup": "",
+      "resource": "pods",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "patch",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "netcheck-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "netchecks",
+      "apiGroup": "",
+      "resource": "pods/log",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "ClusterWideLogAccess",
+        "InformationDisclosure",
+        "DataExposure",
+        "LogAccess"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1018,
+          "name": "Read pod logs cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1018/"
+        },
+        {
+          "id": 1019,
+          "name": "Read pod logs in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1019/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "netcheck-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "netchecks",
+      "apiGroup": "",
+      "resource": "pods/status",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "patch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "netcheck-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "netchecks",
+      "apiGroup": "",
+      "resource": "namespaces",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [
+        "InformationDisclosure",
+        "Reconnaissance",
+        "ClusterStructure"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1082,
+          "name": "List Namespaces (Cluster Reconnaissance)",
+          "link": "https://rbac-atlas.github.io/rules/1082/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "netcheck-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "netchecks",
+      "apiGroup": "",
+      "resource": "events",
+      "resourceName": "",
+      "verbs": [
+        "create"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "netcheck-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "netchecks",
+      "apiGroup": "admissionregistration.k8s.io/v1",
+      "resource": "validatingwebhookconfigurations",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "patch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "netcheck-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "netchecks",
+      "apiGroup": "admissionregistration.k8s.io/v1",
+      "resource": "mutatingwebhookconfigurations",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "patch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "netcheck-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "netchecks",
+      "apiGroup": "netchecks.io",
+      "resource": "networkassertions",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "netcheck-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "netchecks",
+      "apiGroup": "wgpolicyk8s.io",
+      "resource": "policyreports",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "netcheck-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "netchecks",
+      "apiGroup": "extensions",
+      "resource": "jobs",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "netcheck-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "netchecks",
+      "apiGroup": "extensions",
+      "resource": "cronjobs",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "netcheck-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "netchecks",
+      "apiGroup": "kopf.dev",
+      "resource": "clusterkopfpeerings",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "patch",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "netcheck-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "netchecks",
+      "apiGroup": "apiextensions.k8s.io",
+      "resource": "customresourcedefinitions",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "netcheck-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "netchecks",
+      "apiGroup": "admissionregistration.k8s.io/v1beta1",
+      "resource": "validatingwebhookconfigurations",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "patch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "netcheck-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "netchecks",
+      "apiGroup": "admissionregistration.k8s.io/v1beta1",
+      "resource": "mutatingwebhookconfigurations",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "patch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "netcheck-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "netchecks",
+      "apiGroup": "batch",
+      "resource": "jobs",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "netcheck-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "netchecks",
+      "apiGroup": "batch",
+      "resource": "cronjobs",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "netchecks-ui",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "netchecks-ui-secret-reader",
+      "apiGroup": "",
+      "resource": "secrets",
+      "resourceName": "",
+      "verbs": [
+        "get"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    }
+  ],
+  "serviceAccountWorkloads": [
+    {
+      "serviceAccountName": "netchecks-ui",
+      "namespace": "default",
+      "workloadType": "Deployment",
+      "workloadName": "netchecks-ui",
+      "containerName": "ui",
+      "image": "ghcr.io/kyverno/policy-reporter-ui:1.9.2"
+    },
+    {
+      "serviceAccountName": "netchecks-policy-reporter",
+      "namespace": "default",
+      "workloadType": "Deployment",
+      "workloadName": "netchecks-policy-reporter",
+      "containerName": "policy-reporter",
+      "image": "ghcr.io/kyverno/policy-reporter:2.18.1"
+    },
+    {
+      "serviceAccountName": "netcheck-operator",
+      "namespace": "default",
+      "workloadType": "Deployment",
+      "workloadName": "netchecks",
+      "containerName": "netchecks",
+      "image": "ghcr.io/hardbyte/netchecks-operator:0.5.6"
+    },
+    {
+      "serviceAccountName": "netchecks-kyverno-plugin",
+      "namespace": "default",
+      "workloadType": "Deployment",
+      "workloadName": "netchecks-kyverno-plugin",
+      "containerName": "kyverno-plugin",
+      "image": "ghcr.io/kyverno/policy-reporter-kyverno-plugin:1.6.3"
+    }
+  ]
+}

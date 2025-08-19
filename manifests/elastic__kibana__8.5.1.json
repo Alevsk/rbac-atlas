@@ -1,0 +1,113 @@
+{
+  "metadata": {
+    "version": "8.5.1",
+    "name": "kibana",
+    "source": "charts/elastic__kibana__8.5.1/",
+    "timestamp": 1755494914,
+    "extra": {
+      "helm": {
+        "description": "Official Elastic helm chart for Kibana",
+        "home": "https://github.com/elastic/helm-charts",
+        "icon": "https://helm.elastic.co/icons/kibana.png",
+        "keywords": null,
+        "kubeVersion": "",
+        "maintainers": [
+          {
+            "name": "Elastic",
+            "email": "helm-charts@elastic.co"
+          }
+        ],
+        "sources": [
+          "https://github.com/elastic/kibana"
+        ]
+      }
+    }
+  },
+  "serviceAccountData": [
+    {
+      "serviceAccountName": "post-delete-kibana-kibana",
+      "namespace": "default",
+      "automountToken": false,
+      "secrets": null,
+      "imagePullSecrets": null
+    },
+    {
+      "serviceAccountName": "pre-install-kibana-kibana",
+      "namespace": "default",
+      "automountToken": false,
+      "secrets": null,
+      "imagePullSecrets": null
+    }
+  ],
+  "serviceAccountPermissions": [
+    {
+      "serviceAccountName": "pre-install-kibana-kibana",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "pre-install-kibana-kibana",
+      "apiGroup": "",
+      "resource": "secrets",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "post-delete-kibana-kibana",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "post-delete-kibana-kibana",
+      "apiGroup": "",
+      "resource": "secrets",
+      "resourceName": "",
+      "verbs": [
+        "delete"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    }
+  ],
+  "serviceAccountWorkloads": [
+    {
+      "serviceAccountName": "",
+      "namespace": "default",
+      "workloadType": "Job",
+      "workloadName": "pre-install-kibana-kibana",
+      "containerName": "create-kibana-token",
+      "image": "docker.elastic.co/kibana/kibana:8.5.1"
+    },
+    {
+      "serviceAccountName": "",
+      "namespace": "default",
+      "workloadType": "Job",
+      "workloadName": "post-delete-kibana-kibana",
+      "containerName": "clean-kibana-token",
+      "image": "docker.elastic.co/kibana/kibana:8.5.1"
+    },
+    {
+      "serviceAccountName": "",
+      "namespace": "default",
+      "workloadType": "Deployment",
+      "workloadName": "kibana-kibana",
+      "containerName": "kibana",
+      "image": "docker.elastic.co/kibana/kibana:8.5.1"
+    }
+  ]
+}

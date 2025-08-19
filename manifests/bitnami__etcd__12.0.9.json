@@ -1,0 +1,60 @@
+{
+  "metadata": {
+    "version": "12.0.9",
+    "name": "etcd",
+    "source": "charts/bitnami__etcd__12.0.9/",
+    "timestamp": 1755494897,
+    "extra": {
+      "helm": {
+        "description": "etcd is a distributed key-value store designed to securely store data across a cluster. etcd is widely used in production on account of its reliability, fault-tolerance and ease of use.",
+        "home": "https://bitnami.com",
+        "icon": "https://dyltqmyl993wv.cloudfront.net/assets/stacks/etcd/img/etcd-stack-220x234.png",
+        "keywords": [
+          "etcd",
+          "cluster",
+          "database",
+          "cache",
+          "key-value"
+        ],
+        "kubeVersion": "",
+        "maintainers": [
+          {
+            "name": "Broadcom, Inc. All Rights Reserved.",
+            "url": "https://github.com/bitnami/charts"
+          }
+        ],
+        "sources": [
+          "https://github.com/bitnami/charts/tree/main/bitnami/etcd"
+        ]
+      }
+    }
+  },
+  "serviceAccountData": [
+    {
+      "serviceAccountName": "etcd",
+      "namespace": "default",
+      "automountToken": false,
+      "secrets": null,
+      "imagePullSecrets": null
+    }
+  ],
+  "serviceAccountPermissions": [],
+  "serviceAccountWorkloads": [
+    {
+      "serviceAccountName": "etcd",
+      "namespace": "default",
+      "workloadType": "StatefulSet",
+      "workloadName": "etcd",
+      "containerName": "etcd",
+      "image": "docker.io/bitnami/etcd:3.6.2-debian-12-r0"
+    },
+    {
+      "serviceAccountName": "",
+      "namespace": "default",
+      "workloadType": "Job",
+      "workloadName": "etcd-pre-upgrade",
+      "containerName": "pre-upgrade-job",
+      "image": "docker.io/bitnami/etcd:3.6.2-debian-12-r0"
+    }
+  ]
+}

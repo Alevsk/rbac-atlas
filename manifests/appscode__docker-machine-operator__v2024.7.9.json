@@ -1,0 +1,116 @@
+{
+  "metadata": {
+    "version": "v2024.7.9",
+    "name": "docker-machine-operator",
+    "source": "charts/appscode__docker-machine-operator__v2024.7.9/",
+    "timestamp": 1755494853,
+    "extra": {
+      "helm": {
+        "description": "A Helm chart for Docker Machine Operator by AppsCode",
+        "home": "https://github.com/kluster-api/docker-machine-operator",
+        "icon": "https://cdn.appscode.com/images/products/searchlight/icons/android-icon-192x192.png",
+        "keywords": null,
+        "kubeVersion": "",
+        "maintainers": [
+          {
+            "name": "appscode",
+            "email": "support@appscode.com"
+          }
+        ],
+        "sources": [
+          "https://github.com/kluster-api/docker-machine-operator"
+        ]
+      }
+    }
+  },
+  "serviceAccountData": [
+    {
+      "serviceAccountName": "docker-machine-operator",
+      "namespace": "default",
+      "automountToken": false,
+      "secrets": null,
+      "imagePullSecrets": null
+    }
+  ],
+  "serviceAccountPermissions": [
+    {
+      "serviceAccountName": "docker-machine-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "docker-machine-operator",
+      "apiGroup": "docker-machine.klusters.dev",
+      "resource": "*",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "patch",
+        "watch"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "WildcardPermission",
+        "ClusterWideAccess"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "docker-machine-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "docker-machine-operator",
+      "apiGroup": "",
+      "resource": "secrets",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "watch"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "CredentialAccess",
+        "DataExposure",
+        "InformationDisclosure",
+        "SecretAccess",
+        "ClusterWideSecretAccess"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1010,
+          "name": "Read secrets cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1010/"
+        },
+        {
+          "id": 1011,
+          "name": "Read secrets in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1011/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    }
+  ],
+  "serviceAccountWorkloads": [
+    {
+      "serviceAccountName": "docker-machine-operator",
+      "namespace": "default",
+      "workloadType": "Deployment",
+      "workloadName": "docker-machine-operator",
+      "containerName": "docker-machine-operator",
+      "image": "ghcr.io/appscode/docker-machine-operator:v0.0.4"
+    }
+  ]
+}

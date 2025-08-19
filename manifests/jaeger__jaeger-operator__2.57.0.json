@@ -1,0 +1,1041 @@
+{
+  "metadata": {
+    "version": "2.57.0",
+    "name": "jaeger-operator",
+    "source": "charts/jaeger__jaeger-operator__2.57.0/",
+    "timestamp": 1755494934,
+    "extra": {
+      "helm": {
+        "description": "jaeger-operator Helm chart for Kubernetes",
+        "home": "https://www.jaegertracing.io/",
+        "icon": "https://www.jaegertracing.io/img/jaeger-icon-reverse-color.svg",
+        "keywords": null,
+        "kubeVersion": "",
+        "maintainers": [
+          {
+            "name": "cpanato",
+            "email": "ctadeu@gmail.com"
+          },
+          {
+            "name": "batazor",
+            "email": "batazor111@gmail.com"
+          }
+        ],
+        "sources": [
+          "https://github.com/jaegertracing/jaeger-operator"
+        ]
+      }
+    }
+  },
+  "serviceAccountData": [
+    {
+      "serviceAccountName": "jaeger-operator",
+      "namespace": "default",
+      "automountToken": false,
+      "secrets": null,
+      "imagePullSecrets": null
+    }
+  ],
+  "serviceAccountPermissions": [
+    {
+      "serviceAccountName": "jaeger-operator",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "jaeger-operator",
+      "apiGroup": "apps",
+      "resource": "daemonsets",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "Persistence",
+        "NodeAccess",
+        "Tampering",
+        "WorkloadLifecycle",
+        "PrivilegeEscalation"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1036,
+          "name": "Manage DaemonSets in a namespace (runs on nodes, high impact)",
+          "link": "https://rbac-atlas.github.io/rules/1036/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "jaeger-operator",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "jaeger-operator",
+      "apiGroup": "apps",
+      "resource": "deployments",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "Tampering",
+        "WorkloadLifecycle",
+        "PotentialPrivilegeEscalation",
+        "Persistence"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1034,
+          "name": "Manage Deployments in a namespace (potential for privileged pod execution)",
+          "link": "https://rbac-atlas.github.io/rules/1034/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "jaeger-operator",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "jaeger-operator",
+      "apiGroup": "apps",
+      "resource": "replicasets",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "jaeger-operator",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "jaeger-operator",
+      "apiGroup": "apps",
+      "resource": "statefulsets",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "WorkloadLifecycle",
+        "PotentialPrivilegeEscalation",
+        "Persistence",
+        "Tampering"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1038,
+          "name": "Manage StatefulSets in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1038/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "jaeger-operator",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "jaeger-operator",
+      "apiGroup": "apps",
+      "resource": "deployments/status",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "patch",
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "jaeger-operator",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "jaeger-operator",
+      "apiGroup": "jaegertracing.io",
+      "resource": "jaegers",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "jaeger-operator",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "jaeger-operator",
+      "apiGroup": "jaegertracing.io",
+      "resource": "jaegers/finalizers",
+      "resourceName": "",
+      "verbs": [
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "jaeger-operator",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "jaeger-operator",
+      "apiGroup": "jaegertracing.io",
+      "resource": "jaegers/status",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "patch",
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "jaeger-operator",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "jaeger-operator",
+      "apiGroup": "monitoring.coreos.com",
+      "resource": "servicemonitors",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "jaeger-operator",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "jaeger-operator",
+      "apiGroup": "networking.k8s.io",
+      "resource": "ingresses",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "NetworkManipulation",
+        "ServiceExposure",
+        "Tampering",
+        "DenialOfService"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1091,
+          "name": "Manage Ingresses (Namespace Service Exposure/Traffic Redirection)",
+          "link": "https://rbac-atlas.github.io/rules/1091/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "jaeger-operator",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "jaeger-operator",
+      "apiGroup": "networking.k8s.io",
+      "resource": "ingressclasses",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "jaeger-operator",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "jaeger-operator",
+      "apiGroup": "autoscaling",
+      "resource": "horizontalpodautoscalers",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "jaeger-operator",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "jaeger-operator",
+      "apiGroup": "batch",
+      "resource": "cronjobs",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "Tampering",
+        "WorkloadLifecycle",
+        "PotentialPrivilegeEscalation",
+        "Persistence"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1040,
+          "name": "Manage CronJobs in a namespace (scheduled privileged execution, persistence)",
+          "link": "https://rbac-atlas.github.io/rules/1040/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "jaeger-operator",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "jaeger-operator",
+      "apiGroup": "batch",
+      "resource": "jobs",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "WorkloadLifecycle",
+        "PotentialPrivilegeEscalation",
+        "Tampering"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1042,
+          "name": "Manage Jobs in a namespace (one-off privileged execution)",
+          "link": "https://rbac-atlas.github.io/rules/1042/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "jaeger-operator",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "jaeger-operator",
+      "apiGroup": "coordination.k8s.io",
+      "resource": "leases",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "get",
+        "list",
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "jaeger-operator",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "jaeger-operator",
+      "apiGroup": "image.openshift.io",
+      "resource": "imagestreams",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "jaeger-operator",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "jaeger-operator",
+      "apiGroup": "",
+      "resource": "configmaps",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "InformationDisclosure",
+        "DataExposure",
+        "Tampering",
+        "ConfigMapAccess",
+        "PotentialPrivilegeEscalation"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1025,
+          "name": "Modify ConfigMaps in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1025/"
+        },
+        {
+          "id": 1023,
+          "name": "Read ConfigMaps in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1023/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "jaeger-operator",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "jaeger-operator",
+      "apiGroup": "",
+      "resource": "persistentvolumeclaims",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "jaeger-operator",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "jaeger-operator",
+      "apiGroup": "",
+      "resource": "pods",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "WorkloadExecution",
+        "PotentialPrivilegeEscalation",
+        "LateralMovement",
+        "Persistence",
+        "Tampering"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1007,
+          "name": "Create pods in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1007/"
+        },
+        {
+          "id": 1009,
+          "name": "Update/Patch pods in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1009/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "jaeger-operator",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "jaeger-operator",
+      "apiGroup": "",
+      "resource": "secrets",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "Tampering",
+        "PotentialPrivilegeEscalation",
+        "Persistence",
+        "SecretAccess",
+        "CredentialAccess",
+        "DataExposure",
+        "InformationDisclosure"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1011,
+          "name": "Read secrets in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1011/"
+        },
+        {
+          "id": 1013,
+          "name": "Modify secrets in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1013/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "jaeger-operator",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "jaeger-operator",
+      "apiGroup": "",
+      "resource": "serviceaccounts",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Medium",
+      "tags": [
+        "IdentityManagement",
+        "PotentialPrivilegeEscalation",
+        "Tampering"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1068,
+          "name": "Manage ServiceAccounts in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1068/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "jaeger-operator",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "jaeger-operator",
+      "apiGroup": "",
+      "resource": "services",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "DenialOfService",
+        "Tampering",
+        "NetworkManipulation",
+        "ServiceExposure"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1076,
+          "name": "Manage Services in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1076/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "jaeger-operator",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "jaeger-operator",
+      "apiGroup": "",
+      "resource": "services/finalizers",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "jaeger-operator",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "jaeger-operator",
+      "apiGroup": "",
+      "resource": "namespaces",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "jaeger-operator",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "jaeger-operator",
+      "apiGroup": "",
+      "resource": "namespaces/status",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "patch",
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "jaeger-operator",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "jaeger-operator",
+      "apiGroup": "kafka.strimzi.io",
+      "resource": "kafkas",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "jaeger-operator",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "jaeger-operator",
+      "apiGroup": "kafka.strimzi.io",
+      "resource": "kafkausers",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "jaeger-operator",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "jaeger-operator",
+      "apiGroup": "logging.openshift.io",
+      "resource": "elasticsearch",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "jaeger-operator",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "jaeger-operator",
+      "apiGroup": "logging.openshift.io",
+      "resource": "elasticsearches",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "jaeger-operator",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "jaeger-operator",
+      "apiGroup": "rbac.authorization.k8s.io",
+      "resource": "clusterrolebindings",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "jaeger-operator",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "jaeger-operator",
+      "apiGroup": "console.openshift.io",
+      "resource": "consolelinks",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "jaeger-operator",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "jaeger-operator",
+      "apiGroup": "extensions",
+      "resource": "ingresses",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "jaeger-operator",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "jaeger-operator",
+      "apiGroup": "route.openshift.io",
+      "resource": "routes",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    }
+  ],
+  "serviceAccountWorkloads": [
+    {
+      "serviceAccountName": "jaeger-operator",
+      "namespace": "default",
+      "workloadType": "Deployment",
+      "workloadName": "jaeger-operator",
+      "containerName": "jaeger-operator",
+      "image": "jaegertracing/jaeger-operator:1.61.0"
+    }
+  ]
+}
