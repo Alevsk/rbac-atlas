@@ -178,6 +178,12 @@ def _pull_single_chart(repo_name: str, chart_config: Dict[str, Any], output_base
     final_chart_path = output_base_dir / output_folder_name
     helm_extracted_dir = output_base_dir / chart_name
 
+    # Check if manifest already exists
+    manifest_path = Path("manifests") / f"{sanitized_repo_name}__{chart_name}__{target_version}.json"
+    if manifest_path.exists():
+        logger.info(f"✅ Manifest for '{full_chart_ref}' version '{target_version}' already exists at {manifest_path}. Skipping pull.")
+        return f"Skipped (manifest exists): {manifest_path}"
+
     if final_chart_path.exists():
         logger.info(f"✅ Chart '{full_chart_ref}' version '{target_version}' already exists. Skipping pull.")
         return f"Skipped (already exists): {final_chart_path}"
