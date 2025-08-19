@@ -15,7 +15,7 @@ import os
 import re
 import yaml
 from collections import Counter, defaultdict
-from typing import Any, Dict, List, Optional
+from typing import Any, Dict, List, Optional, Tuple
 
 # ───────────────────────────── Constants ──────────────────────────────
 # Order for sorting risk levels (lower number means higher risk)
@@ -449,6 +449,33 @@ def parse_chart_info(json_file_path: str) -> Tuple[str, str]:
         return name_parts[0], name_parts[1]
     raise ValueError(f"Invalid filename format: {json_file_path}. Expected format: repo__chart__version.json")
 
+def get_destination_path(meta_data: Dict[str, Any], output_dir: str, json_file_path: str) -> str:
+    """
+    Determines the destination path for a Markdown file based on metadata.
+
+    Args:
+        meta_data: The metadata dictionary from the JSON input.
+        output_dir: The base output directory (site root).
+        json_file_path: Path to the source JSON file for repo/chart info.
+
+    Returns:
+        The full path where the markdown file should be written.
+    """
+    repo_name, chart_name = parse_chart_info(json_file_path)
+
+    # Create directory structure
+    charts_dir = os.path.join(output_dir, "charts")
+    repo_dir = os.path.join(charts_dir, repo_name)
+    chart_dir = os.path.join(repo_dir, chart_name)
+
+    # Remove leading 'v' from version if present
+    version = meta_data['version']
+    if version.startswith("v"):
+        version = version[1:]
+
+    # Return the main content file path
+    return os.path.join(chart_dir, f"{version}.md")
+
 def write_markdown(markdown_content: str, meta_data: Dict[str, Any], output_dir: str, json_file_path: str) -> str:
     """
     Writes the generated Markdown content for an application to a file
@@ -514,7 +541,7 @@ def parse_rules_yaml(yaml_path: str) -> Dict[int, Dict[str, Any]]:
     except (IOError, yaml.YAMLError) as exc:
         raise Exception(f"Error reading or parsing rules YAML file '{yaml_path}': {exc}")
 
-def generate_rule_markdown_files(rules_data: Dict[int, Dict[str, Any]], output_dir: str) -> None:
+def generate_rule_markdown_files(rules_data: Dict[int, Dict[str, Any]], output_dir: str, force: bool = False) -> None:
     """
     Generates Markdown files for each rule in the provided rules data.
     These files are typically placed under 'content/rules/'.
@@ -527,6 +554,12 @@ def generate_rule_markdown_files(rules_data: Dict[int, Dict[str, Any]], output_d
     os.makedirs(rules_dir, exist_ok=True)
 
     for rule_id, rule in rules_data.items():
+
+        destination_path = os.path.join(rules_dir, f"{rule_id}.md")
+        if os.path.exists(destination_path) and not force:
+            print(f"Skipping existing rule: {destination_path}")
+            continue
+
         # Front matter for the rule page
         front_matter_lines = [
             "---",
@@ -589,7 +622,7 @@ def generate_rule_markdown_files(rules_data: Dict[int, Dict[str, Any]], output_d
 
         print(f"Generated rule file: {rule_file_path}")
 
-def process_json_file(json_file_path: str, output_dir: str, rules_data: Dict[int, Dict[str, Any]]) -> None:
+def process_json_file(json_file_path: str, output_dir: str, rules_data: Dict[int, Dict[str, Any]], force: bool = False) -> None:
     """
     Processes a single JSON file, generates its markdown content, and writes it to disk.
     Skips generation if the chart has no service accounts, workloads, or bindings.
@@ -598,10 +631,17 @@ def process_json_file(json_file_path: str, output_dir: str, rules_data: Dict[int
         json_file_path: The full path to the JSON input file.
         output_dir: The base output directory (site root).
         rules_data: A dictionary of security rules, keyed by rule ID.
+        force: Force overwrite existing markdown files.
     """
     try:
+        # Get destination path first to check if file exists
         with open(json_file_path, encoding="utf-8") as fh:
             data = json.load(fh)
+
+        destination_path = get_destination_path(data["metadata"], output_dir, json_file_path)
+        if os.path.exists(destination_path) and not force:
+            print(f"Skipping existing file: {destination_path}")
+            return
 
         # Skip if chart has no service accounts, workloads, or bindings
         sa_data = data.get("serviceAccountData", {})
@@ -641,6 +681,9 @@ def main() -> None:
         "-o", "--output-dir", default="content",
         help="Site root directory (e.g., the directory that contains 'content/')."
     )
+    ap.add_argument(
+        '--force', action='store_true', help='Force overwrite existing markdown files'
+    )
     args = ap.parse_args()
 
     # 1. Parse the rules YAML file
@@ -652,7 +695,7 @@ def main() -> None:
 
     # 2. Generate markdown files for each rule
     try:
-        generate_rule_markdown_files(rules_data, args.output_dir)
+        generate_rule_markdown_files(rules_data, args.output_dir, args.force)
     except Exception as exc:
         ap.error(f"Error generating rule markdown files: {exc}")
 
@@ -668,7 +711,7 @@ def main() -> None:
         if json_file_name == "custom-values.json":
             continue # Skip custom values
         full_path = os.path.join(args.folder, json_file_name)
-        process_json_file(full_path, args.output_dir, rules_data)
+        process_json_file(full_path, args.output_dir, rules_data, args.force)
 
 
 if __name__ == "__main__":

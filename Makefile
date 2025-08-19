@@ -76,3 +76,9 @@ json2markdown:
 	python json2hugo.py -f manifests/ -o content/
 
 generate-pages: json2markdown fmt lint
+
+json2markdownForce:
+	@echo "Force regenerating pages..."
+	python json2hugo.py -f manifests/ -o content/ --force
+
+generate-pages-force: json2markdownForce fmt lint
