@@ -1,0 +1,72 @@
+name: Daily Content Update
+
+on:
+  schedule:
+    - cron: "0 0 * * *" # Runs at 00:00 UTC daily
+  workflow_dispatch: # Allows manual trigger
+
+jobs:
+  update-content:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout rbac-atlas
+        uses: actions/checkout@v4
+        with:
+          repository: Alevsk/rbac-atlas
+          token: ${{ secrets.DAILY_UPDATE_TOKEN }}
+          fetch-depth: 0
+
+      - name: Checkout rbac-scope
+        run: |
+          mkdir -p /tmp/rbac-scope
+          git clone https://github.com/Alevsk/rbac-scope.git /tmp/rbac-scope
+          cd /tmp/rbac-scope
+          # Store latest commit for reference
+          echo "RBAC_SCOPE_SHA=$(git rev-parse HEAD)" >> $GITHUB_ENV
+          # Copy risks.yaml to repository root
+          cp internal/policyevaluation/risks.yaml /home/runner/work/rbac-atlas/rbac-atlas/risks.yaml
+
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.x"
+
+      - name: Set up Python environment
+        run: |
+          python -m venv .venv
+          source .venv/bin/activate
+          python -m pip install 'pagefind[extended]' djlint
+          python -m pip install -r requirements.txt
+        shell: bash
+
+      - name: Setup Helm
+        uses: azure/setup-helm@v3
+        with:
+          version: "latest"
+
+      - name: Install rbac-scope
+        run: |
+          cd /tmp/rbac-scope
+          make build
+          sudo mv bin/rbac-scope /usr/local/bin/
+          rbac-scope version
+
+      - name: Run make commands
+        run: |
+          source .venv/bin/activate
+          make pull-projects
+          make get-manifests
+          make json-to-markdown
+        shell: bash
+
+      - name: Commit and push changes
+        run: |
+          if [[ -n $(git status --porcelain) ]]; then
+            git config user.name "GitHub Actions"
+            git config user.email "actions@github.com"
+            git add .
+            git commit -m "update $(date +'%Y-%m-%d')"
+            git push
+          else
+            echo "No changes to commit"
+          fi

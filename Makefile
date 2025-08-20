@@ -22,6 +22,12 @@ help: ##@ Help
 # Centralize configuration here. Avoid hardcoding values in the recipes.
 # ==============================================================================
 
+# --- Python Environment ---
+VENV_DIR       := .venv
+VENV_BIN       := $(VENV_DIR)/bin
+VENV_PYTHON    := $(VENV_BIN)/python
+VENV_PIP       := $(VENV_BIN)/pip
+
 # --- Application Configuration ---
 DOCKER_IMAGE   := rbac-atlas
 DOCKER_TAG     := latest
@@ -35,8 +41,8 @@ PYTHON         := python3
 NPM            := npm
 NPX            := npx
 DOCKER         := docker
-DJLINT         := djlint
-PAGEFIND       := $(PYTHON) -m pagefind
+DJLINT         := $(VENV_BIN)/djlint
+PAGEFIND       := $(VENV_PYTHON) -m pagefind
 
 # --- Directories & Paths ---
 # Define paths to avoid repetition and make cleaning more precise.
@@ -123,9 +129,9 @@ cover: ##@ Run tests and generate an HTML coverage report
 #
 # These targets manage fetching Helm charts and generating content from them.
 # ==============================================================================
-.PHONY: update-projects pull-projects get-manifests generate-pages
+.PHONY: update pull-projects get-manifests generate-pages
 
-update-projects: pull-projects get-manifests generate-pages ##@ Full data pipeline: pull projects, analyze manifests, generate pages
+update: pull-projects get-manifests generate-pages ##@ Full data pipeline: pull projects, analyze manifests, generate pages
 
 pull-projects: ##@ Pull remote project sources defined in projects.yaml
 	@echo "INFO: Pulling project sources..."
@@ -152,17 +158,25 @@ json-to-markdown:
 # ==============================================================================
 .PHONY: install clean docker
 
-install: ##@ Install all required dependencies (npm, pip)
+venv: ##@ Create Python virtual environment
+	@echo "INFO: Creating Python virtual environment..."
+	@$(PYTHON) -m venv $(VENV_DIR)
+
+activate: ##@ Print commands to activate virtual environment
+	@echo "To activate the virtual environment, run:"
+	@echo "source $(VENV_DIR)/bin/activate"
+
+install: venv ##@ Install all required dependencies (npm, pip)
 	@echo "INFO: Installing Node.js dependencies..."
 	@$(NPM) install
 	@echo "INFO: Installing global Node.js tools (Playwright)..."
 	@$(NPM) install -g playwright
 	@echo "INFO: Installing Python dependencies..."
-	@$(PYTHON) -m pip install 'pagefind[extended]' djlint
+	@$(VENV_PIP) install -r requirements.txt
 
 clean: ##@ Remove all generated files and build artifacts
 	@echo "INFO: Cleaning up generated files and directories..."
-	@rm -rf $(PUBLIC_DIR) $(RESOURCES_DIR) $(NODE_MODULES) $(PLAYWRIGHT_REPORT)
+	@rm -rf $(PUBLIC_DIR) $(RESOURCES_DIR) $(NODE_MODULES) $(PLAYWRIGHT_REPORT) $(VENV_DIR)
 
 docker: ##@ Build the Docker image for the application
 	@echo "INFO: Building Docker image [$(DOCKER_IMAGE):$(DOCKER_TAG)]..."

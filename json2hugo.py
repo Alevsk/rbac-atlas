@@ -674,7 +674,7 @@ def main() -> None:
     )
     ap.add_argument(
         "-r", "--rules",
-        default="/home/alevsk/Development/rbac-scope/internal/policyevaluation/risks.yaml",
+        default="risks.yaml",
         help="Path to the rules YAML file (e.g., risks.yaml)."
     )
     ap.add_argument(

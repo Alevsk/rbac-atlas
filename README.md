@@ -5,37 +5,15 @@ A curated database of identities and RBAC policies in Kubernetes projects, with 
 ## Quick Start
 
 1. Clone the repository:
+
    ```bash
    git clone https://github.com/yourusername/rbac-atlas.git
    cd rbac-atlas
    ```
 
-2. Install dependencies:
-   ```bash
-   make install-deps
-   ```
+2. Follow the setup instructions in [DEVELOPMENT.md](DEVELOPMENT.md).
 
-3. Start the development server:
-   ```bash
-   make serve
-   ```
-
-4. Visit http://localhost:1313
-
-## Building and Deployment
-
-### Local Development
-```bash
-make serve  # Start development server
-make build  # Build static site
-make test   # Run tests
-```
-
-### Docker Deployment
-```bash
-make docker  # Build container
-docker-compose up  # Run with Nginx
-```
+3. Visit [http://localhost:1313](http://localhost:1313) after starting the development server.
 
 ## Contributing
 
@@ -48,7 +26,3 @@ For security concerns, please see our [Security Policy](SECURITY.md).
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-
-
-
