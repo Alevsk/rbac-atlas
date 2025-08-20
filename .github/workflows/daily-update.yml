@@ -31,12 +31,16 @@ jobs:
         with:
           python-version: "3.x"
 
-      - name: Set up Python environment
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: "18"
+
+      - name: Install dependencies
         run: |
-          python -m venv .venv
+          make venv
           source .venv/bin/activate
-          python -m pip install 'pagefind[extended]' djlint
-          python -m pip install -r requirements.txt
+          make install
         shell: bash
 
       - name: Setup Helm
@@ -56,7 +60,7 @@ jobs:
           source .venv/bin/activate
           make pull-projects
           make get-manifests
-          make json-to-markdown
+          make generate-pages
         shell: bash
 
       - name: Commit and push changes

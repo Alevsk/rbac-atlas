@@ -143,7 +143,7 @@ get-manifests: ##@ Analyze Helm charts to generate JSON manifests (use FORCE=tru
 	@# This makes the Makefile cleaner and the script more maintainable and testable.
 	@FORCE=$(FORCE) scripts/get_manifests.sh
 
-generate-pages: json-to-markdown fmt ##@ Generate Hugo content from JSON manifests (use FORCE=true to overwrite)
+generate-pages: json-to-markdown fmt lint ##@ Generate Hugo content from JSON manifests (use FORCE=true to overwrite)
 	@echo "SUCCESS: Pages generated successfully."
 
 # Internal target for generating markdown. Called by `generate-pages`.
@@ -168,7 +168,7 @@ activate: ##@ Print commands to activate virtual environment
 
 install: venv ##@ Install all required dependencies (npm, pip)
 	@echo "INFO: Installing Node.js dependencies..."
-	@$(NPM) install
+	@$(NPM) install --include=dev
 	@echo "INFO: Installing global Node.js tools (Playwright)..."
 	@$(NPM) install -g playwright
 	@echo "INFO: Installing Python dependencies..."
