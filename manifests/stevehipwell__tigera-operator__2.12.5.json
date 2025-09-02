@@ -1,0 +1,2367 @@
+{
+  "metadata": {
+    "version": "2.12.5",
+    "name": "tigera-operator",
+    "source": "charts/stevehipwell__tigera-operator__2.12.5/",
+    "timestamp": 1756777338,
+    "extra": {
+      "helm": {
+        "description": "Helm chart to install the Tigera Operator for managing Calico.",
+        "home": "https://www.tigera.io/",
+        "icon": "https://raw.githubusercontent.com/stevehipwell/helm-charts/main/charts/tigera-operator/icon.png",
+        "keywords": [
+          "kubernetes",
+          "cni",
+          "calico",
+          "tigera",
+          "operator",
+          "network",
+          "policy",
+          "plugin"
+        ],
+        "kubeVersion": "",
+        "maintainers": [
+          {
+            "name": "stevehipwell",
+            "email": "steve.hipwell@gmail.com"
+          }
+        ],
+        "sources": [
+          "https://github.com/tigera/operator",
+          "https://github.com/projectcalico/calico",
+          "https://github.com/stevehipwell/helm-charts/"
+        ]
+      }
+    }
+  },
+  "serviceAccountData": [
+    {
+      "serviceAccountName": "tigera-operator",
+      "namespace": "default",
+      "automountToken": false,
+      "secrets": null,
+      "imagePullSecrets": null
+    }
+  ],
+  "serviceAccountPermissions": [
+    {
+      "serviceAccountName": "tigera-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "tigera-operator",
+      "apiGroup": "certificates.k8s.io",
+      "resource": "certificatesigningrequests",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "tigera-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "tigera-operator",
+      "apiGroup": "batch",
+      "resource": "jobs",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "tigera-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "tigera-operator",
+      "apiGroup": "batch",
+      "resource": "jobs",
+      "resourceName": "tigera-gateway-api-gateway-helm-certgen",
+      "verbs": [
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [
+        "ResourceNameRestricted"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "tigera-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "tigera-operator",
+      "apiGroup": "crd.projectcalico.org",
+      "resource": "kubecontrollersconfigurations",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "tigera-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "tigera-operator",
+      "apiGroup": "crd.projectcalico.org",
+      "resource": "bgpconfigurations",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "tigera-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "tigera-operator",
+      "apiGroup": "crd.projectcalico.org",
+      "resource": "clusterinformations",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "tigera-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "tigera-operator",
+      "apiGroup": "crd.projectcalico.org",
+      "resource": "felixconfigurations",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "get",
+        "list",
+        "patch",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "tigera-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "tigera-operator",
+      "apiGroup": "crd.projectcalico.org",
+      "resource": "ippools",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "get",
+        "list",
+        "patch",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "tigera-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "tigera-operator",
+      "apiGroup": "policy",
+      "resource": "poddisruptionbudgets",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "tigera-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "tigera-operator",
+      "apiGroup": "coordination.k8s.io",
+      "resource": "leases",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "tigera-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "tigera-operator",
+      "apiGroup": "rbac.authorization.k8s.io",
+      "resource": "clusterrolebindings",
+      "resourceName": "",
+      "verbs": [
+        "bind",
+        "create",
+        "delete",
+        "escalate",
+        "get",
+        "list",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Medium",
+      "tags": [
+        "Reconnaissance",
+        "InformationDisclosure",
+        "RBACQuery"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1077,
+          "name": "Read RBAC configuration cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1077/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "tigera-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "tigera-operator",
+      "apiGroup": "rbac.authorization.k8s.io",
+      "resource": "rolebindings",
+      "resourceName": "",
+      "verbs": [
+        "bind",
+        "create",
+        "delete",
+        "escalate",
+        "get",
+        "list",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Medium",
+      "tags": [
+        "InformationDisclosure",
+        "RBACQuery",
+        "Reconnaissance"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1077,
+          "name": "Read RBAC configuration cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1077/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "tigera-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "tigera-operator",
+      "apiGroup": "rbac.authorization.k8s.io",
+      "resource": "roles",
+      "resourceName": "",
+      "verbs": [
+        "bind",
+        "create",
+        "delete",
+        "escalate",
+        "get",
+        "list",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Medium",
+      "tags": [
+        "InformationDisclosure",
+        "RBACQuery",
+        "Reconnaissance"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1077,
+          "name": "Read RBAC configuration cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1077/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "tigera-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "tigera-operator",
+      "apiGroup": "rbac.authorization.k8s.io",
+      "resource": "clusterroles",
+      "resourceName": "",
+      "verbs": [
+        "bind",
+        "create",
+        "delete",
+        "escalate",
+        "get",
+        "list",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "RBACManipulation",
+        "ClusterAdminAccess",
+        "PrivilegeEscalation",
+        "BindingToPrivilegedRole",
+        "InformationDisclosure",
+        "RBACQuery",
+        "Reconnaissance"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1031,
+          "name": "Escalate privileges via ClusterRoles (escalate verb)",
+          "link": "https://rbac-atlas.github.io/rules/1031/"
+        },
+        {
+          "id": 1032,
+          "name": "Bind ClusterRoles to identities (bind verb)",
+          "link": "https://rbac-atlas.github.io/rules/1032/"
+        },
+        {
+          "id": 1077,
+          "name": "Read RBAC configuration cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1077/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "tigera-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "tigera-operator",
+      "apiGroup": "apps",
+      "resource": "deployments",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "WorkloadLifecycle",
+        "PrivilegeEscalation",
+        "Persistence",
+        "Tampering",
+        "PotentialPrivilegeEscalation"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1033,
+          "name": "Manage Deployments cluster-wide (potential for privileged pod execution)",
+          "link": "https://rbac-atlas.github.io/rules/1033/"
+        },
+        {
+          "id": 1034,
+          "name": "Manage Deployments in a namespace (potential for privileged pod execution)",
+          "link": "https://rbac-atlas.github.io/rules/1034/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "tigera-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "tigera-operator",
+      "apiGroup": "apps",
+      "resource": "daemonsets",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "NodeAccess",
+        "Tampering",
+        "WorkloadLifecycle",
+        "PrivilegeEscalation",
+        "Persistence"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1035,
+          "name": "Manage DaemonSets cluster-wide (runs on all nodes, high impact)",
+          "link": "https://rbac-atlas.github.io/rules/1035/"
+        },
+        {
+          "id": 1036,
+          "name": "Manage DaemonSets in a namespace (runs on nodes, high impact)",
+          "link": "https://rbac-atlas.github.io/rules/1036/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "tigera-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "tigera-operator",
+      "apiGroup": "apps",
+      "resource": "statefulsets",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "PotentialPrivilegeEscalation",
+        "WorkloadLifecycle",
+        "PrivilegeEscalation",
+        "Persistence",
+        "Tampering"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1037,
+          "name": "Manage StatefulSets cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1037/"
+        },
+        {
+          "id": 1038,
+          "name": "Manage StatefulSets in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1038/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "tigera-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "tigera-operator",
+      "apiGroup": "apps",
+      "resource": "deployments/finalizers",
+      "resourceName": "tigera-operator",
+      "verbs": [
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [
+        "ResourceNameRestricted"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "tigera-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "tigera-operator",
+      "apiGroup": "operator.tigera.io",
+      "resource": "gatewayapis/status",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "tigera-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "tigera-operator",
+      "apiGroup": "operator.tigera.io",
+      "resource": "managementclusterconnections/finalizers",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "tigera-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "tigera-operator",
+      "apiGroup": "operator.tigera.io",
+      "resource": "managementclusterconnections/status",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "tigera-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "tigera-operator",
+      "apiGroup": "operator.tigera.io",
+      "resource": "whiskers/finalizers",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "tigera-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "tigera-operator",
+      "apiGroup": "operator.tigera.io",
+      "resource": "installations",
+      "resourceName": "",
+      "verbs": [
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "tigera-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "tigera-operator",
+      "apiGroup": "operator.tigera.io",
+      "resource": "apiservers",
+      "resourceName": "",
+      "verbs": [
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "tigera-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "tigera-operator",
+      "apiGroup": "operator.tigera.io",
+      "resource": "apiservers/status",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "tigera-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "tigera-operator",
+      "apiGroup": "operator.tigera.io",
+      "resource": "gatewayapis/finalizers",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "tigera-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "tigera-operator",
+      "apiGroup": "operator.tigera.io",
+      "resource": "goldmanes",
+      "resourceName": "",
+      "verbs": [
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "tigera-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "tigera-operator",
+      "apiGroup": "operator.tigera.io",
+      "resource": "imagesets",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "tigera-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "tigera-operator",
+      "apiGroup": "operator.tigera.io",
+      "resource": "tigerastatuses/finalizers",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "tigera-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "tigera-operator",
+      "apiGroup": "operator.tigera.io",
+      "resource": "apiservers/finalizers",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "tigera-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "tigera-operator",
+      "apiGroup": "operator.tigera.io",
+      "resource": "installations/finalizers",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "tigera-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "tigera-operator",
+      "apiGroup": "operator.tigera.io",
+      "resource": "managementclusterconnections",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "tigera-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "tigera-operator",
+      "apiGroup": "operator.tigera.io",
+      "resource": "tigerastatuses",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "tigera-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "tigera-operator",
+      "apiGroup": "operator.tigera.io",
+      "resource": "installations/status",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "tigera-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "tigera-operator",
+      "apiGroup": "operator.tigera.io",
+      "resource": "gatewayapis",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "tigera-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "tigera-operator",
+      "apiGroup": "operator.tigera.io",
+      "resource": "goldmanes/finalizers",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "tigera-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "tigera-operator",
+      "apiGroup": "operator.tigera.io",
+      "resource": "goldmanes/status",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "tigera-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "tigera-operator",
+      "apiGroup": "operator.tigera.io",
+      "resource": "tigerastatuses/status",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "tigera-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "tigera-operator",
+      "apiGroup": "operator.tigera.io",
+      "resource": "whiskers",
+      "resourceName": "",
+      "verbs": [
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "tigera-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "tigera-operator",
+      "apiGroup": "operator.tigera.io",
+      "resource": "whiskers/status",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "tigera-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "tigera-operator",
+      "apiGroup": "networking.k8s.io",
+      "resource": "networkpolicies",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "tigera-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "tigera-operator",
+      "apiGroup": "scheduling.k8s.io",
+      "resource": "priorityclasses",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "tigera-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "tigera-operator",
+      "apiGroup": "apiextensions.k8s.io",
+      "resource": "customresourcedefinitions",
+      "resourceName": "gatewayclasses.gateway.networking.k8s.io",
+      "verbs": [
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [
+        "ResourceNameRestricted"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "tigera-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "tigera-operator",
+      "apiGroup": "apiextensions.k8s.io",
+      "resource": "customresourcedefinitions",
+      "resourceName": "httproutes.gateway.networking.k8s.io",
+      "verbs": [
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [
+        "ResourceNameRestricted"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "tigera-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "tigera-operator",
+      "apiGroup": "apiextensions.k8s.io",
+      "resource": "customresourcedefinitions",
+      "resourceName": "envoyextensionpolicies.gateway.envoyproxy.io",
+      "verbs": [
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [
+        "ResourceNameRestricted"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "tigera-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "tigera-operator",
+      "apiGroup": "apiextensions.k8s.io",
+      "resource": "customresourcedefinitions",
+      "resourceName": "securitypolicies.gateway.envoyproxy.io",
+      "verbs": [
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [
+        "ResourceNameRestricted"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "tigera-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "tigera-operator",
+      "apiGroup": "apiextensions.k8s.io",
+      "resource": "customresourcedefinitions",
+      "resourceName": "backendlbpolicies.gateway.networking.k8s.io",
+      "verbs": [
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [
+        "ResourceNameRestricted"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "tigera-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "tigera-operator",
+      "apiGroup": "apiextensions.k8s.io",
+      "resource": "customresourcedefinitions",
+      "resourceName": "grpcroutes.gateway.networking.k8s.io",
+      "verbs": [
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [
+        "ResourceNameRestricted"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "tigera-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "tigera-operator",
+      "apiGroup": "apiextensions.k8s.io",
+      "resource": "customresourcedefinitions",
+      "resourceName": "referencegrants.gateway.networking.k8s.io",
+      "verbs": [
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [
+        "ResourceNameRestricted"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "tigera-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "tigera-operator",
+      "apiGroup": "apiextensions.k8s.io",
+      "resource": "customresourcedefinitions",
+      "resourceName": "tcproutes.gateway.networking.k8s.io",
+      "verbs": [
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [
+        "ResourceNameRestricted"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "tigera-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "tigera-operator",
+      "apiGroup": "apiextensions.k8s.io",
+      "resource": "customresourcedefinitions",
+      "resourceName": "backends.gateway.envoyproxy.io",
+      "verbs": [
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [
+        "ResourceNameRestricted"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "tigera-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "tigera-operator",
+      "apiGroup": "apiextensions.k8s.io",
+      "resource": "customresourcedefinitions",
+      "resourceName": "backendtrafficpolicies.gateway.envoyproxy.io",
+      "verbs": [
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [
+        "ResourceNameRestricted"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "tigera-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "tigera-operator",
+      "apiGroup": "apiextensions.k8s.io",
+      "resource": "customresourcedefinitions",
+      "resourceName": "clienttrafficpolicies.gateway.envoyproxy.io",
+      "verbs": [
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [
+        "ResourceNameRestricted"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "tigera-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "tigera-operator",
+      "apiGroup": "apiextensions.k8s.io",
+      "resource": "customresourcedefinitions",
+      "resourceName": "envoypatchpolicies.gateway.envoyproxy.io",
+      "verbs": [
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [
+        "ResourceNameRestricted"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "tigera-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "tigera-operator",
+      "apiGroup": "apiextensions.k8s.io",
+      "resource": "customresourcedefinitions",
+      "resourceName": "backendtlspolicies.gateway.networking.k8s.io",
+      "verbs": [
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [
+        "ResourceNameRestricted"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "tigera-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "tigera-operator",
+      "apiGroup": "apiextensions.k8s.io",
+      "resource": "customresourcedefinitions",
+      "resourceName": "gateways.gateway.networking.k8s.io",
+      "verbs": [
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [
+        "ResourceNameRestricted"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "tigera-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "tigera-operator",
+      "apiGroup": "apiextensions.k8s.io",
+      "resource": "customresourcedefinitions",
+      "resourceName": "tlsroutes.gateway.networking.k8s.io",
+      "verbs": [
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [
+        "ResourceNameRestricted"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "tigera-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "tigera-operator",
+      "apiGroup": "apiextensions.k8s.io",
+      "resource": "customresourcedefinitions",
+      "resourceName": "envoyproxies.gateway.envoyproxy.io",
+      "verbs": [
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [
+        "ResourceNameRestricted"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "tigera-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "tigera-operator",
+      "apiGroup": "apiextensions.k8s.io",
+      "resource": "customresourcedefinitions",
+      "resourceName": "httproutefilters.gateway.envoyproxy.io",
+      "verbs": [
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [
+        "ResourceNameRestricted"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "tigera-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "tigera-operator",
+      "apiGroup": "apiextensions.k8s.io",
+      "resource": "customresourcedefinitions",
+      "resourceName": "udproutes.gateway.networking.k8s.io",
+      "verbs": [
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [
+        "ResourceNameRestricted"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "tigera-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "tigera-operator",
+      "apiGroup": "gateway.envoyproxy.io",
+      "resource": "envoyproxies",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "tigera-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "tigera-operator",
+      "apiGroup": "",
+      "resource": "endpoints",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "tigera-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "tigera-operator",
+      "apiGroup": "",
+      "resource": "configmaps",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "InformationDisclosure",
+        "ConfigMapAccess",
+        "DataExposure"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1022,
+          "name": "Read ConfigMaps cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1022/"
+        },
+        {
+          "id": 1023,
+          "name": "Read ConfigMaps in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1023/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "tigera-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "tigera-operator",
+      "apiGroup": "",
+      "resource": "secrets",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "SecretAccess",
+        "ClusterWideSecretAccess",
+        "CredentialAccess",
+        "DataExposure",
+        "InformationDisclosure"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1010,
+          "name": "Read secrets cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1010/"
+        },
+        {
+          "id": 1011,
+          "name": "Read secrets in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1011/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "tigera-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "tigera-operator",
+      "apiGroup": "",
+      "resource": "pods",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "PotentialPrivilegeEscalation",
+        "WorkloadExecution",
+        "PrivilegeEscalation",
+        "LateralMovement",
+        "Persistence"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1006,
+          "name": "Create pods cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1006/"
+        },
+        {
+          "id": 1007,
+          "name": "Create pods in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1007/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "tigera-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "tigera-operator",
+      "apiGroup": "",
+      "resource": "services",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "tigera-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "tigera-operator",
+      "apiGroup": "",
+      "resource": "events",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Medium",
+      "tags": [
+        "InformationDisclosure",
+        "Reconnaissance",
+        "OperationalData"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1070,
+          "name": "Read events cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1070/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "tigera-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "tigera-operator",
+      "apiGroup": "",
+      "resource": "serviceaccounts",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "tigera-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "tigera-operator",
+      "apiGroup": "",
+      "resource": "resourcequotas",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Medium",
+      "tags": [
+        "ResourceConfiguration",
+        "QuotaTampering",
+        "InformationDisclosure",
+        "Reconnaissance"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1089,
+          "name": "Read All ResourceQuotas (Cluster-wide Information Disclosure)",
+          "link": "https://rbac-atlas.github.io/rules/1089/"
+        },
+        {
+          "id": 1088,
+          "name": "Read ResourceQuotas (Namespace Information Disclosure)",
+          "link": "https://rbac-atlas.github.io/rules/1088/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "tigera-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "tigera-operator",
+      "apiGroup": "",
+      "resource": "resourcequotas",
+      "resourceName": "calico-critical-pods",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [
+        "InformationDisclosure",
+        "Reconnaissance",
+        "ResourceConfiguration",
+        "QuotaTampering",
+        "ResourceNameRestricted"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1088,
+          "name": "Read ResourceQuotas (Namespace Information Disclosure)",
+          "link": "https://rbac-atlas.github.io/rules/1088/"
+        },
+        {
+          "id": 1089,
+          "name": "Read All ResourceQuotas (Cluster-wide Information Disclosure)",
+          "link": "https://rbac-atlas.github.io/rules/1089/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "tigera-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "tigera-operator",
+      "apiGroup": "",
+      "resource": "resourcequotas",
+      "resourceName": "tigera-critical-pods",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [
+        "Reconnaissance",
+        "ResourceConfiguration",
+        "QuotaTampering",
+        "ResourceNameRestricted",
+        "InformationDisclosure"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1088,
+          "name": "Read ResourceQuotas (Namespace Information Disclosure)",
+          "link": "https://rbac-atlas.github.io/rules/1088/"
+        },
+        {
+          "id": 1089,
+          "name": "Read All ResourceQuotas (Cluster-wide Information Disclosure)",
+          "link": "https://rbac-atlas.github.io/rules/1089/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "tigera-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "tigera-operator",
+      "apiGroup": "",
+      "resource": "nodes",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "patch",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "tigera-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "tigera-operator",
+      "apiGroup": "",
+      "resource": "namespaces",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "ResourceDeletion",
+        "DenialOfService",
+        "InformationDisclosure",
+        "Reconnaissance",
+        "ClusterStructure",
+        "NamespaceLifecycle"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1026,
+          "name": "Delete namespaces",
+          "link": "https://rbac-atlas.github.io/rules/1026/"
+        },
+        {
+          "id": 1082,
+          "name": "List Namespaces (Cluster Reconnaissance)",
+          "link": "https://rbac-atlas.github.io/rules/1082/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "tigera-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "tigera-operator",
+      "apiGroup": "",
+      "resource": "podtemplates",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "tigera-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "tigera-operator",
+      "apiGroup": "projectcalico.org",
+      "resource": "ippools",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "tigera-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "tigera-operator",
+      "apiGroup": "projectcalico.org",
+      "resource": "ipamconfigurations",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "tigera-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "tigera-operator",
+      "apiGroup": "projectcalico.org",
+      "resource": "tier.networkpolicies",
+      "resourceName": "allow-tigera.*",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [
+        "ResourceNameRestricted"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "tigera-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "tigera-operator",
+      "apiGroup": "projectcalico.org",
+      "resource": "tier.globalnetworkpolicies",
+      "resourceName": "allow-tigera.*",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [
+        "ResourceNameRestricted"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "tigera-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "tigera-operator",
+      "apiGroup": "projectcalico.org",
+      "resource": "tiers",
+      "resourceName": "allow-tigera",
+      "verbs": [
+        "delete",
+        "get",
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [
+        "ResourceNameRestricted"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "tigera-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "tigera-operator",
+      "apiGroup": "projectcalico.org",
+      "resource": "tiers",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "tigera-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "tigera-operator",
+      "apiGroup": "apiregistration.k8s.io",
+      "resource": "apiservices",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "list",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "tigera-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "tigera-operator",
+      "apiGroup": "admissionregistration.k8s.io",
+      "resource": "mutatingwebhookconfigurations",
+      "resourceName": "",
+      "verbs": [
+        "delete"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "tigera-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "tigera-operator",
+      "apiGroup": "storage.k8s.io",
+      "resource": "csidrivers",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "tigera-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "tigera-operator",
+      "apiGroup": "gateway.networking.k8s.io",
+      "resource": "gatewayclasses",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    }
+  ],
+  "serviceAccountWorkloads": [
+    {
+      "serviceAccountName": "tigera-operator",
+      "namespace": "default",
+      "workloadType": "Deployment",
+      "workloadName": "tigera-operator",
+      "containerName": "tigera-operator",
+      "image": "quay.io/tigera/operator:v1.38.6"
+    },
+    {
+      "serviceAccountName": "tigera-operator",
+      "namespace": "default",
+      "workloadType": "Job",
+      "workloadName": "tigera-operator-uninstall",
+      "containerName": "tigera-operator",
+      "image": "quay.io/tigera/operator:v1.38.6"
+    }
+  ]
+}
