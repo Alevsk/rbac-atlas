@@ -1,0 +1,143 @@
+{
+  "metadata": {
+    "version": "0.31.0",
+    "name": "prometheus-operator-admission-webhook",
+    "source": "charts/prometheus-community__prometheus-operator-admission-webhook__0.31.0/",
+    "timestamp": 1757727105,
+    "extra": {
+      "helm": {
+        "description": "Prometheus Operator Admission Webhook",
+        "home": "https://github.com/prometheus-operator/prometheus-operator",
+        "icon": "https://github.com/prometheus-operator/prometheus-operator/raw/main/Documentation/logos/prometheus-operator-logo.png",
+        "keywords": [
+          "admission",
+          "monitoring",
+          "prometheus-operator",
+          "webhook"
+        ],
+        "kubeVersion": "",
+        "maintainers": [
+          {
+            "name": "zeritti",
+            "email": "rootsandtrees@posteo.de",
+            "url": "https://github.com/zeritti"
+          }
+        ],
+        "sources": [
+          "https://github.com/prometheus-operator/prometheus-operator",
+          "https://github.com/prometheus-community/helm-charts/tree/main/charts/prometheus-operator-admission-webhook"
+        ]
+      }
+    }
+  },
+  "serviceAccountData": [
+    {
+      "serviceAccountName": "prometheus-operator-admission-webhook-aux",
+      "namespace": "default",
+      "automountToken": false,
+      "secrets": null,
+      "imagePullSecrets": null
+    },
+    {
+      "serviceAccountName": "prometheus-operator-admission-webhook",
+      "namespace": "default",
+      "automountToken": false,
+      "secrets": null,
+      "imagePullSecrets": null
+    }
+  ],
+  "serviceAccountPermissions": [
+    {
+      "serviceAccountName": "prometheus-operator-admission-webhook-aux",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "prometheus-operator-admission-webhook-aux",
+      "apiGroup": "",
+      "resource": "secrets",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "get"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "prometheus-operator-admission-webhook-aux",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "prometheus-operator-admission-webhook-aux",
+      "apiGroup": "admissionregistration.k8s.io",
+      "resource": "validatingwebhookconfigurations",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "prometheus-operator-admission-webhook-aux",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "prometheus-operator-admission-webhook-aux",
+      "apiGroup": "admissionregistration.k8s.io",
+      "resource": "mutatingwebhookconfigurations",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    }
+  ],
+  "serviceAccountWorkloads": [
+    {
+      "serviceAccountName": "prometheus-operator-admission-webhook",
+      "namespace": "default",
+      "workloadType": "Deployment",
+      "workloadName": "prometheus-operator-admission-webhook",
+      "containerName": "prometheus-operator-admission-webhook",
+      "image": "quay.io/prometheus-operator/admission-webhook:v0.85.0"
+    },
+    {
+      "serviceAccountName": "prometheus-operator-admission-webhook-aux",
+      "namespace": "default",
+      "workloadType": "Job",
+      "workloadName": "prometheus-operator-admission-webhook-patch",
+      "containerName": "patch",
+      "image": "registry.k8s.io/ingress-nginx/kube-webhook-certgen:v1.6.2"
+    },
+    {
+      "serviceAccountName": "prometheus-operator-admission-webhook-aux",
+      "namespace": "default",
+      "workloadType": "Job",
+      "workloadName": "prometheus-operator-admission-webhook-create",
+      "containerName": "create",
+      "image": "registry.k8s.io/ingress-nginx/kube-webhook-certgen:v1.6.2"
+    }
+  ]
+}
