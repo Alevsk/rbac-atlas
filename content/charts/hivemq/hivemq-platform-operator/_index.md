@@ -1,8 +1,8 @@
 ---
 title: "hivemq-platform-operator"
-description: "HiveMQ Platform Operator Helm Chart (new)"
+description: "HiveMQ Platform Operator Helm Chart"
 ---
 
 ## hivemq-platform-operator
 
-HiveMQ Platform Operator Helm Chart (new)
+HiveMQ Platform Operator Helm Chart

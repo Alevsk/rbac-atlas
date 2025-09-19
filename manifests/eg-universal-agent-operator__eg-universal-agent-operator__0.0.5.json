@@ -1,0 +1,3266 @@
+{
+  "metadata": {
+    "version": "0.0.5",
+    "name": "eg-universal-agent-operator",
+    "source": "charts/eg-universal-agent-operator__eg-universal-agent-operator__0.0.5/",
+    "timestamp": 1758245914,
+    "extra": {
+      "helm": {
+        "description": "A Helm chart for Kubernetes installation of eG Universal agent Operator",
+        "home": "https://www.eginnovations.com/",
+        "icon": "https://s.gravatar.com/avatar/9a5699e3ad66f788e8f29d32e0066e60?s=80",
+        "keywords": [
+          "eginnovations",
+          "egagent",
+          "cluster",
+          "kubernetes",
+          "openshift",
+          "monitoring",
+          "pod",
+          "deployment",
+          "apm",
+          "k8s",
+          "ocp"
+        ],
+        "kubeVersion": "",
+        "maintainers": [
+          {
+            "name": "eG Innovations",
+            "email": "devops@eginnovations.com"
+          }
+        ],
+        "sources": [
+          "https://eginnovations.github.io/eg-universal-agent-operator-helm"
+        ]
+      }
+    }
+  },
+  "serviceAccountData": [
+    {
+      "serviceAccountName": "eg-universal-agent-operator-cert-manager-startupapicheck",
+      "namespace": "cert-manager",
+      "automountToken": true,
+      "secrets": null,
+      "imagePullSecrets": null
+    },
+    {
+      "serviceAccountName": "eg-universal-agent-operator-cert-manager-webhook",
+      "namespace": "cert-manager",
+      "automountToken": true,
+      "secrets": null,
+      "imagePullSecrets": null
+    },
+    {
+      "serviceAccountName": "eg-universal-agent-operator-cert-manager-cainjector",
+      "namespace": "cert-manager",
+      "automountToken": true,
+      "secrets": null,
+      "imagePullSecrets": null
+    },
+    {
+      "serviceAccountName": "eginnovations-operator-controller-manager",
+      "namespace": "egagent",
+      "automountToken": false,
+      "secrets": null,
+      "imagePullSecrets": null
+    },
+    {
+      "serviceAccountName": "eg-universal-agent-operator-cert-manager",
+      "namespace": "cert-manager",
+      "automountToken": true,
+      "secrets": null,
+      "imagePullSecrets": null
+    }
+  ],
+  "serviceAccountPermissions": [
+    {
+      "serviceAccountName": "eg-universal-agent-operator-cert-manager",
+      "namespace": "cert-manager",
+      "roleType": "Role",
+      "roleName": "eg-universal-agent-operator-cert-manager:leaderelection",
+      "apiGroup": "coordination.k8s.io",
+      "resource": "leases",
+      "resourceName": "cert-manager-controller",
+      "verbs": [
+        "get",
+        "patch",
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [
+        "ResourceNameRestricted"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "eg-universal-agent-operator-cert-manager",
+      "namespace": "cert-manager",
+      "roleType": "Role",
+      "roleName": "eg-universal-agent-operator-cert-manager:leaderelection",
+      "apiGroup": "coordination.k8s.io",
+      "resource": "leases",
+      "resourceName": "",
+      "verbs": [
+        "create"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "eg-universal-agent-operator-cert-manager",
+      "namespace": "cert-manager",
+      "roleType": "Role",
+      "roleName": "eg-universal-agent-operator-cert-manager-tokenrequest",
+      "apiGroup": "",
+      "resource": "serviceaccounts/token",
+      "resourceName": "eg-universal-agent-operator-cert-manager",
+      "verbs": [
+        "create"
+      ],
+      "riskLevel": "Low",
+      "tags": [
+        "ResourceNameRestricted"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "eg-universal-agent-operator-cert-manager",
+      "namespace": "cert-manager",
+      "roleType": "ClusterRole",
+      "roleName": "eg-universal-agent-operator-cert-manager-controller-issuers",
+      "apiGroup": "cert-manager.io",
+      "resource": "issuers",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "eg-universal-agent-operator-cert-manager",
+      "namespace": "cert-manager",
+      "roleType": "ClusterRole",
+      "roleName": "eg-universal-agent-operator-cert-manager-controller-issuers",
+      "apiGroup": "cert-manager.io",
+      "resource": "issuers/status",
+      "resourceName": "",
+      "verbs": [
+        "patch",
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "eg-universal-agent-operator-cert-manager",
+      "namespace": "cert-manager",
+      "roleType": "ClusterRole",
+      "roleName": "eg-universal-agent-operator-cert-manager-controller-issuers",
+      "apiGroup": "",
+      "resource": "secrets",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "InformationDisclosure",
+        "SecretAccess",
+        "ClusterWideSecretAccess",
+        "CredentialAccess",
+        "DataExposure"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1010,
+          "name": "Read secrets cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1010/"
+        },
+        {
+          "id": 1011,
+          "name": "Read secrets in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1011/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "eg-universal-agent-operator-cert-manager",
+      "namespace": "cert-manager",
+      "roleType": "ClusterRole",
+      "roleName": "eg-universal-agent-operator-cert-manager-controller-issuers",
+      "apiGroup": "",
+      "resource": "events",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "patch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "eg-universal-agent-operator-cert-manager",
+      "namespace": "cert-manager",
+      "roleType": "ClusterRole",
+      "roleName": "eg-universal-agent-operator-cert-manager-controller-clusterissuers",
+      "apiGroup": "",
+      "resource": "secrets",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "DataExposure",
+        "InformationDisclosure",
+        "SecretAccess",
+        "ClusterWideSecretAccess",
+        "CredentialAccess"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1010,
+          "name": "Read secrets cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1010/"
+        },
+        {
+          "id": 1011,
+          "name": "Read secrets in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1011/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "eg-universal-agent-operator-cert-manager",
+      "namespace": "cert-manager",
+      "roleType": "ClusterRole",
+      "roleName": "eg-universal-agent-operator-cert-manager-controller-clusterissuers",
+      "apiGroup": "",
+      "resource": "events",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "patch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "eg-universal-agent-operator-cert-manager",
+      "namespace": "cert-manager",
+      "roleType": "ClusterRole",
+      "roleName": "eg-universal-agent-operator-cert-manager-controller-clusterissuers",
+      "apiGroup": "cert-manager.io",
+      "resource": "clusterissuers",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "eg-universal-agent-operator-cert-manager",
+      "namespace": "cert-manager",
+      "roleType": "ClusterRole",
+      "roleName": "eg-universal-agent-operator-cert-manager-controller-clusterissuers",
+      "apiGroup": "cert-manager.io",
+      "resource": "clusterissuers/status",
+      "resourceName": "",
+      "verbs": [
+        "patch",
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "eg-universal-agent-operator-cert-manager",
+      "namespace": "cert-manager",
+      "roleType": "ClusterRole",
+      "roleName": "eg-universal-agent-operator-cert-manager-controller-certificates",
+      "apiGroup": "cert-manager.io",
+      "resource": "certificates",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "eg-universal-agent-operator-cert-manager",
+      "namespace": "cert-manager",
+      "roleType": "ClusterRole",
+      "roleName": "eg-universal-agent-operator-cert-manager-controller-certificates",
+      "apiGroup": "cert-manager.io",
+      "resource": "certificates/status",
+      "resourceName": "",
+      "verbs": [
+        "patch",
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "eg-universal-agent-operator-cert-manager",
+      "namespace": "cert-manager",
+      "roleType": "ClusterRole",
+      "roleName": "eg-universal-agent-operator-cert-manager-controller-certificates",
+      "apiGroup": "cert-manager.io",
+      "resource": "certificaterequests",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "eg-universal-agent-operator-cert-manager",
+      "namespace": "cert-manager",
+      "roleType": "ClusterRole",
+      "roleName": "eg-universal-agent-operator-cert-manager-controller-certificates",
+      "apiGroup": "cert-manager.io",
+      "resource": "certificaterequests/status",
+      "resourceName": "",
+      "verbs": [
+        "patch",
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "eg-universal-agent-operator-cert-manager",
+      "namespace": "cert-manager",
+      "roleType": "ClusterRole",
+      "roleName": "eg-universal-agent-operator-cert-manager-controller-certificates",
+      "apiGroup": "cert-manager.io",
+      "resource": "clusterissuers",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "eg-universal-agent-operator-cert-manager",
+      "namespace": "cert-manager",
+      "roleType": "ClusterRole",
+      "roleName": "eg-universal-agent-operator-cert-manager-controller-certificates",
+      "apiGroup": "cert-manager.io",
+      "resource": "issuers",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "eg-universal-agent-operator-cert-manager",
+      "namespace": "cert-manager",
+      "roleType": "ClusterRole",
+      "roleName": "eg-universal-agent-operator-cert-manager-controller-certificates",
+      "apiGroup": "cert-manager.io",
+      "resource": "certificates/finalizers",
+      "resourceName": "",
+      "verbs": [
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "eg-universal-agent-operator-cert-manager",
+      "namespace": "cert-manager",
+      "roleType": "ClusterRole",
+      "roleName": "eg-universal-agent-operator-cert-manager-controller-certificates",
+      "apiGroup": "cert-manager.io",
+      "resource": "certificaterequests/finalizers",
+      "resourceName": "",
+      "verbs": [
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "eg-universal-agent-operator-cert-manager",
+      "namespace": "cert-manager",
+      "roleType": "ClusterRole",
+      "roleName": "eg-universal-agent-operator-cert-manager-controller-certificates",
+      "apiGroup": "acme.cert-manager.io",
+      "resource": "orders",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "eg-universal-agent-operator-cert-manager",
+      "namespace": "cert-manager",
+      "roleType": "ClusterRole",
+      "roleName": "eg-universal-agent-operator-cert-manager-controller-certificates",
+      "apiGroup": "",
+      "resource": "secrets",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "ClusterWideSecretAccess",
+        "DataExposure",
+        "SecretAccess",
+        "Persistence",
+        "PotentialPrivilegeEscalation",
+        "CredentialAccess",
+        "InformationDisclosure",
+        "Tampering",
+        "PrivilegeEscalation"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1010,
+          "name": "Read secrets cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1010/"
+        },
+        {
+          "id": 1011,
+          "name": "Read secrets in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1011/"
+        },
+        {
+          "id": 1012,
+          "name": "Modify secrets cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1012/"
+        },
+        {
+          "id": 1013,
+          "name": "Modify secrets in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1013/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "eg-universal-agent-operator-cert-manager",
+      "namespace": "cert-manager",
+      "roleType": "ClusterRole",
+      "roleName": "eg-universal-agent-operator-cert-manager-controller-certificates",
+      "apiGroup": "",
+      "resource": "events",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "patch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "eg-universal-agent-operator-cert-manager",
+      "namespace": "cert-manager",
+      "roleType": "ClusterRole",
+      "roleName": "eg-universal-agent-operator-cert-manager-controller-orders",
+      "apiGroup": "cert-manager.io",
+      "resource": "clusterissuers",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "eg-universal-agent-operator-cert-manager",
+      "namespace": "cert-manager",
+      "roleType": "ClusterRole",
+      "roleName": "eg-universal-agent-operator-cert-manager-controller-orders",
+      "apiGroup": "cert-manager.io",
+      "resource": "issuers",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "eg-universal-agent-operator-cert-manager",
+      "namespace": "cert-manager",
+      "roleType": "ClusterRole",
+      "roleName": "eg-universal-agent-operator-cert-manager-controller-orders",
+      "apiGroup": "",
+      "resource": "secrets",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "SecretAccess",
+        "ClusterWideSecretAccess",
+        "CredentialAccess",
+        "DataExposure",
+        "InformationDisclosure"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1010,
+          "name": "Read secrets cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1010/"
+        },
+        {
+          "id": 1011,
+          "name": "Read secrets in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1011/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "eg-universal-agent-operator-cert-manager",
+      "namespace": "cert-manager",
+      "roleType": "ClusterRole",
+      "roleName": "eg-universal-agent-operator-cert-manager-controller-orders",
+      "apiGroup": "",
+      "resource": "events",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "patch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "eg-universal-agent-operator-cert-manager",
+      "namespace": "cert-manager",
+      "roleType": "ClusterRole",
+      "roleName": "eg-universal-agent-operator-cert-manager-controller-orders",
+      "apiGroup": "acme.cert-manager.io",
+      "resource": "orders/status",
+      "resourceName": "",
+      "verbs": [
+        "patch",
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "eg-universal-agent-operator-cert-manager",
+      "namespace": "cert-manager",
+      "roleType": "ClusterRole",
+      "roleName": "eg-universal-agent-operator-cert-manager-controller-orders",
+      "apiGroup": "acme.cert-manager.io",
+      "resource": "challenges",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "eg-universal-agent-operator-cert-manager",
+      "namespace": "cert-manager",
+      "roleType": "ClusterRole",
+      "roleName": "eg-universal-agent-operator-cert-manager-controller-orders",
+      "apiGroup": "acme.cert-manager.io",
+      "resource": "orders/finalizers",
+      "resourceName": "",
+      "verbs": [
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "eg-universal-agent-operator-cert-manager",
+      "namespace": "cert-manager",
+      "roleType": "ClusterRole",
+      "roleName": "eg-universal-agent-operator-cert-manager-controller-orders",
+      "apiGroup": "acme.cert-manager.io",
+      "resource": "orders",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "eg-universal-agent-operator-cert-manager",
+      "namespace": "cert-manager",
+      "roleType": "ClusterRole",
+      "roleName": "eg-universal-agent-operator-cert-manager-controller-challenges",
+      "apiGroup": "acme.cert-manager.io",
+      "resource": "challenges",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "eg-universal-agent-operator-cert-manager",
+      "namespace": "cert-manager",
+      "roleType": "ClusterRole",
+      "roleName": "eg-universal-agent-operator-cert-manager-controller-challenges",
+      "apiGroup": "acme.cert-manager.io",
+      "resource": "challenges/status",
+      "resourceName": "",
+      "verbs": [
+        "patch",
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "eg-universal-agent-operator-cert-manager",
+      "namespace": "cert-manager",
+      "roleType": "ClusterRole",
+      "roleName": "eg-universal-agent-operator-cert-manager-controller-challenges",
+      "apiGroup": "acme.cert-manager.io",
+      "resource": "challenges/finalizers",
+      "resourceName": "",
+      "verbs": [
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "eg-universal-agent-operator-cert-manager",
+      "namespace": "cert-manager",
+      "roleType": "ClusterRole",
+      "roleName": "eg-universal-agent-operator-cert-manager-controller-challenges",
+      "apiGroup": "cert-manager.io",
+      "resource": "issuers",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "eg-universal-agent-operator-cert-manager",
+      "namespace": "cert-manager",
+      "roleType": "ClusterRole",
+      "roleName": "eg-universal-agent-operator-cert-manager-controller-challenges",
+      "apiGroup": "cert-manager.io",
+      "resource": "clusterissuers",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "eg-universal-agent-operator-cert-manager",
+      "namespace": "cert-manager",
+      "roleType": "ClusterRole",
+      "roleName": "eg-universal-agent-operator-cert-manager-controller-challenges",
+      "apiGroup": "",
+      "resource": "events",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "patch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "eg-universal-agent-operator-cert-manager",
+      "namespace": "cert-manager",
+      "roleType": "ClusterRole",
+      "roleName": "eg-universal-agent-operator-cert-manager-controller-challenges",
+      "apiGroup": "",
+      "resource": "pods",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "WorkloadExecution",
+        "PrivilegeEscalation",
+        "LateralMovement",
+        "Persistence",
+        "PotentialPrivilegeEscalation"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1006,
+          "name": "Create pods cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1006/"
+        },
+        {
+          "id": 1007,
+          "name": "Create pods in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1007/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "eg-universal-agent-operator-cert-manager",
+      "namespace": "cert-manager",
+      "roleType": "ClusterRole",
+      "roleName": "eg-universal-agent-operator-cert-manager-controller-challenges",
+      "apiGroup": "",
+      "resource": "services",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "eg-universal-agent-operator-cert-manager",
+      "namespace": "cert-manager",
+      "roleType": "ClusterRole",
+      "roleName": "eg-universal-agent-operator-cert-manager-controller-challenges",
+      "apiGroup": "",
+      "resource": "secrets",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "SecretAccess",
+        "ClusterWideSecretAccess",
+        "CredentialAccess",
+        "DataExposure",
+        "InformationDisclosure"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1010,
+          "name": "Read secrets cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1010/"
+        },
+        {
+          "id": 1011,
+          "name": "Read secrets in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1011/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "eg-universal-agent-operator-cert-manager",
+      "namespace": "cert-manager",
+      "roleType": "ClusterRole",
+      "roleName": "eg-universal-agent-operator-cert-manager-controller-challenges",
+      "apiGroup": "networking.k8s.io",
+      "resource": "ingresses",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "eg-universal-agent-operator-cert-manager",
+      "namespace": "cert-manager",
+      "roleType": "ClusterRole",
+      "roleName": "eg-universal-agent-operator-cert-manager-controller-challenges",
+      "apiGroup": "gateway.networking.k8s.io",
+      "resource": "httproutes",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "eg-universal-agent-operator-cert-manager",
+      "namespace": "cert-manager",
+      "roleType": "ClusterRole",
+      "roleName": "eg-universal-agent-operator-cert-manager-controller-challenges",
+      "apiGroup": "route.openshift.io",
+      "resource": "routes/custom-host",
+      "resourceName": "",
+      "verbs": [
+        "create"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "eg-universal-agent-operator-cert-manager",
+      "namespace": "cert-manager",
+      "roleType": "ClusterRole",
+      "roleName": "eg-universal-agent-operator-cert-manager-controller-ingress-shim",
+      "apiGroup": "cert-manager.io",
+      "resource": "certificates",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "eg-universal-agent-operator-cert-manager",
+      "namespace": "cert-manager",
+      "roleType": "ClusterRole",
+      "roleName": "eg-universal-agent-operator-cert-manager-controller-ingress-shim",
+      "apiGroup": "cert-manager.io",
+      "resource": "certificaterequests",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "eg-universal-agent-operator-cert-manager",
+      "namespace": "cert-manager",
+      "roleType": "ClusterRole",
+      "roleName": "eg-universal-agent-operator-cert-manager-controller-ingress-shim",
+      "apiGroup": "cert-manager.io",
+      "resource": "issuers",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "eg-universal-agent-operator-cert-manager",
+      "namespace": "cert-manager",
+      "roleType": "ClusterRole",
+      "roleName": "eg-universal-agent-operator-cert-manager-controller-ingress-shim",
+      "apiGroup": "cert-manager.io",
+      "resource": "clusterissuers",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "eg-universal-agent-operator-cert-manager",
+      "namespace": "cert-manager",
+      "roleType": "ClusterRole",
+      "roleName": "eg-universal-agent-operator-cert-manager-controller-ingress-shim",
+      "apiGroup": "networking.k8s.io",
+      "resource": "ingresses",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "eg-universal-agent-operator-cert-manager",
+      "namespace": "cert-manager",
+      "roleType": "ClusterRole",
+      "roleName": "eg-universal-agent-operator-cert-manager-controller-ingress-shim",
+      "apiGroup": "networking.k8s.io",
+      "resource": "ingresses/finalizers",
+      "resourceName": "",
+      "verbs": [
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "eg-universal-agent-operator-cert-manager",
+      "namespace": "cert-manager",
+      "roleType": "ClusterRole",
+      "roleName": "eg-universal-agent-operator-cert-manager-controller-ingress-shim",
+      "apiGroup": "gateway.networking.k8s.io",
+      "resource": "gateways",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "eg-universal-agent-operator-cert-manager",
+      "namespace": "cert-manager",
+      "roleType": "ClusterRole",
+      "roleName": "eg-universal-agent-operator-cert-manager-controller-ingress-shim",
+      "apiGroup": "gateway.networking.k8s.io",
+      "resource": "httproutes",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "eg-universal-agent-operator-cert-manager",
+      "namespace": "cert-manager",
+      "roleType": "ClusterRole",
+      "roleName": "eg-universal-agent-operator-cert-manager-controller-ingress-shim",
+      "apiGroup": "gateway.networking.k8s.io",
+      "resource": "gateways/finalizers",
+      "resourceName": "",
+      "verbs": [
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "eg-universal-agent-operator-cert-manager",
+      "namespace": "cert-manager",
+      "roleType": "ClusterRole",
+      "roleName": "eg-universal-agent-operator-cert-manager-controller-ingress-shim",
+      "apiGroup": "gateway.networking.k8s.io",
+      "resource": "httproutes/finalizers",
+      "resourceName": "",
+      "verbs": [
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "eg-universal-agent-operator-cert-manager",
+      "namespace": "cert-manager",
+      "roleType": "ClusterRole",
+      "roleName": "eg-universal-agent-operator-cert-manager-controller-ingress-shim",
+      "apiGroup": "",
+      "resource": "events",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "patch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "eg-universal-agent-operator-cert-manager-webhook",
+      "namespace": "cert-manager",
+      "roleType": "Role",
+      "roleName": "eg-universal-agent-operator-cert-manager-webhook:dynamic-serving",
+      "apiGroup": "",
+      "resource": "secrets",
+      "resourceName": "eg-universal-agent-operator-cert-manager-webhook-ca",
+      "verbs": [
+        "get",
+        "list",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [
+        "SecretAccess",
+        "CredentialAccess",
+        "DataExposure",
+        "InformationDisclosure",
+        "ResourceNameRestricted"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1011,
+          "name": "Read secrets in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1011/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "eg-universal-agent-operator-cert-manager-webhook",
+      "namespace": "cert-manager",
+      "roleType": "Role",
+      "roleName": "eg-universal-agent-operator-cert-manager-webhook:dynamic-serving",
+      "apiGroup": "",
+      "resource": "secrets",
+      "resourceName": "",
+      "verbs": [
+        "create"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "eg-universal-agent-operator-cert-manager-webhook",
+      "namespace": "cert-manager",
+      "roleType": "ClusterRole",
+      "roleName": "eg-universal-agent-operator-cert-manager-webhook:subjectaccessreviews",
+      "apiGroup": "authorization.k8s.io",
+      "resource": "subjectaccessreviews",
+      "resourceName": "",
+      "verbs": [
+        "create"
+      ],
+      "riskLevel": "Medium",
+      "tags": [
+        "InformationDisclosure",
+        "RBACQuery"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1050,
+          "name": "Create SubjectAccessReviews (check arbitrary permissions)",
+          "link": "https://rbac-atlas.github.io/rules/1050/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "eg-universal-agent-operator-cert-manager-cainjector",
+      "namespace": "cert-manager",
+      "roleType": "ClusterRole",
+      "roleName": "eg-universal-agent-operator-cert-manager-cainjector",
+      "apiGroup": "cert-manager.io",
+      "resource": "certificates",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "eg-universal-agent-operator-cert-manager-cainjector",
+      "namespace": "cert-manager",
+      "roleType": "ClusterRole",
+      "roleName": "eg-universal-agent-operator-cert-manager-cainjector",
+      "apiGroup": "",
+      "resource": "secrets",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "CredentialAccess",
+        "DataExposure",
+        "InformationDisclosure",
+        "SecretAccess",
+        "ClusterWideSecretAccess"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1010,
+          "name": "Read secrets cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1010/"
+        },
+        {
+          "id": 1011,
+          "name": "Read secrets in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1011/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "eg-universal-agent-operator-cert-manager-cainjector",
+      "namespace": "cert-manager",
+      "roleType": "ClusterRole",
+      "roleName": "eg-universal-agent-operator-cert-manager-cainjector",
+      "apiGroup": "",
+      "resource": "events",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "get",
+        "patch",
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "eg-universal-agent-operator-cert-manager-cainjector",
+      "namespace": "cert-manager",
+      "roleType": "ClusterRole",
+      "roleName": "eg-universal-agent-operator-cert-manager-cainjector",
+      "apiGroup": "admissionregistration.k8s.io",
+      "resource": "mutatingwebhookconfigurations",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Medium",
+      "tags": [
+        "InformationDisclosure",
+        "WebhookReconnaissance",
+        "Reconnaissance"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1084,
+          "name": "List MutatingWebhookConfigurations (Reconnaissance)",
+          "link": "https://rbac-atlas.github.io/rules/1084/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "eg-universal-agent-operator-cert-manager-cainjector",
+      "namespace": "cert-manager",
+      "roleType": "ClusterRole",
+      "roleName": "eg-universal-agent-operator-cert-manager-cainjector",
+      "apiGroup": "admissionregistration.k8s.io",
+      "resource": "validatingwebhookconfigurations",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Medium",
+      "tags": [
+        "InformationDisclosure",
+        "WebhookReconnaissance",
+        "Reconnaissance"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1083,
+          "name": "List ValidatingWebhookConfigurations (Reconnaissance)",
+          "link": "https://rbac-atlas.github.io/rules/1083/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "eg-universal-agent-operator-cert-manager-cainjector",
+      "namespace": "cert-manager",
+      "roleType": "ClusterRole",
+      "roleName": "eg-universal-agent-operator-cert-manager-cainjector",
+      "apiGroup": "apiregistration.k8s.io",
+      "resource": "apiservices",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "eg-universal-agent-operator-cert-manager-cainjector",
+      "namespace": "cert-manager",
+      "roleType": "ClusterRole",
+      "roleName": "eg-universal-agent-operator-cert-manager-cainjector",
+      "apiGroup": "apiextensions.k8s.io",
+      "resource": "customresourcedefinitions",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "eg-universal-agent-operator-cert-manager-cainjector",
+      "namespace": "cert-manager",
+      "roleType": "Role",
+      "roleName": "eg-universal-agent-operator-cert-manager-cainjector:leaderelection",
+      "apiGroup": "coordination.k8s.io",
+      "resource": "leases",
+      "resourceName": "cert-manager-cainjector-leader-election-core",
+      "verbs": [
+        "get",
+        "patch",
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [
+        "ResourceNameRestricted"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "eg-universal-agent-operator-cert-manager-cainjector",
+      "namespace": "cert-manager",
+      "roleType": "Role",
+      "roleName": "eg-universal-agent-operator-cert-manager-cainjector:leaderelection",
+      "apiGroup": "coordination.k8s.io",
+      "resource": "leases",
+      "resourceName": "",
+      "verbs": [
+        "create"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "eg-universal-agent-operator-cert-manager-cainjector",
+      "namespace": "cert-manager",
+      "roleType": "Role",
+      "roleName": "eg-universal-agent-operator-cert-manager-cainjector:leaderelection",
+      "apiGroup": "coordination.k8s.io",
+      "resource": "leases",
+      "resourceName": "cert-manager-cainjector-leader-election",
+      "verbs": [
+        "get",
+        "patch",
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [
+        "ResourceNameRestricted"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "eg-universal-agent-operator-cert-manager-startupapicheck",
+      "namespace": "cert-manager",
+      "roleType": "Role",
+      "roleName": "eg-universal-agent-operator-cert-manager-startupapicheck:create-cert",
+      "apiGroup": "cert-manager.io",
+      "resource": "certificaterequests",
+      "resourceName": "",
+      "verbs": [
+        "create"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "eginnovations-operator-controller-manager",
+      "namespace": "egagent",
+      "roleType": "Role",
+      "roleName": "eginnovations-operator-leader-election-role",
+      "apiGroup": "",
+      "resource": "configmaps",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "Tampering",
+        "ConfigMapAccess",
+        "PotentialPrivilegeEscalation",
+        "InformationDisclosure",
+        "DataExposure"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1025,
+          "name": "Modify ConfigMaps in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1025/"
+        },
+        {
+          "id": 1023,
+          "name": "Read ConfigMaps in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1023/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "eginnovations-operator-controller-manager",
+      "namespace": "egagent",
+      "roleType": "Role",
+      "roleName": "eginnovations-operator-leader-election-role",
+      "apiGroup": "",
+      "resource": "events",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "patch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "eginnovations-operator-controller-manager",
+      "namespace": "egagent",
+      "roleType": "Role",
+      "roleName": "eginnovations-operator-leader-election-role",
+      "apiGroup": "coordination.k8s.io",
+      "resource": "leases",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "Tampering",
+        "DenialOfService",
+        "ControlPlaneDisruption",
+        "CriticalNamespace"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1081,
+          "name": "Manage Leases in kube-system or kube-node-lease namespace",
+          "link": "https://rbac-atlas.github.io/rules/1081/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "eginnovations-operator-controller-manager",
+      "namespace": "egagent",
+      "roleType": "ClusterRole",
+      "roleName": "eginnovations-operator-manager-role",
+      "apiGroup": "*",
+      "resource": "ingresses",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "ClusterWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "eginnovations-operator-controller-manager",
+      "namespace": "egagent",
+      "roleType": "ClusterRole",
+      "roleName": "eginnovations-operator-manager-role",
+      "apiGroup": "*",
+      "resource": "nodes/proxy",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "ClusterWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "eginnovations-operator-controller-manager",
+      "namespace": "egagent",
+      "roleType": "ClusterRole",
+      "roleName": "eginnovations-operator-manager-role",
+      "apiGroup": "*",
+      "resource": "replicationcontrollers",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "ClusterWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "eginnovations-operator-controller-manager",
+      "namespace": "egagent",
+      "roleType": "ClusterRole",
+      "roleName": "eginnovations-operator-manager-role",
+      "apiGroup": "*",
+      "resource": "services",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "ClusterWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "eginnovations-operator-controller-manager",
+      "namespace": "egagent",
+      "roleType": "ClusterRole",
+      "roleName": "eginnovations-operator-manager-role",
+      "apiGroup": "*",
+      "resource": "statefulsets",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "WildcardPermission",
+        "ClusterWideAccess"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "eginnovations-operator-controller-manager",
+      "namespace": "egagent",
+      "roleType": "ClusterRole",
+      "roleName": "eginnovations-operator-manager-role",
+      "apiGroup": "*",
+      "resource": "deploymentconfigs",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "ClusterWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "eginnovations-operator-controller-manager",
+      "namespace": "egagent",
+      "roleType": "ClusterRole",
+      "roleName": "eginnovations-operator-manager-role",
+      "apiGroup": "*",
+      "resource": "deployments",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "ClusterWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "eginnovations-operator-controller-manager",
+      "namespace": "egagent",
+      "roleType": "ClusterRole",
+      "roleName": "eginnovations-operator-manager-role",
+      "apiGroup": "*",
+      "resource": "events",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Medium",
+      "tags": [
+        "ClusterWideAccess",
+        "WildcardPermission",
+        "InformationDisclosure",
+        "Reconnaissance",
+        "OperationalData"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1070,
+          "name": "Read events cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1070/"
+        },
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "eginnovations-operator-controller-manager",
+      "namespace": "egagent",
+      "roleType": "ClusterRole",
+      "roleName": "eginnovations-operator-manager-role",
+      "apiGroup": "*",
+      "resource": "nodes",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "ClusterWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "eginnovations-operator-controller-manager",
+      "namespace": "egagent",
+      "roleType": "ClusterRole",
+      "roleName": "eginnovations-operator-manager-role",
+      "apiGroup": "*",
+      "resource": "persistentvolumeclaims",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "WildcardPermission",
+        "ClusterWideAccess"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "eginnovations-operator-controller-manager",
+      "namespace": "egagent",
+      "roleType": "ClusterRole",
+      "roleName": "eginnovations-operator-manager-role",
+      "apiGroup": "*",
+      "resource": "pods",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "ClusterWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "eginnovations-operator-controller-manager",
+      "namespace": "egagent",
+      "roleType": "ClusterRole",
+      "roleName": "eginnovations-operator-manager-role",
+      "apiGroup": "*",
+      "resource": "replicasets",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "ClusterWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "eginnovations-operator-controller-manager",
+      "namespace": "egagent",
+      "roleType": "ClusterRole",
+      "roleName": "eginnovations-operator-manager-role",
+      "apiGroup": "*",
+      "resource": "cronjobs",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "WildcardPermission",
+        "ClusterWideAccess"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "eginnovations-operator-controller-manager",
+      "namespace": "egagent",
+      "roleType": "ClusterRole",
+      "roleName": "eginnovations-operator-manager-role",
+      "apiGroup": "*",
+      "resource": "horizontalpodautoscalers",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "ClusterWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "eginnovations-operator-controller-manager",
+      "namespace": "egagent",
+      "roleType": "ClusterRole",
+      "roleName": "eginnovations-operator-manager-role",
+      "apiGroup": "*",
+      "resource": "jobs",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "ClusterWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "eginnovations-operator-controller-manager",
+      "namespace": "egagent",
+      "roleType": "ClusterRole",
+      "roleName": "eginnovations-operator-manager-role",
+      "apiGroup": "*",
+      "resource": "nodes/log",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "ClusterWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "eginnovations-operator-controller-manager",
+      "namespace": "egagent",
+      "roleType": "ClusterRole",
+      "roleName": "eginnovations-operator-manager-role",
+      "apiGroup": "*",
+      "resource": "nodes/stats",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "ClusterWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "eginnovations-operator-controller-manager",
+      "namespace": "egagent",
+      "roleType": "ClusterRole",
+      "roleName": "eginnovations-operator-manager-role",
+      "apiGroup": "*",
+      "resource": "persistentvolumes",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "ClusterWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "eginnovations-operator-controller-manager",
+      "namespace": "egagent",
+      "roleType": "ClusterRole",
+      "roleName": "eginnovations-operator-manager-role",
+      "apiGroup": "*",
+      "resource": "componentstatuses",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Medium",
+      "tags": [
+        "ControlPlaneDisruption",
+        "ClusterWideAccess",
+        "WildcardPermission",
+        "InformationDisclosure",
+        "Reconnaissance"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1095,
+          "name": "Read ComponentStatuses (Control Plane Reconnaissance)",
+          "link": "https://rbac-atlas.github.io/rules/1095/"
+        },
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "eginnovations-operator-controller-manager",
+      "namespace": "egagent",
+      "roleType": "ClusterRole",
+      "roleName": "eginnovations-operator-manager-role",
+      "apiGroup": "*",
+      "resource": "endpoints",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "ClusterWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "eginnovations-operator-controller-manager",
+      "namespace": "egagent",
+      "roleType": "ClusterRole",
+      "roleName": "eginnovations-operator-manager-role",
+      "apiGroup": "*",
+      "resource": "limitranges",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [
+        "ResourceConfiguration",
+        "ClusterWideAccess",
+        "WildcardPermission",
+        "InformationDisclosure",
+        "Reconnaissance"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1087,
+          "name": "Read LimitRanges (Namespace Information Disclosure)",
+          "link": "https://rbac-atlas.github.io/rules/1087/"
+        },
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "eginnovations-operator-controller-manager",
+      "namespace": "egagent",
+      "roleType": "ClusterRole",
+      "roleName": "eginnovations-operator-manager-role",
+      "apiGroup": "*",
+      "resource": "nodes/metrics",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "ClusterWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "eginnovations-operator-controller-manager",
+      "namespace": "egagent",
+      "roleType": "ClusterRole",
+      "roleName": "eginnovations-operator-manager-role",
+      "apiGroup": "*",
+      "resource": "nodes/spec",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "ClusterWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "eginnovations-operator-controller-manager",
+      "namespace": "egagent",
+      "roleType": "ClusterRole",
+      "roleName": "eginnovations-operator-manager-role",
+      "apiGroup": "*",
+      "resource": "resourcequotas",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Medium",
+      "tags": [
+        "ClusterWideAccess",
+        "WildcardPermission",
+        "InformationDisclosure",
+        "Reconnaissance",
+        "ResourceConfiguration",
+        "QuotaTampering"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1089,
+          "name": "Read All ResourceQuotas (Cluster-wide Information Disclosure)",
+          "link": "https://rbac-atlas.github.io/rules/1089/"
+        },
+        {
+          "id": 1088,
+          "name": "Read ResourceQuotas (Namespace Information Disclosure)",
+          "link": "https://rbac-atlas.github.io/rules/1088/"
+        },
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "eginnovations-operator-controller-manager",
+      "namespace": "egagent",
+      "roleType": "ClusterRole",
+      "roleName": "eginnovations-operator-manager-role",
+      "apiGroup": "*",
+      "resource": "clusteroperators",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "ClusterWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "eginnovations-operator-controller-manager",
+      "namespace": "egagent",
+      "roleType": "ClusterRole",
+      "roleName": "eginnovations-operator-manager-role",
+      "apiGroup": "admissionregistration.k8s.io",
+      "resource": "mutatingwebhookconfigurations",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "WebhookManipulation",
+        "Tampering",
+        "PrivilegeEscalation",
+        "DenialOfService",
+        "InformationDisclosure",
+        "WebhookReconnaissance",
+        "Reconnaissance"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1043,
+          "name": "Manage MutatingWebhookConfigurations",
+          "link": "https://rbac-atlas.github.io/rules/1043/"
+        },
+        {
+          "id": 1084,
+          "name": "List MutatingWebhookConfigurations (Reconnaissance)",
+          "link": "https://rbac-atlas.github.io/rules/1084/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "eginnovations-operator-controller-manager",
+      "namespace": "egagent",
+      "roleType": "ClusterRole",
+      "roleName": "eginnovations-operator-manager-role",
+      "apiGroup": "apps",
+      "resource": "daemonsets",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "PrivilegeEscalation",
+        "Persistence",
+        "NodeAccess",
+        "Tampering",
+        "WorkloadLifecycle"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1035,
+          "name": "Manage DaemonSets cluster-wide (runs on all nodes, high impact)",
+          "link": "https://rbac-atlas.github.io/rules/1035/"
+        },
+        {
+          "id": 1036,
+          "name": "Manage DaemonSets in a namespace (runs on nodes, high impact)",
+          "link": "https://rbac-atlas.github.io/rules/1036/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "eginnovations-operator-controller-manager",
+      "namespace": "egagent",
+      "roleType": "ClusterRole",
+      "roleName": "eginnovations-operator-manager-role",
+      "apiGroup": "coordination.k8s.io",
+      "resource": "leases",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "Tampering",
+        "DenialOfService",
+        "ControlPlaneDisruption",
+        "LeaderElectionAbuse",
+        "CriticalNamespace"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1080,
+          "name": "Manage Leases cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1080/"
+        },
+        {
+          "id": 1081,
+          "name": "Manage Leases in kube-system or kube-node-lease namespace",
+          "link": "https://rbac-atlas.github.io/rules/1081/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "eginnovations-operator-controller-manager",
+      "namespace": "egagent",
+      "roleType": "ClusterRole",
+      "roleName": "eginnovations-operator-manager-role",
+      "apiGroup": "eginnovations.com",
+      "resource": "eguniversalagents/finalizers",
+      "resourceName": "",
+      "verbs": [
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "eginnovations-operator-controller-manager",
+      "namespace": "egagent",
+      "roleType": "ClusterRole",
+      "roleName": "eginnovations-operator-manager-role",
+      "apiGroup": "eginnovations.com",
+      "resource": "eguniversalagents/status",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "patch",
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "eginnovations-operator-controller-manager",
+      "namespace": "egagent",
+      "roleType": "ClusterRole",
+      "roleName": "eginnovations-operator-manager-role",
+      "apiGroup": "eginnovations.com",
+      "resource": "eguniversalagents",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "eginnovations-operator-controller-manager",
+      "namespace": "egagent",
+      "roleType": "ClusterRole",
+      "roleName": "eginnovations-operator-manager-role",
+      "apiGroup": "rbac.authorization.k8s.io",
+      "resource": "clusterrolebindings",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "Reconnaissance",
+        "RBACManipulation",
+        "ClusterAdminAccess",
+        "PrivilegeEscalation",
+        "BindingToPrivilegedRole",
+        "InformationDisclosure",
+        "RBACQuery"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1028,
+          "name": "Manage ClusterRoleBindings (create, update, patch, delete)",
+          "link": "https://rbac-atlas.github.io/rules/1028/"
+        },
+        {
+          "id": 1077,
+          "name": "Read RBAC configuration cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1077/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "eginnovations-operator-controller-manager",
+      "namespace": "egagent",
+      "roleType": "ClusterRole",
+      "roleName": "eginnovations-operator-manager-role",
+      "apiGroup": "rbac.authorization.k8s.io",
+      "resource": "clusterroles",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "RBACManipulation",
+        "ClusterAdminAccess",
+        "PrivilegeEscalation",
+        "InformationDisclosure",
+        "RBACQuery",
+        "Reconnaissance"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1027,
+          "name": "Manage ClusterRoles (create, update, patch, delete)",
+          "link": "https://rbac-atlas.github.io/rules/1027/"
+        },
+        {
+          "id": 1077,
+          "name": "Read RBAC configuration cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1077/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "eginnovations-operator-controller-manager",
+      "namespace": "egagent",
+      "roleType": "ClusterRole",
+      "roleName": "eginnovations-operator-manager-role",
+      "apiGroup": "security.openshift.io",
+      "resource": "securitycontextconstraints",
+      "resourceName": "privileged",
+      "verbs": [
+        "use"
+      ],
+      "riskLevel": "Low",
+      "tags": [
+        "ResourceNameRestricted"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "eginnovations-operator-controller-manager",
+      "namespace": "egagent",
+      "roleType": "ClusterRole",
+      "roleName": "eginnovations-operator-manager-role",
+      "apiGroup": "",
+      "resource": "configmaps",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "Tampering",
+        "ConfigMapAccess",
+        "PotentialPrivilegeEscalation",
+        "InformationDisclosure",
+        "DataExposure"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1024,
+          "name": "Modify ConfigMaps cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1024/"
+        },
+        {
+          "id": 1022,
+          "name": "Read ConfigMaps cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1022/"
+        },
+        {
+          "id": 1025,
+          "name": "Modify ConfigMaps in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1025/"
+        },
+        {
+          "id": 1023,
+          "name": "Read ConfigMaps in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1023/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "eginnovations-operator-controller-manager",
+      "namespace": "egagent",
+      "roleType": "ClusterRole",
+      "roleName": "eginnovations-operator-manager-role",
+      "apiGroup": "",
+      "resource": "namespaces",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "NamespaceLifecycle",
+        "ResourceDeletion",
+        "DenialOfService",
+        "InformationDisclosure",
+        "Reconnaissance",
+        "ClusterStructure"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1026,
+          "name": "Delete namespaces",
+          "link": "https://rbac-atlas.github.io/rules/1026/"
+        },
+        {
+          "id": 1082,
+          "name": "List Namespaces (Cluster Reconnaissance)",
+          "link": "https://rbac-atlas.github.io/rules/1082/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "eginnovations-operator-controller-manager",
+      "namespace": "egagent",
+      "roleType": "ClusterRole",
+      "roleName": "eginnovations-operator-manager-role",
+      "apiGroup": "",
+      "resource": "secrets",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "Persistence",
+        "PotentialPrivilegeEscalation",
+        "DataExposure",
+        "Tampering",
+        "PrivilegeEscalation",
+        "ClusterWideSecretAccess",
+        "CredentialAccess",
+        "InformationDisclosure",
+        "SecretAccess"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1010,
+          "name": "Read secrets cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1010/"
+        },
+        {
+          "id": 1011,
+          "name": "Read secrets in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1011/"
+        },
+        {
+          "id": 1012,
+          "name": "Modify secrets cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1012/"
+        },
+        {
+          "id": 1013,
+          "name": "Modify secrets in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1013/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "eginnovations-operator-controller-manager",
+      "namespace": "egagent",
+      "roleType": "ClusterRole",
+      "roleName": "eginnovations-operator-manager-role",
+      "apiGroup": "",
+      "resource": "serviceaccounts",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "Tampering",
+        "IdentityManagement",
+        "PotentialPrivilegeEscalation"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1067,
+          "name": "Manage ServiceAccounts cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1067/"
+        },
+        {
+          "id": 1068,
+          "name": "Manage ServiceAccounts in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1068/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "eginnovations-operator-controller-manager",
+      "namespace": "egagent",
+      "roleType": "ClusterRole",
+      "roleName": "eginnovations-operator-manager-role",
+      "apiGroup": "",
+      "resource": "services",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "NetworkManipulation",
+        "ServiceExposure",
+        "DenialOfService",
+        "Tampering"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1075,
+          "name": "Manage Services cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1075/"
+        },
+        {
+          "id": 1076,
+          "name": "Manage Services in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1076/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "eginnovations-operator-controller-manager",
+      "namespace": "egagent",
+      "roleType": "ClusterRole",
+      "roleName": "eginnovations-operator-manager-role",
+      "apiGroup": "",
+      "resource": "pods",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "eginnovations-operator-controller-manager",
+      "namespace": "egagent",
+      "roleType": "ClusterRole",
+      "roleName": "eginnovations-operator-metrics-auth-role",
+      "apiGroup": "authentication.k8s.io",
+      "resource": "tokenreviews",
+      "resourceName": "",
+      "verbs": [
+        "create"
+      ],
+      "riskLevel": "Medium",
+      "tags": [
+        "RBACQuery",
+        "InformationDisclosure",
+        "CredentialAccess"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1049,
+          "name": "Create TokenReviews (validate arbitrary tokens)",
+          "link": "https://rbac-atlas.github.io/rules/1049/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "eginnovations-operator-controller-manager",
+      "namespace": "egagent",
+      "roleType": "ClusterRole",
+      "roleName": "eginnovations-operator-metrics-auth-role",
+      "apiGroup": "authorization.k8s.io",
+      "resource": "subjectaccessreviews",
+      "resourceName": "",
+      "verbs": [
+        "create"
+      ],
+      "riskLevel": "Medium",
+      "tags": [
+        "InformationDisclosure",
+        "RBACQuery"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1050,
+          "name": "Create SubjectAccessReviews (check arbitrary permissions)",
+          "link": "https://rbac-atlas.github.io/rules/1050/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    }
+  ],
+  "serviceAccountWorkloads": [
+    {
+      "serviceAccountName": "eg-universal-agent-operator-cert-manager",
+      "namespace": "cert-manager",
+      "workloadType": "Deployment",
+      "workloadName": "eg-universal-agent-operator-cert-manager",
+      "containerName": "cert-manager-controller",
+      "image": "quay.io/jetstack/cert-manager-controller:v1.18.2"
+    },
+    {
+      "serviceAccountName": "eg-universal-agent-operator-cert-manager-startupapicheck",
+      "namespace": "cert-manager",
+      "workloadType": "Job",
+      "workloadName": "eg-universal-agent-operator-cert-manager-startupapicheck",
+      "containerName": "cert-manager-startupapicheck",
+      "image": "quay.io/jetstack/cert-manager-startupapicheck:v1.18.2"
+    },
+    {
+      "serviceAccountName": "eg-universal-agent-operator-cert-manager-cainjector",
+      "namespace": "cert-manager",
+      "workloadType": "Deployment",
+      "workloadName": "eg-universal-agent-operator-cert-manager-cainjector",
+      "containerName": "cert-manager-cainjector",
+      "image": "quay.io/jetstack/cert-manager-cainjector:v1.18.2"
+    },
+    {
+      "serviceAccountName": "eginnovations-operator-controller-manager",
+      "namespace": "egagent",
+      "workloadType": "Deployment",
+      "workloadName": "eginnovations-operator-controller-manager",
+      "containerName": "manager",
+      "image": "docker.io/eginnovations/universal-agent-operator:0.0.11"
+    },
+    {
+      "serviceAccountName": "eg-universal-agent-operator-cert-manager-webhook",
+      "namespace": "cert-manager",
+      "workloadType": "Deployment",
+      "workloadName": "eg-universal-agent-operator-cert-manager-webhook",
+      "containerName": "cert-manager-webhook",
+      "image": "quay.io/jetstack/cert-manager-webhook:v1.18.2"
+    }
+  ]
+}
