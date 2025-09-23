@@ -10,6 +10,6 @@ Jenkins - Build great things at any scale! As the leading open source automation
 ## Sources
 
 - https://github.com/jenkinsci/jenkins
-- https://github.com/jenkinsci/docker-inbound-agent
+- https://github.com/jenkinsci/docker-agent
 - https://github.com/maorfr/kube-tasks
 - https://github.com/jenkinsci/configuration-as-code-plugin
