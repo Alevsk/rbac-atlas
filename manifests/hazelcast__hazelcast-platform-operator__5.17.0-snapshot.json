@@ -1,0 +1,1987 @@
+{
+  "metadata": {
+    "version": "5.17.0-snapshot",
+    "name": "hazelcast-platform-operator",
+    "source": "charts/hazelcast__hazelcast-platform-operator__5.17.0-snapshot/",
+    "timestamp": 1760664687,
+    "extra": {
+      "helm": {
+        "description": "A Helm chart for installing Hazelcast Platform Operator which automates common management tasks such as configuring, creating, scaling, and recovering Hazelcast clusters on Kubernetes and Red Hat OpenShift. By taking care of manual deployment and life-cycle management, Hazelcast Platform Operator makes it simpler to work with Hazelcast clusters.",
+        "home": "https://docs.hazelcast.com/operator/latest-snapshot/",
+        "icon": "",
+        "keywords": [
+          "Hazelcast",
+          "Operator"
+        ],
+        "kubeVersion": "",
+        "maintainers": [
+          {
+            "name": "Hazelcast Cloud Native Team",
+            "email": "cloudnative@hazelcast.com"
+          }
+        ],
+        "sources": null
+      }
+    }
+  },
+  "serviceAccountData": [
+    {
+      "serviceAccountName": "hazelcast-platform-operator",
+      "namespace": "default",
+      "automountToken": false,
+      "secrets": null,
+      "imagePullSecrets": null
+    }
+  ],
+  "serviceAccountPermissions": [
+    {
+      "serviceAccountName": "hazelcast-platform-operator",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "hazelcast-platform-operator",
+      "apiGroup": "apps",
+      "resource": "deployments",
+      "resourceName": "",
+      "verbs": [
+        "get"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "hazelcast-platform-operator",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "hazelcast-platform-operator",
+      "apiGroup": "coordination.k8s.io",
+      "resource": "leases",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "CriticalNamespace",
+        "Tampering",
+        "DenialOfService",
+        "ControlPlaneDisruption"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1081,
+          "name": "Manage Leases in kube-system or kube-node-lease namespace",
+          "link": "https://rbac-atlas.github.io/rules/1081/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "hazelcast-platform-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "hazelcast-platform-operator",
+      "apiGroup": "networking.k8s.io",
+      "resource": "ingresses",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "NetworkManipulation",
+        "ServiceExposure",
+        "Tampering",
+        "DenialOfService"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1091,
+          "name": "Manage Ingresses (Namespace Service Exposure/Traffic Redirection)",
+          "link": "https://rbac-atlas.github.io/rules/1091/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "hazelcast-platform-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "hazelcast-platform-operator",
+      "apiGroup": "route.openshift.io",
+      "resource": "routes",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "hazelcast-platform-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "hazelcast-platform-operator",
+      "apiGroup": "route.openshift.io",
+      "resource": "routes/custom-host",
+      "resourceName": "",
+      "verbs": [
+        "create"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "hazelcast-platform-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "hazelcast-platform-operator",
+      "apiGroup": "route.openshift.io",
+      "resource": "routes/status",
+      "resourceName": "",
+      "verbs": [
+        "get"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "hazelcast-platform-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "hazelcast-platform-operator",
+      "apiGroup": "",
+      "resource": "pods",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "Tampering",
+        "PotentialPrivilegeEscalation",
+        "WorkloadExecution",
+        "PrivilegeEscalation",
+        "LateralMovement",
+        "Persistence"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1006,
+          "name": "Create pods cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1006/"
+        },
+        {
+          "id": 1008,
+          "name": "Update/Patch pods cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1008/"
+        },
+        {
+          "id": 1007,
+          "name": "Create pods in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1007/"
+        },
+        {
+          "id": 1009,
+          "name": "Update/Patch pods in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1009/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "hazelcast-platform-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "hazelcast-platform-operator",
+      "apiGroup": "",
+      "resource": "secrets",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "Persistence",
+        "ClusterWideSecretAccess",
+        "SecretAccess",
+        "PrivilegeEscalation",
+        "PotentialPrivilegeEscalation",
+        "CredentialAccess",
+        "DataExposure",
+        "InformationDisclosure",
+        "Tampering"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1010,
+          "name": "Read secrets cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1010/"
+        },
+        {
+          "id": 1011,
+          "name": "Read secrets in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1011/"
+        },
+        {
+          "id": 1012,
+          "name": "Modify secrets cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1012/"
+        },
+        {
+          "id": 1013,
+          "name": "Modify secrets in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1013/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "hazelcast-platform-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "hazelcast-platform-operator",
+      "apiGroup": "",
+      "resource": "serviceaccounts",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "IdentityManagement",
+        "PotentialPrivilegeEscalation",
+        "Tampering"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1067,
+          "name": "Manage ServiceAccounts cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1067/"
+        },
+        {
+          "id": 1068,
+          "name": "Manage ServiceAccounts in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1068/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "hazelcast-platform-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "hazelcast-platform-operator",
+      "apiGroup": "",
+      "resource": "services",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "NetworkManipulation",
+        "ServiceExposure",
+        "DenialOfService",
+        "Tampering"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1075,
+          "name": "Manage Services cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1075/"
+        },
+        {
+          "id": 1076,
+          "name": "Manage Services in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1076/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "hazelcast-platform-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "hazelcast-platform-operator",
+      "apiGroup": "",
+      "resource": "endpoints",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "TrafficRedirection",
+        "ManInTheMiddle",
+        "DenialOfService",
+        "Tampering",
+        "NetworkManipulation"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1073,
+          "name": "Manage Endpoints or EndpointSlices cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1073/"
+        },
+        {
+          "id": 1074,
+          "name": "Manage Endpoints or EndpointSlices in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1074/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "hazelcast-platform-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "hazelcast-platform-operator",
+      "apiGroup": "",
+      "resource": "nodes",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "hazelcast-platform-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "hazelcast-platform-operator",
+      "apiGroup": "",
+      "resource": "configmaps",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "Tampering",
+        "ConfigMapAccess",
+        "PotentialPrivilegeEscalation",
+        "InformationDisclosure",
+        "DataExposure"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1024,
+          "name": "Modify ConfigMaps cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1024/"
+        },
+        {
+          "id": 1022,
+          "name": "Read ConfigMaps cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1022/"
+        },
+        {
+          "id": 1025,
+          "name": "Modify ConfigMaps in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1025/"
+        },
+        {
+          "id": 1023,
+          "name": "Read ConfigMaps in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1023/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "hazelcast-platform-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "hazelcast-platform-operator",
+      "apiGroup": "",
+      "resource": "events",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Medium",
+      "tags": [
+        "OperationalData",
+        "InformationDisclosure",
+        "Reconnaissance"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1070,
+          "name": "Read events cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1070/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "hazelcast-platform-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "hazelcast-platform-operator",
+      "apiGroup": "rbac.authorization.k8s.io",
+      "resource": "rolebindings",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "InformationDisclosure",
+        "RBACQuery",
+        "Reconnaissance",
+        "RBACManipulation",
+        "PrivilegeEscalation",
+        "BindingToPrivilegedRole"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1030,
+          "name": "Manage RoleBindings in a namespace (create, update, patch, delete)",
+          "link": "https://rbac-atlas.github.io/rules/1030/"
+        },
+        {
+          "id": 1077,
+          "name": "Read RBAC configuration cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1077/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "hazelcast-platform-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "hazelcast-platform-operator",
+      "apiGroup": "rbac.authorization.k8s.io",
+      "resource": "roles",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "RBACManipulation",
+        "PrivilegeEscalation",
+        "InformationDisclosure",
+        "RBACQuery",
+        "Reconnaissance"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1029,
+          "name": "Manage Roles in a namespace (create, update, patch, delete)",
+          "link": "https://rbac-atlas.github.io/rules/1029/"
+        },
+        {
+          "id": 1077,
+          "name": "Read RBAC configuration cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1077/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "hazelcast-platform-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "hazelcast-platform-operator",
+      "apiGroup": "rbac.authorization.k8s.io",
+      "resource": "clusterrolebindings",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "RBACManipulation",
+        "ClusterAdminAccess",
+        "PrivilegeEscalation",
+        "BindingToPrivilegedRole",
+        "InformationDisclosure",
+        "RBACQuery",
+        "Reconnaissance"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1028,
+          "name": "Manage ClusterRoleBindings (create, update, patch, delete)",
+          "link": "https://rbac-atlas.github.io/rules/1028/"
+        },
+        {
+          "id": 1077,
+          "name": "Read RBAC configuration cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1077/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "hazelcast-platform-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "hazelcast-platform-operator",
+      "apiGroup": "rbac.authorization.k8s.io",
+      "resource": "clusterroles",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "RBACManipulation",
+        "ClusterAdminAccess",
+        "PrivilegeEscalation",
+        "InformationDisclosure",
+        "RBACQuery",
+        "Reconnaissance"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1027,
+          "name": "Manage ClusterRoles (create, update, patch, delete)",
+          "link": "https://rbac-atlas.github.io/rules/1027/"
+        },
+        {
+          "id": 1077,
+          "name": "Read RBAC configuration cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1077/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "hazelcast-platform-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "hazelcast-platform-operator",
+      "apiGroup": "apps",
+      "resource": "statefulsets",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "PrivilegeEscalation",
+        "Persistence",
+        "Tampering",
+        "PotentialPrivilegeEscalation",
+        "WorkloadLifecycle"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1037,
+          "name": "Manage StatefulSets cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1037/"
+        },
+        {
+          "id": 1038,
+          "name": "Manage StatefulSets in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1038/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "hazelcast-platform-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "hazelcast-platform-operator",
+      "apiGroup": "hazelcast.com",
+      "resource": "wansyncs",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "hazelcast-platform-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "hazelcast-platform-operator",
+      "apiGroup": "hazelcast.com",
+      "resource": "wanreplications",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "hazelcast-platform-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "hazelcast-platform-operator",
+      "apiGroup": "hazelcast.com",
+      "resource": "jetjobsnapshots/finalizers",
+      "resourceName": "",
+      "verbs": [
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "hazelcast-platform-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "hazelcast-platform-operator",
+      "apiGroup": "hazelcast.com",
+      "resource": "replicatedmaps/finalizers",
+      "resourceName": "",
+      "verbs": [
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "hazelcast-platform-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "hazelcast-platform-operator",
+      "apiGroup": "hazelcast.com",
+      "resource": "cronhotbackups/status",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "patch",
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "hazelcast-platform-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "hazelcast-platform-operator",
+      "apiGroup": "hazelcast.com",
+      "resource": "jetjobs/status",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "patch",
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "hazelcast-platform-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "hazelcast-platform-operator",
+      "apiGroup": "hazelcast.com",
+      "resource": "vectorcollections/status",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "patch",
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "hazelcast-platform-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "hazelcast-platform-operator",
+      "apiGroup": "hazelcast.com",
+      "resource": "queues",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "hazelcast-platform-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "hazelcast-platform-operator",
+      "apiGroup": "hazelcast.com",
+      "resource": "caches/finalizers",
+      "resourceName": "",
+      "verbs": [
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "hazelcast-platform-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "hazelcast-platform-operator",
+      "apiGroup": "hazelcast.com",
+      "resource": "wanreplications/finalizers",
+      "resourceName": "",
+      "verbs": [
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "hazelcast-platform-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "hazelcast-platform-operator",
+      "apiGroup": "hazelcast.com",
+      "resource": "jetjobsnapshots/status",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "patch",
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "hazelcast-platform-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "hazelcast-platform-operator",
+      "apiGroup": "hazelcast.com",
+      "resource": "wansyncs/status",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "patch",
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "hazelcast-platform-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "hazelcast-platform-operator",
+      "apiGroup": "hazelcast.com",
+      "resource": "hazelcastendpoints",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "hazelcast-platform-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "hazelcast-platform-operator",
+      "apiGroup": "hazelcast.com",
+      "resource": "multimaps",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "hazelcast-platform-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "hazelcast-platform-operator",
+      "apiGroup": "hazelcast.com",
+      "resource": "hazelcastendpoints/finalizers",
+      "resourceName": "",
+      "verbs": [
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "hazelcast-platform-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "hazelcast-platform-operator",
+      "apiGroup": "hazelcast.com",
+      "resource": "queues/finalizers",
+      "resourceName": "",
+      "verbs": [
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "hazelcast-platform-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "hazelcast-platform-operator",
+      "apiGroup": "hazelcast.com",
+      "resource": "hazelcastendpoints/status",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "patch",
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "hazelcast-platform-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "hazelcast-platform-operator",
+      "apiGroup": "hazelcast.com",
+      "resource": "multimaps/status",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "patch",
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "hazelcast-platform-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "hazelcast-platform-operator",
+      "apiGroup": "hazelcast.com",
+      "resource": "queues/status",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "patch",
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "hazelcast-platform-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "hazelcast-platform-operator",
+      "apiGroup": "hazelcast.com",
+      "resource": "replicatedmaps/status",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "patch",
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "hazelcast-platform-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "hazelcast-platform-operator",
+      "apiGroup": "hazelcast.com",
+      "resource": "hazelcasts/finalizers",
+      "resourceName": "",
+      "verbs": [
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "hazelcast-platform-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "hazelcast-platform-operator",
+      "apiGroup": "hazelcast.com",
+      "resource": "topics/finalizers",
+      "resourceName": "",
+      "verbs": [
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "hazelcast-platform-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "hazelcast-platform-operator",
+      "apiGroup": "hazelcast.com",
+      "resource": "vectorcollections/finalizers",
+      "resourceName": "",
+      "verbs": [
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "hazelcast-platform-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "hazelcast-platform-operator",
+      "apiGroup": "hazelcast.com",
+      "resource": "usercodenamespaces/status",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "patch",
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "hazelcast-platform-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "hazelcast-platform-operator",
+      "apiGroup": "hazelcast.com",
+      "resource": "wanreplications/status",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "patch",
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "hazelcast-platform-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "hazelcast-platform-operator",
+      "apiGroup": "hazelcast.com",
+      "resource": "caches",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "hazelcast-platform-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "hazelcast-platform-operator",
+      "apiGroup": "hazelcast.com",
+      "resource": "hazelcasts",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "hazelcast-platform-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "hazelcast-platform-operator",
+      "apiGroup": "hazelcast.com",
+      "resource": "jetjobsnapshots",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "hazelcast-platform-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "hazelcast-platform-operator",
+      "apiGroup": "hazelcast.com",
+      "resource": "replicatedmaps",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "hazelcast-platform-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "hazelcast-platform-operator",
+      "apiGroup": "hazelcast.com",
+      "resource": "hotbackups/finalizers",
+      "resourceName": "",
+      "verbs": [
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "hazelcast-platform-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "hazelcast-platform-operator",
+      "apiGroup": "hazelcast.com",
+      "resource": "jetjobs/finalizers",
+      "resourceName": "",
+      "verbs": [
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "hazelcast-platform-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "hazelcast-platform-operator",
+      "apiGroup": "hazelcast.com",
+      "resource": "managementcenters/finalizers",
+      "resourceName": "",
+      "verbs": [
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "hazelcast-platform-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "hazelcast-platform-operator",
+      "apiGroup": "hazelcast.com",
+      "resource": "wansyncs/finalizers",
+      "resourceName": "",
+      "verbs": [
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "hazelcast-platform-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "hazelcast-platform-operator",
+      "apiGroup": "hazelcast.com",
+      "resource": "jetjobs",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "hazelcast-platform-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "hazelcast-platform-operator",
+      "apiGroup": "hazelcast.com",
+      "resource": "managementcenters",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "hazelcast-platform-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "hazelcast-platform-operator",
+      "apiGroup": "hazelcast.com",
+      "resource": "maps",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "hazelcast-platform-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "hazelcast-platform-operator",
+      "apiGroup": "hazelcast.com",
+      "resource": "usercodenamespaces",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "hazelcast-platform-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "hazelcast-platform-operator",
+      "apiGroup": "hazelcast.com",
+      "resource": "usercodenamespaces/finalizers",
+      "resourceName": "",
+      "verbs": [
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "hazelcast-platform-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "hazelcast-platform-operator",
+      "apiGroup": "hazelcast.com",
+      "resource": "caches/status",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "patch",
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "hazelcast-platform-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "hazelcast-platform-operator",
+      "apiGroup": "hazelcast.com",
+      "resource": "managementcenters/status",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "patch",
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "hazelcast-platform-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "hazelcast-platform-operator",
+      "apiGroup": "hazelcast.com",
+      "resource": "maps/status",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "patch",
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "hazelcast-platform-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "hazelcast-platform-operator",
+      "apiGroup": "hazelcast.com",
+      "resource": "hotbackups",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "hazelcast-platform-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "hazelcast-platform-operator",
+      "apiGroup": "hazelcast.com",
+      "resource": "topics",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "hazelcast-platform-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "hazelcast-platform-operator",
+      "apiGroup": "hazelcast.com",
+      "resource": "vectorcollections",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "hazelcast-platform-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "hazelcast-platform-operator",
+      "apiGroup": "hazelcast.com",
+      "resource": "maps/finalizers",
+      "resourceName": "",
+      "verbs": [
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "hazelcast-platform-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "hazelcast-platform-operator",
+      "apiGroup": "hazelcast.com",
+      "resource": "hazelcasts/status",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "patch",
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "hazelcast-platform-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "hazelcast-platform-operator",
+      "apiGroup": "hazelcast.com",
+      "resource": "topics/status",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "patch",
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "hazelcast-platform-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "hazelcast-platform-operator",
+      "apiGroup": "hazelcast.com",
+      "resource": "cronhotbackups/finalizers",
+      "resourceName": "",
+      "verbs": [
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "hazelcast-platform-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "hazelcast-platform-operator",
+      "apiGroup": "hazelcast.com",
+      "resource": "multimaps/finalizers",
+      "resourceName": "",
+      "verbs": [
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "hazelcast-platform-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "hazelcast-platform-operator",
+      "apiGroup": "hazelcast.com",
+      "resource": "hotbackups/status",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "patch",
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "hazelcast-platform-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "hazelcast-platform-operator",
+      "apiGroup": "hazelcast.com",
+      "resource": "cronhotbackups",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    }
+  ],
+  "serviceAccountWorkloads": [
+    {
+      "serviceAccountName": "hazelcast-platform-operator",
+      "namespace": "default",
+      "workloadType": "Deployment",
+      "workloadName": "hazelcast-platform-operator",
+      "containerName": "manager",
+      "image": "hazelcast/hazelcast-platform-operator:latest-snapshot"
+    }
+  ]
+}
