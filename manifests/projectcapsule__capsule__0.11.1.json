@@ -1,0 +1,552 @@
+{
+  "metadata": {
+    "version": "0.11.1",
+    "name": "capsule",
+    "source": "charts/projectcapsule__capsule__0.11.1/",
+    "timestamp": 1761269372,
+    "extra": {
+      "helm": {
+        "description": "A Helm chart to deploy the Capsule Operator for easily implementing, managing, and maintaining mutitenancy and access control in Kubernetes.",
+        "home": "https://github.com/projectcapsule/capsule",
+        "icon": "https://github.com/projectcapsule/capsule/raw/main/assets/logo/capsule_small.png",
+        "keywords": [
+          "kubernetes",
+          "operator",
+          "multi-tenancy",
+          "multi-tenant",
+          "multitenancy",
+          "multitenant",
+          "namespace"
+        ],
+        "kubeVersion": "",
+        "maintainers": [
+          {
+            "name": "capsule-maintainers",
+            "email": "cncf-capsule-maintainers@lists.cncf.io"
+          }
+        ],
+        "sources": [
+          "https://github.com/projectcapsule/capsule"
+        ]
+      }
+    }
+  },
+  "serviceAccountData": [
+    {
+      "serviceAccountName": "capsule-pre-delete",
+      "namespace": "default",
+      "automountToken": false,
+      "secrets": null,
+      "imagePullSecrets": null
+    },
+    {
+      "serviceAccountName": "capsule-post-install",
+      "namespace": "default",
+      "automountToken": false,
+      "secrets": null,
+      "imagePullSecrets": null
+    },
+    {
+      "serviceAccountName": "capsule-capsule-proxy",
+      "namespace": "default",
+      "automountToken": false,
+      "secrets": null,
+      "imagePullSecrets": null
+    },
+    {
+      "serviceAccountName": "capsule-proxy-crds",
+      "namespace": "default",
+      "automountToken": false,
+      "secrets": null,
+      "imagePullSecrets": null
+    },
+    {
+      "serviceAccountName": "capsule",
+      "namespace": "default",
+      "automountToken": false,
+      "secrets": null,
+      "imagePullSecrets": null
+    },
+    {
+      "serviceAccountName": "capsule-crds",
+      "namespace": "default",
+      "automountToken": false,
+      "secrets": null,
+      "imagePullSecrets": null
+    }
+  ],
+  "serviceAccountPermissions": [
+    {
+      "serviceAccountName": "capsule-pre-delete",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "capsule-pre-delete",
+      "apiGroup": "rbac.authorization.k8s.io",
+      "resource": "clusterrolebindings",
+      "resourceName": "capsule-namespace-deleter",
+      "verbs": [
+        "delete"
+      ],
+      "riskLevel": "Low",
+      "tags": [
+        "ResourceNameRestricted"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "capsule-pre-delete",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "capsule-pre-delete",
+      "apiGroup": "rbac.authorization.k8s.io",
+      "resource": "clusterrolebindings",
+      "resourceName": "capsule-namespace-provisioner",
+      "verbs": [
+        "delete"
+      ],
+      "riskLevel": "Low",
+      "tags": [
+        "ResourceNameRestricted"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "capsule-pre-delete",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "capsule-pre-delete",
+      "apiGroup": "rbac.authorization.k8s.io",
+      "resource": "clusterroles",
+      "resourceName": "capsule-namespace-deleter",
+      "verbs": [
+        "delete"
+      ],
+      "riskLevel": "Low",
+      "tags": [
+        "ResourceNameRestricted"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "capsule-pre-delete",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "capsule-pre-delete",
+      "apiGroup": "rbac.authorization.k8s.io",
+      "resource": "clusterroles",
+      "resourceName": "capsule-namespace-provisioner",
+      "verbs": [
+        "delete"
+      ],
+      "riskLevel": "Low",
+      "tags": [
+        "ResourceNameRestricted"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "capsule-pre-delete",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "capsule-pre-delete",
+      "apiGroup": "",
+      "resource": "secrets",
+      "resourceName": "capsule-tls",
+      "verbs": [
+        "delete"
+      ],
+      "riskLevel": "Low",
+      "tags": [
+        "ResourceNameRestricted"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "capsule-post-install",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "capsule-post-install",
+      "apiGroup": "",
+      "resource": "secrets",
+      "resourceName": "",
+      "verbs": [
+        "get"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "capsule-crds",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "capsule-crds",
+      "apiGroup": "",
+      "resource": "jobs",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "capsule-crds",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "capsule-crds",
+      "apiGroup": "apiextensions.k8s.io",
+      "resource": "customresourcedefinitions",
+      "resourceName": "capsuleconfigurations.capsule.clastix.io",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "patch",
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [
+        "CRDManipulation",
+        "Tampering",
+        "PotentialPrivilegeEscalation",
+        "ResourceNameRestricted"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1045,
+          "name": "Manage CustomResourceDefinitions",
+          "link": "https://rbac-atlas.github.io/rules/1045/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "capsule-crds",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "capsule-crds",
+      "apiGroup": "apiextensions.k8s.io",
+      "resource": "customresourcedefinitions",
+      "resourceName": "resourcepoolclaims.capsule.clastix.io",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "patch",
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [
+        "PotentialPrivilegeEscalation",
+        "ResourceNameRestricted",
+        "CRDManipulation",
+        "Tampering"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1045,
+          "name": "Manage CustomResourceDefinitions",
+          "link": "https://rbac-atlas.github.io/rules/1045/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "capsule-crds",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "capsule-crds",
+      "apiGroup": "apiextensions.k8s.io",
+      "resource": "customresourcedefinitions",
+      "resourceName": "resourcepools.capsule.clastix.io",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "patch",
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [
+        "CRDManipulation",
+        "Tampering",
+        "PotentialPrivilegeEscalation",
+        "ResourceNameRestricted"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1045,
+          "name": "Manage CustomResourceDefinitions",
+          "link": "https://rbac-atlas.github.io/rules/1045/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "capsule-crds",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "capsule-crds",
+      "apiGroup": "apiextensions.k8s.io",
+      "resource": "customresourcedefinitions",
+      "resourceName": "tenantresources.capsule.clastix.io",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "patch",
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [
+        "Tampering",
+        "PotentialPrivilegeEscalation",
+        "ResourceNameRestricted",
+        "CRDManipulation"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1045,
+          "name": "Manage CustomResourceDefinitions",
+          "link": "https://rbac-atlas.github.io/rules/1045/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "capsule-crds",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "capsule-crds",
+      "apiGroup": "apiextensions.k8s.io",
+      "resource": "customresourcedefinitions",
+      "resourceName": "globaltenantresources.capsule.clastix.io",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "patch",
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [
+        "PotentialPrivilegeEscalation",
+        "ResourceNameRestricted",
+        "CRDManipulation",
+        "Tampering"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1045,
+          "name": "Manage CustomResourceDefinitions",
+          "link": "https://rbac-atlas.github.io/rules/1045/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "capsule-crds",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "capsule-crds",
+      "apiGroup": "apiextensions.k8s.io",
+      "resource": "customresourcedefinitions",
+      "resourceName": "tenants.capsule.clastix.io",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "patch",
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [
+        "ResourceNameRestricted",
+        "CRDManipulation",
+        "Tampering",
+        "PotentialPrivilegeEscalation"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1045,
+          "name": "Manage CustomResourceDefinitions",
+          "link": "https://rbac-atlas.github.io/rules/1045/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "capsule-proxy-crds",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "capsule-proxy-crds",
+      "apiGroup": "",
+      "resource": "jobs",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "capsule-proxy-crds",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "capsule-proxy-crds",
+      "apiGroup": "apiextensions.k8s.io",
+      "resource": "customresourcedefinitions",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "patch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    }
+  ],
+  "serviceAccountWorkloads": [
+    {
+      "serviceAccountName": "capsule-pre-delete",
+      "namespace": "default",
+      "workloadType": "Job",
+      "workloadName": "capsule-pre-delete",
+      "containerName": "pre-delete-job",
+      "image": "docker.io/clastix/kubectl:v1.20"
+    },
+    {
+      "serviceAccountName": "capsule-capsule-proxy",
+      "namespace": "default",
+      "workloadType": "Deployment",
+      "workloadName": "capsule-capsule-proxy",
+      "containerName": "capsule-proxy",
+      "image": "ghcr.io/projectcapsule/capsule-proxy:v0.9.13"
+    },
+    {
+      "serviceAccountName": "capsule-capsule-proxy",
+      "namespace": "default",
+      "workloadType": "Job",
+      "workloadName": "capsule-capsule-proxy-certgen",
+      "containerName": "post-install-job",
+      "image": "registry.k8s.io/ingress-nginx/kube-webhook-certgen:v1.6.2"
+    },
+    {
+      "serviceAccountName": "capsule",
+      "namespace": "default",
+      "workloadType": "Deployment",
+      "workloadName": "capsule-controller-manager",
+      "containerName": "manager",
+      "image": "ghcr.io/projectcapsule/capsule:v0.11.1"
+    },
+    {
+      "serviceAccountName": "capsule-post-install",
+      "namespace": "default",
+      "workloadType": "Job",
+      "workloadName": "capsule-post-install",
+      "containerName": "post-install",
+      "image": "docker.io/clastix/kubectl:v1.20"
+    },
+    {
+      "serviceAccountName": "capsule-proxy-crds",
+      "namespace": "default",
+      "workloadType": "Job",
+      "workloadName": "capsule-proxy-crds",
+      "containerName": "crds-hook",
+      "image": "docker.io/clastix/kubectl:v1.20"
+    },
+    {
+      "serviceAccountName": "capsule-crds",
+      "namespace": "default",
+      "workloadType": "Job",
+      "workloadName": "capsule-crds",
+      "containerName": "crds-hook",
+      "image": "docker.io/clastix/kubectl:v1.20"
+    }
+  ]
+}
