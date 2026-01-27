@@ -1,0 +1,6085 @@
+{
+  "metadata": {
+    "version": "3.163.0",
+    "name": "datadog",
+    "source": "charts/datadog__datadog__3.163.0/",
+    "timestamp": 1769479284,
+    "extra": {
+      "helm": {
+        "description": "Datadog Agent",
+        "home": "https://www.datadoghq.com",
+        "icon": "https://datadog-live.imgix.net/img/dd_logo_70x75.png",
+        "keywords": [
+          "monitoring",
+          "alerting",
+          "metric"
+        ],
+        "kubeVersion": "",
+        "maintainers": [
+          {
+            "name": "Datadog",
+            "email": "support@datadoghq.com"
+          }
+        ],
+        "sources": [
+          "https://app.datadoghq.com/account/settings#agent/kubernetes",
+          "https://github.com/DataDog/datadog-agent"
+        ]
+      }
+    }
+  },
+  "serviceAccountData": [
+    {
+      "serviceAccountName": "datadog",
+      "namespace": "default",
+      "automountToken": true,
+      "secrets": null,
+      "imagePullSecrets": null
+    },
+    {
+      "serviceAccountName": "datadog-datadog-operator",
+      "namespace": "default",
+      "automountToken": false,
+      "secrets": null,
+      "imagePullSecrets": null
+    },
+    {
+      "serviceAccountName": "datadog-cluster-agent",
+      "namespace": "default",
+      "automountToken": true,
+      "secrets": null,
+      "imagePullSecrets": null
+    },
+    {
+      "serviceAccountName": "datadog-kube-state-metrics",
+      "namespace": "default",
+      "automountToken": false,
+      "secrets": null,
+      "imagePullSecrets": null
+    }
+  ],
+  "serviceAccountPermissions": [
+    {
+      "serviceAccountName": "datadog-cluster-agent",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "datadog-dca-flare",
+      "apiGroup": "",
+      "resource": "secrets",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "datadog-cluster-agent",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "datadog-dca-flare",
+      "apiGroup": "",
+      "resource": "configmaps",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "datadog-cluster-agent",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "datadog-ksm-core",
+      "apiGroup": "extensions",
+      "resource": "daemonsets",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "datadog-cluster-agent",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "datadog-ksm-core",
+      "apiGroup": "extensions",
+      "resource": "deployments",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "datadog-cluster-agent",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "datadog-ksm-core",
+      "apiGroup": "extensions",
+      "resource": "replicasets",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "datadog-cluster-agent",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "datadog-ksm-core",
+      "apiGroup": "apps",
+      "resource": "statefulsets",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "datadog-cluster-agent",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "datadog-ksm-core",
+      "apiGroup": "apps",
+      "resource": "daemonsets",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "datadog-cluster-agent",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "datadog-ksm-core",
+      "apiGroup": "apps",
+      "resource": "deployments",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "datadog-cluster-agent",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "datadog-ksm-core",
+      "apiGroup": "apps",
+      "resource": "replicasets",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "datadog-cluster-agent",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "datadog-ksm-core",
+      "apiGroup": "apps",
+      "resource": "controllerrevisions",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "datadog-cluster-agent",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "datadog-ksm-core",
+      "apiGroup": "batch",
+      "resource": "cronjobs",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "datadog-cluster-agent",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "datadog-ksm-core",
+      "apiGroup": "batch",
+      "resource": "jobs",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "datadog-cluster-agent",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "datadog-ksm-core",
+      "apiGroup": "apiextensions.k8s.io",
+      "resource": "customresourcedefinitions",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "datadog-cluster-agent",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "datadog-ksm-core",
+      "apiGroup": "autoscaling",
+      "resource": "horizontalpodautoscalers",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "datadog-cluster-agent",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "datadog-ksm-core",
+      "apiGroup": "policy",
+      "resource": "poddisruptionbudgets",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "datadog-cluster-agent",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "datadog-ksm-core",
+      "apiGroup": "storage.k8s.io",
+      "resource": "storageclasses",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "datadog-cluster-agent",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "datadog-ksm-core",
+      "apiGroup": "storage.k8s.io",
+      "resource": "volumeattachments",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "datadog-cluster-agent",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "datadog-ksm-core",
+      "apiGroup": "networking.k8s.io",
+      "resource": "ingresses",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "datadog-cluster-agent",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "datadog-ksm-core",
+      "apiGroup": "",
+      "resource": "namespaces",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [
+        "InformationDisclosure",
+        "Reconnaissance",
+        "ClusterStructure"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1082,
+          "name": "List Namespaces (Cluster Reconnaissance)",
+          "link": "https://rbac-atlas.github.io/rules/1082/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "datadog-cluster-agent",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "datadog-ksm-core",
+      "apiGroup": "",
+      "resource": "endpoints",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "datadog-cluster-agent",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "datadog-ksm-core",
+      "apiGroup": "",
+      "resource": "pods",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "datadog-cluster-agent",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "datadog-ksm-core",
+      "apiGroup": "",
+      "resource": "services",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "datadog-cluster-agent",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "datadog-ksm-core",
+      "apiGroup": "",
+      "resource": "limitranges",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [
+        "ResourceConfiguration",
+        "InformationDisclosure",
+        "Reconnaissance"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1087,
+          "name": "Read LimitRanges (Namespace Information Disclosure)",
+          "link": "https://rbac-atlas.github.io/rules/1087/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "datadog-cluster-agent",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "datadog-ksm-core",
+      "apiGroup": "",
+      "resource": "persistentvolumeclaims",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "datadog-cluster-agent",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "datadog-ksm-core",
+      "apiGroup": "",
+      "resource": "events",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Medium",
+      "tags": [
+        "InformationDisclosure",
+        "Reconnaissance",
+        "OperationalData"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1070,
+          "name": "Read events cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1070/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "datadog-cluster-agent",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "datadog-ksm-core",
+      "apiGroup": "",
+      "resource": "secrets",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "ClusterWideSecretAccess",
+        "CredentialAccess",
+        "DataExposure",
+        "InformationDisclosure",
+        "SecretAccess"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1010,
+          "name": "Read secrets cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1010/"
+        },
+        {
+          "id": 1011,
+          "name": "Read secrets in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1011/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "datadog-cluster-agent",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "datadog-ksm-core",
+      "apiGroup": "",
+      "resource": "configmaps",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "InformationDisclosure",
+        "ConfigMapAccess",
+        "DataExposure"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1022,
+          "name": "Read ConfigMaps cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1022/"
+        },
+        {
+          "id": 1023,
+          "name": "Read ConfigMaps in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1023/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "datadog-cluster-agent",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "datadog-ksm-core",
+      "apiGroup": "",
+      "resource": "nodes",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "datadog-cluster-agent",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "datadog-ksm-core",
+      "apiGroup": "",
+      "resource": "resourcequotas",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Medium",
+      "tags": [
+        "Reconnaissance",
+        "ResourceConfiguration",
+        "QuotaTampering",
+        "InformationDisclosure"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1089,
+          "name": "Read All ResourceQuotas (Cluster-wide Information Disclosure)",
+          "link": "https://rbac-atlas.github.io/rules/1089/"
+        },
+        {
+          "id": 1088,
+          "name": "Read ResourceQuotas (Namespace Information Disclosure)",
+          "link": "https://rbac-atlas.github.io/rules/1088/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "datadog-cluster-agent",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "datadog-ksm-core",
+      "apiGroup": "",
+      "resource": "replicationcontrollers",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "datadog-cluster-agent",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "datadog-ksm-core",
+      "apiGroup": "",
+      "resource": "persistentvolumes",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "datadog-cluster-agent",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "datadog-cluster-agent",
+      "apiGroup": "karpenter.azure.com",
+      "resource": "*",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "WildcardPermission",
+        "ClusterWideAccess"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "datadog-cluster-agent",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "datadog-cluster-agent",
+      "apiGroup": "source.toolkit.fluxcd.io",
+      "resource": "helmrepositories",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "datadog-cluster-agent",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "datadog-cluster-agent",
+      "apiGroup": "source.toolkit.fluxcd.io",
+      "resource": "ocirepositories",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "datadog-cluster-agent",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "datadog-cluster-agent",
+      "apiGroup": "source.toolkit.fluxcd.io",
+      "resource": "buckets",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "datadog-cluster-agent",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "datadog-cluster-agent",
+      "apiGroup": "source.toolkit.fluxcd.io",
+      "resource": "helmcharts",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "datadog-cluster-agent",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "datadog-cluster-agent",
+      "apiGroup": "source.toolkit.fluxcd.io",
+      "resource": "externalartifacts",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "datadog-cluster-agent",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "datadog-cluster-agent",
+      "apiGroup": "source.toolkit.fluxcd.io",
+      "resource": "gitrepositories",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "datadog-cluster-agent",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "datadog-cluster-agent",
+      "apiGroup": "kustomize.toolkit.fluxcd.io",
+      "resource": "kustomizations",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "datadog-cluster-agent",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "datadog-cluster-agent",
+      "apiGroup": "coordination.k8s.io",
+      "resource": "leases",
+      "resourceName": "datadog-leader-election",
+      "verbs": [
+        "get",
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [
+        "ResourceNameRestricted"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "datadog-cluster-agent",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "datadog-cluster-agent",
+      "apiGroup": "coordination.k8s.io",
+      "resource": "leases",
+      "resourceName": "",
+      "verbs": [
+        "create"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "datadog-cluster-agent",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "datadog-cluster-agent",
+      "apiGroup": "security.openshift.io",
+      "resource": "securitycontextconstraints",
+      "resourceName": "datadog-cluster-agent",
+      "verbs": [
+        "use"
+      ],
+      "riskLevel": "Low",
+      "tags": [
+        "ResourceNameRestricted"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "datadog-cluster-agent",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "datadog-cluster-agent",
+      "apiGroup": "security.openshift.io",
+      "resource": "securitycontextconstraints",
+      "resourceName": "hostnetwork",
+      "verbs": [
+        "use"
+      ],
+      "riskLevel": "Low",
+      "tags": [
+        "ResourceNameRestricted"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "datadog-cluster-agent",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "datadog-cluster-agent",
+      "apiGroup": "policy",
+      "resource": "poddisruptionbudgets",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "datadog-cluster-agent",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "datadog-cluster-agent",
+      "apiGroup": "karpenter.sh",
+      "resource": "*",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "WildcardPermission",
+        "ClusterWideAccess"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "datadog-cluster-agent",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "datadog-cluster-agent",
+      "apiGroup": "discovery.k8s.io",
+      "resource": "endpointslices",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "datadog-cluster-agent",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "datadog-cluster-agent",
+      "apiGroup": "autoscaling",
+      "resource": "horizontalpodautoscalers",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "datadog-cluster-agent",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "datadog-cluster-agent",
+      "apiGroup": "apps",
+      "resource": "deployments",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "datadog-cluster-agent",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "datadog-cluster-agent",
+      "apiGroup": "apps",
+      "resource": "replicasets",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "datadog-cluster-agent",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "datadog-cluster-agent",
+      "apiGroup": "apps",
+      "resource": "daemonsets",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "datadog-cluster-agent",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "datadog-cluster-agent",
+      "apiGroup": "apps",
+      "resource": "statefulsets",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "datadog-cluster-agent",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "datadog-cluster-agent",
+      "apiGroup": "batch",
+      "resource": "cronjobs",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "datadog-cluster-agent",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "datadog-cluster-agent",
+      "apiGroup": "batch",
+      "resource": "jobs",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "datadog-cluster-agent",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "datadog-cluster-agent",
+      "apiGroup": "autoscaling.k8s.io",
+      "resource": "verticalpodautoscalers",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "datadog-cluster-agent",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "datadog-cluster-agent",
+      "apiGroup": "datadoghq.com",
+      "resource": "*",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "ClusterWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "datadog-cluster-agent",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "datadog-cluster-agent",
+      "apiGroup": "argoproj.io",
+      "resource": "applications",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "datadog-cluster-agent",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "datadog-cluster-agent",
+      "apiGroup": "argoproj.io",
+      "resource": "applicationsets",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "datadog-cluster-agent",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "datadog-cluster-agent",
+      "apiGroup": "argoproj.io",
+      "resource": "rollouts",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "datadog-cluster-agent",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "datadog-cluster-agent",
+      "apiGroup": "gateway.networking.k8s.io",
+      "resource": "gatewayclasses",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "patch",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "datadog-cluster-agent",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "datadog-cluster-agent",
+      "apiGroup": "gateway.networking.k8s.io",
+      "resource": "referencegrants",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "patch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "datadog-cluster-agent",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "datadog-cluster-agent",
+      "apiGroup": "gateway.networking.k8s.io",
+      "resource": "gateways",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "patch",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "datadog-cluster-agent",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "datadog-cluster-agent",
+      "apiGroup": "",
+      "resource": "configmaps",
+      "resourceName": "datadog-cluster-id",
+      "verbs": [
+        "create",
+        "get",
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [
+        "ResourceNameRestricted"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "datadog-cluster-agent",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "datadog-cluster-agent",
+      "apiGroup": "",
+      "resource": "configmaps",
+      "resourceName": "datadogtoken",
+      "verbs": [
+        "get",
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [
+        "ResourceNameRestricted"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "datadog-cluster-agent",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "datadog-cluster-agent",
+      "apiGroup": "",
+      "resource": "configmaps",
+      "resourceName": "datadog-leader-election",
+      "verbs": [
+        "get",
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [
+        "ResourceNameRestricted"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "datadog-cluster-agent",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "datadog-cluster-agent",
+      "apiGroup": "",
+      "resource": "configmaps",
+      "resourceName": "",
+      "verbs": [
+        "create"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "datadog-cluster-agent",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "datadog-cluster-agent",
+      "apiGroup": "",
+      "resource": "serviceaccounts",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "datadog-cluster-agent",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "datadog-cluster-agent",
+      "apiGroup": "",
+      "resource": "endpoints",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "datadog-cluster-agent",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "datadog-cluster-agent",
+      "apiGroup": "",
+      "resource": "pods",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "datadog-cluster-agent",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "datadog-cluster-agent",
+      "apiGroup": "",
+      "resource": "namespaces",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [
+        "InformationDisclosure",
+        "Reconnaissance",
+        "ClusterStructure"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1082,
+          "name": "List Namespaces (Cluster Reconnaissance)",
+          "link": "https://rbac-atlas.github.io/rules/1082/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "datadog-cluster-agent",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "datadog-cluster-agent",
+      "apiGroup": "",
+      "resource": "namespaces",
+      "resourceName": "kube-system",
+      "verbs": [
+        "get"
+      ],
+      "riskLevel": "Low",
+      "tags": [
+        "ResourceNameRestricted"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "datadog-cluster-agent",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "datadog-cluster-agent",
+      "apiGroup": "",
+      "resource": "persistentvolumes",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "datadog-cluster-agent",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "datadog-cluster-agent",
+      "apiGroup": "",
+      "resource": "persistentvolumeclaims",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "datadog-cluster-agent",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "datadog-cluster-agent",
+      "apiGroup": "",
+      "resource": "replicationcontrollers",
+      "resourceName": "",
+      "verbs": [
+        "get"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "datadog-cluster-agent",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "datadog-cluster-agent",
+      "apiGroup": "",
+      "resource": "services",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "datadog-cluster-agent",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "datadog-cluster-agent",
+      "apiGroup": "",
+      "resource": "nodes",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "datadog-cluster-agent",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "datadog-cluster-agent",
+      "apiGroup": "",
+      "resource": "componentstatuses",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Medium",
+      "tags": [
+        "InformationDisclosure",
+        "Reconnaissance",
+        "ControlPlaneDisruption"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1095,
+          "name": "Read ComponentStatuses (Control Plane Reconnaissance)",
+          "link": "https://rbac-atlas.github.io/rules/1095/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "datadog-cluster-agent",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "datadog-cluster-agent",
+      "apiGroup": "",
+      "resource": "limitranges",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [
+        "InformationDisclosure",
+        "Reconnaissance",
+        "ResourceConfiguration"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1087,
+          "name": "Read LimitRanges (Namespace Information Disclosure)",
+          "link": "https://rbac-atlas.github.io/rules/1087/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "datadog-cluster-agent",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "datadog-cluster-agent",
+      "apiGroup": "",
+      "resource": "events",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Medium",
+      "tags": [
+        "OperationalData",
+        "InformationDisclosure",
+        "Reconnaissance"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1070,
+          "name": "Read events cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1070/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "datadog-cluster-agent",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "datadog-cluster-agent",
+      "apiGroup": "quota.openshift.io",
+      "resource": "clusterresourcequotas",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "datadog-cluster-agent",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "datadog-cluster-agent",
+      "apiGroup": "networking.k8s.io",
+      "resource": "ingresses",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "datadog-cluster-agent",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "datadog-cluster-agent",
+      "apiGroup": "networking.k8s.io",
+      "resource": "networkpolicies",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "datadog-cluster-agent",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "datadog-cluster-agent",
+      "apiGroup": "rbac.authorization.k8s.io",
+      "resource": "rolebindings",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Medium",
+      "tags": [
+        "InformationDisclosure",
+        "RBACQuery",
+        "Reconnaissance"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1077,
+          "name": "Read RBAC configuration cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1077/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "datadog-cluster-agent",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "datadog-cluster-agent",
+      "apiGroup": "rbac.authorization.k8s.io",
+      "resource": "clusterroles",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Medium",
+      "tags": [
+        "Reconnaissance",
+        "InformationDisclosure",
+        "RBACQuery"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1077,
+          "name": "Read RBAC configuration cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1077/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "datadog-cluster-agent",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "datadog-cluster-agent",
+      "apiGroup": "rbac.authorization.k8s.io",
+      "resource": "clusterrolebindings",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Medium",
+      "tags": [
+        "InformationDisclosure",
+        "RBACQuery",
+        "Reconnaissance"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1077,
+          "name": "Read RBAC configuration cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1077/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "datadog-cluster-agent",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "datadog-cluster-agent",
+      "apiGroup": "rbac.authorization.k8s.io",
+      "resource": "roles",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Medium",
+      "tags": [
+        "Reconnaissance",
+        "InformationDisclosure",
+        "RBACQuery"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1077,
+          "name": "Read RBAC configuration cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1077/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "datadog-cluster-agent",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "datadog-cluster-agent",
+      "apiGroup": "admissionregistration.k8s.io",
+      "resource": "validatingwebhookconfigurations",
+      "resourceName": "datadog-webhook",
+      "verbs": [
+        "delete",
+        "get",
+        "list",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [
+        "InformationDisclosure",
+        "WebhookReconnaissance",
+        "Reconnaissance",
+        "ResourceNameRestricted"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1083,
+          "name": "List ValidatingWebhookConfigurations (Reconnaissance)",
+          "link": "https://rbac-atlas.github.io/rules/1083/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "datadog-cluster-agent",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "datadog-cluster-agent",
+      "apiGroup": "admissionregistration.k8s.io",
+      "resource": "validatingwebhookconfigurations",
+      "resourceName": "",
+      "verbs": [
+        "create"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "datadog-cluster-agent",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "datadog-cluster-agent",
+      "apiGroup": "admissionregistration.k8s.io",
+      "resource": "mutatingwebhookconfigurations",
+      "resourceName": "",
+      "verbs": [
+        "create"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "datadog-cluster-agent",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "datadog-cluster-agent",
+      "apiGroup": "admissionregistration.k8s.io",
+      "resource": "mutatingwebhookconfigurations",
+      "resourceName": "datadog-webhook",
+      "verbs": [
+        "delete",
+        "get",
+        "list",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [
+        "InformationDisclosure",
+        "WebhookReconnaissance",
+        "Reconnaissance",
+        "ResourceNameRestricted"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1084,
+          "name": "List MutatingWebhookConfigurations (Reconnaissance)",
+          "link": "https://rbac-atlas.github.io/rules/1084/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "datadog-cluster-agent",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "datadog-cluster-agent",
+      "apiGroup": "karpenter.k8s.aws",
+      "resource": "*",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "ClusterWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "datadog-cluster-agent",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "datadog-cluster-agent",
+      "apiGroup": "gateway.envoyproxy.io",
+      "resource": "envoyextensionpolicies",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "datadog-cluster-agent",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "datadog-cluster-agent",
+      "apiGroup": "networking.istio.io",
+      "resource": "envoyfilters",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "datadog-cluster-agent",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "datadog-cluster-agent",
+      "apiGroup": "storage.k8s.io",
+      "resource": "storageclasses",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "datadog-cluster-agent",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "datadog-cluster-agent",
+      "apiGroup": "apiextensions.k8s.io",
+      "resource": "customresourcedefinitions",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "datadog-cluster-agent",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "datadog-cluster-agent-main",
+      "apiGroup": "",
+      "resource": "secrets",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "get",
+        "list",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "SecretAccess",
+        "CredentialAccess",
+        "DataExposure",
+        "InformationDisclosure"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1011,
+          "name": "Read secrets in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1011/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "datadog-datadog-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "datadog-datadog-operator",
+      "apiGroup": "argoproj.io",
+      "resource": "rollouts",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "patch",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "datadog-datadog-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "datadog-datadog-operator",
+      "apiGroup": "discovery.k8s.io",
+      "resource": "endpointslices",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "datadog-datadog-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "datadog-datadog-operator",
+      "apiGroup": "karpenter.k8s.aws",
+      "resource": "*",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "WildcardPermission",
+        "ClusterWideAccess"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "datadog-datadog-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "datadog-datadog-operator",
+      "apiGroup": "apiextensions.k8s.io",
+      "resource": "customresourcedefinitions",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "datadog-datadog-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "datadog-datadog-operator",
+      "apiGroup": "apiregistration.k8s.io",
+      "resource": "apiservices",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "DenialOfService",
+        "InformationDisclosure",
+        "ClusterWideAccess",
+        "WildcardPermission",
+        "APIServiceManipulation",
+        "Tampering",
+        "PrivilegeEscalation"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1046,
+          "name": "Manage APIServices",
+          "link": "https://rbac-atlas.github.io/rules/1046/"
+        },
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "datadog-datadog-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "datadog-datadog-operator",
+      "apiGroup": "gateway.networking.k8s.io",
+      "resource": "referencegrants",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "patch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "datadog-datadog-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "datadog-datadog-operator",
+      "apiGroup": "gateway.networking.k8s.io",
+      "resource": "gatewayclasses",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "patch",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "datadog-datadog-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "datadog-datadog-operator",
+      "apiGroup": "gateway.networking.k8s.io",
+      "resource": "gateways",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "patch",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "datadog-datadog-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "datadog-datadog-operator",
+      "apiGroup": "gateway.networking.k8s.io",
+      "resource": "httproutes",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "patch",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "datadog-datadog-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "datadog-datadog-operator",
+      "apiGroup": "networking.k8s.io",
+      "resource": "networkpolicies",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "DenialOfService",
+        "LateralMovement",
+        "NetworkPolicyManagement",
+        "NetworkManipulation",
+        "Tampering"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1071,
+          "name": "Manage NetworkPolicies cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1071/"
+        },
+        {
+          "id": 1072,
+          "name": "Manage NetworkPolicies in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1072/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "datadog-datadog-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "datadog-datadog-operator",
+      "apiGroup": "networking.k8s.io",
+      "resource": "ingresses",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "patch",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "datadog-datadog-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "datadog-datadog-operator",
+      "apiGroup": "security.openshift.io",
+      "resource": "securitycontextconstraints",
+      "resourceName": "restricted",
+      "verbs": [
+        "use"
+      ],
+      "riskLevel": "Low",
+      "tags": [
+        "ResourceNameRestricted"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "datadog-datadog-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "datadog-datadog-operator",
+      "apiGroup": "certificates.k8s.io",
+      "resource": "certificatesigningrequests",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "datadog-datadog-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "datadog-datadog-operator",
+      "apiGroup": "karpenter.sh",
+      "resource": "*",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "ClusterWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "datadog-datadog-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "datadog-datadog-operator",
+      "apiGroup": "auto.gke.io",
+      "resource": "allowlistsynchronizers",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "datadog-datadog-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "datadog-datadog-operator",
+      "apiGroup": "metrics.eks.amazonaws.com",
+      "resource": "kcm/metrics",
+      "resourceName": "",
+      "verbs": [
+        "get"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "datadog-datadog-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "datadog-datadog-operator",
+      "apiGroup": "metrics.eks.amazonaws.com",
+      "resource": "ksh/metrics",
+      "resourceName": "",
+      "verbs": [
+        "get"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "datadog-datadog-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "datadog-datadog-operator",
+      "apiGroup": "policy",
+      "resource": "poddisruptionbudgets",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Medium",
+      "tags": [
+        "DenialOfService",
+        "AvailabilityImpact",
+        "Tampering"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1079,
+          "name": "Manage PodDisruptionBudgets cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1079/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "datadog-datadog-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "datadog-datadog-operator",
+      "apiGroup": "*",
+      "resource": "*/scale",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "update"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "ClusterWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "datadog-datadog-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "datadog-datadog-operator",
+      "apiGroup": "authentication.k8s.io",
+      "resource": "tokenreviews",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Medium",
+      "tags": [
+        "InformationDisclosure",
+        "CredentialAccess",
+        "RBACQuery"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1049,
+          "name": "Create TokenReviews (validate arbitrary tokens)",
+          "link": "https://rbac-atlas.github.io/rules/1049/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "datadog-datadog-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "datadog-datadog-operator",
+      "apiGroup": "coordination.k8s.io",
+      "resource": "leases",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "DenialOfService",
+        "ControlPlaneDisruption",
+        "LeaderElectionAbuse",
+        "CriticalNamespace",
+        "Tampering"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1080,
+          "name": "Manage Leases cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1080/"
+        },
+        {
+          "id": 1081,
+          "name": "Manage Leases in kube-system or kube-node-lease namespace",
+          "link": "https://rbac-atlas.github.io/rules/1081/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "datadog-datadog-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "datadog-datadog-operator",
+      "apiGroup": "datadoghq.com",
+      "resource": "datadogagentinternals/status",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "patch",
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "datadog-datadog-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "datadog-datadog-operator",
+      "apiGroup": "datadoghq.com",
+      "resource": "datadogagents",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "datadog-datadog-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "datadog-datadog-operator",
+      "apiGroup": "datadoghq.com",
+      "resource": "datadoggenericresources/status",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "patch",
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "datadog-datadog-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "datadog-datadog-operator",
+      "apiGroup": "datadoghq.com",
+      "resource": "datadogmetrics",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "datadog-datadog-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "datadog-datadog-operator",
+      "apiGroup": "datadoghq.com",
+      "resource": "datadogpodautoscalers",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "WildcardPermission",
+        "ClusterWideAccess"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "datadog-datadog-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "datadog-datadog-operator",
+      "apiGroup": "datadoghq.com",
+      "resource": "datadogpodautoscalers/status",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "ClusterWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "datadog-datadog-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "datadog-datadog-operator",
+      "apiGroup": "datadoghq.com",
+      "resource": "extendeddaemonsetreplicasets",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "datadog-datadog-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "datadog-datadog-operator",
+      "apiGroup": "datadoghq.com",
+      "resource": "*",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "ClusterWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "datadog-datadog-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "datadog-datadog-operator",
+      "apiGroup": "datadoghq.com",
+      "resource": "datadogagentinternals",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "datadog-datadog-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "datadog-datadog-operator",
+      "apiGroup": "datadoghq.com",
+      "resource": "datadogmetrics/status",
+      "resourceName": "",
+      "verbs": [
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "datadog-datadog-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "datadog-datadog-operator",
+      "apiGroup": "datadoghq.com",
+      "resource": "datadogagents/finalizers",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "datadog-datadog-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "datadog-datadog-operator",
+      "apiGroup": "datadoghq.com",
+      "resource": "datadoggenericresources",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "datadog-datadog-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "datadog-datadog-operator",
+      "apiGroup": "datadoghq.com",
+      "resource": "datadogmonitors",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "datadog-datadog-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "datadog-datadog-operator",
+      "apiGroup": "datadoghq.com",
+      "resource": "datadogmonitors/finalizers",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "datadog-datadog-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "datadog-datadog-operator",
+      "apiGroup": "datadoghq.com",
+      "resource": "extendeddaemonsets",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "datadog-datadog-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "datadog-datadog-operator",
+      "apiGroup": "datadoghq.com",
+      "resource": "datadogslos/status",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "patch",
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "datadog-datadog-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "datadog-datadog-operator",
+      "apiGroup": "datadoghq.com",
+      "resource": "watermarkpodautoscalers",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "datadog-datadog-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "datadog-datadog-operator",
+      "apiGroup": "datadoghq.com",
+      "resource": "datadoggenericresources/finalizers",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "datadog-datadog-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "datadog-datadog-operator",
+      "apiGroup": "datadoghq.com",
+      "resource": "datadogslos/finalizers",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "datadog-datadog-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "datadog-datadog-operator",
+      "apiGroup": "datadoghq.com",
+      "resource": "datadogagents/status",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "patch",
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "datadog-datadog-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "datadog-datadog-operator",
+      "apiGroup": "datadoghq.com",
+      "resource": "datadogagentinternals/finalizers",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "datadog-datadog-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "datadog-datadog-operator",
+      "apiGroup": "datadoghq.com",
+      "resource": "datadogslos",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "datadog-datadog-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "datadog-datadog-operator",
+      "apiGroup": "datadoghq.com",
+      "resource": "datadogmonitors/status",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "patch",
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "datadog-datadog-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "datadog-datadog-operator",
+      "apiGroup": "external.metrics.k8s.io",
+      "resource": "*",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "ClusterWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "datadog-datadog-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "datadog-datadog-operator",
+      "apiGroup": "gateway.envoyproxy.io",
+      "resource": "envoyextensionpolicies",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "datadog-datadog-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "datadog-datadog-operator",
+      "apiGroup": "networking.istio.io",
+      "resource": "envoyfilters",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "datadog-datadog-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "datadog-datadog-operator",
+      "apiGroup": "rbac.authorization.k8s.io",
+      "resource": "rolebindings",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "PrivilegeEscalation",
+        "BindingToPrivilegedRole",
+        "InformationDisclosure",
+        "RBACQuery",
+        "Reconnaissance",
+        "RBACManipulation"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1030,
+          "name": "Manage RoleBindings in a namespace (create, update, patch, delete)",
+          "link": "https://rbac-atlas.github.io/rules/1030/"
+        },
+        {
+          "id": 1077,
+          "name": "Read RBAC configuration cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1077/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "datadog-datadog-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "datadog-datadog-operator",
+      "apiGroup": "rbac.authorization.k8s.io",
+      "resource": "roles",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "RBACQuery",
+        "Reconnaissance",
+        "RBACManipulation",
+        "PrivilegeEscalation",
+        "InformationDisclosure"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1029,
+          "name": "Manage Roles in a namespace (create, update, patch, delete)",
+          "link": "https://rbac-atlas.github.io/rules/1029/"
+        },
+        {
+          "id": 1077,
+          "name": "Read RBAC configuration cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1077/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "datadog-datadog-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "datadog-datadog-operator",
+      "apiGroup": "rbac.authorization.k8s.io",
+      "resource": "clusterrolebindings",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "deletecollection",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "RBACManipulation",
+        "ClusterAdminAccess",
+        "PrivilegeEscalation",
+        "BindingToPrivilegedRole",
+        "InformationDisclosure",
+        "RBACQuery",
+        "Reconnaissance"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1028,
+          "name": "Manage ClusterRoleBindings (create, update, patch, delete)",
+          "link": "https://rbac-atlas.github.io/rules/1028/"
+        },
+        {
+          "id": 1077,
+          "name": "Read RBAC configuration cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1077/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "datadog-datadog-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "datadog-datadog-operator",
+      "apiGroup": "rbac.authorization.k8s.io",
+      "resource": "clusterroles",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "deletecollection",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "Reconnaissance",
+        "RBACManipulation",
+        "ClusterAdminAccess",
+        "PrivilegeEscalation",
+        "InformationDisclosure",
+        "RBACQuery"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1027,
+          "name": "Manage ClusterRoles (create, update, patch, delete)",
+          "link": "https://rbac-atlas.github.io/rules/1027/"
+        },
+        {
+          "id": 1077,
+          "name": "Read RBAC configuration cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1077/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "datadog-datadog-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "datadog-datadog-operator",
+      "apiGroup": "",
+      "resource": "deployments",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "datadog-datadog-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "datadog-datadog-operator",
+      "apiGroup": "",
+      "resource": "replicationcontrollers",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "datadog-datadog-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "datadog-datadog-operator",
+      "apiGroup": "",
+      "resource": "serviceaccounts",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "IdentityManagement",
+        "PotentialPrivilegeEscalation",
+        "Tampering"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1067,
+          "name": "Manage ServiceAccounts cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1067/"
+        },
+        {
+          "id": 1068,
+          "name": "Manage ServiceAccounts in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1068/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "datadog-datadog-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "datadog-datadog-operator",
+      "apiGroup": "",
+      "resource": "services",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "NetworkManipulation",
+        "ServiceExposure",
+        "DenialOfService",
+        "Tampering"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1075,
+          "name": "Manage Services cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1075/"
+        },
+        {
+          "id": 1076,
+          "name": "Manage Services in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1076/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "datadog-datadog-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "datadog-datadog-operator",
+      "apiGroup": "",
+      "resource": "nodes/metrics",
+      "resourceName": "",
+      "verbs": [
+        "get"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "datadog-datadog-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "datadog-datadog-operator",
+      "apiGroup": "",
+      "resource": "nodes/pods",
+      "resourceName": "",
+      "verbs": [
+        "get"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "datadog-datadog-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "datadog-datadog-operator",
+      "apiGroup": "",
+      "resource": "componentstatuses",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Medium",
+      "tags": [
+        "Reconnaissance",
+        "ControlPlaneDisruption",
+        "InformationDisclosure"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1095,
+          "name": "Read ComponentStatuses (Control Plane Reconnaissance)",
+          "link": "https://rbac-atlas.github.io/rules/1095/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "datadog-datadog-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "datadog-datadog-operator",
+      "apiGroup": "",
+      "resource": "namespaces",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [
+        "InformationDisclosure",
+        "Reconnaissance",
+        "ClusterStructure"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1082,
+          "name": "List Namespaces (Cluster Reconnaissance)",
+          "link": "https://rbac-atlas.github.io/rules/1082/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "datadog-datadog-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "datadog-datadog-operator",
+      "apiGroup": "",
+      "resource": "persistentvolumeclaims",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "datadog-datadog-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "datadog-datadog-operator",
+      "apiGroup": "",
+      "resource": "persistentvolumes",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "datadog-datadog-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "datadog-datadog-operator",
+      "apiGroup": "",
+      "resource": "configmaps",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "Tampering",
+        "ConfigMapAccess",
+        "PotentialPrivilegeEscalation",
+        "InformationDisclosure",
+        "DataExposure"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1024,
+          "name": "Modify ConfigMaps cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1024/"
+        },
+        {
+          "id": 1022,
+          "name": "Read ConfigMaps cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1022/"
+        },
+        {
+          "id": 1025,
+          "name": "Modify ConfigMaps in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1025/"
+        },
+        {
+          "id": 1023,
+          "name": "Read ConfigMaps in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1023/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "datadog-datadog-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "datadog-datadog-operator",
+      "apiGroup": "",
+      "resource": "events",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Medium",
+      "tags": [
+        "Reconnaissance",
+        "OperationalData",
+        "InformationDisclosure"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1070,
+          "name": "Read events cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1070/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "datadog-datadog-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "datadog-datadog-operator",
+      "apiGroup": "",
+      "resource": "pods",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "PrivilegeEscalation",
+        "LateralMovement",
+        "Persistence",
+        "Tampering",
+        "PotentialPrivilegeEscalation",
+        "WorkloadExecution"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1006,
+          "name": "Create pods cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1006/"
+        },
+        {
+          "id": 1008,
+          "name": "Update/Patch pods cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1008/"
+        },
+        {
+          "id": 1007,
+          "name": "Create pods in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1007/"
+        },
+        {
+          "id": 1009,
+          "name": "Update/Patch pods in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1009/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "datadog-datadog-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "datadog-datadog-operator",
+      "apiGroup": "",
+      "resource": "nodes/configz",
+      "resourceName": "",
+      "verbs": [
+        "get"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "datadog-datadog-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "datadog-datadog-operator",
+      "apiGroup": "",
+      "resource": "limitranges",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [
+        "InformationDisclosure",
+        "Reconnaissance",
+        "ResourceConfiguration"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1087,
+          "name": "Read LimitRanges (Namespace Information Disclosure)",
+          "link": "https://rbac-atlas.github.io/rules/1087/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "datadog-datadog-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "datadog-datadog-operator",
+      "apiGroup": "",
+      "resource": "endpoints",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "DenialOfService",
+        "Tampering",
+        "NetworkManipulation",
+        "TrafficRedirection",
+        "ManInTheMiddle"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1073,
+          "name": "Manage Endpoints or EndpointSlices cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1073/"
+        },
+        {
+          "id": 1074,
+          "name": "Manage Endpoints or EndpointSlices in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1074/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "datadog-datadog-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "datadog-datadog-operator",
+      "apiGroup": "",
+      "resource": "nodes",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "datadog-datadog-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "datadog-datadog-operator",
+      "apiGroup": "",
+      "resource": "nodes/healthz",
+      "resourceName": "",
+      "verbs": [
+        "get"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "datadog-datadog-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "datadog-datadog-operator",
+      "apiGroup": "",
+      "resource": "nodes/logs",
+      "resourceName": "",
+      "verbs": [
+        "get"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "datadog-datadog-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "datadog-datadog-operator",
+      "apiGroup": "",
+      "resource": "nodes/spec",
+      "resourceName": "",
+      "verbs": [
+        "get"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "datadog-datadog-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "datadog-datadog-operator",
+      "apiGroup": "",
+      "resource": "nodes/stats",
+      "resourceName": "",
+      "verbs": [
+        "get"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "datadog-datadog-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "datadog-datadog-operator",
+      "apiGroup": "",
+      "resource": "secrets",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "ClusterWideSecretAccess",
+        "InformationDisclosure",
+        "SecretAccess",
+        "Tampering",
+        "PrivilegeEscalation",
+        "PotentialPrivilegeEscalation",
+        "CredentialAccess",
+        "DataExposure",
+        "Persistence"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1010,
+          "name": "Read secrets cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1010/"
+        },
+        {
+          "id": 1011,
+          "name": "Read secrets in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1011/"
+        },
+        {
+          "id": 1012,
+          "name": "Modify secrets cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1012/"
+        },
+        {
+          "id": 1013,
+          "name": "Modify secrets in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1013/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "datadog-datadog-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "datadog-datadog-operator",
+      "apiGroup": "",
+      "resource": "resourcequotas",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Medium",
+      "tags": [
+        "InformationDisclosure",
+        "Reconnaissance",
+        "ResourceConfiguration",
+        "QuotaTampering"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1089,
+          "name": "Read All ResourceQuotas (Cluster-wide Information Disclosure)",
+          "link": "https://rbac-atlas.github.io/rules/1089/"
+        },
+        {
+          "id": 1088,
+          "name": "Read ResourceQuotas (Namespace Information Disclosure)",
+          "link": "https://rbac-atlas.github.io/rules/1088/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "datadog-datadog-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "datadog-datadog-operator",
+      "apiGroup": "",
+      "resource": "nodes/proxy",
+      "resourceName": "",
+      "verbs": [
+        "get"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "NodeAccess",
+        "ClusterAdminAccess",
+        "CodeExecution",
+        "LateralMovement",
+        "ElevationOfPrivilege",
+        "AuthorizationBypass"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1104,
+          "name": "Node proxy GET RCE via WebSocket",
+          "link": "https://rbac-atlas.github.io/rules/1104/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "datadog-datadog-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "datadog-datadog-operator",
+      "apiGroup": "apps",
+      "resource": "controllerrevisions",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "datadog-datadog-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "datadog-datadog-operator",
+      "apiGroup": "apps",
+      "resource": "daemonsets",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "deletecollection",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "WorkloadLifecycle",
+        "PrivilegeEscalation",
+        "Persistence",
+        "NodeAccess",
+        "Tampering"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1035,
+          "name": "Manage DaemonSets cluster-wide (runs on all nodes, high impact)",
+          "link": "https://rbac-atlas.github.io/rules/1035/"
+        },
+        {
+          "id": 1036,
+          "name": "Manage DaemonSets in a namespace (runs on nodes, high impact)",
+          "link": "https://rbac-atlas.github.io/rules/1036/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "datadog-datadog-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "datadog-datadog-operator",
+      "apiGroup": "apps",
+      "resource": "deployments",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "deletecollection",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "PotentialPrivilegeEscalation",
+        "WorkloadLifecycle",
+        "PrivilegeEscalation",
+        "Persistence",
+        "Tampering"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1033,
+          "name": "Manage Deployments cluster-wide (potential for privileged pod execution)",
+          "link": "https://rbac-atlas.github.io/rules/1033/"
+        },
+        {
+          "id": 1034,
+          "name": "Manage Deployments in a namespace (potential for privileged pod execution)",
+          "link": "https://rbac-atlas.github.io/rules/1034/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "datadog-datadog-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "datadog-datadog-operator",
+      "apiGroup": "apps",
+      "resource": "replicasets",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "datadog-datadog-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "datadog-datadog-operator",
+      "apiGroup": "apps",
+      "resource": "statefulsets",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "datadog-datadog-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "datadog-datadog-operator",
+      "apiGroup": "authorization.k8s.io",
+      "resource": "subjectaccessreviews",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "get"
+      ],
+      "riskLevel": "Medium",
+      "tags": [
+        "InformationDisclosure",
+        "RBACQuery"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1050,
+          "name": "Create SubjectAccessReviews (check arbitrary permissions)",
+          "link": "https://rbac-atlas.github.io/rules/1050/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "datadog-datadog-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "datadog-datadog-operator",
+      "apiGroup": "autoscaling",
+      "resource": "horizontalpodautoscalers",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "datadog-datadog-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "datadog-datadog-operator",
+      "apiGroup": "autoscaling.k8s.io",
+      "resource": "verticalpodautoscalers",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "datadog-datadog-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "datadog-datadog-operator",
+      "apiGroup": "batch",
+      "resource": "jobs",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "datadog-datadog-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "datadog-datadog-operator",
+      "apiGroup": "batch",
+      "resource": "cronjobs",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "datadog-datadog-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "datadog-datadog-operator",
+      "apiGroup": "quota.openshift.io",
+      "resource": "clusterresourcequotas",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "datadog-datadog-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "datadog-datadog-operator",
+      "apiGroup": "storage.k8s.io",
+      "resource": "storageclasses",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "datadog-datadog-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "datadog-datadog-operator",
+      "apiGroup": "storage.k8s.io",
+      "resource": "volumeattachments",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "datadog-datadog-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "datadog-datadog-operator",
+      "apiGroup": "admissionregistration.k8s.io",
+      "resource": "mutatingwebhookconfigurations",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "WebhookManipulation",
+        "Tampering",
+        "DenialOfService",
+        "ClusterWideAccess",
+        "WildcardPermission",
+        "PrivilegeEscalation",
+        "InformationDisclosure",
+        "WebhookReconnaissance",
+        "Reconnaissance"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1043,
+          "name": "Manage MutatingWebhookConfigurations",
+          "link": "https://rbac-atlas.github.io/rules/1043/"
+        },
+        {
+          "id": 1084,
+          "name": "List MutatingWebhookConfigurations (Reconnaissance)",
+          "link": "https://rbac-atlas.github.io/rules/1084/"
+        },
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "datadog-datadog-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "datadog-datadog-operator",
+      "apiGroup": "admissionregistration.k8s.io",
+      "resource": "validatingwebhookconfigurations",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "InformationDisclosure",
+        "WebhookReconnaissance",
+        "Reconnaissance",
+        "ClusterWideAccess",
+        "WildcardPermission",
+        "WebhookManipulation",
+        "Tampering",
+        "DenialOfService"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1044,
+          "name": "Manage ValidatingWebhookConfigurations",
+          "link": "https://rbac-atlas.github.io/rules/1044/"
+        },
+        {
+          "id": 1083,
+          "name": "List ValidatingWebhookConfigurations (Reconnaissance)",
+          "link": "https://rbac-atlas.github.io/rules/1083/"
+        },
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "datadog-datadog-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "datadog-datadog-operator",
+      "apiGroup": "cilium.io",
+      "resource": "ciliumnetworkpolicies",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "datadog-datadog-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "datadog-datadog-operator",
+      "apiGroup": "karpenter.azure.com",
+      "resource": "*",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "ClusterWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "datadog",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "datadog",
+      "apiGroup": "",
+      "resource": "endpoints",
+      "resourceName": "",
+      "verbs": [
+        "get"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "datadog",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "datadog",
+      "apiGroup": "",
+      "resource": "nodes/metrics",
+      "resourceName": "",
+      "verbs": [
+        "get"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "datadog",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "datadog",
+      "apiGroup": "",
+      "resource": "nodes/spec",
+      "resourceName": "",
+      "verbs": [
+        "get"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "datadog",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "datadog",
+      "apiGroup": "",
+      "resource": "nodes/proxy",
+      "resourceName": "",
+      "verbs": [
+        "get"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "NodeAccess",
+        "ClusterAdminAccess",
+        "CodeExecution",
+        "LateralMovement",
+        "ElevationOfPrivilege",
+        "AuthorizationBypass"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1104,
+          "name": "Node proxy GET RCE via WebSocket",
+          "link": "https://rbac-atlas.github.io/rules/1104/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "datadog",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "datadog",
+      "apiGroup": "",
+      "resource": "nodes/stats",
+      "resourceName": "",
+      "verbs": [
+        "get"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "datadog",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "datadog",
+      "apiGroup": "security.openshift.io",
+      "resource": "securitycontextconstraints",
+      "resourceName": "datadog",
+      "verbs": [
+        "use"
+      ],
+      "riskLevel": "Low",
+      "tags": [
+        "ResourceNameRestricted"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "datadog",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "datadog",
+      "apiGroup": "security.openshift.io",
+      "resource": "securitycontextconstraints",
+      "resourceName": "hostaccess",
+      "verbs": [
+        "use"
+      ],
+      "riskLevel": "Low",
+      "tags": [
+        "ResourceNameRestricted"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "datadog",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "datadog",
+      "apiGroup": "security.openshift.io",
+      "resource": "securitycontextconstraints",
+      "resourceName": "privileged",
+      "verbs": [
+        "use"
+      ],
+      "riskLevel": "Low",
+      "tags": [
+        "ResourceNameRestricted"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "datadog",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "datadog",
+      "apiGroup": "coordination.k8s.io",
+      "resource": "leases",
+      "resourceName": "",
+      "verbs": [
+        "get"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "datadog",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "datadog",
+      "apiGroup": "metrics.eks.amazonaws.com",
+      "resource": "kcm/metrics",
+      "resourceName": "",
+      "verbs": [
+        "get"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "datadog",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "datadog",
+      "apiGroup": "metrics.eks.amazonaws.com",
+      "resource": "ksh/metrics",
+      "resourceName": "",
+      "verbs": [
+        "get"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "datadog-kube-state-metrics",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "datadog-kube-state-metrics",
+      "apiGroup": "extensions",
+      "resource": "deployments",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "datadog-kube-state-metrics",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "datadog-kube-state-metrics",
+      "apiGroup": "extensions",
+      "resource": "ingresses",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "datadog-kube-state-metrics",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "datadog-kube-state-metrics",
+      "apiGroup": "extensions",
+      "resource": "replicasets",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "datadog-kube-state-metrics",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "datadog-kube-state-metrics",
+      "apiGroup": "extensions",
+      "resource": "daemonsets",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "datadog-kube-state-metrics",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "datadog-kube-state-metrics",
+      "apiGroup": "apps",
+      "resource": "daemonsets",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "datadog-kube-state-metrics",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "datadog-kube-state-metrics",
+      "apiGroup": "apps",
+      "resource": "deployments",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "datadog-kube-state-metrics",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "datadog-kube-state-metrics",
+      "apiGroup": "apps",
+      "resource": "replicasets",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "datadog-kube-state-metrics",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "datadog-kube-state-metrics",
+      "apiGroup": "apps",
+      "resource": "statefulsets",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "datadog-kube-state-metrics",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "datadog-kube-state-metrics",
+      "apiGroup": "policy",
+      "resource": "poddisruptionbudgets",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "datadog-kube-state-metrics",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "datadog-kube-state-metrics",
+      "apiGroup": "certificates.k8s.io",
+      "resource": "certificatesigningrequests",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "datadog-kube-state-metrics",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "datadog-kube-state-metrics",
+      "apiGroup": "",
+      "resource": "services",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "datadog-kube-state-metrics",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "datadog-kube-state-metrics",
+      "apiGroup": "",
+      "resource": "namespaces",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [
+        "InformationDisclosure",
+        "Reconnaissance",
+        "ClusterStructure"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1082,
+          "name": "List Namespaces (Cluster Reconnaissance)",
+          "link": "https://rbac-atlas.github.io/rules/1082/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "datadog-kube-state-metrics",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "datadog-kube-state-metrics",
+      "apiGroup": "",
+      "resource": "nodes",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "datadog-kube-state-metrics",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "datadog-kube-state-metrics",
+      "apiGroup": "",
+      "resource": "persistentvolumes",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "datadog-kube-state-metrics",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "datadog-kube-state-metrics",
+      "apiGroup": "",
+      "resource": "replicationcontrollers",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "datadog-kube-state-metrics",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "datadog-kube-state-metrics",
+      "apiGroup": "",
+      "resource": "resourcequotas",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Medium",
+      "tags": [
+        "InformationDisclosure",
+        "Reconnaissance",
+        "ResourceConfiguration",
+        "QuotaTampering"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1089,
+          "name": "Read All ResourceQuotas (Cluster-wide Information Disclosure)",
+          "link": "https://rbac-atlas.github.io/rules/1089/"
+        },
+        {
+          "id": 1088,
+          "name": "Read ResourceQuotas (Namespace Information Disclosure)",
+          "link": "https://rbac-atlas.github.io/rules/1088/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "datadog-kube-state-metrics",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "datadog-kube-state-metrics",
+      "apiGroup": "",
+      "resource": "configmaps",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "DataExposure",
+        "InformationDisclosure",
+        "ConfigMapAccess"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1022,
+          "name": "Read ConfigMaps cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1022/"
+        },
+        {
+          "id": 1023,
+          "name": "Read ConfigMaps in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1023/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "datadog-kube-state-metrics",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "datadog-kube-state-metrics",
+      "apiGroup": "",
+      "resource": "endpoints",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "datadog-kube-state-metrics",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "datadog-kube-state-metrics",
+      "apiGroup": "",
+      "resource": "limitranges",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [
+        "InformationDisclosure",
+        "Reconnaissance",
+        "ResourceConfiguration"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1087,
+          "name": "Read LimitRanges (Namespace Information Disclosure)",
+          "link": "https://rbac-atlas.github.io/rules/1087/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "datadog-kube-state-metrics",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "datadog-kube-state-metrics",
+      "apiGroup": "",
+      "resource": "persistentvolumeclaims",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "datadog-kube-state-metrics",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "datadog-kube-state-metrics",
+      "apiGroup": "",
+      "resource": "pods",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "datadog-kube-state-metrics",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "datadog-kube-state-metrics",
+      "apiGroup": "",
+      "resource": "secrets",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "SecretAccess",
+        "ClusterWideSecretAccess",
+        "CredentialAccess",
+        "DataExposure",
+        "InformationDisclosure"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1010,
+          "name": "Read secrets cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1010/"
+        },
+        {
+          "id": 1011,
+          "name": "Read secrets in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1011/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "datadog-kube-state-metrics",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "datadog-kube-state-metrics",
+      "apiGroup": "autoscaling",
+      "resource": "horizontalpodautoscalers",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "datadog-kube-state-metrics",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "datadog-kube-state-metrics",
+      "apiGroup": "networking.k8s.io",
+      "resource": "ingresses",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "datadog-kube-state-metrics",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "datadog-kube-state-metrics",
+      "apiGroup": "networking.k8s.io",
+      "resource": "networkpolicies",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "datadog-kube-state-metrics",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "datadog-kube-state-metrics",
+      "apiGroup": "admissionregistration.k8s.io",
+      "resource": "validatingwebhookconfigurations",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Medium",
+      "tags": [
+        "WebhookReconnaissance",
+        "Reconnaissance",
+        "InformationDisclosure"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1083,
+          "name": "List ValidatingWebhookConfigurations (Reconnaissance)",
+          "link": "https://rbac-atlas.github.io/rules/1083/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "datadog-kube-state-metrics",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "datadog-kube-state-metrics",
+      "apiGroup": "admissionregistration.k8s.io",
+      "resource": "mutatingwebhookconfigurations",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Medium",
+      "tags": [
+        "WebhookReconnaissance",
+        "Reconnaissance",
+        "InformationDisclosure"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1084,
+          "name": "List MutatingWebhookConfigurations (Reconnaissance)",
+          "link": "https://rbac-atlas.github.io/rules/1084/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "datadog-kube-state-metrics",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "datadog-kube-state-metrics",
+      "apiGroup": "storage.k8s.io",
+      "resource": "storageclasses",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "datadog-kube-state-metrics",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "datadog-kube-state-metrics",
+      "apiGroup": "storage.k8s.io",
+      "resource": "volumeattachments",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "datadog-kube-state-metrics",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "datadog-kube-state-metrics",
+      "apiGroup": "batch",
+      "resource": "jobs",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "datadog-kube-state-metrics",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "datadog-kube-state-metrics",
+      "apiGroup": "batch",
+      "resource": "cronjobs",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    }
+  ],
+  "serviceAccountWorkloads": [
+    {
+      "serviceAccountName": "datadog-datadog-operator",
+      "namespace": "default",
+      "workloadType": "Deployment",
+      "workloadName": "datadog-datadog-operator",
+      "containerName": "datadog-operator",
+      "image": "gcr.io/datadoghq/operator:1.22.0"
+    },
+    {
+      "serviceAccountName": "datadog-cluster-agent",
+      "namespace": "default",
+      "workloadType": "Deployment",
+      "workloadName": "datadog-cluster-agent",
+      "containerName": "cluster-agent",
+      "image": "gcr.io/datadoghq/cluster-agent:7.74.0"
+    },
+    {
+      "serviceAccountName": "datadog-kube-state-metrics",
+      "namespace": "default",
+      "workloadType": "Deployment",
+      "workloadName": "datadog-kube-state-metrics",
+      "containerName": "kube-state-metrics",
+      "image": "registry.k8s.io/kube-state-metrics/kube-state-metrics:v1.9.8"
+    },
+    {
+      "serviceAccountName": "",
+      "namespace": "default",
+      "workloadType": "DaemonSet",
+      "workloadName": "datadog-csi-driver-node-server",
+      "containerName": "csi-node-driver",
+      "image": "gcr.io/datadoghq/csi-driver:1.0.0"
+    },
+    {
+      "serviceAccountName": "",
+      "namespace": "default",
+      "workloadType": "DaemonSet",
+      "workloadName": "datadog-csi-driver-node-server",
+      "containerName": "csi-node-driver-registrar",
+      "image": "k8s.gcr.io/sig-storage/csi-node-driver-registrar:v2.0.1"
+    }
+  ]
+}
