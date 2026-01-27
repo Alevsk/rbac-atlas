@@ -15,7 +15,15 @@
         </div>
       </a>
     </div>
+    {{ if len $.Site.Menus }} {{ partial "menu.html" . }} {{ end }}
     {{ if len $.Site.Menus }} {{ partial "mobile-menu.html" . }} {{ end }}
   </div>
-  {{ if len $.Site.Menus }} {{ partial "menu.html" . }} {{ end }}
+  <link href="/pagefind/pagefind-ui.css" rel="stylesheet" />
+  <script src="/pagefind/pagefind-ui.js"></script>
+  <div id="search"></div>
+  <script>
+    window.addEventListener("DOMContentLoaded", (event) => {
+      new PagefindUI({ element: "#search", showSubResults: true });
+    });
+  </script>
 </header>
