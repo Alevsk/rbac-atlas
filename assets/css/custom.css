@@ -493,29 +493,154 @@ tr:nth-child(even) {
   margin: 0 0 20px 0;
 }
 
-/* Hide mobile menu on desktop */
+/* Hamburger button - hidden on desktop */
+.hamburger {
+  display: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.hamburger__line {
+  display: block;
+  width: 24px;
+  height: 2px;
+  background: var(--accent);
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.hamburger.is-open .hamburger__line:nth-child(1) {
+  transform: translateY(7px) rotate(45deg);
+}
+
+.hamburger.is-open .hamburger__line:nth-child(2) {
+  opacity: 0;
+}
+
+.hamburger.is-open .hamburger__line:nth-child(3) {
+  transform: translateY(-7px) rotate(-45deg);
+}
+
+/* Hide old theme mobile menu always */
+.menu--mobile {
+  display: none !important;
+}
+
+/* Desktop: show desktop menu, hide hamburger + mobile nav */
 @media (min-width: 684px) {
-  .menu--mobile {
-    display: none;
+  .hamburger,
+  .mobile-nav {
+    display: none !important;
   }
 }
 
-/* Show mobile menu on mobile and hide desktop menu */
+/* Mobile: show hamburger, hide desktop menu */
 @media (max-width: 683px) {
   .menu--desktop {
     display: none;
   }
 
-  .header__inner {
+  .hamburger {
+    display: flex;
+  }
+
+  .mobile-nav {
+    display: block;
+    position: relative;
+    width: 100%;
+    max-height: 0;
+    overflow: hidden;
+    background: var(--background);
+    border-bottom: 1px solid transparent;
+    padding: 0 15px;
+    transition: max-height 0.3s ease, padding 0.3s ease, border-color 0.3s ease;
+  }
+
+  .mobile-nav.is-open {
+    max-height: 400px;
     padding: 15px;
+    border-bottom: 1px solid rgba(238, 195, 94, 0.3);
+  }
+
+  .mobile-nav__links {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .mobile-nav__links li {
+    border-bottom: 1px solid rgba(238, 195, 94, 0.15);
+  }
+
+  .mobile-nav__links li a {
+    display: block;
+    padding: 14px 0;
+    color: var(--accent);
+    font-family: 'Anton', sans-serif;
+    font-size: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    text-decoration: none;
+  }
+
+  .mobile-nav__links li a:hover {
+    color: var(--foreground);
+  }
+
+  .mobile-nav__github {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-top: 24px;
+    padding-top: 24px;
+    border-top: 1px solid rgba(238, 195, 94, 0.15);
+  }
+
+  .mobile-nav__github .github-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.5rem 0.7rem;
+    border: 1.5px solid var(--accent);
+    border-radius: 4px;
+    text-decoration: none;
+    color: var(--accent);
+    font-family: 'Anton', sans-serif;
+    font-size: 0.8rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    background: var(--background);
+  }
+
+  .mobile-nav__github .github-btn:hover {
+    background: var(--accent);
+    color: var(--background);
+  }
+
+  .header__inner {
+    padding: 10px 15px;
+  }
+
+  .header__logo {
+    flex: 1;
+    min-width: 0;
   }
 
   .logo-text .title-line {
-    font-size: 2rem;
+    font-size: 1.5rem;
   }
 
   .logo-text .tagline {
-    font-size: 0.6rem;
+    font-size: 0.5rem;
+  }
+
+  .logo-icon img {
+    width: 3rem;
+    min-width: 3rem;
+    height: 3rem;
   }
 }
 
@@ -655,6 +780,7 @@ tr:nth-child(even) {
 }
 
 @media (max-width: 683px) {
+  .navigation-menu,
   .github-nav-buttons {
     display: none;
   }
@@ -700,4 +826,35 @@ tr:nth-child(even) {
 .letter-link.disabled {
   opacity: 0.3;
   cursor: not-allowed;
+}
+
+/* Footer */
+.footer .copyright {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex-flow: column wrap;
+}
+
+.footer-github {
+  display: flex;
+  gap: 0.4rem;
+  justify-content: center;
+  align-items: center;
+  margin-top: 0.4rem;
+}
+
+.footer-github a {
+  color: var(--accent);
+  text-decoration: none;
+  font-size: 0.85rem;
+}
+
+.footer-github a:hover {
+  text-decoration: underline;
+}
+
+.footer-github span {
+  color: var(--accent);
+  opacity: 0.5;
 }
