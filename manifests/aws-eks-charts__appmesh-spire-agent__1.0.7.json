@@ -1,0 +1,126 @@
+{
+  "metadata": {
+    "version": "1.0.7",
+    "name": "appmesh-spire-agent",
+    "source": "charts/aws-eks-charts__appmesh-spire-agent__1.0.7/",
+    "timestamp": 1769479919,
+    "extra": {
+      "helm": {
+        "description": "SPIRE Agent Helm chart for AppMesh mTLS support on Kubernetes",
+        "home": "https://github.com/aws/eks-charts",
+        "icon": "https://raw.githubusercontent.com/aws/eks-charts/master/docs/logo/aws.png",
+        "keywords": [
+          "eks",
+          "appmesh",
+          "spire"
+        ],
+        "kubeVersion": "",
+        "maintainers": [
+          {
+            "name": "Apurup Chevuru",
+            "url": "https://github.com/achevuru"
+          }
+        ],
+        "sources": [
+          "https://github.com/aws/eks-charts"
+        ]
+      }
+    }
+  },
+  "serviceAccountData": [
+    {
+      "serviceAccountName": "spire-agent",
+      "namespace": "default",
+      "automountToken": false,
+      "secrets": null,
+      "imagePullSecrets": null
+    }
+  ],
+  "serviceAccountPermissions": [
+    {
+      "serviceAccountName": "spire-agent",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "spire-agent-role",
+      "apiGroup": "",
+      "resource": "pods",
+      "resourceName": "",
+      "verbs": [
+        "get"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "spire-agent",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "spire-agent-role",
+      "apiGroup": "",
+      "resource": "nodes",
+      "resourceName": "",
+      "verbs": [
+        "get"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "spire-agent",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "spire-agent-role",
+      "apiGroup": "",
+      "resource": "nodes/proxy",
+      "resourceName": "",
+      "verbs": [
+        "get"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "AuthorizationBypass",
+        "NodeAccess",
+        "ClusterAdminAccess",
+        "CodeExecution",
+        "LateralMovement",
+        "ElevationOfPrivilege"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1104,
+          "name": "Node proxy GET RCE via WebSocket",
+          "link": "https://rbac-atlas.github.io/rules/1104/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    }
+  ],
+  "serviceAccountWorkloads": [
+    {
+      "serviceAccountName": "spire-agent",
+      "namespace": "default",
+      "workloadType": "DaemonSet",
+      "workloadName": "spire-agent",
+      "containerName": "appmesh-spire-agent",
+      "image": "gcr.io/spiffe-io/spire-agent:1.5.0"
+    }
+  ]
+}
