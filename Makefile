@@ -22,12 +22,6 @@ help: ##@ Help
 # Centralize configuration here. Avoid hardcoding values in the recipes.
 # ==============================================================================
 
-# --- Python Environment ---
-VENV_DIR       := .venv
-VENV_BIN       := $(VENV_DIR)/bin
-VENV_PYTHON    := $(VENV_BIN)/python
-VENV_PIP       := $(VENV_BIN)/pip
-
 # --- Application Configuration ---
 DOCKER_IMAGE   := rbac-atlas
 DOCKER_TAG     := latest
@@ -36,13 +30,14 @@ HUGO_PORT      := 1313
 # --- Tooling ---
 # Use variables for commands to allow for easy overrides and environment flexibility.
 SHELL          := /bin/bash
+UV             := uv
 HUGO           := hugo
-PYTHON         := python3
+PYTHON         := $(UV) run python
 NPM            := npm
 NPX            := npx
 DOCKER         := docker
-DJLINT         := $(VENV_BIN)/djlint
-PAGEFIND       := $(VENV_PYTHON) -m pagefind
+DJLINT         := $(UV) run djlint
+PAGEFIND       := $(UV) run python -m pagefind
 
 # --- Directories & Paths ---
 # Define paths to avoid repetition and make cleaning more precise.
@@ -135,7 +130,7 @@ update: pull-projects get-manifests generate-pages ##@ Full data pipeline: pull 
 
 pull-projects: ##@ Pull remote project sources defined in projects.yaml
 	@echo "INFO: Pulling project sources..."
-	@$(PYTHON) pull_projects.py -c projects.yaml
+	@$(UV) run pull_projects.py -c projects.yaml
 
 get-manifests: ##@ Analyze Helm charts to generate JSON manifests (use FORCE=true to regenerate all)
 	@echo "INFO: Fetching and analyzing manifests from Helm charts..."
@@ -150,7 +145,7 @@ generate-pages: json-to-markdown fmt lint ##@ Generate Hugo content from JSON ma
 .PHONY: json-to-markdown
 json-to-markdown:
 	@echo "INFO: Generating Hugo content pages from JSON manifests..."
-	@$(PYTHON) $(J2H_SCRIPT) $(J2H_FLAGS)
+	@$(UV) run python $(J2H_SCRIPT) $(J2H_FLAGS)
 
 
 # ==============================================================================
@@ -158,25 +153,17 @@ json-to-markdown:
 # ==============================================================================
 .PHONY: install clean docker
 
-venv: ##@ Create Python virtual environment
-	@echo "INFO: Creating Python virtual environment..."
-	@$(PYTHON) -m venv $(VENV_DIR)
-
-activate: ##@ Print commands to activate virtual environment
-	@echo "To activate the virtual environment, run:"
-	@echo "source $(VENV_DIR)/bin/activate"
-
-install: venv ##@ Install all required dependencies (npm, pip)
+install: ##@ Install all required dependencies (npm, uv)
 	@echo "INFO: Installing Node.js dependencies..."
 	@$(NPM) install --include=dev
 	@echo "INFO: Installing global Node.js tools (Playwright)..."
 	@$(NPM) install -g playwright
 	@echo "INFO: Installing Python dependencies..."
-	@$(VENV_PIP) install -r requirements.txt
+	@$(UV) sync
 
 clean: ##@ Remove all generated files and build artifacts
 	@echo "INFO: Cleaning up generated files and directories..."
-	@rm -rf $(PUBLIC_DIR) $(RESOURCES_DIR) $(NODE_MODULES) $(PLAYWRIGHT_REPORT) $(VENV_DIR)
+	@rm -rf $(PUBLIC_DIR) $(RESOURCES_DIR) $(NODE_MODULES) $(PLAYWRIGHT_REPORT) .venv
 
 docker: ##@ Build the Docker image for the application
 	@echo "INFO: Building Docker image [$(DOCKER_IMAGE):$(DOCKER_TAG)]..."

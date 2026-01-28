@@ -2,7 +2,10 @@
 FROM hugomods/hugo:latest AS builder
 
 # Install system dependencies
-RUN apk add --no-cache nodejs npm python3 py3-pip
+RUN apk add --no-cache nodejs npm python3
+
+# Install uv
+COPY --from=ghcr.io/astral-sh/uv:latest /uv /usr/local/bin/uv
 
 # Set working directory
 WORKDIR /src
@@ -16,9 +19,9 @@ RUN npm install -g prettier
 RUN npm install --save-dev prettier-plugin-go-template
 
 # Setup Python virtual environment and install dependencies
-RUN python3 -m venv /venv
+COPY requirements.txt ./
+RUN uv venv /venv && VIRTUAL_ENV=/venv uv pip install --no-cache -r requirements.txt
 ENV PATH="/venv/bin:$PATH"
-RUN pip install --no-cache-dir 'pagefind[extended]' djlint
 
 # Copy the rest of the application
 COPY . .

@@ -26,10 +26,8 @@ jobs:
           # Copy risks.yaml to repository root
           cp internal/policyevaluation/risks.yaml /home/runner/work/rbac-atlas/rbac-atlas/risks.yaml
 
-      - name: Setup Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: "3.x"
+      - name: Install uv
+        uses: astral-sh/setup-uv@v4
 
       - name: Setup Node.js
         uses: actions/setup-node@v3
@@ -37,11 +35,7 @@ jobs:
           node-version: "18"
 
       - name: Install dependencies
-        run: |
-          make venv
-          source .venv/bin/activate
-          make install
-        shell: bash
+        run: make install
 
       - name: Setup Helm
         uses: azure/setup-helm@v3
@@ -57,11 +51,9 @@ jobs:
 
       - name: Run make commands
         run: |
-          source .venv/bin/activate
           make pull-projects
           make get-manifests
           make generate-pages
-        shell: bash
 
       - name: Commit and push changes
         run: |

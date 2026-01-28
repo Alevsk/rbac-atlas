@@ -2,36 +2,29 @@
 
 ## Prerequisites
 
-- Python 3.x
+- [uv](https://docs.astral.sh/uv/) (Python package manager)
 - Make
 - Helm
 - Docker (optional)
 
 ## Python Environment Setup
 
-1. Create a virtual environment:
+1. Install uv:
 
    ```bash
-   python -m venv .venv
+   curl -LsSf https://astral.sh/uv/install.sh | sh
    ```
 
-2. Activate the virtual environment:
-   - Linux/macOS:
-
-     ```bash
-     source .venv/bin/activate
-     ```
-
-   - Windows:
-
-     ```bash
-     .venv\Scripts\activate
-     ```
-
-3. Install dependencies:
+2. Install dependencies:
 
    ```bash
-   pip install -r requirements.txt
+   uv sync
+   ```
+
+   Or using make:
+
+   ```bash
+   make install
    ```
 
 ## Development Workflow
