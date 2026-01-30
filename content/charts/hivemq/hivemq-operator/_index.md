@@ -1,8 +1,8 @@
 ---
 title: "hivemq-operator"
-description: "HiveMQ Operator (legacy)"
+description: "Operator for the HiveMQ MQTT broker"
 ---
 
 ## hivemq-operator
 
-HiveMQ Operator (legacy)
+Operator for the HiveMQ MQTT broker

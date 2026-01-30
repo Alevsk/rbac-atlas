@@ -10,4 +10,3 @@ Druid exporter to monitor druid metrics with Prometheus
 ## Sources
 
 - https://github.com/prometheus-community/helm-charts/tree/main/charts/prometheus-druid-exporter
-- https://github.com/opstree/druid-exporter

@@ -1,15 +1,14 @@
 ---
 title: "vault"
-description: "Official HashiCorp Vault Chart"
+description: "Install and configure Vault on Kubernetes."
 ---
 
 ## vault
 
-Official HashiCorp Vault Chart
+Install and configure Vault on Kubernetes.
 
 ## Sources
 
 - https://github.com/hashicorp/vault
 - https://github.com/hashicorp/vault-helm
 - https://github.com/hashicorp/vault-k8s
-- https://github.com/hashicorp/vault-csi-provider

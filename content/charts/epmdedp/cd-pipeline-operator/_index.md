@@ -1,11 +1,11 @@
 ---
 title: "cd-pipeline-operator"
-description: "A Helm chart for KubeRocketCI CD Pipeline Operator"
+description: "A Helm chart for EDP CD Pipeline Operator"
 ---
 
 ## cd-pipeline-operator
 
-A Helm chart for KubeRocketCI CD Pipeline Operator
+A Helm chart for EDP CD Pipeline Operator
 
 ## Sources
 

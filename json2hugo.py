@@ -15,6 +15,7 @@ import os
 import re
 import yaml
 from collections import Counter, defaultdict
+from concurrent.futures import ThreadPoolExecutor, as_completed
 from typing import Any, Dict, List, Optional, Tuple
 
 # ───────────────────────────── Constants ──────────────────────────────
@@ -541,7 +542,7 @@ def parse_rules_yaml(yaml_path: str) -> Dict[int, Dict[str, Any]]:
     except (IOError, yaml.YAMLError) as exc:
         raise Exception(f"Error reading or parsing rules YAML file '{yaml_path}': {exc}")
 
-def generate_rule_markdown_files(rules_data: Dict[int, Dict[str, Any]], output_dir: str, force: bool = False) -> None:
+def generate_rule_markdown_files(rules_data: Dict[int, Dict[str, Any]], output_dir: str, force: bool = False, verbose: bool = False) -> None:
     """
     Generates Markdown files for each rule in the provided rules data.
     These files are typically placed under 'content/rules/'.
@@ -549,15 +550,21 @@ def generate_rule_markdown_files(rules_data: Dict[int, Dict[str, Any]], output_d
     Args:
         rules_data: A dictionary of security rules, keyed by rule ID.
         output_dir: The base output directory (site root).
+        force: Force overwrite existing rule files.
+        verbose: Print detailed progress for each rule.
     """
     rules_dir = os.path.join(output_dir, "rules")
     os.makedirs(rules_dir, exist_ok=True)
 
+    wrote = 0
+    skipped = 0
     for rule_id, rule in rules_data.items():
 
         destination_path = os.path.join(rules_dir, f"{rule_id}.md")
         if os.path.exists(destination_path) and not force:
-            print(f"Skipping existing rule: {destination_path}")
+            skipped += 1
+            if verbose:
+                print(f"Skipping existing rule: {destination_path}")
             continue
 
         # Front matter for the rule page
@@ -620,9 +627,13 @@ def generate_rule_markdown_files(rules_data: Dict[int, Dict[str, Any]], output_d
         with open(rule_file_path, "w", encoding="utf-8") as f:
             f.write(content)
 
-        print(f"Generated rule file: {rule_file_path}")
+        wrote += 1
+        if verbose:
+            print(f"Generated rule file: {rule_file_path}")
 
-def process_json_file(json_file_path: str, output_dir: str, rules_data: Dict[int, Dict[str, Any]], force: bool = False) -> None:
+    print(f"Rules: {wrote} wrote, {skipped} skipped (total: {len(rules_data)})")
+
+def process_json_file(json_file_path: str, output_dir: str, rules_data: Dict[int, Dict[str, Any]], force: bool = False, verbose: bool = False) -> str:
     """
     Processes a single JSON file, generates its markdown content, and writes it to disk.
     Skips generation if the chart has no service accounts, workloads, or bindings.
@@ -632,32 +643,40 @@ def process_json_file(json_file_path: str, output_dir: str, rules_data: Dict[int
         output_dir: The base output directory (site root).
         rules_data: A dictionary of security rules, keyed by rule ID.
         force: Force overwrite existing markdown files.
+        verbose: Print detailed progress for each file.
+
+    Returns:
+        A status string: "wrote", "skipped", "empty", or "error".
     """
     try:
-        # Get destination path first to check if file exists
         with open(json_file_path, encoding="utf-8") as fh:
             data = json.load(fh)
 
         destination_path = get_destination_path(data["metadata"], output_dir, json_file_path)
         if os.path.exists(destination_path) and not force:
-            print(f"Skipping existing file: {destination_path}")
-            return
+            if verbose:
+                print(f"Skipping existing file: {destination_path}")
+            return "skipped"
 
-        # Skip if chart has no service accounts, workloads, or bindings
         sa_data = data.get("serviceAccountData", {})
         perms = data.get("serviceAccountPermissions", [])
         workloads = data.get("serviceAccountWorkloads", [])
         if not perms and not workloads and not sa_data:
-            print(f"Skipping empty chart: {json_file_path}")
-            return
+            if verbose:
+                print(f"Skipping empty chart: {json_file_path}")
+            return "empty"
 
         markdown_content = build_markdown(data, rules_data)
         destination_path = write_markdown(markdown_content, data["metadata"], output_dir, json_file_path)
-        print(f"Wrote application markdown: {destination_path}")
+        if verbose:
+            print(f"Wrote: {destination_path}")
+        return "wrote"
     except (IOError, json.JSONDecodeError) as exc:
-        print(f"Warning: Unable to process JSON file '{json_file_path}': {exc}")
+        print(f"ERROR: Unable to process '{json_file_path}': {exc}")
+        return "error"
     except KeyError as exc:
-        print(f"Warning: Missing expected key in JSON data for '{json_file_path}': {exc}")
+        print(f"ERROR: Missing key in '{json_file_path}': {exc}")
+        return "error"
 
 
 def main() -> None:
@@ -684,6 +703,14 @@ def main() -> None:
     ap.add_argument(
         '--force', action='store_true', help='Force overwrite existing markdown files'
     )
+    ap.add_argument(
+        '--max-workers', type=int, default=16,
+        help='Maximum number of threads for parallel processing (default: 16)'
+    )
+    ap.add_argument(
+        '--verbose', action='store_true',
+        help='Print detailed progress for each file (default: summary only)'
+    )
     args = ap.parse_args()
 
     # 1. Parse the rules YAML file
@@ -695,7 +722,7 @@ def main() -> None:
 
     # 2. Generate markdown files for each rule
     try:
-        generate_rule_markdown_files(rules_data, args.output_dir, args.force)
+        generate_rule_markdown_files(rules_data, args.output_dir, args.force, args.verbose)
     except Exception as exc:
         ap.error(f"Error generating rule markdown files: {exc}")
 
@@ -707,11 +734,29 @@ def main() -> None:
     if not json_files:
         ap.error(f"No JSON files found in '{args.folder}'.")
 
+    tasks = []
     for json_file_name in json_files:
         if json_file_name == "custom-values.json":
-            continue # Skip custom values
-        full_path = os.path.join(args.folder, json_file_name)
-        process_json_file(full_path, args.output_dir, rules_data, args.force)
+            continue
+        tasks.append(os.path.join(args.folder, json_file_name))
+
+    print(f"Processing {len(tasks)} JSON files with {args.max_workers} workers...")
+    stats = Counter()
+    with ThreadPoolExecutor(max_workers=args.max_workers) as executor:
+        futures = {
+            executor.submit(process_json_file, path, args.output_dir, rules_data, args.force, args.verbose): path
+            for path in tasks
+        }
+        for future in as_completed(futures):
+            try:
+                status = future.result()
+                stats[status] += 1
+            except Exception as exc:
+                stats["error"] += 1
+                print(f"ERROR: {futures[future]}: {exc}")
+
+    print(f"Charts: {stats['wrote']} wrote, {stats['skipped']} skipped, "
+          f"{stats['empty']} empty, {stats['error']} errors (total: {len(tasks)})")
 
 
 if __name__ == "__main__":

@@ -9,4 +9,5 @@ RabbitMQ is an open source general-purpose message broker that is designed for c
 
 ## Sources
 
-- https://github.com/bitnami/charts/tree/main/bitnami/rabbitmq
+- https://github.com/bitnami/containers/tree/main/bitnami/rabbitmq
+- https://www.rabbitmq.com

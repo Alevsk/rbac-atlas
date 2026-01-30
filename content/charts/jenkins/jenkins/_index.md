@@ -1,15 +1,15 @@
 ---
 title: "jenkins"
-description: "Jenkins - Build great things at any scale! As the leading open source automation server, Jenkins provides over 2000 plugins to support building, deploying and automating any project. "
+description: "Open source continuous integration server. It supports multiple SCM tools including CVS, Subversion and Git. It can execute Apache Ant and Apache Maven-based projects as well as arbitrary scripts."
 ---
 
 ## jenkins
 
-Jenkins - Build great things at any scale! As the leading open source automation server, Jenkins provides over 2000 plugins to support building, deploying and automating any project.
+Open source continuous integration server. It supports multiple SCM tools including CVS, Subversion and Git. It can execute Apache Ant and Apache Maven-based projects as well as arbitrary scripts.
 
 ## Sources
 
 - https://github.com/jenkinsci/jenkins
-- https://github.com/jenkinsci/docker-agent
-- https://github.com/maorfr/kube-tasks
+- https://github.com/jenkinsci/docker-jnlp-slave
+- https://github.com/nuvo/kube-tasks
 - https://github.com/jenkinsci/configuration-as-code-plugin

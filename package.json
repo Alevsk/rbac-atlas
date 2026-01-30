@@ -3,8 +3,10 @@
   "version": "1.0.0",
   "description": "A curated database of identities and RBAC policies in Kubernetes projects",
   "scripts": {
-    "fmt": "prettier --write 'content/**/*.md'",
-    "lint": "prettier --check 'content/**/*.md'",
+    "fmt": "prettier --write 'content/**/*.md' --log-level warn",
+    "fmt:changed": "git diff --name-only --diff-filter=ACMR HEAD -- 'content/**/*.md' | xargs -r prettier --write --log-level warn",
+    "lint": "prettier --check 'content/**/*.md' --log-level warn",
+    "lint:changed": "git diff --name-only --diff-filter=ACMR HEAD -- 'content/**/*.md' | xargs -r prettier --check --log-level warn",
     "test": "playwright test"
   },
   "devDependencies": {

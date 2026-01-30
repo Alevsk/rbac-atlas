@@ -1,11 +1,11 @@
 ---
 title: "sonar-operator"
-description: "A Helm chart for KubeRocketCI Sonar Operator"
+description: "A Helm chart for EDP Sonar Operator"
 ---
 
 ## sonar-operator
 
-A Helm chart for KubeRocketCI Sonar Operator
+A Helm chart for EDP Sonar Operator
 
 ## Sources
 

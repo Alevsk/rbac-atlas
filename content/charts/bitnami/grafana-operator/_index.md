@@ -9,4 +9,5 @@ Grafana Operator is a Kubernetes operator that enables the installation and mana
 
 ## Sources
 
-- https://github.com/bitnami/charts/tree/main/bitnami/grafana-operator
+- https://github.com/grafana-operator/grafana-operator
+- https://github.com/bitnami/containers/tree/main/bitnami/grafana-operator

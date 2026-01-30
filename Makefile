@@ -59,6 +59,12 @@ J2H_FLAGS      := -f $(MANIFESTS_DIR)/ -o $(CONTENT_DIR)/
 ifeq ($(FORCE),true)
 	J2H_FLAGS += --force
 endif
+ifdef J2H_WORKERS
+	J2H_FLAGS += --max-workers $(J2H_WORKERS)
+endif
+ifeq ($(VERBOSE),true)
+	J2H_FLAGS += --verbose
+endif
 
 
 # ==============================================================================
@@ -95,17 +101,29 @@ pre-build:
 # ==============================================================================
 # Code Quality & Testing
 # ==============================================================================
-.PHONY: fmt lint test cover
+.PHONY: fmt fmt-all lint lint-all test cover
 
-fmt: ##@ Format all source files (Markdown, Go Templates, HTML)
-	@echo "INFO: Formatting Markdown and Go template files..."
-	@$(NPM) run fmt
+fmt: ##@ Format changed source files (use 'fmt-all' for everything)
+	@echo "INFO: Formatting changed Markdown files..."
+	@$(NPM) run fmt:changed --silent
+	@echo "INFO: Formatting HTML layout files..."
+	@$(DJLINT) --reformat --quiet layouts/**/*.html
+
+fmt-all: ##@ Format all source files (Markdown, Go Templates, HTML)
+	@echo "INFO: Formatting all Markdown files..."
+	@$(NPM) run fmt --silent
 	@echo "INFO: Formatting HTML layout files..."
 	@$(DJLINT) --reformat layouts/**/*.html
 
-lint: ##@ Check all source files for formatting issues
-	@echo "INFO: Linting Markdown and Go template files..."
-	@$(NPM) run lint
+lint: ##@ Lint changed source files (use 'lint-all' for everything)
+	@echo "INFO: Linting changed Markdown files..."
+	@$(NPM) run lint:changed --silent
+	@echo "INFO: Linting HTML layout files..."
+	@$(DJLINT) --check --quiet layouts/**/*.html
+
+lint-all: ##@ Lint all source files for formatting issues
+	@echo "INFO: Linting all Markdown files..."
+	@$(NPM) run lint --silent
 	@echo "INFO: Linting HTML layout files..."
 	@$(DJLINT) --check layouts/**/*.html
 

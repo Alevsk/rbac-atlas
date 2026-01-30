@@ -1,11 +1,11 @@
 ---
 title: "tigera-operator"
-description: "Helm chart to install the Tigera Operator for managing Calico."
+description: "Helm chart for the Tigera Operator for Calico."
 ---
 
 ## tigera-operator
 
-Helm chart to install the Tigera Operator for managing Calico.
+Helm chart for the Tigera Operator for Calico.
 
 ## Sources
 

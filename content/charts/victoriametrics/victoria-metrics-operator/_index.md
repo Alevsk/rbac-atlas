@@ -1,13 +1,12 @@
 ---
 title: "victoria-metrics-operator"
-description: "VictoriaMetrics Operator"
+description: "Victoria Metrics Operator"
 ---
 
 ## victoria-metrics-operator
 
-VictoriaMetrics Operator
+Victoria Metrics Operator
 
 ## Sources
 
-- https://github.com/VictoriaMetrics/helm-charts
 - https://github.com/VictoriaMetrics/operator

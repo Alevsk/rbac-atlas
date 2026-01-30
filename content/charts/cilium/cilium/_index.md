@@ -1,11 +1,11 @@
 ---
 title: "cilium"
-description: "eBPF-based Networking, Security, and Observability"
+description: "Helm chart for Cilium"
 ---
 
 ## cilium
 
-eBPF-based Networking, Security, and Observability
+Helm chart for Cilium
 
 ## Sources
 

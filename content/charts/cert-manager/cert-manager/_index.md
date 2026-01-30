@@ -9,4 +9,4 @@ A Helm chart for cert-manager
 
 ## Sources
 
-- https://github.com/cert-manager/cert-manager
+- https://github.com/jetstack/cert-manager

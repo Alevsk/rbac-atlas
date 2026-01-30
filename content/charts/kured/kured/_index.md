@@ -9,4 +9,4 @@ A Helm chart for kured
 
 ## Sources
 
-- https://github.com/kubereboot/kured
+- https://github.com/weaveworks/kured

@@ -9,4 +9,6 @@ MariaDB is an open source, community-developed SQL database server that is widel
 
 ## Sources
 
-- https://github.com/bitnami/charts/tree/main/bitnami/mariadb
+- https://github.com/bitnami/containers/tree/main/bitnami/mariadb
+- https://github.com/prometheus/mysqld_exporter
+- https://mariadb.org
