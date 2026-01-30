@@ -1,0 +1,2319 @@
+{
+  "metadata": {
+    "version": "1.8.3",
+    "name": "cilium",
+    "source": "charts/cilium__cilium__1.8.3/",
+    "timestamp": 1769793388,
+    "extra": {
+      "helm": {
+        "description": "Helm chart for Cilium",
+        "home": "https://cilium.io/",
+        "icon": "",
+        "keywords": null,
+        "kubeVersion": "",
+        "maintainers": null,
+        "sources": [
+          "https://github.com/cilium/cilium"
+        ]
+      }
+    }
+  },
+  "serviceAccountData": [
+    {
+      "serviceAccountName": "hubble-ui",
+      "namespace": "default",
+      "automountToken": false,
+      "secrets": null,
+      "imagePullSecrets": null
+    },
+    {
+      "serviceAccountName": "cilium",
+      "namespace": "default",
+      "automountToken": false,
+      "secrets": null,
+      "imagePullSecrets": null
+    },
+    {
+      "serviceAccountName": "cilium-operator",
+      "namespace": "default",
+      "automountToken": false,
+      "secrets": null,
+      "imagePullSecrets": null
+    },
+    {
+      "serviceAccountName": "cilium-etcd-sa",
+      "namespace": "default",
+      "automountToken": false,
+      "secrets": null,
+      "imagePullSecrets": null
+    },
+    {
+      "serviceAccountName": "hubble-relay",
+      "namespace": "default",
+      "automountToken": false,
+      "secrets": null,
+      "imagePullSecrets": null
+    },
+    {
+      "serviceAccountName": "cilium-etcd-operator",
+      "namespace": "default",
+      "automountToken": false,
+      "secrets": null,
+      "imagePullSecrets": null
+    }
+  ],
+  "serviceAccountPermissions": [
+    {
+      "serviceAccountName": "cilium-etcd-sa",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "etcd-operator",
+      "apiGroup": "etcd.database.coreos.com",
+      "resource": "etcdclusters",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "ClusterWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "cilium-etcd-sa",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "etcd-operator",
+      "apiGroup": "etcd.database.coreos.com",
+      "resource": "etcdbackups",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "ClusterWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "cilium-etcd-sa",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "etcd-operator",
+      "apiGroup": "etcd.database.coreos.com",
+      "resource": "etcdrestores",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "ClusterWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "cilium-etcd-sa",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "etcd-operator",
+      "apiGroup": "apiextensions.k8s.io",
+      "resource": "customresourcedefinitions",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "CRDManipulation",
+        "Tampering",
+        "PotentialPrivilegeEscalation",
+        "ClusterWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1045,
+          "name": "Manage CustomResourceDefinitions",
+          "link": "https://rbac-atlas.github.io/rules/1045/"
+        },
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "cilium-etcd-sa",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "etcd-operator",
+      "apiGroup": "",
+      "resource": "deployments",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "ClusterWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "cilium-etcd-sa",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "etcd-operator",
+      "apiGroup": "",
+      "resource": "secrets",
+      "resourceName": "",
+      "verbs": [
+        "get"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "cilium-etcd-sa",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "etcd-operator",
+      "apiGroup": "",
+      "resource": "pods",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "PotentialPrivilegeEscalation",
+        "ClusterWideAccess",
+        "WildcardPermission",
+        "WorkloadExecution",
+        "PrivilegeEscalation",
+        "LateralMovement",
+        "Persistence",
+        "Tampering"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1006,
+          "name": "Create pods cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1006/"
+        },
+        {
+          "id": 1008,
+          "name": "Update/Patch pods cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1008/"
+        },
+        {
+          "id": 1007,
+          "name": "Create pods in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1007/"
+        },
+        {
+          "id": 1009,
+          "name": "Update/Patch pods in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1009/"
+        },
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "cilium-etcd-sa",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "etcd-operator",
+      "apiGroup": "",
+      "resource": "services",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "DenialOfService",
+        "Tampering",
+        "ClusterWideAccess",
+        "WildcardPermission",
+        "NetworkManipulation",
+        "ServiceExposure"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1075,
+          "name": "Manage Services cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1075/"
+        },
+        {
+          "id": 1076,
+          "name": "Manage Services in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1076/"
+        },
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "cilium-etcd-sa",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "etcd-operator",
+      "apiGroup": "",
+      "resource": "endpoints",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "WildcardPermission",
+        "NetworkManipulation",
+        "TrafficRedirection",
+        "ManInTheMiddle",
+        "DenialOfService",
+        "Tampering",
+        "ClusterWideAccess"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1073,
+          "name": "Manage Endpoints or EndpointSlices cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1073/"
+        },
+        {
+          "id": 1074,
+          "name": "Manage Endpoints or EndpointSlices in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1074/"
+        },
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "cilium-etcd-sa",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "etcd-operator",
+      "apiGroup": "",
+      "resource": "persistentvolumeclaims",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "WildcardPermission",
+        "ClusterWideAccess"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "cilium-etcd-sa",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "etcd-operator",
+      "apiGroup": "",
+      "resource": "events",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "Medium",
+      "tags": [
+        "WildcardPermission",
+        "InformationDisclosure",
+        "Reconnaissance",
+        "OperationalData",
+        "ClusterWideAccess"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1070,
+          "name": "Read events cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1070/"
+        },
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "cilium-etcd-sa",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "etcd-operator",
+      "apiGroup": "apps",
+      "resource": "deployments",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "ClusterWideAccess",
+        "WildcardPermission",
+        "WorkloadLifecycle",
+        "PrivilegeEscalation",
+        "Persistence",
+        "Tampering",
+        "PotentialPrivilegeEscalation"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1033,
+          "name": "Manage Deployments cluster-wide (potential for privileged pod execution)",
+          "link": "https://rbac-atlas.github.io/rules/1033/"
+        },
+        {
+          "id": 1034,
+          "name": "Manage Deployments in a namespace (potential for privileged pod execution)",
+          "link": "https://rbac-atlas.github.io/rules/1034/"
+        },
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "cilium-etcd-sa",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "etcd-operator",
+      "apiGroup": "extensions",
+      "resource": "deployments",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "get",
+        "list",
+        "patch",
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "cilium-etcd-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "cilium-etcd-operator",
+      "apiGroup": "etcd.database.coreos.com",
+      "resource": "etcdclusters",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "cilium-etcd-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "cilium-etcd-operator",
+      "apiGroup": "apiextensions.k8s.io",
+      "resource": "customresourcedefinitions",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "cilium-etcd-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "cilium-etcd-operator",
+      "apiGroup": "",
+      "resource": "deployments",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "cilium-etcd-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "cilium-etcd-operator",
+      "apiGroup": "",
+      "resource": "pods",
+      "resourceName": "",
+      "verbs": [
+        "delete",
+        "get",
+        "list"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "cilium-etcd-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "cilium-etcd-operator",
+      "apiGroup": "",
+      "resource": "componentstatuses",
+      "resourceName": "",
+      "verbs": [
+        "get"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "cilium-etcd-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "cilium-etcd-operator",
+      "apiGroup": "",
+      "resource": "secrets",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "cilium-etcd-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "cilium-etcd-operator",
+      "apiGroup": "apps",
+      "resource": "deployments",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "cilium-etcd-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "cilium-etcd-operator",
+      "apiGroup": "extensions",
+      "resource": "deployments",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "cilium",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "cilium",
+      "apiGroup": "networking.k8s.io",
+      "resource": "networkpolicies",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "cilium",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "cilium",
+      "apiGroup": "discovery.k8s.io",
+      "resource": "endpointslices",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "cilium",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "cilium",
+      "apiGroup": "",
+      "resource": "namespaces",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [
+        "InformationDisclosure",
+        "Reconnaissance",
+        "ClusterStructure"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1082,
+          "name": "List Namespaces (Cluster Reconnaissance)",
+          "link": "https://rbac-atlas.github.io/rules/1082/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "cilium",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "cilium",
+      "apiGroup": "",
+      "resource": "services",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "cilium",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "cilium",
+      "apiGroup": "",
+      "resource": "nodes",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "Tampering",
+        "PotentialPrivilegeEscalation",
+        "DenialOfService",
+        "NodeAccess"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1015,
+          "name": "Modify node configuration (labels, taints)",
+          "link": "https://rbac-atlas.github.io/rules/1015/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "cilium",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "cilium",
+      "apiGroup": "",
+      "resource": "endpoints",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "cilium",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "cilium",
+      "apiGroup": "",
+      "resource": "pods",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "cilium",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "cilium",
+      "apiGroup": "",
+      "resource": "nodes/status",
+      "resourceName": "",
+      "verbs": [
+        "patch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "cilium",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "cilium",
+      "apiGroup": "apiextensions.k8s.io",
+      "resource": "customresourcedefinitions",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "get",
+        "list",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "cilium",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "cilium",
+      "apiGroup": "cilium.io",
+      "resource": "ciliumidentities",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "ClusterWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "cilium",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "cilium",
+      "apiGroup": "cilium.io",
+      "resource": "ciliumidentities/status",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "ClusterWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "cilium",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "cilium",
+      "apiGroup": "cilium.io",
+      "resource": "ciliumnetworkpolicies/status",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "ClusterWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "cilium",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "cilium",
+      "apiGroup": "cilium.io",
+      "resource": "ciliumendpoints",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "ClusterWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "cilium",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "cilium",
+      "apiGroup": "cilium.io",
+      "resource": "ciliumendpoints/status",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "WildcardPermission",
+        "ClusterWideAccess"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "cilium",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "cilium",
+      "apiGroup": "cilium.io",
+      "resource": "ciliumnodes",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "ClusterWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "cilium",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "cilium",
+      "apiGroup": "cilium.io",
+      "resource": "ciliumnodes/status",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "ClusterWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "cilium",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "cilium",
+      "apiGroup": "cilium.io",
+      "resource": "ciliumnetworkpolicies",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "ClusterWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "cilium",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "cilium",
+      "apiGroup": "cilium.io",
+      "resource": "ciliumclusterwidenetworkpolicies",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "WildcardPermission",
+        "NetworkPolicyManagement",
+        "NetworkManipulation",
+        "Tampering",
+        "DenialOfService",
+        "ClusterWideAccess"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1064,
+          "name": "Manage Cilium ClusterwideNetworkPolicies (cilium.io)",
+          "link": "https://rbac-atlas.github.io/rules/1064/"
+        },
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "cilium",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "cilium",
+      "apiGroup": "cilium.io",
+      "resource": "ciliumclusterwidenetworkpolicies/status",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "ClusterWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "cilium",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "cilium-pre-flight",
+      "apiGroup": "apiextensions.k8s.io",
+      "resource": "customresourcedefinitions",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "get",
+        "list",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "cilium",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "cilium-pre-flight",
+      "apiGroup": "cilium.io",
+      "resource": "ciliumnetworkpolicies",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "ClusterWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "cilium",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "cilium-pre-flight",
+      "apiGroup": "cilium.io",
+      "resource": "ciliumnetworkpolicies/status",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "ClusterWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "cilium",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "cilium-pre-flight",
+      "apiGroup": "cilium.io",
+      "resource": "ciliumclusterwidenetworkpolicies/status",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "ClusterWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "cilium",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "cilium-pre-flight",
+      "apiGroup": "cilium.io",
+      "resource": "ciliumendpoints",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "WildcardPermission",
+        "ClusterWideAccess"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "cilium",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "cilium-pre-flight",
+      "apiGroup": "cilium.io",
+      "resource": "ciliumendpoints/status",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "WildcardPermission",
+        "ClusterWideAccess"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "cilium",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "cilium-pre-flight",
+      "apiGroup": "cilium.io",
+      "resource": "ciliumnodes",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "ClusterWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "cilium",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "cilium-pre-flight",
+      "apiGroup": "cilium.io",
+      "resource": "ciliumnodes/status",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "ClusterWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "cilium",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "cilium-pre-flight",
+      "apiGroup": "cilium.io",
+      "resource": "ciliumidentities",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "ClusterWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "cilium",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "cilium-pre-flight",
+      "apiGroup": "cilium.io",
+      "resource": "ciliumclusterwidenetworkpolicies",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "DenialOfService",
+        "ClusterWideAccess",
+        "WildcardPermission",
+        "NetworkPolicyManagement",
+        "NetworkManipulation",
+        "Tampering"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1064,
+          "name": "Manage Cilium ClusterwideNetworkPolicies (cilium.io)",
+          "link": "https://rbac-atlas.github.io/rules/1064/"
+        },
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "cilium",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "cilium-pre-flight",
+      "apiGroup": "cilium.io",
+      "resource": "ciliumidentities/status",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "ClusterWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "cilium",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "cilium-pre-flight",
+      "apiGroup": "networking.k8s.io",
+      "resource": "networkpolicies",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "cilium",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "cilium-pre-flight",
+      "apiGroup": "discovery.k8s.io",
+      "resource": "endpointslices",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "cilium",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "cilium-pre-flight",
+      "apiGroup": "",
+      "resource": "namespaces",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [
+        "InformationDisclosure",
+        "Reconnaissance",
+        "ClusterStructure"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1082,
+          "name": "List Namespaces (Cluster Reconnaissance)",
+          "link": "https://rbac-atlas.github.io/rules/1082/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "cilium",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "cilium-pre-flight",
+      "apiGroup": "",
+      "resource": "services",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "cilium",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "cilium-pre-flight",
+      "apiGroup": "",
+      "resource": "nodes",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "NodeAccess",
+        "Tampering",
+        "PotentialPrivilegeEscalation",
+        "DenialOfService"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1015,
+          "name": "Modify node configuration (labels, taints)",
+          "link": "https://rbac-atlas.github.io/rules/1015/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "cilium",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "cilium-pre-flight",
+      "apiGroup": "",
+      "resource": "endpoints",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "cilium",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "cilium-pre-flight",
+      "apiGroup": "",
+      "resource": "pods",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "cilium",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "cilium-pre-flight",
+      "apiGroup": "",
+      "resource": "nodes/status",
+      "resourceName": "",
+      "verbs": [
+        "patch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "hubble-ui",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "hubble-ui",
+      "apiGroup": "",
+      "resource": "nodes",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "hubble-ui",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "hubble-ui",
+      "apiGroup": "",
+      "resource": "pods",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "hubble-ui",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "hubble-ui",
+      "apiGroup": "",
+      "resource": "services",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "hubble-ui",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "hubble-ui",
+      "apiGroup": "",
+      "resource": "componentstatuses",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Medium",
+      "tags": [
+        "InformationDisclosure",
+        "Reconnaissance",
+        "ControlPlaneDisruption"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1095,
+          "name": "Read ComponentStatuses (Control Plane Reconnaissance)",
+          "link": "https://rbac-atlas.github.io/rules/1095/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "hubble-ui",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "hubble-ui",
+      "apiGroup": "",
+      "resource": "endpoints",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "hubble-ui",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "hubble-ui",
+      "apiGroup": "",
+      "resource": "namespaces",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [
+        "InformationDisclosure",
+        "Reconnaissance",
+        "ClusterStructure"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1082,
+          "name": "List Namespaces (Cluster Reconnaissance)",
+          "link": "https://rbac-atlas.github.io/rules/1082/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "hubble-ui",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "hubble-ui",
+      "apiGroup": "apiextensions.k8s.io",
+      "resource": "customresourcedefinitions",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "hubble-ui",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "hubble-ui",
+      "apiGroup": "cilium.io",
+      "resource": "*",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "ClusterWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "hubble-ui",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "hubble-ui",
+      "apiGroup": "networking.k8s.io",
+      "resource": "networkpolicies",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "cilium-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "cilium-operator",
+      "apiGroup": "cilium.io",
+      "resource": "ciliumnetworkpolicies",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "ClusterWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "cilium-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "cilium-operator",
+      "apiGroup": "cilium.io",
+      "resource": "ciliumnetworkpolicies/status",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "ClusterWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "cilium-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "cilium-operator",
+      "apiGroup": "cilium.io",
+      "resource": "ciliumclusterwidenetworkpolicies/status",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "ClusterWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "cilium-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "cilium-operator",
+      "apiGroup": "cilium.io",
+      "resource": "ciliumidentities",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "ClusterWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "cilium-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "cilium-operator",
+      "apiGroup": "cilium.io",
+      "resource": "ciliumidentities/status",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "ClusterWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "cilium-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "cilium-operator",
+      "apiGroup": "cilium.io",
+      "resource": "ciliumclusterwidenetworkpolicies",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "DenialOfService",
+        "ClusterWideAccess",
+        "WildcardPermission",
+        "NetworkPolicyManagement",
+        "NetworkManipulation",
+        "Tampering"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1064,
+          "name": "Manage Cilium ClusterwideNetworkPolicies (cilium.io)",
+          "link": "https://rbac-atlas.github.io/rules/1064/"
+        },
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "cilium-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "cilium-operator",
+      "apiGroup": "cilium.io",
+      "resource": "ciliumendpoints",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "ClusterWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "cilium-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "cilium-operator",
+      "apiGroup": "cilium.io",
+      "resource": "ciliumendpoints/status",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "ClusterWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "cilium-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "cilium-operator",
+      "apiGroup": "cilium.io",
+      "resource": "ciliumnodes",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "ClusterWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "cilium-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "cilium-operator",
+      "apiGroup": "cilium.io",
+      "resource": "ciliumnodes/status",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "ClusterWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "cilium-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "cilium-operator",
+      "apiGroup": "apiextensions.k8s.io",
+      "resource": "customresourcedefinitions",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "cilium-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "cilium-operator",
+      "apiGroup": "coordination.k8s.io",
+      "resource": "leases",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "get",
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "cilium-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "cilium-operator",
+      "apiGroup": "",
+      "resource": "pods",
+      "resourceName": "",
+      "verbs": [
+        "delete",
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "cilium-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "cilium-operator",
+      "apiGroup": "",
+      "resource": "services",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "cilium-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "cilium-operator",
+      "apiGroup": "",
+      "resource": "endpoints",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "cilium-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "cilium-operator",
+      "apiGroup": "",
+      "resource": "namespaces",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [
+        "InformationDisclosure",
+        "Reconnaissance",
+        "ClusterStructure"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1082,
+          "name": "List Namespaces (Cluster Reconnaissance)",
+          "link": "https://rbac-atlas.github.io/rules/1082/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "cilium-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "cilium-operator",
+      "apiGroup": "discovery.k8s.io",
+      "resource": "endpointslices",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    }
+  ],
+  "serviceAccountWorkloads": [
+    {
+      "serviceAccountName": "cilium-operator",
+      "namespace": "default",
+      "workloadType": "Deployment",
+      "workloadName": "cilium-operator",
+      "containerName": "cilium-operator",
+      "image": "docker.io/cilium/operator-generic:v1.8.3"
+    },
+    {
+      "serviceAccountName": "",
+      "namespace": "default",
+      "workloadType": "DaemonSet",
+      "workloadName": "cilium-node-init",
+      "containerName": "node-init",
+      "image": "docker.io/cilium/startup-script:af2a99046eca96c0138551393b21a5c044c7fe79"
+    },
+    {
+      "serviceAccountName": "hubble-ui",
+      "namespace": "default",
+      "workloadType": "Deployment",
+      "workloadName": "hubble-ui",
+      "containerName": "hubble-ui",
+      "image": "quay.io/cilium/hubble-ui:v0.6.1"
+    },
+    {
+      "serviceAccountName": "cilium-etcd-operator",
+      "namespace": "default",
+      "workloadType": "Deployment",
+      "workloadName": "cilium-etcd-operator",
+      "containerName": "cilium-etcd-operator",
+      "image": "docker.io/cilium/cilium-etcd-operator:v2.0.7"
+    },
+    {
+      "serviceAccountName": "hubble-relay",
+      "namespace": "default",
+      "workloadType": "Deployment",
+      "workloadName": "hubble-relay",
+      "containerName": "hubble-relay",
+      "image": "docker.io/cilium/hubble-relay:v1.8.3"
+    },
+    {
+      "serviceAccountName": "cilium",
+      "namespace": "default",
+      "workloadType": "DaemonSet",
+      "workloadName": "cilium-pre-flight-check",
+      "containerName": "cilium-pre-flight-check",
+      "image": "docker.io/cilium/cilium:v1.8.3"
+    },
+    {
+      "serviceAccountName": "cilium",
+      "namespace": "default",
+      "workloadType": "Deployment",
+      "workloadName": "cilium-pre-flight-check",
+      "containerName": "cnp-validator",
+      "image": "docker.io/cilium/cilium:v1.8.3"
+    },
+    {
+      "serviceAccountName": "cilium",
+      "namespace": "default",
+      "workloadType": "DaemonSet",
+      "workloadName": "cilium",
+      "containerName": "cilium-agent",
+      "image": "docker.io/cilium/cilium:v1.8.3"
+    }
+  ]
+}

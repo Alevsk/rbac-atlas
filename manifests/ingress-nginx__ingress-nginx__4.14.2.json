@@ -3,7 +3,7 @@
     "version": "4.14.2",
     "name": "ingress-nginx",
     "source": "charts/ingress-nginx__ingress-nginx__4.14.2/",
-    "timestamp": 1769479288,
+    "timestamp": 1769793846,
     "extra": {
       "helm": {
         "description": "Ingress controller for Kubernetes using NGINX as a reverse proxy and load balancer",
@@ -52,16 +52,17 @@
   ],
   "serviceAccountPermissions": [
     {
-      "serviceAccountName": "ingress-nginx-admission",
+      "serviceAccountName": "ingress-nginx",
       "namespace": "default",
-      "roleType": "Role",
-      "roleName": "ingress-nginx-admission",
+      "roleType": "ClusterRole",
+      "roleName": "ingress-nginx",
       "apiGroup": "",
-      "resource": "secrets",
+      "resource": "nodes",
       "resourceName": "",
       "verbs": [
-        "create",
-        "get"
+        "get",
+        "list",
+        "watch"
       ],
       "riskLevel": "Low",
       "tags": [],
@@ -74,16 +75,16 @@
       ]
     },
     {
-      "serviceAccountName": "ingress-nginx-admission",
+      "serviceAccountName": "ingress-nginx",
       "namespace": "default",
       "roleType": "ClusterRole",
-      "roleName": "ingress-nginx-admission",
-      "apiGroup": "admissionregistration.k8s.io",
-      "resource": "validatingwebhookconfigurations",
+      "roleName": "ingress-nginx",
+      "apiGroup": "",
+      "resource": "pods",
       "resourceName": "",
       "verbs": [
-        "get",
-        "update"
+        "list",
+        "watch"
       ],
       "riskLevel": "Low",
       "tags": [],
@@ -109,11 +110,11 @@
       ],
       "riskLevel": "Critical",
       "tags": [
+        "InformationDisclosure",
         "SecretAccess",
         "ClusterWideSecretAccess",
         "CredentialAccess",
-        "DataExposure",
-        "InformationDisclosure"
+        "DataExposure"
       ],
       "matchedRiskRules": [
         {
@@ -147,9 +148,9 @@
       ],
       "riskLevel": "Low",
       "tags": [
-        "InformationDisclosure",
         "Reconnaissance",
-        "ClusterStructure"
+        "ClusterStructure",
+        "InformationDisclosure"
       ],
       "matchedRiskRules": [
         {
@@ -272,51 +273,6 @@
       "namespace": "default",
       "roleType": "ClusterRole",
       "roleName": "ingress-nginx",
-      "apiGroup": "",
-      "resource": "nodes",
-      "resourceName": "",
-      "verbs": [
-        "get",
-        "list",
-        "watch"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "ingress-nginx",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "ingress-nginx",
-      "apiGroup": "",
-      "resource": "pods",
-      "resourceName": "",
-      "verbs": [
-        "list",
-        "watch"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "ingress-nginx",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "ingress-nginx",
       "apiGroup": "coordination.k8s.io",
       "resource": "leases",
       "resourceName": "",
@@ -408,108 +364,6 @@
       "roleName": "ingress-nginx",
       "apiGroup": "discovery.k8s.io",
       "resource": "endpointslices",
-      "resourceName": "",
-      "verbs": [
-        "get",
-        "list",
-        "watch"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "ingress-nginx",
-      "namespace": "default",
-      "roleType": "Role",
-      "roleName": "ingress-nginx",
-      "apiGroup": "",
-      "resource": "pods",
-      "resourceName": "",
-      "verbs": [
-        "get",
-        "list",
-        "watch"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "ingress-nginx",
-      "namespace": "default",
-      "roleType": "Role",
-      "roleName": "ingress-nginx",
-      "apiGroup": "",
-      "resource": "secrets",
-      "resourceName": "",
-      "verbs": [
-        "get",
-        "list",
-        "watch"
-      ],
-      "riskLevel": "Critical",
-      "tags": [
-        "CredentialAccess",
-        "DataExposure",
-        "InformationDisclosure",
-        "SecretAccess"
-      ],
-      "matchedRiskRules": [
-        {
-          "id": 1011,
-          "name": "Read secrets in a namespace",
-          "link": "https://rbac-atlas.github.io/rules/1011/"
-        },
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "ingress-nginx",
-      "namespace": "default",
-      "roleType": "Role",
-      "roleName": "ingress-nginx",
-      "apiGroup": "",
-      "resource": "endpoints",
-      "resourceName": "",
-      "verbs": [
-        "get",
-        "list",
-        "watch"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "ingress-nginx",
-      "namespace": "default",
-      "roleType": "Role",
-      "roleName": "ingress-nginx",
-      "apiGroup": "",
-      "resource": "services",
       "resourceName": "",
       "verbs": [
         "get",
@@ -584,9 +438,9 @@
       ],
       "riskLevel": "Medium",
       "tags": [
+        "DataExposure",
         "InformationDisclosure",
-        "ConfigMapAccess",
-        "DataExposure"
+        "ConfigMapAccess"
       ],
       "matchedRiskRules": [
         {
@@ -594,6 +448,131 @@
           "name": "Read ConfigMaps in a namespace",
           "link": "https://rbac-atlas.github.io/rules/1023/"
         },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "ingress-nginx",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "ingress-nginx",
+      "apiGroup": "",
+      "resource": "pods",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "ingress-nginx",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "ingress-nginx",
+      "apiGroup": "",
+      "resource": "secrets",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "DataExposure",
+        "InformationDisclosure",
+        "SecretAccess",
+        "CredentialAccess"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1011,
+          "name": "Read secrets in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1011/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "ingress-nginx",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "ingress-nginx",
+      "apiGroup": "",
+      "resource": "endpoints",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "ingress-nginx",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "ingress-nginx",
+      "apiGroup": "",
+      "resource": "services",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "ingress-nginx",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "ingress-nginx",
+      "apiGroup": "networking.k8s.io",
+      "resource": "ingresses",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
         {
           "id": 9996,
           "name": "Base Risk Level - Low",
@@ -650,13 +629,11 @@
       "namespace": "default",
       "roleType": "Role",
       "roleName": "ingress-nginx",
-      "apiGroup": "networking.k8s.io",
-      "resource": "ingresses",
+      "apiGroup": "coordination.k8s.io",
+      "resource": "leases",
       "resourceName": "",
       "verbs": [
-        "get",
-        "list",
-        "watch"
+        "create"
       ],
       "riskLevel": "Low",
       "tags": [],
@@ -697,27 +674,6 @@
       "namespace": "default",
       "roleType": "Role",
       "roleName": "ingress-nginx",
-      "apiGroup": "coordination.k8s.io",
-      "resource": "leases",
-      "resourceName": "",
-      "verbs": [
-        "create"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "ingress-nginx",
-      "namespace": "default",
-      "roleType": "Role",
-      "roleName": "ingress-nginx",
       "apiGroup": "discovery.k8s.io",
       "resource": "endpointslices",
       "resourceName": "",
@@ -735,16 +691,60 @@
           "link": "https://rbac-atlas.github.io/rules/9996/"
         }
       ]
+    },
+    {
+      "serviceAccountName": "ingress-nginx-admission",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "ingress-nginx-admission",
+      "apiGroup": "",
+      "resource": "secrets",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "get"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "ingress-nginx-admission",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "ingress-nginx-admission",
+      "apiGroup": "admissionregistration.k8s.io",
+      "resource": "validatingwebhookconfigurations",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
     }
   ],
   "serviceAccountWorkloads": [
     {
-      "serviceAccountName": "ingress-nginx-admission",
+      "serviceAccountName": "ingress-nginx",
       "namespace": "default",
-      "workloadType": "Job",
-      "workloadName": "ingress-nginx-admission-patch",
-      "containerName": "patch",
-      "image": "registry.k8s.io/ingress-nginx/kube-webhook-certgen:v1.6.6@sha256:b28e0688be7d1e15fe385053bd4c6b631bc7708c9220632de1b95867e5e7da11"
+      "workloadType": "Deployment",
+      "workloadName": "ingress-nginx-controller",
+      "containerName": "controller",
+      "image": "registry.k8s.io/ingress-nginx/controller:v1.14.2@sha256:fb3e5c0bdff6a498dd5192b11a09ace0739baa9fe6ba519bf5b22425871ce490"
     },
     {
       "serviceAccountName": "ingress-nginx-admission",
@@ -755,12 +755,12 @@
       "image": "registry.k8s.io/ingress-nginx/kube-webhook-certgen:v1.6.6@sha256:b28e0688be7d1e15fe385053bd4c6b631bc7708c9220632de1b95867e5e7da11"
     },
     {
-      "serviceAccountName": "ingress-nginx",
+      "serviceAccountName": "ingress-nginx-admission",
       "namespace": "default",
-      "workloadType": "Deployment",
-      "workloadName": "ingress-nginx-controller",
-      "containerName": "controller",
-      "image": "registry.k8s.io/ingress-nginx/controller:v1.14.2@sha256:fb3e5c0bdff6a498dd5192b11a09ace0739baa9fe6ba519bf5b22425871ce490"
+      "workloadType": "Job",
+      "workloadName": "ingress-nginx-admission-patch",
+      "containerName": "patch",
+      "image": "registry.k8s.io/ingress-nginx/kube-webhook-certgen:v1.6.6@sha256:b28e0688be7d1e15fe385053bd4c6b631bc7708c9220632de1b95867e5e7da11"
     }
   ]
 }

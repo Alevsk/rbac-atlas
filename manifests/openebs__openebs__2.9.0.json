@@ -1,0 +1,1329 @@
+{
+  "metadata": {
+    "version": "2.9.0",
+    "name": "openebs",
+    "source": "charts/openebs__openebs__2.9.0/",
+    "timestamp": 1769794152,
+    "extra": {
+      "helm": {
+        "description": "Containerized Storage for Containers",
+        "home": "http://www.openebs.io/",
+        "icon": "https://raw.githubusercontent.com/cncf/artwork/master/projects/openebs/icon/color/openebs-icon-color.png",
+        "keywords": [
+          "cloud-native-storage",
+          "block-storage",
+          "iSCSI",
+          "storage"
+        ],
+        "kubeVersion": "",
+        "maintainers": [
+          {
+            "name": "kmova",
+            "email": "kiran.mova@openebs.io"
+          },
+          {
+            "name": "prateekpandey14",
+            "email": "prateek.pandey@openebs.io"
+          }
+        ],
+        "sources": [
+          "https://github.com/openebs/openebs"
+        ]
+      }
+    }
+  },
+  "serviceAccountData": [
+    {
+      "serviceAccountName": "openebs",
+      "namespace": "default",
+      "automountToken": false,
+      "secrets": null,
+      "imagePullSecrets": null
+    }
+  ],
+  "serviceAccountPermissions": [
+    {
+      "serviceAccountName": "openebs",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "openebs",
+      "apiGroup": "*",
+      "resource": "persistentvolumeclaims",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "ClusterWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "openebs",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "openebs",
+      "apiGroup": "*",
+      "resource": "nodes",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "ClusterWideAccess",
+        "WildcardPermission",
+        "NodeAccess",
+        "Tampering",
+        "PotentialPrivilegeEscalation",
+        "DenialOfService",
+        "ResourceDeletion"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1015,
+          "name": "Modify node configuration (labels, taints)",
+          "link": "https://rbac-atlas.github.io/rules/1015/"
+        },
+        {
+          "id": 1016,
+          "name": "Delete nodes",
+          "link": "https://rbac-atlas.github.io/rules/1016/"
+        },
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "openebs",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "openebs",
+      "apiGroup": "*",
+      "resource": "namespaces",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "DenialOfService",
+        "InformationDisclosure",
+        "Reconnaissance",
+        "ClusterStructure",
+        "ClusterWideAccess",
+        "WildcardPermission",
+        "NamespaceLifecycle",
+        "ResourceDeletion"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1026,
+          "name": "Delete namespaces",
+          "link": "https://rbac-atlas.github.io/rules/1026/"
+        },
+        {
+          "id": 1082,
+          "name": "List Namespaces (Cluster Reconnaissance)",
+          "link": "https://rbac-atlas.github.io/rules/1082/"
+        },
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "openebs",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "openebs",
+      "apiGroup": "*",
+      "resource": "configmaps",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "Tampering",
+        "ConfigMapAccess",
+        "PotentialPrivilegeEscalation",
+        "InformationDisclosure",
+        "DataExposure",
+        "ClusterWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1024,
+          "name": "Modify ConfigMaps cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1024/"
+        },
+        {
+          "id": 1022,
+          "name": "Read ConfigMaps cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1022/"
+        },
+        {
+          "id": 1025,
+          "name": "Modify ConfigMaps in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1025/"
+        },
+        {
+          "id": 1023,
+          "name": "Read ConfigMaps in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1023/"
+        },
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "openebs",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "openebs",
+      "apiGroup": "*",
+      "resource": "statefulsets",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "Tampering",
+        "PotentialPrivilegeEscalation",
+        "ClusterWideAccess",
+        "WildcardPermission",
+        "WorkloadLifecycle",
+        "PrivilegeEscalation",
+        "Persistence"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1037,
+          "name": "Manage StatefulSets cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1037/"
+        },
+        {
+          "id": 1038,
+          "name": "Manage StatefulSets in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1038/"
+        },
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "openebs",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "openebs",
+      "apiGroup": "*",
+      "resource": "limitranges",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [
+        "ClusterWideAccess",
+        "WildcardPermission",
+        "InformationDisclosure",
+        "Reconnaissance",
+        "ResourceConfiguration"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1087,
+          "name": "Read LimitRanges (Namespace Information Disclosure)",
+          "link": "https://rbac-atlas.github.io/rules/1087/"
+        },
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "openebs",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "openebs",
+      "apiGroup": "*",
+      "resource": "ingresses",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "ClusterWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "openebs",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "openebs",
+      "apiGroup": "*",
+      "resource": "persistentvolumes",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "DataLoss",
+        "DenialOfService",
+        "Tampering",
+        "ClusterWideAccess",
+        "WildcardPermission",
+        "StorageManipulation",
+        "DataExposure"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1017,
+          "name": "Manage PersistentVolumes (cluster-wide storage manipulation)",
+          "link": "https://rbac-atlas.github.io/rules/1017/"
+        },
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "openebs",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "openebs",
+      "apiGroup": "*",
+      "resource": "nodes/proxy",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "Tampering",
+        "ElevationOfPrivilege",
+        "ClusterWideAccess",
+        "CodeExecution",
+        "AuthorizationBypass",
+        "WildcardPermission",
+        "NodeAccess",
+        "ClusterAdminAccess",
+        "LateralMovement",
+        "DataExposure"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1014,
+          "name": "Node proxy access (Kubelet API)",
+          "link": "https://rbac-atlas.github.io/rules/1014/"
+        },
+        {
+          "id": 1104,
+          "name": "Node proxy GET RCE via WebSocket",
+          "link": "https://rbac-atlas.github.io/rules/1104/"
+        },
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "openebs",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "openebs",
+      "apiGroup": "*",
+      "resource": "services",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "ServiceExposure",
+        "DenialOfService",
+        "Tampering",
+        "ClusterWideAccess",
+        "WildcardPermission",
+        "NetworkManipulation"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1075,
+          "name": "Manage Services cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1075/"
+        },
+        {
+          "id": 1076,
+          "name": "Manage Services in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1076/"
+        },
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "openebs",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "openebs",
+      "apiGroup": "*",
+      "resource": "pods",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "ClusterWideAccess",
+        "WildcardPermission",
+        "WorkloadExecution",
+        "PrivilegeEscalation",
+        "LateralMovement",
+        "Persistence",
+        "Tampering",
+        "PotentialPrivilegeEscalation"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1006,
+          "name": "Create pods cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1006/"
+        },
+        {
+          "id": 1008,
+          "name": "Update/Patch pods cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1008/"
+        },
+        {
+          "id": 1007,
+          "name": "Create pods in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1007/"
+        },
+        {
+          "id": 1009,
+          "name": "Update/Patch pods in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1009/"
+        },
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "openebs",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "openebs",
+      "apiGroup": "*",
+      "resource": "pods/exec",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "ClusterWideAccess",
+        "WildcardPermission",
+        "ClusterWidePodExec",
+        "CodeExecution",
+        "LateralMovement",
+        "ElevationOfPrivilege",
+        "PodExec",
+        "PotentialPrivilegeEscalation"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1000,
+          "name": "Cluster-wide pod exec",
+          "link": "https://rbac-atlas.github.io/rules/1000/"
+        },
+        {
+          "id": 1001,
+          "name": "Namespaced pod exec",
+          "link": "https://rbac-atlas.github.io/rules/1001/"
+        },
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "openebs",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "openebs",
+      "apiGroup": "*",
+      "resource": "deployments/finalizers",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "ClusterWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "openebs",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "openebs",
+      "apiGroup": "*",
+      "resource": "secrets",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "CredentialAccess",
+        "DataExposure",
+        "SecretAccess",
+        "PrivilegeEscalation",
+        "WildcardPermission",
+        "ClusterWideSecretAccess",
+        "InformationDisclosure",
+        "Tampering",
+        "Persistence",
+        "PotentialPrivilegeEscalation",
+        "ClusterWideAccess"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1010,
+          "name": "Read secrets cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1010/"
+        },
+        {
+          "id": 1011,
+          "name": "Read secrets in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1011/"
+        },
+        {
+          "id": 1012,
+          "name": "Modify secrets cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1012/"
+        },
+        {
+          "id": 1013,
+          "name": "Modify secrets in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1013/"
+        },
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "openebs",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "openebs",
+      "apiGroup": "*",
+      "resource": "jobs",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "Tampering",
+        "PotentialPrivilegeEscalation",
+        "ClusterWideAccess",
+        "WildcardPermission",
+        "WorkloadLifecycle",
+        "PrivilegeEscalation"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1041,
+          "name": "Manage Jobs cluster-wide (one-off privileged execution)",
+          "link": "https://rbac-atlas.github.io/rules/1041/"
+        },
+        {
+          "id": 1042,
+          "name": "Manage Jobs in a namespace (one-off privileged execution)",
+          "link": "https://rbac-atlas.github.io/rules/1042/"
+        },
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "openebs",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "openebs",
+      "apiGroup": "*",
+      "resource": "cronjobs",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "WorkloadLifecycle",
+        "PrivilegeEscalation",
+        "Persistence",
+        "Tampering",
+        "PotentialPrivilegeEscalation",
+        "ClusterWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1039,
+          "name": "Manage CronJobs cluster-wide (scheduled privileged execution, persistence)",
+          "link": "https://rbac-atlas.github.io/rules/1039/"
+        },
+        {
+          "id": 1040,
+          "name": "Manage CronJobs in a namespace (scheduled privileged execution, persistence)",
+          "link": "https://rbac-atlas.github.io/rules/1040/"
+        },
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "openebs",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "openebs",
+      "apiGroup": "*",
+      "resource": "replicationcontrollers",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "ClusterWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "openebs",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "openebs",
+      "apiGroup": "*",
+      "resource": "replicasets",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "ClusterWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "openebs",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "openebs",
+      "apiGroup": "*",
+      "resource": "endpoints",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "DenialOfService",
+        "Tampering",
+        "ClusterWideAccess",
+        "WildcardPermission",
+        "NetworkManipulation",
+        "TrafficRedirection",
+        "ManInTheMiddle"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1073,
+          "name": "Manage Endpoints or EndpointSlices cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1073/"
+        },
+        {
+          "id": 1074,
+          "name": "Manage Endpoints or EndpointSlices in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1074/"
+        },
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "openebs",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "openebs",
+      "apiGroup": "*",
+      "resource": "resourcequotas",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Medium",
+      "tags": [
+        "ClusterWideAccess",
+        "WildcardPermission",
+        "InformationDisclosure",
+        "Reconnaissance",
+        "ResourceConfiguration",
+        "QuotaTampering"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1089,
+          "name": "Read All ResourceQuotas (Cluster-wide Information Disclosure)",
+          "link": "https://rbac-atlas.github.io/rules/1089/"
+        },
+        {
+          "id": 1088,
+          "name": "Read ResourceQuotas (Namespace Information Disclosure)",
+          "link": "https://rbac-atlas.github.io/rules/1088/"
+        },
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "openebs",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "openebs",
+      "apiGroup": "*",
+      "resource": "horizontalpodautoscalers",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "ClusterWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "openebs",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "openebs",
+      "apiGroup": "*",
+      "resource": "verticalpodautoscalers",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "ClusterWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "openebs",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "openebs",
+      "apiGroup": "*",
+      "resource": "poddisruptionbudgets",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "ClusterWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "openebs",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "openebs",
+      "apiGroup": "*",
+      "resource": "certificatesigningrequests",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "ClusterWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "openebs",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "openebs",
+      "apiGroup": "*",
+      "resource": "deployments",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "Persistence",
+        "Tampering",
+        "PotentialPrivilegeEscalation",
+        "ClusterWideAccess",
+        "WildcardPermission",
+        "WorkloadLifecycle",
+        "PrivilegeEscalation"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1033,
+          "name": "Manage Deployments cluster-wide (potential for privileged pod execution)",
+          "link": "https://rbac-atlas.github.io/rules/1033/"
+        },
+        {
+          "id": 1034,
+          "name": "Manage Deployments in a namespace (potential for privileged pod execution)",
+          "link": "https://rbac-atlas.github.io/rules/1034/"
+        },
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "openebs",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "openebs",
+      "apiGroup": "*",
+      "resource": "events",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "Medium",
+      "tags": [
+        "InformationDisclosure",
+        "Reconnaissance",
+        "OperationalData",
+        "ClusterWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1070,
+          "name": "Read events cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1070/"
+        },
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "openebs",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "openebs",
+      "apiGroup": "*",
+      "resource": "daemonsets",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "Persistence",
+        "NodeAccess",
+        "Tampering",
+        "ClusterWideAccess",
+        "WildcardPermission",
+        "WorkloadLifecycle",
+        "PrivilegeEscalation"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1035,
+          "name": "Manage DaemonSets cluster-wide (runs on all nodes, high impact)",
+          "link": "https://rbac-atlas.github.io/rules/1035/"
+        },
+        {
+          "id": 1036,
+          "name": "Manage DaemonSets in a namespace (runs on nodes, high impact)",
+          "link": "https://rbac-atlas.github.io/rules/1036/"
+        },
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "openebs",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "openebs",
+      "apiGroup": "*",
+      "resource": "storageclasses",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "DenialOfService",
+        "ClusterWideAccess",
+        "WildcardPermission",
+        "StorageManipulation",
+        "Tampering"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1056,
+          "name": "Manage StorageClasses",
+          "link": "https://rbac-atlas.github.io/rules/1056/"
+        },
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "openebs",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "openebs",
+      "apiGroup": "volumesnapshot.external-storage.k8s.io",
+      "resource": "volumesnapshots",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "openebs",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "openebs",
+      "apiGroup": "volumesnapshot.external-storage.k8s.io",
+      "resource": "volumesnapshotdatas",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "openebs",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "openebs",
+      "apiGroup": "apiextensions.k8s.io",
+      "resource": "customresourcedefinitions",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "PotentialPrivilegeEscalation",
+        "CRDManipulation",
+        "Tampering"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1045,
+          "name": "Manage CustomResourceDefinitions",
+          "link": "https://rbac-atlas.github.io/rules/1045/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "openebs",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "openebs",
+      "apiGroup": "openebs.io",
+      "resource": "*",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "ClusterWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "openebs",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "openebs",
+      "apiGroup": "cstor.openebs.io",
+      "resource": "*",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "ClusterWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "openebs",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "openebs",
+      "apiGroup": "coordination.k8s.io",
+      "resource": "leases",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "openebs",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "openebs",
+      "apiGroup": "admissionregistration.k8s.io",
+      "resource": "validatingwebhookconfigurations",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "WebhookManipulation",
+        "Tampering",
+        "DenialOfService"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1044,
+          "name": "Manage ValidatingWebhookConfigurations",
+          "link": "https://rbac-atlas.github.io/rules/1044/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "openebs",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "openebs",
+      "apiGroup": "admissionregistration.k8s.io",
+      "resource": "mutatingwebhookconfigurations",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "WebhookManipulation",
+        "Tampering",
+        "PrivilegeEscalation",
+        "DenialOfService"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1043,
+          "name": "Manage MutatingWebhookConfigurations",
+          "link": "https://rbac-atlas.github.io/rules/1043/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    }
+  ],
+  "serviceAccountWorkloads": [
+    {
+      "serviceAccountName": "openebs",
+      "namespace": "default",
+      "workloadType": "Deployment",
+      "workloadName": "openebs-localpv-provisioner",
+      "containerName": "openebs-localpv-provisioner",
+      "image": "openebs/provisioner-localpv:2.9.0"
+    },
+    {
+      "serviceAccountName": "openebs",
+      "namespace": "default",
+      "workloadType": "Deployment",
+      "workloadName": "openebs-snapshot-operator",
+      "containerName": "openebs-snapshot-controller",
+      "image": "openebs/snapshot-controller:2.9.0"
+    },
+    {
+      "serviceAccountName": "openebs",
+      "namespace": "default",
+      "workloadType": "Deployment",
+      "workloadName": "openebs-snapshot-operator",
+      "containerName": "openebs-snapshot-provisioner",
+      "image": "openebs/snapshot-provisioner:2.9.0"
+    },
+    {
+      "serviceAccountName": "openebs",
+      "namespace": "default",
+      "workloadType": "Deployment",
+      "workloadName": "openebs-apiserver",
+      "containerName": "openebs-apiserver",
+      "image": "openebs/m-apiserver:2.9.0"
+    },
+    {
+      "serviceAccountName": "openebs",
+      "namespace": "default",
+      "workloadType": "Job",
+      "workloadName": "openebs-webhook-cleanup",
+      "containerName": "kubectl",
+      "image": "bitnami/kubectl:1.20"
+    },
+    {
+      "serviceAccountName": "openebs",
+      "namespace": "default",
+      "workloadType": "Deployment",
+      "workloadName": "openebs-ndm-operator",
+      "containerName": "openebs-ndm-operator",
+      "image": "openebs/node-disk-operator:1.4.1"
+    },
+    {
+      "serviceAccountName": "openebs",
+      "namespace": "default",
+      "workloadType": "Deployment",
+      "workloadName": "openebs-provisioner",
+      "containerName": "openebs-provisioner",
+      "image": "openebs/openebs-k8s-provisioner:2.9.0"
+    },
+    {
+      "serviceAccountName": "openebs",
+      "namespace": "default",
+      "workloadType": "Deployment",
+      "workloadName": "openebs-admission-server",
+      "containerName": "admission-webhook",
+      "image": "openebs/admission-server:2.9.0"
+    },
+    {
+      "serviceAccountName": "openebs",
+      "namespace": "default",
+      "workloadType": "DaemonSet",
+      "workloadName": "openebs-ndm",
+      "containerName": "openebs-ndm",
+      "image": "openebs/node-disk-manager:1.4.1"
+    }
+  ]
+}

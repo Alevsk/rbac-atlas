@@ -1,0 +1,4913 @@
+{
+  "metadata": {
+    "version": "0.9.3",
+    "name": "stackgres-operator",
+    "source": "charts/stackgres-charts__stackgres-operator__0.9.3/",
+    "timestamp": 1769794411,
+    "extra": {
+      "helm": {
+        "description": "StackGres Operator",
+        "home": "https://stackgres.io",
+        "icon": "https://gitlab.com/uploads/-/system/project/avatar/12584701/logo-stackgres.png?width=64",
+        "keywords": null,
+        "kubeVersion": "1.11.0-0 - 1.17.x-O",
+        "maintainers": [
+          {
+            "name": "OnGres Inc.",
+            "email": "info@ongres.com",
+            "url": "https://ongres.com"
+          }
+        ],
+        "sources": [
+          "https://gitlab.com/ongresinc/stackgres"
+        ]
+      }
+    }
+  },
+  "serviceAccountData": [
+    {
+      "serviceAccountName": "stackgres-operator-kube-state-metrics",
+      "namespace": "default",
+      "automountToken": false,
+      "secrets": null,
+      "imagePullSecrets": null
+    },
+    {
+      "serviceAccountName": "stackgres-operator-init",
+      "namespace": "default",
+      "automountToken": false,
+      "secrets": null,
+      "imagePullSecrets": null
+    },
+    {
+      "serviceAccountName": "stackgres-operator-grafana",
+      "namespace": "default",
+      "automountToken": false,
+      "secrets": null,
+      "imagePullSecrets": null
+    },
+    {
+      "serviceAccountName": "stackgres-operator-prometh-alertmanager",
+      "namespace": "default",
+      "automountToken": false,
+      "secrets": null,
+      "imagePullSecrets": null
+    },
+    {
+      "serviceAccountName": "stackgres-operator-prometh-prometheus",
+      "namespace": "default",
+      "automountToken": false,
+      "secrets": null,
+      "imagePullSecrets": null
+    },
+    {
+      "serviceAccountName": "stackgres-restapi",
+      "namespace": "default",
+      "automountToken": false,
+      "secrets": null,
+      "imagePullSecrets": null
+    },
+    {
+      "serviceAccountName": "stackgres-operator-prometh-admission",
+      "namespace": "default",
+      "automountToken": false,
+      "secrets": null,
+      "imagePullSecrets": null
+    },
+    {
+      "serviceAccountName": "stackgres-operator-grafana-test",
+      "namespace": "default",
+      "automountToken": false,
+      "secrets": null,
+      "imagePullSecrets": null
+    },
+    {
+      "serviceAccountName": "stackgres-operator-prometh-operator",
+      "namespace": "default",
+      "automountToken": false,
+      "secrets": null,
+      "imagePullSecrets": null
+    },
+    {
+      "serviceAccountName": "stackgres-operator-prometheus-node-exporter",
+      "namespace": "default",
+      "automountToken": false,
+      "secrets": null,
+      "imagePullSecrets": null
+    },
+    {
+      "serviceAccountName": "stackgres-operator",
+      "namespace": "default",
+      "automountToken": false,
+      "secrets": null,
+      "imagePullSecrets": null
+    }
+  ],
+  "serviceAccountPermissions": [
+    {
+      "serviceAccountName": "stackgres-operator-prometheus-node-exporter",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "psp-stackgres-operator-prometheus-node-exporter",
+      "apiGroup": "extensions",
+      "resource": "podsecuritypolicies",
+      "resourceName": "stackgres-operator-prometheus-node-exporter",
+      "verbs": [
+        "use"
+      ],
+      "riskLevel": "Low",
+      "tags": [
+        "PrivilegeEscalation",
+        "PodSecurityPolicy",
+        "DeprecatedFeature",
+        "NodeAccess",
+        "ResourceNameRestricted"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1078,
+          "name": "Use privileged PodSecurityPolicy (deprecated)",
+          "link": "https://rbac-atlas.github.io/rules/1078/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "stackgres-operator-kube-state-metrics",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "psp-stackgres-operator-kube-state-metrics",
+      "apiGroup": "policy",
+      "resource": "podsecuritypolicies",
+      "resourceName": "stackgres-operator-kube-state-metrics",
+      "verbs": [
+        "use"
+      ],
+      "riskLevel": "Low",
+      "tags": [
+        "PrivilegeEscalation",
+        "PodSecurityPolicy",
+        "DeprecatedFeature",
+        "NodeAccess",
+        "ResourceNameRestricted"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1078,
+          "name": "Use privileged PodSecurityPolicy (deprecated)",
+          "link": "https://rbac-atlas.github.io/rules/1078/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "stackgres-operator-kube-state-metrics",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "stackgres-operator-kube-state-metrics",
+      "apiGroup": "",
+      "resource": "nodes",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "stackgres-operator-kube-state-metrics",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "stackgres-operator-kube-state-metrics",
+      "apiGroup": "",
+      "resource": "persistentvolumes",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "stackgres-operator-kube-state-metrics",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "stackgres-operator-kube-state-metrics",
+      "apiGroup": "",
+      "resource": "pods",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "stackgres-operator-kube-state-metrics",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "stackgres-operator-kube-state-metrics",
+      "apiGroup": "",
+      "resource": "resourcequotas",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Medium",
+      "tags": [
+        "InformationDisclosure",
+        "Reconnaissance",
+        "ResourceConfiguration",
+        "QuotaTampering"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1089,
+          "name": "Read All ResourceQuotas (Cluster-wide Information Disclosure)",
+          "link": "https://rbac-atlas.github.io/rules/1089/"
+        },
+        {
+          "id": 1088,
+          "name": "Read ResourceQuotas (Namespace Information Disclosure)",
+          "link": "https://rbac-atlas.github.io/rules/1088/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "stackgres-operator-kube-state-metrics",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "stackgres-operator-kube-state-metrics",
+      "apiGroup": "",
+      "resource": "secrets",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "DataExposure",
+        "InformationDisclosure",
+        "SecretAccess",
+        "ClusterWideSecretAccess",
+        "CredentialAccess"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1010,
+          "name": "Read secrets cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1010/"
+        },
+        {
+          "id": 1011,
+          "name": "Read secrets in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1011/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "stackgres-operator-kube-state-metrics",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "stackgres-operator-kube-state-metrics",
+      "apiGroup": "",
+      "resource": "limitranges",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [
+        "InformationDisclosure",
+        "Reconnaissance",
+        "ResourceConfiguration"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1087,
+          "name": "Read LimitRanges (Namespace Information Disclosure)",
+          "link": "https://rbac-atlas.github.io/rules/1087/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "stackgres-operator-kube-state-metrics",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "stackgres-operator-kube-state-metrics",
+      "apiGroup": "",
+      "resource": "persistentvolumeclaims",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "stackgres-operator-kube-state-metrics",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "stackgres-operator-kube-state-metrics",
+      "apiGroup": "",
+      "resource": "replicationcontrollers",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "stackgres-operator-kube-state-metrics",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "stackgres-operator-kube-state-metrics",
+      "apiGroup": "",
+      "resource": "services",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "stackgres-operator-kube-state-metrics",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "stackgres-operator-kube-state-metrics",
+      "apiGroup": "",
+      "resource": "configmaps",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "InformationDisclosure",
+        "ConfigMapAccess",
+        "DataExposure"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1022,
+          "name": "Read ConfigMaps cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1022/"
+        },
+        {
+          "id": 1023,
+          "name": "Read ConfigMaps in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1023/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "stackgres-operator-kube-state-metrics",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "stackgres-operator-kube-state-metrics",
+      "apiGroup": "",
+      "resource": "endpoints",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "stackgres-operator-kube-state-metrics",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "stackgres-operator-kube-state-metrics",
+      "apiGroup": "",
+      "resource": "namespaces",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [
+        "Reconnaissance",
+        "ClusterStructure",
+        "InformationDisclosure"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1082,
+          "name": "List Namespaces (Cluster Reconnaissance)",
+          "link": "https://rbac-atlas.github.io/rules/1082/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "stackgres-operator-kube-state-metrics",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "stackgres-operator-kube-state-metrics",
+      "apiGroup": "extensions",
+      "resource": "deployments",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "stackgres-operator-kube-state-metrics",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "stackgres-operator-kube-state-metrics",
+      "apiGroup": "extensions",
+      "resource": "ingresses",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "stackgres-operator-kube-state-metrics",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "stackgres-operator-kube-state-metrics",
+      "apiGroup": "extensions",
+      "resource": "replicasets",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "stackgres-operator-kube-state-metrics",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "stackgres-operator-kube-state-metrics",
+      "apiGroup": "extensions",
+      "resource": "daemonsets",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "stackgres-operator-kube-state-metrics",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "stackgres-operator-kube-state-metrics",
+      "apiGroup": "networking.k8s.io",
+      "resource": "ingresses",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "stackgres-operator-kube-state-metrics",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "stackgres-operator-kube-state-metrics",
+      "apiGroup": "networking.k8s.io",
+      "resource": "networkpolicies",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "stackgres-operator-kube-state-metrics",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "stackgres-operator-kube-state-metrics",
+      "apiGroup": "storage.k8s.io",
+      "resource": "storageclasses",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "stackgres-operator-kube-state-metrics",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "stackgres-operator-kube-state-metrics",
+      "apiGroup": "storage.k8s.io",
+      "resource": "volumeattachments",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "stackgres-operator-kube-state-metrics",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "stackgres-operator-kube-state-metrics",
+      "apiGroup": "certificates.k8s.io",
+      "resource": "certificatesigningrequests",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "stackgres-operator-kube-state-metrics",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "stackgres-operator-kube-state-metrics",
+      "apiGroup": "batch",
+      "resource": "cronjobs",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "stackgres-operator-kube-state-metrics",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "stackgres-operator-kube-state-metrics",
+      "apiGroup": "batch",
+      "resource": "jobs",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "stackgres-operator-kube-state-metrics",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "stackgres-operator-kube-state-metrics",
+      "apiGroup": "apps",
+      "resource": "daemonsets",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "stackgres-operator-kube-state-metrics",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "stackgres-operator-kube-state-metrics",
+      "apiGroup": "apps",
+      "resource": "deployments",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "stackgres-operator-kube-state-metrics",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "stackgres-operator-kube-state-metrics",
+      "apiGroup": "apps",
+      "resource": "replicasets",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "stackgres-operator-kube-state-metrics",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "stackgres-operator-kube-state-metrics",
+      "apiGroup": "apps",
+      "resource": "statefulsets",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "stackgres-operator-kube-state-metrics",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "stackgres-operator-kube-state-metrics",
+      "apiGroup": "autoscaling",
+      "resource": "horizontalpodautoscalers",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "stackgres-operator-kube-state-metrics",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "stackgres-operator-kube-state-metrics",
+      "apiGroup": "admissionregistration.k8s.io",
+      "resource": "mutatingwebhookconfigurations",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Medium",
+      "tags": [
+        "Reconnaissance",
+        "InformationDisclosure",
+        "WebhookReconnaissance"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1084,
+          "name": "List MutatingWebhookConfigurations (Reconnaissance)",
+          "link": "https://rbac-atlas.github.io/rules/1084/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "stackgres-operator-kube-state-metrics",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "stackgres-operator-kube-state-metrics",
+      "apiGroup": "admissionregistration.k8s.io",
+      "resource": "validatingwebhookconfigurations",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Medium",
+      "tags": [
+        "InformationDisclosure",
+        "WebhookReconnaissance",
+        "Reconnaissance"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1083,
+          "name": "List ValidatingWebhookConfigurations (Reconnaissance)",
+          "link": "https://rbac-atlas.github.io/rules/1083/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "stackgres-operator-kube-state-metrics",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "stackgres-operator-kube-state-metrics",
+      "apiGroup": "policy",
+      "resource": "poddisruptionbudgets",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "stackgres-operator-kube-state-metrics",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "stackgres-operator-kube-state-metrics",
+      "apiGroup": "autoscaling.k8s.io",
+      "resource": "verticalpodautoscalers",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "stackgres-operator-grafana",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "stackgres-operator-grafana",
+      "apiGroup": "extensions",
+      "resource": "podsecuritypolicies",
+      "resourceName": "stackgres-operator-grafana",
+      "verbs": [
+        "use"
+      ],
+      "riskLevel": "Low",
+      "tags": [
+        "ResourceNameRestricted"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "stackgres-operator-grafana",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "stackgres-operator-grafana-clusterrole",
+      "apiGroup": "",
+      "resource": "configmaps",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "InformationDisclosure",
+        "ConfigMapAccess",
+        "DataExposure"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1022,
+          "name": "Read ConfigMaps cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1022/"
+        },
+        {
+          "id": 1023,
+          "name": "Read ConfigMaps in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1023/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "stackgres-operator-grafana",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "stackgres-operator-grafana-clusterrole",
+      "apiGroup": "",
+      "resource": "secrets",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "CredentialAccess",
+        "DataExposure",
+        "InformationDisclosure",
+        "SecretAccess",
+        "ClusterWideSecretAccess"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1010,
+          "name": "Read secrets cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1010/"
+        },
+        {
+          "id": 1011,
+          "name": "Read secrets in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1011/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "stackgres-restapi",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "stackgres-restapi",
+      "apiGroup": "",
+      "resource": "secrets",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "stackgres-restapi",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "stackgres-restapi",
+      "apiGroup": "",
+      "resource": "users",
+      "resourceName": "",
+      "verbs": [
+        "impersonate"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "Impersonation",
+        "PrivilegeEscalation",
+        "ClusterAdminAccess",
+        "Spoofing"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1066,
+          "name": "Impersonate users, groups, or service accounts (cluster-wide)",
+          "link": "https://rbac-atlas.github.io/rules/1066/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "stackgres-restapi",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "stackgres-restapi",
+      "apiGroup": "",
+      "resource": "groups",
+      "resourceName": "",
+      "verbs": [
+        "impersonate"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "Impersonation",
+        "PrivilegeEscalation",
+        "ClusterAdminAccess",
+        "Spoofing"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1066,
+          "name": "Impersonate users, groups, or service accounts (cluster-wide)",
+          "link": "https://rbac-atlas.github.io/rules/1066/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "stackgres-restapi",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "stackgres-restapi",
+      "apiGroup": "",
+      "resource": "serviceaccount",
+      "resourceName": "",
+      "verbs": [
+        "impersonate"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "stackgres-restapi",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "stackgres-restapi",
+      "apiGroup": "authorization.k8s.io",
+      "resource": "subjectaccessreviews",
+      "resourceName": "",
+      "verbs": [
+        "create"
+      ],
+      "riskLevel": "Medium",
+      "tags": [
+        "InformationDisclosure",
+        "RBACQuery"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1050,
+          "name": "Create SubjectAccessReviews (check arbitrary permissions)",
+          "link": "https://rbac-atlas.github.io/rules/1050/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "stackgres-operator-prometh-alertmanager",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "stackgres-operator-prometh-alertmanager",
+      "apiGroup": "policy",
+      "resource": "podsecuritypolicies",
+      "resourceName": "stackgres-operator-prometh-alertmanager",
+      "verbs": [
+        "use"
+      ],
+      "riskLevel": "Low",
+      "tags": [
+        "ResourceNameRestricted"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "stackgres-operator-prometh-prometheus",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "stackgres-operator-prometh-prometheus",
+      "apiGroup": "",
+      "resource": "nodes/metrics",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "stackgres-operator-prometh-prometheus",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "stackgres-operator-prometh-prometheus",
+      "apiGroup": "",
+      "resource": "nodes",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "stackgres-operator-prometh-prometheus",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "stackgres-operator-prometh-prometheus",
+      "apiGroup": "",
+      "resource": "nodes/proxy",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "AuthorizationBypass",
+        "NodeAccess",
+        "ClusterAdminAccess",
+        "CodeExecution",
+        "LateralMovement",
+        "ElevationOfPrivilege"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1104,
+          "name": "Node proxy GET RCE via WebSocket",
+          "link": "https://rbac-atlas.github.io/rules/1104/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "stackgres-operator-prometh-prometheus",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "stackgres-operator-prometh-prometheus",
+      "apiGroup": "",
+      "resource": "services",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "stackgres-operator-prometh-prometheus",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "stackgres-operator-prometh-prometheus",
+      "apiGroup": "",
+      "resource": "endpoints",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "stackgres-operator-prometh-prometheus",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "stackgres-operator-prometh-prometheus",
+      "apiGroup": "",
+      "resource": "pods",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "stackgres-operator-prometh-prometheus",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "stackgres-operator-prometh-prometheus",
+      "apiGroup": "extensions",
+      "resource": "ingresses",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "stackgres-operator-prometh-prometheus",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "stackgres-operator-prometh-prometheus",
+      "apiGroup": "networking.k8s.io",
+      "resource": "ingresses",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "stackgres-operator-prometh-prometheus",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "stackgres-operator-prometh-prometheus-psp",
+      "apiGroup": "policy",
+      "resource": "podsecuritypolicies",
+      "resourceName": "stackgres-operator-prometh-prometheus",
+      "verbs": [
+        "use"
+      ],
+      "riskLevel": "Low",
+      "tags": [
+        "PrivilegeEscalation",
+        "PodSecurityPolicy",
+        "DeprecatedFeature",
+        "NodeAccess",
+        "ResourceNameRestricted"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1078,
+          "name": "Use privileged PodSecurityPolicy (deprecated)",
+          "link": "https://rbac-atlas.github.io/rules/1078/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "stackgres-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "stackgres-operator",
+      "apiGroup": "customresourcedefinitions.apiextensions.k8s.io",
+      "resource": "customresourcedefinitions",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "stackgres-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "stackgres-operator",
+      "apiGroup": "stackgres.io",
+      "resource": "sgpgconfigs",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "stackgres-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "stackgres-operator",
+      "apiGroup": "stackgres.io",
+      "resource": "sginstanceprofiles",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "stackgres-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "stackgres-operator",
+      "apiGroup": "stackgres.io",
+      "resource": "sgpoolconfigs",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "stackgres-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "stackgres-operator",
+      "apiGroup": "stackgres.io",
+      "resource": "sgbackupconfigs",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "stackgres-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "stackgres-operator",
+      "apiGroup": "stackgres.io",
+      "resource": "sgbackups",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "stackgres-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "stackgres-operator",
+      "apiGroup": "stackgres.io",
+      "resource": "sgrestoreconfigs",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "stackgres-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "stackgres-operator",
+      "apiGroup": "stackgres.io",
+      "resource": "sgdistributedlogs",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "stackgres-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "stackgres-operator",
+      "apiGroup": "stackgres.io",
+      "resource": "sgclusters",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "stackgres-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "stackgres-operator",
+      "apiGroup": "",
+      "resource": "events",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Medium",
+      "tags": [
+        "InformationDisclosure",
+        "Reconnaissance",
+        "OperationalData"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1070,
+          "name": "Read events cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1070/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "stackgres-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "stackgres-operator",
+      "apiGroup": "",
+      "resource": "cronjobs",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "stackgres-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "stackgres-operator",
+      "apiGroup": "",
+      "resource": "pods",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "Tampering",
+        "PotentialPrivilegeEscalation",
+        "WorkloadExecution",
+        "PrivilegeEscalation",
+        "LateralMovement",
+        "Persistence"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1006,
+          "name": "Create pods cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1006/"
+        },
+        {
+          "id": 1008,
+          "name": "Update/Patch pods cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1008/"
+        },
+        {
+          "id": 1007,
+          "name": "Create pods in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1007/"
+        },
+        {
+          "id": 1009,
+          "name": "Update/Patch pods in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1009/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "stackgres-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "stackgres-operator",
+      "apiGroup": "",
+      "resource": "roles",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "stackgres-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "stackgres-operator",
+      "apiGroup": "",
+      "resource": "rolebindings",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "stackgres-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "stackgres-operator",
+      "apiGroup": "",
+      "resource": "services",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "NetworkManipulation",
+        "ServiceExposure",
+        "DenialOfService",
+        "Tampering"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1075,
+          "name": "Manage Services cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1075/"
+        },
+        {
+          "id": 1076,
+          "name": "Manage Services in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1076/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "stackgres-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "stackgres-operator",
+      "apiGroup": "",
+      "resource": "statefulsets",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "stackgres-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "stackgres-operator",
+      "apiGroup": "",
+      "resource": "namespaces",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "Reconnaissance",
+        "ClusterStructure",
+        "NamespaceLifecycle",
+        "ResourceDeletion",
+        "DenialOfService",
+        "InformationDisclosure"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1026,
+          "name": "Delete namespaces",
+          "link": "https://rbac-atlas.github.io/rules/1026/"
+        },
+        {
+          "id": 1082,
+          "name": "List Namespaces (Cluster Reconnaissance)",
+          "link": "https://rbac-atlas.github.io/rules/1082/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "stackgres-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "stackgres-operator",
+      "apiGroup": "",
+      "resource": "jobs",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "stackgres-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "stackgres-operator",
+      "apiGroup": "",
+      "resource": "pods/exec",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "ClusterWidePodExec",
+        "CodeExecution",
+        "LateralMovement",
+        "ElevationOfPrivilege",
+        "PodExec",
+        "PotentialPrivilegeEscalation"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1000,
+          "name": "Cluster-wide pod exec",
+          "link": "https://rbac-atlas.github.io/rules/1000/"
+        },
+        {
+          "id": 1001,
+          "name": "Namespaced pod exec",
+          "link": "https://rbac-atlas.github.io/rules/1001/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "stackgres-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "stackgres-operator",
+      "apiGroup": "",
+      "resource": "endpoints",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "NetworkManipulation",
+        "TrafficRedirection",
+        "ManInTheMiddle",
+        "DenialOfService",
+        "Tampering"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1073,
+          "name": "Manage Endpoints or EndpointSlices cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1073/"
+        },
+        {
+          "id": 1074,
+          "name": "Manage Endpoints or EndpointSlices in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1074/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "stackgres-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "stackgres-operator",
+      "apiGroup": "",
+      "resource": "persistentvolumeclaims",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "stackgres-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "stackgres-operator",
+      "apiGroup": "",
+      "resource": "secrets",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "DataExposure",
+        "InformationDisclosure",
+        "PrivilegeEscalation",
+        "Persistence",
+        "ClusterWideSecretAccess",
+        "CredentialAccess",
+        "SecretAccess",
+        "Tampering",
+        "PotentialPrivilegeEscalation"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1010,
+          "name": "Read secrets cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1010/"
+        },
+        {
+          "id": 1011,
+          "name": "Read secrets in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1011/"
+        },
+        {
+          "id": 1012,
+          "name": "Modify secrets cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1012/"
+        },
+        {
+          "id": 1013,
+          "name": "Modify secrets in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1013/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "stackgres-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "stackgres-operator",
+      "apiGroup": "",
+      "resource": "serviceaccounts",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "IdentityManagement",
+        "PotentialPrivilegeEscalation",
+        "Tampering"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1067,
+          "name": "Manage ServiceAccounts cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1067/"
+        },
+        {
+          "id": 1068,
+          "name": "Manage ServiceAccounts in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1068/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "stackgres-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "stackgres-operator",
+      "apiGroup": "",
+      "resource": "configmaps",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "DataExposure",
+        "Tampering",
+        "ConfigMapAccess",
+        "PotentialPrivilegeEscalation",
+        "InformationDisclosure"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1024,
+          "name": "Modify ConfigMaps cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1024/"
+        },
+        {
+          "id": 1022,
+          "name": "Read ConfigMaps cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1022/"
+        },
+        {
+          "id": 1025,
+          "name": "Modify ConfigMaps in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1025/"
+        },
+        {
+          "id": 1023,
+          "name": "Read ConfigMaps in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1023/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "stackgres-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "stackgres-operator",
+      "apiGroup": "apiextensions.k8s.io",
+      "resource": "customresourcedefinitions",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "stackgres-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "stackgres-operator",
+      "apiGroup": "monitoring.coreos.com",
+      "resource": "servicemonitors",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "stackgres-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "stackgres-operator",
+      "apiGroup": "monitoring.coreos.com",
+      "resource": "prometheus",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "stackgres-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "stackgres-operator",
+      "apiGroup": "monitoring.coreos.com",
+      "resource": "prometheuses",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "stackgres-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "stackgres-operator",
+      "apiGroup": "monitoring.coreos.com",
+      "resource": "podmonitors",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "stackgres-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "stackgres-operator",
+      "apiGroup": "apps",
+      "resource": "pods/exec",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "stackgres-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "stackgres-operator",
+      "apiGroup": "apps",
+      "resource": "persistentvolumeclaims",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "stackgres-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "stackgres-operator",
+      "apiGroup": "apps",
+      "resource": "secrets",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "stackgres-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "stackgres-operator",
+      "apiGroup": "apps",
+      "resource": "roles",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "stackgres-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "stackgres-operator",
+      "apiGroup": "apps",
+      "resource": "cronjobs",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "stackgres-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "stackgres-operator",
+      "apiGroup": "apps",
+      "resource": "endpoints",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "stackgres-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "stackgres-operator",
+      "apiGroup": "apps",
+      "resource": "namespaces",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "stackgres-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "stackgres-operator",
+      "apiGroup": "apps",
+      "resource": "rolebindings",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "stackgres-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "stackgres-operator",
+      "apiGroup": "apps",
+      "resource": "jobs",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "stackgres-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "stackgres-operator",
+      "apiGroup": "apps",
+      "resource": "services",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "stackgres-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "stackgres-operator",
+      "apiGroup": "apps",
+      "resource": "configmaps",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "stackgres-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "stackgres-operator",
+      "apiGroup": "apps",
+      "resource": "statefulsets",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "WorkloadLifecycle",
+        "PrivilegeEscalation",
+        "Persistence",
+        "Tampering",
+        "PotentialPrivilegeEscalation"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1037,
+          "name": "Manage StatefulSets cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1037/"
+        },
+        {
+          "id": 1038,
+          "name": "Manage StatefulSets in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1038/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "stackgres-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "stackgres-operator",
+      "apiGroup": "apps",
+      "resource": "serviceaccounts",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "stackgres-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "stackgres-operator",
+      "apiGroup": "apps",
+      "resource": "events",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "stackgres-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "stackgres-operator",
+      "apiGroup": "apps",
+      "resource": "pods",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "stackgres-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "stackgres-operator",
+      "apiGroup": "extensions",
+      "resource": "statefulsets",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "stackgres-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "stackgres-operator",
+      "apiGroup": "extensions",
+      "resource": "rolebindings",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "stackgres-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "stackgres-operator",
+      "apiGroup": "extensions",
+      "resource": "pods/exec",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "stackgres-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "stackgres-operator",
+      "apiGroup": "extensions",
+      "resource": "persistentvolumeclaims",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "stackgres-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "stackgres-operator",
+      "apiGroup": "extensions",
+      "resource": "cronjobs",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "stackgres-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "stackgres-operator",
+      "apiGroup": "extensions",
+      "resource": "events",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "stackgres-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "stackgres-operator",
+      "apiGroup": "extensions",
+      "resource": "pods",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "stackgres-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "stackgres-operator",
+      "apiGroup": "extensions",
+      "resource": "secrets",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "stackgres-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "stackgres-operator",
+      "apiGroup": "extensions",
+      "resource": "serviceaccounts",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "stackgres-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "stackgres-operator",
+      "apiGroup": "extensions",
+      "resource": "namespaces",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "stackgres-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "stackgres-operator",
+      "apiGroup": "extensions",
+      "resource": "roles",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "stackgres-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "stackgres-operator",
+      "apiGroup": "extensions",
+      "resource": "services",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "stackgres-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "stackgres-operator",
+      "apiGroup": "extensions",
+      "resource": "endpoints",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "stackgres-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "stackgres-operator",
+      "apiGroup": "extensions",
+      "resource": "jobs",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "stackgres-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "stackgres-operator",
+      "apiGroup": "extensions",
+      "resource": "configmaps",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "stackgres-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "stackgres-operator",
+      "apiGroup": "rbac.authorization.k8s.io",
+      "resource": "pods/exec",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "stackgres-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "stackgres-operator",
+      "apiGroup": "rbac.authorization.k8s.io",
+      "resource": "persistentvolumeclaims",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "stackgres-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "stackgres-operator",
+      "apiGroup": "rbac.authorization.k8s.io",
+      "resource": "events",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "stackgres-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "stackgres-operator",
+      "apiGroup": "rbac.authorization.k8s.io",
+      "resource": "serviceaccounts",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "stackgres-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "stackgres-operator",
+      "apiGroup": "rbac.authorization.k8s.io",
+      "resource": "rolebindings",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "PrivilegeEscalation",
+        "BindingToPrivilegedRole",
+        "InformationDisclosure",
+        "RBACQuery",
+        "Reconnaissance",
+        "RBACManipulation"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1030,
+          "name": "Manage RoleBindings in a namespace (create, update, patch, delete)",
+          "link": "https://rbac-atlas.github.io/rules/1030/"
+        },
+        {
+          "id": 1077,
+          "name": "Read RBAC configuration cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1077/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "stackgres-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "stackgres-operator",
+      "apiGroup": "rbac.authorization.k8s.io",
+      "resource": "jobs",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "stackgres-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "stackgres-operator",
+      "apiGroup": "rbac.authorization.k8s.io",
+      "resource": "endpoints",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "stackgres-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "stackgres-operator",
+      "apiGroup": "rbac.authorization.k8s.io",
+      "resource": "secrets",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "stackgres-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "stackgres-operator",
+      "apiGroup": "rbac.authorization.k8s.io",
+      "resource": "statefulsets",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "stackgres-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "stackgres-operator",
+      "apiGroup": "rbac.authorization.k8s.io",
+      "resource": "roles",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "InformationDisclosure",
+        "RBACQuery",
+        "Reconnaissance",
+        "RBACManipulation",
+        "PrivilegeEscalation"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1029,
+          "name": "Manage Roles in a namespace (create, update, patch, delete)",
+          "link": "https://rbac-atlas.github.io/rules/1029/"
+        },
+        {
+          "id": 1077,
+          "name": "Read RBAC configuration cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1077/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "stackgres-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "stackgres-operator",
+      "apiGroup": "rbac.authorization.k8s.io",
+      "resource": "cronjobs",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "stackgres-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "stackgres-operator",
+      "apiGroup": "rbac.authorization.k8s.io",
+      "resource": "pods",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "stackgres-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "stackgres-operator",
+      "apiGroup": "rbac.authorization.k8s.io",
+      "resource": "services",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "stackgres-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "stackgres-operator",
+      "apiGroup": "rbac.authorization.k8s.io",
+      "resource": "configmaps",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "stackgres-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "stackgres-operator",
+      "apiGroup": "rbac.authorization.k8s.io",
+      "resource": "namespaces",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "stackgres-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "stackgres-operator",
+      "apiGroup": "batch",
+      "resource": "pods",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "stackgres-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "stackgres-operator",
+      "apiGroup": "batch",
+      "resource": "persistentvolumeclaims",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "stackgres-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "stackgres-operator",
+      "apiGroup": "batch",
+      "resource": "configmaps",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "stackgres-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "stackgres-operator",
+      "apiGroup": "batch",
+      "resource": "secrets",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "stackgres-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "stackgres-operator",
+      "apiGroup": "batch",
+      "resource": "statefulsets",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "stackgres-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "stackgres-operator",
+      "apiGroup": "batch",
+      "resource": "serviceaccounts",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "stackgres-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "stackgres-operator",
+      "apiGroup": "batch",
+      "resource": "jobs",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "PotentialPrivilegeEscalation",
+        "WorkloadLifecycle",
+        "PrivilegeEscalation",
+        "Tampering"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1041,
+          "name": "Manage Jobs cluster-wide (one-off privileged execution)",
+          "link": "https://rbac-atlas.github.io/rules/1041/"
+        },
+        {
+          "id": 1042,
+          "name": "Manage Jobs in a namespace (one-off privileged execution)",
+          "link": "https://rbac-atlas.github.io/rules/1042/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "stackgres-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "stackgres-operator",
+      "apiGroup": "batch",
+      "resource": "namespaces",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "stackgres-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "stackgres-operator",
+      "apiGroup": "batch",
+      "resource": "roles",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "stackgres-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "stackgres-operator",
+      "apiGroup": "batch",
+      "resource": "events",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "stackgres-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "stackgres-operator",
+      "apiGroup": "batch",
+      "resource": "cronjobs",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "Persistence",
+        "Tampering",
+        "PotentialPrivilegeEscalation",
+        "WorkloadLifecycle",
+        "PrivilegeEscalation"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1039,
+          "name": "Manage CronJobs cluster-wide (scheduled privileged execution, persistence)",
+          "link": "https://rbac-atlas.github.io/rules/1039/"
+        },
+        {
+          "id": 1040,
+          "name": "Manage CronJobs in a namespace (scheduled privileged execution, persistence)",
+          "link": "https://rbac-atlas.github.io/rules/1040/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "stackgres-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "stackgres-operator",
+      "apiGroup": "batch",
+      "resource": "pods/exec",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "stackgres-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "stackgres-operator",
+      "apiGroup": "batch",
+      "resource": "services",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "stackgres-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "stackgres-operator",
+      "apiGroup": "batch",
+      "resource": "endpoints",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "stackgres-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "stackgres-operator",
+      "apiGroup": "batch",
+      "resource": "rolebindings",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "stackgres-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "stackgres-operator",
+      "apiGroup": "storage.k8s.io",
+      "resource": "storageclasses",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "stackgres-operator-prometh-admission",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "stackgres-operator-prometh-admission",
+      "apiGroup": "admissionregistration.k8s.io",
+      "resource": "validatingwebhookconfigurations",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "stackgres-operator-prometh-admission",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "stackgres-operator-prometh-admission",
+      "apiGroup": "admissionregistration.k8s.io",
+      "resource": "mutatingwebhookconfigurations",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "stackgres-operator-prometh-admission",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "stackgres-operator-prometh-admission",
+      "apiGroup": "policy",
+      "resource": "podsecuritypolicies",
+      "resourceName": "stackgres-operator-prometh-admission",
+      "verbs": [
+        "use"
+      ],
+      "riskLevel": "Low",
+      "tags": [
+        "NodeAccess",
+        "ResourceNameRestricted",
+        "PrivilegeEscalation",
+        "PodSecurityPolicy",
+        "DeprecatedFeature"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1078,
+          "name": "Use privileged PodSecurityPolicy (deprecated)",
+          "link": "https://rbac-atlas.github.io/rules/1078/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "stackgres-operator-prometh-admission",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "stackgres-operator-prometh-admission",
+      "apiGroup": "",
+      "resource": "secrets",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "get"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "stackgres-operator-grafana-test",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "stackgres-operator-grafana-test",
+      "apiGroup": "policy",
+      "resource": "podsecuritypolicies",
+      "resourceName": "stackgres-operator-grafana-test",
+      "verbs": [
+        "use"
+      ],
+      "riskLevel": "Low",
+      "tags": [
+        "ResourceNameRestricted"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "stackgres-operator-prometh-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "stackgres-operator-prometh-operator-psp",
+      "apiGroup": "policy",
+      "resource": "podsecuritypolicies",
+      "resourceName": "stackgres-operator-prometh-operator",
+      "verbs": [
+        "use"
+      ],
+      "riskLevel": "Low",
+      "tags": [
+        "PrivilegeEscalation",
+        "PodSecurityPolicy",
+        "DeprecatedFeature",
+        "NodeAccess",
+        "ResourceNameRestricted"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1078,
+          "name": "Use privileged PodSecurityPolicy (deprecated)",
+          "link": "https://rbac-atlas.github.io/rules/1078/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "stackgres-operator-prometh-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "stackgres-operator-prometh-operator",
+      "apiGroup": "apiextensions.k8s.io",
+      "resource": "customresourcedefinitions",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "CRDManipulation",
+        "Tampering",
+        "PotentialPrivilegeEscalation",
+        "ClusterWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1045,
+          "name": "Manage CustomResourceDefinitions",
+          "link": "https://rbac-atlas.github.io/rules/1045/"
+        },
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "stackgres-operator-prometh-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "stackgres-operator-prometh-operator",
+      "apiGroup": "monitoring.coreos.com",
+      "resource": "alertmanagers",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "WildcardPermission",
+        "ClusterWideAccess"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "stackgres-operator-prometh-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "stackgres-operator-prometh-operator",
+      "apiGroup": "monitoring.coreos.com",
+      "resource": "thanosrulers",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "ClusterWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "stackgres-operator-prometh-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "stackgres-operator-prometh-operator",
+      "apiGroup": "monitoring.coreos.com",
+      "resource": "thanosrulers/finalizers",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "ClusterWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "stackgres-operator-prometh-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "stackgres-operator-prometh-operator",
+      "apiGroup": "monitoring.coreos.com",
+      "resource": "servicemonitors",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "ClusterWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "stackgres-operator-prometh-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "stackgres-operator-prometh-operator",
+      "apiGroup": "monitoring.coreos.com",
+      "resource": "prometheusrules",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "ClusterWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "stackgres-operator-prometh-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "stackgres-operator-prometh-operator",
+      "apiGroup": "monitoring.coreos.com",
+      "resource": "prometheuses",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "ClusterWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "stackgres-operator-prometh-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "stackgres-operator-prometh-operator",
+      "apiGroup": "monitoring.coreos.com",
+      "resource": "prometheuses/finalizers",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "ClusterWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "stackgres-operator-prometh-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "stackgres-operator-prometh-operator",
+      "apiGroup": "monitoring.coreos.com",
+      "resource": "alertmanagers/finalizers",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "ClusterWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "stackgres-operator-prometh-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "stackgres-operator-prometh-operator",
+      "apiGroup": "monitoring.coreos.com",
+      "resource": "podmonitors",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "ClusterWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "stackgres-operator-prometh-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "stackgres-operator-prometh-operator",
+      "apiGroup": "apps",
+      "resource": "statefulsets",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "WorkloadLifecycle",
+        "PrivilegeEscalation",
+        "Persistence",
+        "Tampering",
+        "PotentialPrivilegeEscalation",
+        "ClusterWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1037,
+          "name": "Manage StatefulSets cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1037/"
+        },
+        {
+          "id": 1038,
+          "name": "Manage StatefulSets in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1038/"
+        },
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "stackgres-operator-prometh-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "stackgres-operator-prometh-operator",
+      "apiGroup": "",
+      "resource": "nodes",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "stackgres-operator-prometh-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "stackgres-operator-prometh-operator",
+      "apiGroup": "",
+      "resource": "namespaces",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [
+        "InformationDisclosure",
+        "Reconnaissance",
+        "ClusterStructure"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1082,
+          "name": "List Namespaces (Cluster Reconnaissance)",
+          "link": "https://rbac-atlas.github.io/rules/1082/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "stackgres-operator-prometh-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "stackgres-operator-prometh-operator",
+      "apiGroup": "",
+      "resource": "configmaps",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "WildcardPermission",
+        "Tampering",
+        "ConfigMapAccess",
+        "PotentialPrivilegeEscalation",
+        "InformationDisclosure",
+        "DataExposure",
+        "ClusterWideAccess"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1024,
+          "name": "Modify ConfigMaps cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1024/"
+        },
+        {
+          "id": 1022,
+          "name": "Read ConfigMaps cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1022/"
+        },
+        {
+          "id": 1025,
+          "name": "Modify ConfigMaps in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1025/"
+        },
+        {
+          "id": 1023,
+          "name": "Read ConfigMaps in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1023/"
+        },
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "stackgres-operator-prometh-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "stackgres-operator-prometh-operator",
+      "apiGroup": "",
+      "resource": "secrets",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "WildcardPermission",
+        "ClusterWideSecretAccess",
+        "CredentialAccess",
+        "SecretAccess",
+        "DataExposure",
+        "InformationDisclosure",
+        "Tampering",
+        "PrivilegeEscalation",
+        "Persistence",
+        "PotentialPrivilegeEscalation",
+        "ClusterWideAccess"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1010,
+          "name": "Read secrets cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1010/"
+        },
+        {
+          "id": 1011,
+          "name": "Read secrets in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1011/"
+        },
+        {
+          "id": 1012,
+          "name": "Modify secrets cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1012/"
+        },
+        {
+          "id": 1013,
+          "name": "Modify secrets in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1013/"
+        },
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "stackgres-operator-prometh-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "stackgres-operator-prometh-operator",
+      "apiGroup": "",
+      "resource": "pods",
+      "resourceName": "",
+      "verbs": [
+        "delete",
+        "list"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "stackgres-operator-prometh-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "stackgres-operator-prometh-operator",
+      "apiGroup": "",
+      "resource": "services",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "stackgres-operator-prometh-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "stackgres-operator-prometh-operator",
+      "apiGroup": "",
+      "resource": "services/finalizers",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "stackgres-operator-prometh-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "stackgres-operator-prometh-operator",
+      "apiGroup": "",
+      "resource": "endpoints",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    }
+  ],
+  "serviceAccountWorkloads": [
+    {
+      "serviceAccountName": "stackgres-operator-prometh-admission",
+      "namespace": "default",
+      "workloadType": "Job",
+      "workloadName": "stackgres-operator-prometh-admission-patch",
+      "containerName": "patch",
+      "image": "jettech/kube-webhook-certgen:v1.2.0"
+    },
+    {
+      "serviceAccountName": "stackgres-operator-prometh-admission",
+      "namespace": "default",
+      "workloadType": "Job",
+      "workloadName": "stackgres-operator-prometh-admission-create",
+      "containerName": "create",
+      "image": "jettech/kube-webhook-certgen:v1.2.0"
+    },
+    {
+      "serviceAccountName": "stackgres-operator-prometheus-node-exporter",
+      "namespace": "default",
+      "workloadType": "DaemonSet",
+      "workloadName": "stackgres-operator-prometheus-node-exporter",
+      "containerName": "node-exporter",
+      "image": "quay.io/prometheus/node-exporter:v0.18.1"
+    },
+    {
+      "serviceAccountName": "stackgres-operator",
+      "namespace": "default",
+      "workloadType": "Deployment",
+      "workloadName": "stackgres-operator",
+      "containerName": "stackgres-operator",
+      "image": "stackgres/operator:0.9.3-jvm"
+    },
+    {
+      "serviceAccountName": "stackgres-operator-grafana-test",
+      "namespace": "default",
+      "workloadType": "Pod",
+      "workloadName": "stackgres-operator-grafana-test",
+      "containerName": "stackgres-operator-test",
+      "image": "bats/bats:v1.1.0"
+    },
+    {
+      "serviceAccountName": "stackgres-operator-prometh-operator",
+      "namespace": "default",
+      "workloadType": "Deployment",
+      "workloadName": "stackgres-operator-prometh-operator",
+      "containerName": "prometheus-operator",
+      "image": "quay.io/coreos/prometheus-operator:v0.38.1"
+    },
+    {
+      "serviceAccountName": "stackgres-operator-prometh-operator",
+      "namespace": "default",
+      "workloadType": "Deployment",
+      "workloadName": "stackgres-operator-prometh-operator",
+      "containerName": "tls-proxy",
+      "image": "squareup/ghostunnel:v1.5.2"
+    },
+    {
+      "serviceAccountName": "stackgres-operator-init",
+      "namespace": "default",
+      "workloadType": "Job",
+      "workloadName": "stackgres-operator-bootstrap",
+      "containerName": "stackgres-operator-bootstrap",
+      "image": "bitnami/kubectl:1.18.3"
+    },
+    {
+      "serviceAccountName": "stackgres-operator-init",
+      "namespace": "default",
+      "workloadType": "Job",
+      "workloadName": "stackgres-operator-create-certificate",
+      "containerName": "stackgres-operator-create-certificate",
+      "image": "bitnami/kubectl:1.18.3"
+    },
+    {
+      "serviceAccountName": "stackgres-operator-init",
+      "namespace": "default",
+      "workloadType": "Job",
+      "workloadName": "stackgres-operator-wait",
+      "containerName": "stackgres-operator-wait",
+      "image": "bitnami/kubectl:1.18.3"
+    },
+    {
+      "serviceAccountName": "stackgres-operator-init",
+      "namespace": "default",
+      "workloadType": "Job",
+      "workloadName": "stackgres-operator-upgrade",
+      "containerName": "stackgres-operator-upgrade",
+      "image": "bitnami/kubectl:1.18.3"
+    },
+    {
+      "serviceAccountName": "stackgres-restapi",
+      "namespace": "default",
+      "workloadType": "Deployment",
+      "workloadName": "stackgres-restapi",
+      "containerName": "stackgres-restapi",
+      "image": "stackgres/restapi:0.9.3-jvm"
+    },
+    {
+      "serviceAccountName": "stackgres-restapi",
+      "namespace": "default",
+      "workloadType": "Deployment",
+      "workloadName": "stackgres-restapi",
+      "containerName": "stackgres-adminui",
+      "image": "stackgres/admin-ui:0.9.3"
+    },
+    {
+      "serviceAccountName": "stackgres-operator-kube-state-metrics",
+      "namespace": "default",
+      "workloadType": "Deployment",
+      "workloadName": "stackgres-operator-kube-state-metrics",
+      "containerName": "kube-state-metrics",
+      "image": "quay.io/coreos/kube-state-metrics:v1.9.5"
+    },
+    {
+      "serviceAccountName": "stackgres-operator-grafana",
+      "namespace": "default",
+      "workloadType": "Deployment",
+      "workloadName": "stackgres-operator-grafana",
+      "containerName": "grafana-sc-dashboard",
+      "image": "kiwigrid/k8s-sidecar:0.1.99"
+    },
+    {
+      "serviceAccountName": "stackgres-operator-grafana",
+      "namespace": "default",
+      "workloadType": "Deployment",
+      "workloadName": "stackgres-operator-grafana",
+      "containerName": "grafana",
+      "image": "grafana/grafana:6.7.3"
+    }
+  ]
+}

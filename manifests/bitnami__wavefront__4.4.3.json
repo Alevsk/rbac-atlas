@@ -3,7 +3,7 @@
     "version": "4.4.3",
     "name": "wavefront",
     "source": "charts/bitnami__wavefront__4.4.3/",
-    "timestamp": 1769479919,
+    "timestamp": 1769793347,
     "extra": {
       "helm": {
         "description": "DEPRECATED Wavefront is a high-performance streaming analytics platform for monitoring and optimizing your environment and applications.",
@@ -45,54 +45,8 @@
       "namespace": "default",
       "roleType": "ClusterRole",
       "roleName": "wavefront-collector",
-      "apiGroup": "batch",
-      "resource": "jobs",
-      "resourceName": "",
-      "verbs": [
-        "get",
-        "list",
-        "watch"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "wavefront-collector",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "wavefront-collector",
-      "apiGroup": "batch",
-      "resource": "cronjobs",
-      "resourceName": "",
-      "verbs": [
-        "get",
-        "list",
-        "watch"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "wavefront-collector",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "wavefront-collector",
-      "apiGroup": "autoscaling",
-      "resource": "horizontalpodautoscalers",
+      "apiGroup": "",
+      "resource": "services",
       "resourceName": "",
       "verbs": [
         "get",
@@ -115,65 +69,7 @@
       "roleType": "ClusterRole",
       "roleName": "wavefront-collector",
       "apiGroup": "",
-      "resource": "nodes",
-      "resourceName": "",
-      "verbs": [
-        "get",
-        "list",
-        "watch"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "wavefront-collector",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "wavefront-collector",
-      "apiGroup": "",
-      "resource": "nodes/proxy",
-      "resourceName": "",
-      "verbs": [
-        "get",
-        "list",
-        "watch"
-      ],
-      "riskLevel": "Critical",
-      "tags": [
-        "ElevationOfPrivilege",
-        "AuthorizationBypass",
-        "NodeAccess",
-        "ClusterAdminAccess",
-        "CodeExecution",
-        "LateralMovement"
-      ],
-      "matchedRiskRules": [
-        {
-          "id": 1104,
-          "name": "Node proxy GET RCE via WebSocket",
-          "link": "https://rbac-atlas.github.io/rules/1104/"
-        },
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "wavefront-collector",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "wavefront-collector",
-      "apiGroup": "",
-      "resource": "pods",
+      "resource": "nodes/stats",
       "resourceName": "",
       "verbs": [
         "get",
@@ -235,6 +131,38 @@
       "roleType": "ClusterRole",
       "roleName": "wavefront-collector",
       "apiGroup": "",
+      "resource": "events",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Medium",
+      "tags": [
+        "Reconnaissance",
+        "OperationalData",
+        "InformationDisclosure"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1070,
+          "name": "Read events cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1070/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "wavefront-collector",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "wavefront-collector",
+      "apiGroup": "",
       "resource": "namespaces",
       "resourceName": "",
       "verbs": [
@@ -267,7 +195,65 @@
       "roleType": "ClusterRole",
       "roleName": "wavefront-collector",
       "apiGroup": "",
-      "resource": "nodes/stats",
+      "resource": "nodes",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "wavefront-collector",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "wavefront-collector",
+      "apiGroup": "",
+      "resource": "nodes/proxy",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "NodeAccess",
+        "ClusterAdminAccess",
+        "CodeExecution",
+        "LateralMovement",
+        "ElevationOfPrivilege",
+        "AuthorizationBypass"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1104,
+          "name": "Node proxy GET RCE via WebSocket",
+          "link": "https://rbac-atlas.github.io/rules/1104/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "wavefront-collector",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "wavefront-collector",
+      "apiGroup": "",
+      "resource": "pods",
       "resourceName": "",
       "verbs": [
         "get",
@@ -322,11 +308,11 @@
       ],
       "riskLevel": "Critical",
       "tags": [
+        "ClusterWideSecretAccess",
+        "CredentialAccess",
         "DataExposure",
         "InformationDisclosure",
-        "SecretAccess",
-        "ClusterWideSecretAccess",
-        "CredentialAccess"
+        "SecretAccess"
       ],
       "matchedRiskRules": [
         {
@@ -351,8 +337,8 @@
       "namespace": "default",
       "roleType": "ClusterRole",
       "roleName": "wavefront-collector",
-      "apiGroup": "",
-      "resource": "services",
+      "apiGroup": "apps",
+      "resource": "deployments",
       "resourceName": "",
       "verbs": [
         "get",
@@ -362,38 +348,6 @@
       "riskLevel": "Low",
       "tags": [],
       "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "wavefront-collector",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "wavefront-collector",
-      "apiGroup": "",
-      "resource": "events",
-      "resourceName": "",
-      "verbs": [
-        "get",
-        "list",
-        "watch"
-      ],
-      "riskLevel": "Medium",
-      "tags": [
-        "InformationDisclosure",
-        "Reconnaissance",
-        "OperationalData"
-      ],
-      "matchedRiskRules": [
-        {
-          "id": 1070,
-          "name": "Read events cluster-wide",
-          "link": "https://rbac-atlas.github.io/rules/1070/"
-        },
         {
           "id": 9996,
           "name": "Base Risk Level - Low",
@@ -475,8 +429,54 @@
       "namespace": "default",
       "roleType": "ClusterRole",
       "roleName": "wavefront-collector",
-      "apiGroup": "apps",
-      "resource": "deployments",
+      "apiGroup": "batch",
+      "resource": "jobs",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "wavefront-collector",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "wavefront-collector",
+      "apiGroup": "batch",
+      "resource": "cronjobs",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "wavefront-collector",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "wavefront-collector",
+      "apiGroup": "autoscaling",
+      "resource": "horizontalpodautoscalers",
       "resourceName": "",
       "verbs": [
         "get",
@@ -530,8 +530,8 @@
       "namespace": "default",
       "roleType": "ClusterRole",
       "roleName": "wavefront-kube-state-metrics-default",
-      "apiGroup": "autoscaling",
-      "resource": "horizontalpodautoscalers",
+      "apiGroup": "batch",
+      "resource": "cronjobs",
       "resourceName": "",
       "verbs": [
         "list",
@@ -552,7 +552,73 @@
       "namespace": "default",
       "roleType": "ClusterRole",
       "roleName": "wavefront-kube-state-metrics-default",
-      "apiGroup": "networking.k8s.io",
+      "apiGroup": "batch",
+      "resource": "jobs",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "wavefront-kube-state-metrics",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "wavefront-kube-state-metrics-default",
+      "apiGroup": "extensions",
+      "resource": "daemonsets",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "wavefront-kube-state-metrics",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "wavefront-kube-state-metrics-default",
+      "apiGroup": "extensions",
+      "resource": "deployments",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "wavefront-kube-state-metrics",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "wavefront-kube-state-metrics-default",
+      "apiGroup": "extensions",
       "resource": "ingresses",
       "resourceName": "",
       "verbs": [
@@ -574,8 +640,96 @@
       "namespace": "default",
       "roleType": "ClusterRole",
       "roleName": "wavefront-kube-state-metrics-default",
-      "apiGroup": "networking.k8s.io",
-      "resource": "networkpolicies",
+      "apiGroup": "extensions",
+      "resource": "replicasets",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "wavefront-kube-state-metrics",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "wavefront-kube-state-metrics-default",
+      "apiGroup": "apps",
+      "resource": "statefulsets",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "wavefront-kube-state-metrics",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "wavefront-kube-state-metrics-default",
+      "apiGroup": "apps",
+      "resource": "daemonsets",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "wavefront-kube-state-metrics",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "wavefront-kube-state-metrics-default",
+      "apiGroup": "apps",
+      "resource": "deployments",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "wavefront-kube-state-metrics",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "wavefront-kube-state-metrics-default",
+      "apiGroup": "apps",
+      "resource": "replicasets",
       "resourceName": "",
       "verbs": [
         "list",
@@ -649,8 +803,8 @@
       "namespace": "default",
       "roleType": "ClusterRole",
       "roleName": "wavefront-kube-state-metrics-default",
-      "apiGroup": "",
-      "resource": "endpoints",
+      "apiGroup": "autoscaling",
+      "resource": "horizontalpodautoscalers",
       "resourceName": "",
       "verbs": [
         "list",
@@ -671,70 +825,8 @@
       "namespace": "default",
       "roleType": "ClusterRole",
       "roleName": "wavefront-kube-state-metrics-default",
-      "apiGroup": "",
-      "resource": "limitranges",
-      "resourceName": "",
-      "verbs": [
-        "list",
-        "watch"
-      ],
-      "riskLevel": "Low",
-      "tags": [
-        "InformationDisclosure",
-        "Reconnaissance",
-        "ResourceConfiguration"
-      ],
-      "matchedRiskRules": [
-        {
-          "id": 1087,
-          "name": "Read LimitRanges (Namespace Information Disclosure)",
-          "link": "https://rbac-atlas.github.io/rules/1087/"
-        },
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "wavefront-kube-state-metrics",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "wavefront-kube-state-metrics-default",
-      "apiGroup": "",
-      "resource": "namespaces",
-      "resourceName": "",
-      "verbs": [
-        "list",
-        "watch"
-      ],
-      "riskLevel": "Low",
-      "tags": [
-        "InformationDisclosure",
-        "Reconnaissance",
-        "ClusterStructure"
-      ],
-      "matchedRiskRules": [
-        {
-          "id": 1082,
-          "name": "List Namespaces (Cluster Reconnaissance)",
-          "link": "https://rbac-atlas.github.io/rules/1082/"
-        },
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "wavefront-kube-state-metrics",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "wavefront-kube-state-metrics-default",
-      "apiGroup": "",
-      "resource": "nodes",
+      "apiGroup": "networking.k8s.io",
+      "resource": "ingresses",
       "resourceName": "",
       "verbs": [
         "list",
@@ -755,295 +847,8 @@
       "namespace": "default",
       "roleType": "ClusterRole",
       "roleName": "wavefront-kube-state-metrics-default",
-      "apiGroup": "",
-      "resource": "persistentvolumeclaims",
-      "resourceName": "",
-      "verbs": [
-        "list",
-        "watch"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "wavefront-kube-state-metrics",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "wavefront-kube-state-metrics-default",
-      "apiGroup": "",
-      "resource": "persistentvolumes",
-      "resourceName": "",
-      "verbs": [
-        "list",
-        "watch"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "wavefront-kube-state-metrics",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "wavefront-kube-state-metrics-default",
-      "apiGroup": "",
-      "resource": "pods",
-      "resourceName": "",
-      "verbs": [
-        "list",
-        "watch"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "wavefront-kube-state-metrics",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "wavefront-kube-state-metrics-default",
-      "apiGroup": "",
-      "resource": "replicationcontrollers",
-      "resourceName": "",
-      "verbs": [
-        "list",
-        "watch"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "wavefront-kube-state-metrics",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "wavefront-kube-state-metrics-default",
-      "apiGroup": "",
-      "resource": "configmaps",
-      "resourceName": "",
-      "verbs": [
-        "list",
-        "watch"
-      ],
-      "riskLevel": "High",
-      "tags": [
-        "InformationDisclosure",
-        "ConfigMapAccess",
-        "DataExposure"
-      ],
-      "matchedRiskRules": [
-        {
-          "id": 1022,
-          "name": "Read ConfigMaps cluster-wide",
-          "link": "https://rbac-atlas.github.io/rules/1022/"
-        },
-        {
-          "id": 1023,
-          "name": "Read ConfigMaps in a namespace",
-          "link": "https://rbac-atlas.github.io/rules/1023/"
-        },
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "wavefront-kube-state-metrics",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "wavefront-kube-state-metrics-default",
-      "apiGroup": "",
-      "resource": "resourcequotas",
-      "resourceName": "",
-      "verbs": [
-        "list",
-        "watch"
-      ],
-      "riskLevel": "Medium",
-      "tags": [
-        "InformationDisclosure",
-        "Reconnaissance",
-        "ResourceConfiguration",
-        "QuotaTampering"
-      ],
-      "matchedRiskRules": [
-        {
-          "id": 1089,
-          "name": "Read All ResourceQuotas (Cluster-wide Information Disclosure)",
-          "link": "https://rbac-atlas.github.io/rules/1089/"
-        },
-        {
-          "id": 1088,
-          "name": "Read ResourceQuotas (Namespace Information Disclosure)",
-          "link": "https://rbac-atlas.github.io/rules/1088/"
-        },
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "wavefront-kube-state-metrics",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "wavefront-kube-state-metrics-default",
-      "apiGroup": "",
-      "resource": "secrets",
-      "resourceName": "",
-      "verbs": [
-        "list",
-        "watch"
-      ],
-      "riskLevel": "Critical",
-      "tags": [
-        "ClusterWideSecretAccess",
-        "CredentialAccess",
-        "DataExposure",
-        "InformationDisclosure",
-        "SecretAccess"
-      ],
-      "matchedRiskRules": [
-        {
-          "id": 1010,
-          "name": "Read secrets cluster-wide",
-          "link": "https://rbac-atlas.github.io/rules/1010/"
-        },
-        {
-          "id": 1011,
-          "name": "Read secrets in a namespace",
-          "link": "https://rbac-atlas.github.io/rules/1011/"
-        },
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "wavefront-kube-state-metrics",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "wavefront-kube-state-metrics-default",
-      "apiGroup": "",
-      "resource": "services",
-      "resourceName": "",
-      "verbs": [
-        "list",
-        "watch"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "wavefront-kube-state-metrics",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "wavefront-kube-state-metrics-default",
-      "apiGroup": "apps",
-      "resource": "daemonsets",
-      "resourceName": "",
-      "verbs": [
-        "list",
-        "watch"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "wavefront-kube-state-metrics",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "wavefront-kube-state-metrics-default",
-      "apiGroup": "apps",
-      "resource": "deployments",
-      "resourceName": "",
-      "verbs": [
-        "list",
-        "watch"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "wavefront-kube-state-metrics",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "wavefront-kube-state-metrics-default",
-      "apiGroup": "apps",
-      "resource": "replicasets",
-      "resourceName": "",
-      "verbs": [
-        "list",
-        "watch"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "wavefront-kube-state-metrics",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "wavefront-kube-state-metrics-default",
-      "apiGroup": "apps",
-      "resource": "statefulsets",
+      "apiGroup": "networking.k8s.io",
+      "resource": "networkpolicies",
       "resourceName": "",
       "verbs": [
         "list",
@@ -1130,8 +935,8 @@
       "namespace": "default",
       "roleType": "ClusterRole",
       "roleName": "wavefront-kube-state-metrics-default",
-      "apiGroup": "batch",
-      "resource": "cronjobs",
+      "apiGroup": "",
+      "resource": "services",
       "resourceName": "",
       "verbs": [
         "list",
@@ -1152,8 +957,75 @@
       "namespace": "default",
       "roleType": "ClusterRole",
       "roleName": "wavefront-kube-state-metrics-default",
-      "apiGroup": "batch",
-      "resource": "jobs",
+      "apiGroup": "",
+      "resource": "configmaps",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "InformationDisclosure",
+        "ConfigMapAccess",
+        "DataExposure"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1022,
+          "name": "Read ConfigMaps cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1022/"
+        },
+        {
+          "id": 1023,
+          "name": "Read ConfigMaps in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1023/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "wavefront-kube-state-metrics",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "wavefront-kube-state-metrics-default",
+      "apiGroup": "",
+      "resource": "namespaces",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [
+        "InformationDisclosure",
+        "Reconnaissance",
+        "ClusterStructure"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1082,
+          "name": "List Namespaces (Cluster Reconnaissance)",
+          "link": "https://rbac-atlas.github.io/rules/1082/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "wavefront-kube-state-metrics",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "wavefront-kube-state-metrics-default",
+      "apiGroup": "",
+      "resource": "persistentvolumeclaims",
       "resourceName": "",
       "verbs": [
         "list",
@@ -1174,8 +1046,8 @@
       "namespace": "default",
       "roleType": "ClusterRole",
       "roleName": "wavefront-kube-state-metrics-default",
-      "apiGroup": "extensions",
-      "resource": "daemonsets",
+      "apiGroup": "",
+      "resource": "persistentvolumes",
       "resourceName": "",
       "verbs": [
         "list",
@@ -1196,8 +1068,46 @@
       "namespace": "default",
       "roleType": "ClusterRole",
       "roleName": "wavefront-kube-state-metrics-default",
-      "apiGroup": "extensions",
-      "resource": "deployments",
+      "apiGroup": "",
+      "resource": "secrets",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "CredentialAccess",
+        "DataExposure",
+        "InformationDisclosure",
+        "SecretAccess",
+        "ClusterWideSecretAccess"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1010,
+          "name": "Read secrets cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1010/"
+        },
+        {
+          "id": 1011,
+          "name": "Read secrets in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1011/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "wavefront-kube-state-metrics",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "wavefront-kube-state-metrics-default",
+      "apiGroup": "",
+      "resource": "endpoints",
       "resourceName": "",
       "verbs": [
         "list",
@@ -1218,8 +1128,39 @@
       "namespace": "default",
       "roleType": "ClusterRole",
       "roleName": "wavefront-kube-state-metrics-default",
-      "apiGroup": "extensions",
-      "resource": "ingresses",
+      "apiGroup": "",
+      "resource": "limitranges",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [
+        "ResourceConfiguration",
+        "InformationDisclosure",
+        "Reconnaissance"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1087,
+          "name": "Read LimitRanges (Namespace Information Disclosure)",
+          "link": "https://rbac-atlas.github.io/rules/1087/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "wavefront-kube-state-metrics",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "wavefront-kube-state-metrics-default",
+      "apiGroup": "",
+      "resource": "nodes",
       "resourceName": "",
       "verbs": [
         "list",
@@ -1240,8 +1181,8 @@
       "namespace": "default",
       "roleType": "ClusterRole",
       "roleName": "wavefront-kube-state-metrics-default",
-      "apiGroup": "extensions",
-      "resource": "replicasets",
+      "apiGroup": "",
+      "resource": "pods",
       "resourceName": "",
       "verbs": [
         "list",
@@ -1250,6 +1191,65 @@
       "riskLevel": "Low",
       "tags": [],
       "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "wavefront-kube-state-metrics",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "wavefront-kube-state-metrics-default",
+      "apiGroup": "",
+      "resource": "replicationcontrollers",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "wavefront-kube-state-metrics",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "wavefront-kube-state-metrics-default",
+      "apiGroup": "",
+      "resource": "resourcequotas",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Medium",
+      "tags": [
+        "InformationDisclosure",
+        "Reconnaissance",
+        "ResourceConfiguration",
+        "QuotaTampering"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1089,
+          "name": "Read All ResourceQuotas (Cluster-wide Information Disclosure)",
+          "link": "https://rbac-atlas.github.io/rules/1089/"
+        },
+        {
+          "id": 1088,
+          "name": "Read ResourceQuotas (Namespace Information Disclosure)",
+          "link": "https://rbac-atlas.github.io/rules/1088/"
+        },
         {
           "id": 9996,
           "name": "Base Risk Level - Low",
@@ -1260,12 +1260,12 @@
   ],
   "serviceAccountWorkloads": [
     {
-      "serviceAccountName": "wavefront-kube-state-metrics",
+      "serviceAccountName": "",
       "namespace": "default",
       "workloadType": "Deployment",
-      "workloadName": "wavefront-kube-state-metrics",
-      "containerName": "kube-state-metrics",
-      "image": "docker.io/bitnami/kube-state-metrics:2.8.2-debian-11-r14"
+      "workloadName": "wavefront-proxy",
+      "containerName": "wavefront-proxy",
+      "image": "docker.io/bitnami/wavefront-proxy:12.4.0-debian-11-r5"
     },
     {
       "serviceAccountName": "wavefront-collector",
@@ -1276,12 +1276,12 @@
       "image": "docker.io/bitnami/wavefront-kubernetes-collector:1.13.0-scratch-r16"
     },
     {
-      "serviceAccountName": "",
+      "serviceAccountName": "wavefront-kube-state-metrics",
       "namespace": "default",
       "workloadType": "Deployment",
-      "workloadName": "wavefront-proxy",
-      "containerName": "wavefront-proxy",
-      "image": "docker.io/bitnami/wavefront-proxy:12.4.0-debian-11-r5"
+      "workloadName": "wavefront-kube-state-metrics",
+      "containerName": "kube-state-metrics",
+      "image": "docker.io/bitnami/kube-state-metrics:2.8.2-debian-11-r14"
     }
   ]
 }

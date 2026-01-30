@@ -1,0 +1,635 @@
+{
+  "metadata": {
+    "version": "0.9.0",
+    "name": "vcluster-k8s",
+    "source": "charts/loft__vcluster-k8s__0.9.0/",
+    "timestamp": 1769794079,
+    "extra": {
+      "helm": {
+        "description": "vcluster - Virtual Kubernetes Clusters (k8s)",
+        "home": "",
+        "icon": "",
+        "keywords": null,
+        "kubeVersion": "",
+        "maintainers": null,
+        "sources": null
+      }
+    }
+  },
+  "serviceAccountData": [
+    {
+      "serviceAccountName": "vcluster-k8s-job",
+      "namespace": "default",
+      "automountToken": false,
+      "secrets": null,
+      "imagePullSecrets": null
+    },
+    {
+      "serviceAccountName": "vc-workload-vcluster-k8s",
+      "namespace": "default",
+      "automountToken": false,
+      "secrets": null,
+      "imagePullSecrets": null
+    },
+    {
+      "serviceAccountName": "vc-vcluster-k8s",
+      "namespace": "default",
+      "automountToken": false,
+      "secrets": null,
+      "imagePullSecrets": null
+    }
+  ],
+  "serviceAccountPermissions": [
+    {
+      "serviceAccountName": "vcluster-k8s-job",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "vcluster-k8s-job",
+      "apiGroup": "",
+      "resource": "secrets",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "get",
+        "list"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "vcluster-k8s-job",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "vcluster-k8s-job",
+      "apiGroup": "",
+      "resource": "configmaps",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "get",
+        "list"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "vc-vcluster-k8s",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "vcluster-k8s",
+      "apiGroup": "",
+      "resource": "configmaps",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "PotentialPrivilegeEscalation",
+        "InformationDisclosure",
+        "DataExposure",
+        "Tampering",
+        "ConfigMapAccess"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1025,
+          "name": "Modify ConfigMaps in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1025/"
+        },
+        {
+          "id": 1023,
+          "name": "Read ConfigMaps in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1023/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "vc-vcluster-k8s",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "vcluster-k8s",
+      "apiGroup": "",
+      "resource": "secrets",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "DataExposure",
+        "InformationDisclosure",
+        "Tampering",
+        "PotentialPrivilegeEscalation",
+        "Persistence",
+        "SecretAccess",
+        "CredentialAccess"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1011,
+          "name": "Read secrets in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1011/"
+        },
+        {
+          "id": 1013,
+          "name": "Modify secrets in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1013/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "vc-vcluster-k8s",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "vcluster-k8s",
+      "apiGroup": "",
+      "resource": "pods/attach",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "LateralMovement",
+        "PotentialPrivilegeEscalation",
+        "PodAttach",
+        "CodeExecution"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1003,
+          "name": "Namespaced pod attach",
+          "link": "https://rbac-atlas.github.io/rules/1003/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "vc-vcluster-k8s",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "vcluster-k8s",
+      "apiGroup": "",
+      "resource": "pods/exec",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "PodExec",
+        "CodeExecution",
+        "LateralMovement",
+        "PotentialPrivilegeEscalation"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1001,
+          "name": "Namespaced pod exec",
+          "link": "https://rbac-atlas.github.io/rules/1001/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "vc-vcluster-k8s",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "vcluster-k8s",
+      "apiGroup": "",
+      "resource": "persistentvolumeclaims",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "vc-vcluster-k8s",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "vcluster-k8s",
+      "apiGroup": "",
+      "resource": "events",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "vc-vcluster-k8s",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "vcluster-k8s",
+      "apiGroup": "",
+      "resource": "services",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "NetworkManipulation",
+        "ServiceExposure",
+        "DenialOfService",
+        "Tampering"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1076,
+          "name": "Manage Services in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1076/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "vc-vcluster-k8s",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "vcluster-k8s",
+      "apiGroup": "",
+      "resource": "pods",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "Tampering",
+        "WorkloadExecution",
+        "PotentialPrivilegeEscalation",
+        "LateralMovement",
+        "Persistence"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1007,
+          "name": "Create pods in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1007/"
+        },
+        {
+          "id": 1009,
+          "name": "Update/Patch pods in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1009/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "vc-vcluster-k8s",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "vcluster-k8s",
+      "apiGroup": "",
+      "resource": "pods/portforward",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Medium",
+      "tags": [
+        "PodPortForward",
+        "LateralMovement",
+        "NetworkManipulation"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1005,
+          "name": "Namespaced pod port-forward",
+          "link": "https://rbac-atlas.github.io/rules/1005/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "vc-vcluster-k8s",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "vcluster-k8s",
+      "apiGroup": "",
+      "resource": "endpoints",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "NetworkManipulation",
+        "TrafficRedirection",
+        "DenialOfService",
+        "Tampering"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1074,
+          "name": "Manage Endpoints or EndpointSlices in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1074/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "vc-vcluster-k8s",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "vcluster-k8s",
+      "apiGroup": "",
+      "resource": "pods/log",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Medium",
+      "tags": [
+        "LogAccess",
+        "InformationDisclosure",
+        "DataExposure"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1019,
+          "name": "Read pod logs in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1019/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "vc-vcluster-k8s",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "vcluster-k8s",
+      "apiGroup": "networking.k8s.io",
+      "resource": "ingresses",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "NetworkManipulation",
+        "ServiceExposure",
+        "Tampering",
+        "DenialOfService"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1091,
+          "name": "Manage Ingresses (Namespace Service Exposure/Traffic Redirection)",
+          "link": "https://rbac-atlas.github.io/rules/1091/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "vc-vcluster-k8s",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "vcluster-k8s",
+      "apiGroup": "apps",
+      "resource": "statefulsets",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "vc-vcluster-k8s",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "vcluster-k8s",
+      "apiGroup": "apps",
+      "resource": "replicasets",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "vc-vcluster-k8s",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "vcluster-k8s",
+      "apiGroup": "apps",
+      "resource": "deployments",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    }
+  ],
+  "serviceAccountWorkloads": [
+    {
+      "serviceAccountName": "vc-vcluster-k8s",
+      "namespace": "default",
+      "workloadType": "StatefulSet",
+      "workloadName": "vcluster-k8s-etcd",
+      "containerName": "etcd",
+      "image": "k8s.gcr.io/etcd:3.5.1-0"
+    },
+    {
+      "serviceAccountName": "vc-vcluster-k8s",
+      "namespace": "default",
+      "workloadType": "Deployment",
+      "workloadName": "vcluster-k8s-controller",
+      "containerName": "kube-controller-manager",
+      "image": "k8s.gcr.io/kube-controller-manager:v1.24.1"
+    },
+    {
+      "serviceAccountName": "vc-vcluster-k8s",
+      "namespace": "default",
+      "workloadType": "Deployment",
+      "workloadName": "vcluster-k8s-api",
+      "containerName": "kube-apiserver",
+      "image": "k8s.gcr.io/kube-apiserver:v1.24.1"
+    },
+    {
+      "serviceAccountName": "vc-vcluster-k8s",
+      "namespace": "default",
+      "workloadType": "Deployment",
+      "workloadName": "vcluster-k8s",
+      "containerName": "syncer",
+      "image": "loftsh/vcluster:0.9.0"
+    },
+    {
+      "serviceAccountName": "vcluster-k8s-job",
+      "namespace": "default",
+      "workloadType": "Job",
+      "workloadName": "vcluster-k8s-job",
+      "containerName": "certs",
+      "image": "loftsh/vcluster:0.9.0"
+    }
+  ]
+}

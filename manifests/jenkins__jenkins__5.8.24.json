@@ -1,0 +1,283 @@
+{
+  "metadata": {
+    "version": "5.8.24",
+    "name": "jenkins",
+    "source": "charts/jenkins__jenkins__5.8.24/",
+    "timestamp": 1769793889,
+    "extra": {
+      "helm": {
+        "description": "Jenkins - Build great things at any scale! As the leading open source automation server, Jenkins provides over 2000 plugins to support building, deploying and automating any project. ",
+        "home": "https://www.jenkins.io/",
+        "icon": "https://get.jenkins.io/art/jenkins-logo/logo.svg",
+        "keywords": [
+          "jenkins",
+          "ci",
+          "devops"
+        ],
+        "kubeVersion": "",
+        "maintainers": [
+          {
+            "name": "maorfr",
+            "email": "maor.friedman@redhat.com"
+          },
+          {
+            "name": "torstenwalter",
+            "email": "mail@torstenwalter.de"
+          },
+          {
+            "name": "mogaal",
+            "email": "garridomota@gmail.com"
+          },
+          {
+            "name": "wmcdona89",
+            "email": "wmcdona89@gmail.com"
+          },
+          {
+            "name": "timja",
+            "email": "timjacomb1@gmail.com"
+          }
+        ],
+        "sources": [
+          "https://github.com/jenkinsci/jenkins",
+          "https://github.com/jenkinsci/docker-inbound-agent",
+          "https://github.com/maorfr/kube-tasks",
+          "https://github.com/jenkinsci/configuration-as-code-plugin"
+        ]
+      }
+    }
+  },
+  "serviceAccountData": [
+    {
+      "serviceAccountName": "jenkins",
+      "namespace": "default",
+      "automountToken": true,
+      "secrets": null,
+      "imagePullSecrets": null
+    }
+  ],
+  "serviceAccountPermissions": [
+    {
+      "serviceAccountName": "jenkins",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "jenkins-schedule-agents",
+      "apiGroup": "",
+      "resource": "pods",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "deletecollection",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "WorkloadExecution",
+        "PotentialPrivilegeEscalation",
+        "LateralMovement",
+        "Persistence",
+        "Tampering"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1007,
+          "name": "Create pods in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1007/"
+        },
+        {
+          "id": 1009,
+          "name": "Update/Patch pods in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1009/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "jenkins",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "jenkins-schedule-agents",
+      "apiGroup": "",
+      "resource": "pods/exec",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "deletecollection",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "PodExec",
+        "CodeExecution",
+        "LateralMovement",
+        "PotentialPrivilegeEscalation"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1001,
+          "name": "Namespaced pod exec",
+          "link": "https://rbac-atlas.github.io/rules/1001/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "jenkins",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "jenkins-schedule-agents",
+      "apiGroup": "",
+      "resource": "pods/log",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Medium",
+      "tags": [
+        "LogAccess",
+        "InformationDisclosure",
+        "DataExposure"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1019,
+          "name": "Read pod logs in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1019/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "jenkins",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "jenkins-schedule-agents",
+      "apiGroup": "",
+      "resource": "persistentvolumeclaims",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "deletecollection",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "jenkins",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "jenkins-schedule-agents",
+      "apiGroup": "",
+      "resource": "events",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "jenkins",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "jenkins-casc-reload",
+      "apiGroup": "",
+      "resource": "configmaps",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Medium",
+      "tags": [
+        "InformationDisclosure",
+        "ConfigMapAccess",
+        "DataExposure"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1023,
+          "name": "Read ConfigMaps in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1023/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    }
+  ],
+  "serviceAccountWorkloads": [
+    {
+      "serviceAccountName": "jenkins",
+      "namespace": "default",
+      "workloadType": "StatefulSet",
+      "workloadName": "jenkins",
+      "containerName": "jenkins",
+      "image": "docker.io/jenkins/jenkins:2.492.2-jdk17"
+    },
+    {
+      "serviceAccountName": "jenkins",
+      "namespace": "default",
+      "workloadType": "StatefulSet",
+      "workloadName": "jenkins",
+      "containerName": "config-reload",
+      "image": "docker.io/kiwigrid/k8s-sidecar:1.30.2"
+    },
+    {
+      "serviceAccountName": "",
+      "namespace": "default",
+      "workloadType": "Pod",
+      "workloadName": "jenkins-ui-test-cqyh9",
+      "containerName": "jenkins-ui-test",
+      "image": "docker.io/jenkins/jenkins:2.492.2-jdk17"
+    }
+  ]
+}

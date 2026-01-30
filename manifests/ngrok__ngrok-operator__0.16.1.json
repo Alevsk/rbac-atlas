@@ -1,0 +1,1472 @@
+{
+  "metadata": {
+    "version": "0.16.1",
+    "name": "ngrok-operator",
+    "source": "charts/ngrok__ngrok-operator__0.16.1/",
+    "timestamp": 1769794136,
+    "extra": {
+      "helm": {
+        "description": "The official ngrok Kubernetes Operator.",
+        "home": "https://ngrok.com",
+        "icon": "https://charts.ngrok.com/assets/ngrok-favicon.svg",
+        "keywords": [
+          "ngrok",
+          "networking",
+          "ingress",
+          "edge",
+          "api gateway"
+        ],
+        "kubeVersion": "",
+        "maintainers": null,
+        "sources": [
+          "https://github.com/ngrok/ngrok-operator"
+        ]
+      }
+    }
+  },
+  "serviceAccountData": [
+    {
+      "serviceAccountName": "ngrok-operator-agent",
+      "namespace": "default",
+      "automountToken": false,
+      "secrets": null,
+      "imagePullSecrets": null
+    },
+    {
+      "serviceAccountName": "ngrok-operator",
+      "namespace": "default",
+      "automountToken": false,
+      "secrets": null,
+      "imagePullSecrets": null
+    }
+  ],
+  "serviceAccountPermissions": [
+    {
+      "serviceAccountName": "ngrok-operator",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "ngrok-operator-leader-election-role",
+      "apiGroup": "",
+      "resource": "configmaps",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "InformationDisclosure",
+        "DataExposure",
+        "Tampering",
+        "ConfigMapAccess",
+        "PotentialPrivilegeEscalation"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1025,
+          "name": "Modify ConfigMaps in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1025/"
+        },
+        {
+          "id": 1023,
+          "name": "Read ConfigMaps in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1023/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "ngrok-operator",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "ngrok-operator-leader-election-role",
+      "apiGroup": "",
+      "resource": "events",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "patch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "ngrok-operator",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "ngrok-operator-leader-election-role",
+      "apiGroup": "coordination.k8s.io",
+      "resource": "leases",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "ControlPlaneDisruption",
+        "CriticalNamespace",
+        "Tampering",
+        "DenialOfService"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1081,
+          "name": "Manage Leases in kube-system or kube-node-lease namespace",
+          "link": "https://rbac-atlas.github.io/rules/1081/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "ngrok-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "ngrok-operator-manager-role",
+      "apiGroup": "networking.k8s.io",
+      "resource": "ingressclasses",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "ngrok-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "ngrok-operator-manager-role",
+      "apiGroup": "networking.k8s.io",
+      "resource": "ingresses",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "ngrok-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "ngrok-operator-manager-role",
+      "apiGroup": "networking.k8s.io",
+      "resource": "ingresses/status",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "ngrok-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "ngrok-operator-manager-role",
+      "apiGroup": "ngrok.k8s.ngrok.com",
+      "resource": "kubernetesoperators/status",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "patch",
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "ngrok-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "ngrok-operator-manager-role",
+      "apiGroup": "ngrok.k8s.ngrok.com",
+      "resource": "ngroktrafficpolicies",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "ngrok-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "ngrok-operator-manager-role",
+      "apiGroup": "ngrok.k8s.ngrok.com",
+      "resource": "ngroktrafficpolicies/status",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "patch",
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "ngrok-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "ngrok-operator-manager-role",
+      "apiGroup": "ngrok.k8s.ngrok.com",
+      "resource": "cloudendpoints",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "ngrok-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "ngrok-operator-manager-role",
+      "apiGroup": "ngrok.k8s.ngrok.com",
+      "resource": "cloudendpoints/finalizers",
+      "resourceName": "",
+      "verbs": [
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "ngrok-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "ngrok-operator-manager-role",
+      "apiGroup": "ngrok.k8s.ngrok.com",
+      "resource": "kubernetesoperators",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "ngrok-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "ngrok-operator-manager-role",
+      "apiGroup": "ngrok.k8s.ngrok.com",
+      "resource": "ngroktrafficpolicies/finalizers",
+      "resourceName": "",
+      "verbs": [
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "ngrok-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "ngrok-operator-manager-role",
+      "apiGroup": "ngrok.k8s.ngrok.com",
+      "resource": "cloudendpoints/status",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "patch",
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "ngrok-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "ngrok-operator-manager-role",
+      "apiGroup": "ngrok.k8s.ngrok.com",
+      "resource": "kubernetesoperators/finalizers",
+      "resourceName": "",
+      "verbs": [
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "ngrok-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "ngrok-operator-manager-role",
+      "apiGroup": "",
+      "resource": "secrets",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "ClusterWideSecretAccess",
+        "CredentialAccess",
+        "DataExposure",
+        "InformationDisclosure",
+        "SecretAccess"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1010,
+          "name": "Read secrets cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1010/"
+        },
+        {
+          "id": 1011,
+          "name": "Read secrets in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1011/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "ngrok-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "ngrok-operator-manager-role",
+      "apiGroup": "",
+      "resource": "services",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "ngrok-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "ngrok-operator-manager-role",
+      "apiGroup": "",
+      "resource": "services/status",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "ngrok-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "ngrok-operator-manager-role",
+      "apiGroup": "",
+      "resource": "configmaps",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "ConfigMapAccess",
+        "DataExposure",
+        "InformationDisclosure"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1022,
+          "name": "Read ConfigMaps cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1022/"
+        },
+        {
+          "id": 1023,
+          "name": "Read ConfigMaps in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1023/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "ngrok-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "ngrok-operator-manager-role",
+      "apiGroup": "",
+      "resource": "events",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "patch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "ngrok-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "ngrok-operator-manager-role",
+      "apiGroup": "",
+      "resource": "namespaces",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [
+        "InformationDisclosure",
+        "Reconnaissance",
+        "ClusterStructure"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1082,
+          "name": "List Namespaces (Cluster Reconnaissance)",
+          "link": "https://rbac-atlas.github.io/rules/1082/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "ngrok-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "ngrok-operator-manager-role",
+      "apiGroup": "bindings.k8s.ngrok.com",
+      "resource": "boundendpoints",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "ngrok-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "ngrok-operator-manager-role",
+      "apiGroup": "bindings.k8s.ngrok.com",
+      "resource": "boundendpoints/finalizers",
+      "resourceName": "",
+      "verbs": [
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "ngrok-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "ngrok-operator-manager-role",
+      "apiGroup": "bindings.k8s.ngrok.com",
+      "resource": "boundendpoints/status",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "patch",
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "ngrok-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "ngrok-operator-manager-role",
+      "apiGroup": "gateway.networking.k8s.io",
+      "resource": "httproutes",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "ngrok-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "ngrok-operator-manager-role",
+      "apiGroup": "gateway.networking.k8s.io",
+      "resource": "httproutes/status",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "ngrok-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "ngrok-operator-manager-role",
+      "apiGroup": "gateway.networking.k8s.io",
+      "resource": "gatewayclasses",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "ngrok-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "ngrok-operator-manager-role",
+      "apiGroup": "gateway.networking.k8s.io",
+      "resource": "gatewayclasses/finalizers",
+      "resourceName": "",
+      "verbs": [
+        "patch",
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "ngrok-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "ngrok-operator-manager-role",
+      "apiGroup": "gateway.networking.k8s.io",
+      "resource": "gatewayclasses/status",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "ngrok-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "ngrok-operator-manager-role",
+      "apiGroup": "gateway.networking.k8s.io",
+      "resource": "gateways",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "ngrok-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "ngrok-operator-manager-role",
+      "apiGroup": "gateway.networking.k8s.io",
+      "resource": "gateways/status",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "ngrok-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "ngrok-operator-manager-role",
+      "apiGroup": "ingress.k8s.ngrok.com",
+      "resource": "httpsedges/status",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "patch",
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "ngrok-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "ngrok-operator-manager-role",
+      "apiGroup": "ingress.k8s.ngrok.com",
+      "resource": "ippolicies/status",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "patch",
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "ngrok-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "ngrok-operator-manager-role",
+      "apiGroup": "ingress.k8s.ngrok.com",
+      "resource": "tcpedges/finalizers",
+      "resourceName": "",
+      "verbs": [
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "ngrok-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "ngrok-operator-manager-role",
+      "apiGroup": "ingress.k8s.ngrok.com",
+      "resource": "tlsedges/status",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "patch",
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "ngrok-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "ngrok-operator-manager-role",
+      "apiGroup": "ingress.k8s.ngrok.com",
+      "resource": "tunnels/status",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "patch",
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "ngrok-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "ngrok-operator-manager-role",
+      "apiGroup": "ingress.k8s.ngrok.com",
+      "resource": "domains/finalizers",
+      "resourceName": "",
+      "verbs": [
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "ngrok-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "ngrok-operator-manager-role",
+      "apiGroup": "ingress.k8s.ngrok.com",
+      "resource": "ippolicies",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "ngrok-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "ngrok-operator-manager-role",
+      "apiGroup": "ingress.k8s.ngrok.com",
+      "resource": "domains",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "ngrok-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "ngrok-operator-manager-role",
+      "apiGroup": "ingress.k8s.ngrok.com",
+      "resource": "ippolicies/finalizers",
+      "resourceName": "",
+      "verbs": [
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "ngrok-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "ngrok-operator-manager-role",
+      "apiGroup": "ingress.k8s.ngrok.com",
+      "resource": "ngrokmodulesets",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "ngrok-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "ngrok-operator-manager-role",
+      "apiGroup": "ingress.k8s.ngrok.com",
+      "resource": "tcpedges",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "ngrok-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "ngrok-operator-manager-role",
+      "apiGroup": "ingress.k8s.ngrok.com",
+      "resource": "tlsedges",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "ngrok-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "ngrok-operator-manager-role",
+      "apiGroup": "ingress.k8s.ngrok.com",
+      "resource": "tlsedges/finalizers",
+      "resourceName": "",
+      "verbs": [
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "ngrok-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "ngrok-operator-manager-role",
+      "apiGroup": "ingress.k8s.ngrok.com",
+      "resource": "tunnels",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "ngrok-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "ngrok-operator-manager-role",
+      "apiGroup": "ingress.k8s.ngrok.com",
+      "resource": "tunnels/finalizers",
+      "resourceName": "",
+      "verbs": [
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "ngrok-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "ngrok-operator-manager-role",
+      "apiGroup": "ingress.k8s.ngrok.com",
+      "resource": "domains/status",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "patch",
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "ngrok-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "ngrok-operator-manager-role",
+      "apiGroup": "ingress.k8s.ngrok.com",
+      "resource": "httpsedges",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "ngrok-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "ngrok-operator-manager-role",
+      "apiGroup": "ingress.k8s.ngrok.com",
+      "resource": "httpsedges/finalizers",
+      "resourceName": "",
+      "verbs": [
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "ngrok-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "ngrok-operator-manager-role",
+      "apiGroup": "ingress.k8s.ngrok.com",
+      "resource": "tcpedges/status",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "patch",
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "ngrok-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "ngrok-operator-proxy-role",
+      "apiGroup": "authentication.k8s.io",
+      "resource": "tokenreviews",
+      "resourceName": "",
+      "verbs": [
+        "create"
+      ],
+      "riskLevel": "Medium",
+      "tags": [
+        "InformationDisclosure",
+        "CredentialAccess",
+        "RBACQuery"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1049,
+          "name": "Create TokenReviews (validate arbitrary tokens)",
+          "link": "https://rbac-atlas.github.io/rules/1049/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "ngrok-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "ngrok-operator-proxy-role",
+      "apiGroup": "authorization.k8s.io",
+      "resource": "subjectaccessreviews",
+      "resourceName": "",
+      "verbs": [
+        "create"
+      ],
+      "riskLevel": "Medium",
+      "tags": [
+        "InformationDisclosure",
+        "RBACQuery"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1050,
+          "name": "Create SubjectAccessReviews (check arbitrary permissions)",
+          "link": "https://rbac-atlas.github.io/rules/1050/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "ngrok-operator-agent",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "ngrok-operator-agent-role",
+      "apiGroup": "ingress.k8s.ngrok.com",
+      "resource": "tunnels",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "ngrok-operator-agent",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "ngrok-operator-agent-role",
+      "apiGroup": "ingress.k8s.ngrok.com",
+      "resource": "tunnels/finalizers",
+      "resourceName": "",
+      "verbs": [
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "ngrok-operator-agent",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "ngrok-operator-agent-role",
+      "apiGroup": "ingress.k8s.ngrok.com",
+      "resource": "tunnels/status",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "patch",
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "ngrok-operator-agent",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "ngrok-operator-agent-role",
+      "apiGroup": "",
+      "resource": "events",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "patch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    }
+  ],
+  "serviceAccountWorkloads": [
+    {
+      "serviceAccountName": "ngrok-operator",
+      "namespace": "default",
+      "workloadType": "Deployment",
+      "workloadName": "ngrok-operator-manager",
+      "containerName": "ngrok-operator",
+      "image": "docker.io/ngrok/ngrok-operator:0.13.4"
+    },
+    {
+      "serviceAccountName": "ngrok-operator-agent",
+      "namespace": "default",
+      "workloadType": "Deployment",
+      "workloadName": "ngrok-operator-agent",
+      "containerName": "agent",
+      "image": "docker.io/ngrok/ngrok-operator:0.13.4"
+    }
+  ]
+}

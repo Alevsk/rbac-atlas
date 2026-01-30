@@ -1,0 +1,751 @@
+{
+  "metadata": {
+    "version": "1.0.12",
+    "name": "netbox-operator",
+    "source": "charts/netbox__netbox-operator__1.0.12/",
+    "timestamp": 1769794106,
+    "extra": {
+      "helm": {
+        "description": "Operator to manage NetBox resources directly through Kubernetes",
+        "home": "https://netbox.dev/",
+        "icon": "https://raw.githubusercontent.com/netbox-community/netbox/develop/docs/netbox_logo_light.svg",
+        "keywords": null,
+        "kubeVersion": "^1.25.0-0",
+        "maintainers": [
+          {
+            "name": "netbox-community",
+            "url": "https://github.com/netbox-community"
+          }
+        ],
+        "sources": [
+          "https://github.com/netbox-community/netbox-operator",
+          "https://github.com/netbox-community/netbox-chart"
+        ]
+      }
+    }
+  },
+  "serviceAccountData": [
+    {
+      "serviceAccountName": "netbox-operator-postgresql",
+      "namespace": "default",
+      "automountToken": false,
+      "secrets": null,
+      "imagePullSecrets": null
+    },
+    {
+      "serviceAccountName": "netbox-operator-netbox-app",
+      "namespace": "default",
+      "automountToken": false,
+      "secrets": null,
+      "imagePullSecrets": null
+    },
+    {
+      "serviceAccountName": "netbox-operator-valkey-primary",
+      "namespace": "default",
+      "automountToken": false,
+      "secrets": null,
+      "imagePullSecrets": null
+    },
+    {
+      "serviceAccountName": "netbox-operator",
+      "namespace": "default",
+      "automountToken": true,
+      "secrets": null,
+      "imagePullSecrets": null
+    },
+    {
+      "serviceAccountName": "netbox-operator-valkey-replica",
+      "namespace": "default",
+      "automountToken": false,
+      "secrets": null,
+      "imagePullSecrets": null
+    }
+  ],
+  "serviceAccountPermissions": [
+    {
+      "serviceAccountName": "netbox-operator",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "netbox-operator-leader-election",
+      "apiGroup": "",
+      "resource": "configmaps",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "Tampering",
+        "ConfigMapAccess",
+        "PotentialPrivilegeEscalation",
+        "InformationDisclosure",
+        "DataExposure"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1025,
+          "name": "Modify ConfigMaps in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1025/"
+        },
+        {
+          "id": 1023,
+          "name": "Read ConfigMaps in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1023/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "netbox-operator",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "netbox-operator-leader-election",
+      "apiGroup": "",
+      "resource": "events",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "patch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "netbox-operator",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "netbox-operator-leader-election",
+      "apiGroup": "coordination.k8s.io",
+      "resource": "leases",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "Tampering",
+        "DenialOfService",
+        "ControlPlaneDisruption",
+        "CriticalNamespace"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1081,
+          "name": "Manage Leases in kube-system or kube-node-lease namespace",
+          "link": "https://rbac-atlas.github.io/rules/1081/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "netbox-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "netbox-operator",
+      "apiGroup": "",
+      "resource": "events",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "patch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "netbox-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "netbox-operator",
+      "apiGroup": "netbox.dev",
+      "resource": "ipranges",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "netbox-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "netbox-operator",
+      "apiGroup": "netbox.dev",
+      "resource": "ipaddresses/finalizers",
+      "resourceName": "",
+      "verbs": [
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "netbox-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "netbox-operator",
+      "apiGroup": "netbox.dev",
+      "resource": "ipaddressclaims/status",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "patch",
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "netbox-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "netbox-operator",
+      "apiGroup": "netbox.dev",
+      "resource": "ipaddressclaims",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "netbox-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "netbox-operator",
+      "apiGroup": "netbox.dev",
+      "resource": "ipaddressclaims/finalizers",
+      "resourceName": "",
+      "verbs": [
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "netbox-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "netbox-operator",
+      "apiGroup": "netbox.dev",
+      "resource": "iprangeclaims/finalizers",
+      "resourceName": "",
+      "verbs": [
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "netbox-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "netbox-operator",
+      "apiGroup": "netbox.dev",
+      "resource": "ipranges/finalizers",
+      "resourceName": "",
+      "verbs": [
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "netbox-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "netbox-operator",
+      "apiGroup": "netbox.dev",
+      "resource": "prefixclaims/finalizers",
+      "resourceName": "",
+      "verbs": [
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "netbox-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "netbox-operator",
+      "apiGroup": "netbox.dev",
+      "resource": "prefixes/finalizers",
+      "resourceName": "",
+      "verbs": [
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "netbox-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "netbox-operator",
+      "apiGroup": "netbox.dev",
+      "resource": "iprangeclaims/status",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "patch",
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "netbox-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "netbox-operator",
+      "apiGroup": "netbox.dev",
+      "resource": "ipaddresses",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "netbox-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "netbox-operator",
+      "apiGroup": "netbox.dev",
+      "resource": "ipaddresses/status",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "patch",
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "netbox-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "netbox-operator",
+      "apiGroup": "netbox.dev",
+      "resource": "prefixclaims/status",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "patch",
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "netbox-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "netbox-operator",
+      "apiGroup": "netbox.dev",
+      "resource": "iprangeclaims",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "netbox-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "netbox-operator",
+      "apiGroup": "netbox.dev",
+      "resource": "prefixclaims",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "netbox-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "netbox-operator",
+      "apiGroup": "netbox.dev",
+      "resource": "prefixes",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "netbox-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "netbox-operator",
+      "apiGroup": "netbox.dev",
+      "resource": "ipranges/status",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "patch",
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "netbox-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "netbox-operator",
+      "apiGroup": "netbox.dev",
+      "resource": "prefixes/status",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "patch",
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "netbox-operator-netbox-app",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "netbox-operator-netbox-app",
+      "apiGroup": "apps",
+      "resource": "statefulsets",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "netbox-operator-netbox-app",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "netbox-operator-netbox-app",
+      "apiGroup": "apps",
+      "resource": "deployments",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "netbox-operator-netbox-app",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "netbox-operator-netbox-app",
+      "apiGroup": "apps",
+      "resource": "replicasets",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    }
+  ],
+  "serviceAccountWorkloads": [
+    {
+      "serviceAccountName": "netbox-operator",
+      "namespace": "default",
+      "workloadType": "Deployment",
+      "workloadName": "netbox-operator",
+      "containerName": "netbox-operator",
+      "image": "ghcr.io/netbox-community/netbox-operator:v0.1.0"
+    },
+    {
+      "serviceAccountName": "netbox-operator-valkey-replica",
+      "namespace": "default",
+      "workloadType": "StatefulSet",
+      "workloadName": "netbox-operator-valkey-replicas",
+      "containerName": "valkey",
+      "image": "docker.io/bitnami/valkey:8.1.1-debian-12-r1"
+    },
+    {
+      "serviceAccountName": "netbox-operator-postgresql",
+      "namespace": "default",
+      "workloadType": "StatefulSet",
+      "workloadName": "netbox-operator-postgresql",
+      "containerName": "postgresql",
+      "image": "docker.io/bitnami/postgresql:17.5.0-debian-12-r6"
+    },
+    {
+      "serviceAccountName": "netbox-operator-netbox-app",
+      "namespace": "default",
+      "workloadType": "CronJob",
+      "workloadName": "netbox-operator-netbox-app-housekeeping",
+      "containerName": "netbox-housekeeping",
+      "image": "ghcr.io/netbox-community/netbox:v4.3.1"
+    },
+    {
+      "serviceAccountName": "netbox-operator-netbox-app",
+      "namespace": "default",
+      "workloadType": "Deployment",
+      "workloadName": "netbox-operator-netbox-app",
+      "containerName": "netbox",
+      "image": "ghcr.io/netbox-community/netbox:v4.3.1"
+    },
+    {
+      "serviceAccountName": "netbox-operator-netbox-app",
+      "namespace": "default",
+      "workloadType": "Deployment",
+      "workloadName": "netbox-operator-netbox-app-worker",
+      "containerName": "netbox-worker",
+      "image": "ghcr.io/netbox-community/netbox:v4.3.1"
+    },
+    {
+      "serviceAccountName": "",
+      "namespace": "default",
+      "workloadType": "Pod",
+      "workloadName": "netbox-operator-netbox-app-test-connection",
+      "containerName": "wget",
+      "image": "busybox:1.37.0"
+    },
+    {
+      "serviceAccountName": "netbox-operator-valkey-primary",
+      "namespace": "default",
+      "workloadType": "StatefulSet",
+      "workloadName": "netbox-operator-valkey-primary",
+      "containerName": "valkey",
+      "image": "docker.io/bitnami/valkey:8.1.1-debian-12-r1"
+    }
+  ]
+}

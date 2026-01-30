@@ -3,7 +3,7 @@
     "version": "1.11.4",
     "name": "operator",
     "source": "charts/kube-starrocks__operator__1.11.4/",
-    "timestamp": 1769133304,
+    "timestamp": 1769793952,
     "extra": {
       "helm": {
         "description": "A Helm chart for StarRocks operator",
@@ -46,43 +46,6 @@
     }
   ],
   "serviceAccountPermissions": [
-    {
-      "serviceAccountName": "starrocks",
-      "namespace": "default",
-      "roleType": "Role",
-      "roleName": "cn-leader-election-role",
-      "apiGroup": "coordination.k8s.io",
-      "resource": "leases",
-      "resourceName": "",
-      "verbs": [
-        "create",
-        "delete",
-        "get",
-        "list",
-        "patch",
-        "update",
-        "watch"
-      ],
-      "riskLevel": "Critical",
-      "tags": [
-        "DenialOfService",
-        "ControlPlaneDisruption",
-        "CriticalNamespace",
-        "Tampering"
-      ],
-      "matchedRiskRules": [
-        {
-          "id": 1081,
-          "name": "Manage Leases in kube-system or kube-node-lease namespace",
-          "link": "https://rbac-atlas.github.io/rules/1081/"
-        },
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
     {
       "serviceAccountName": "starrocks",
       "namespace": "default",
@@ -151,6 +114,43 @@
     {
       "serviceAccountName": "starrocks",
       "namespace": "default",
+      "roleType": "Role",
+      "roleName": "cn-leader-election-role",
+      "apiGroup": "coordination.k8s.io",
+      "resource": "leases",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "Tampering",
+        "DenialOfService",
+        "ControlPlaneDisruption",
+        "CriticalNamespace"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1081,
+          "name": "Manage Leases in kube-system or kube-node-lease namespace",
+          "link": "https://rbac-atlas.github.io/rules/1081/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "starrocks",
+      "namespace": "default",
       "roleType": "ClusterRole",
       "roleName": "kube-starrocks-operator",
       "apiGroup": "apps",
@@ -161,13 +161,13 @@
       ],
       "riskLevel": "Critical",
       "tags": [
+        "WorkloadLifecycle",
+        "PrivilegeEscalation",
         "Persistence",
         "Tampering",
         "PotentialPrivilegeEscalation",
         "ClusterWideAccess",
-        "WildcardPermission",
-        "WorkloadLifecycle",
-        "PrivilegeEscalation"
+        "WildcardPermission"
       ],
       "matchedRiskRules": [
         {
@@ -200,13 +200,13 @@
       ],
       "riskLevel": "Critical",
       "tags": [
-        "PotentialPrivilegeEscalation",
-        "ClusterWideAccess",
         "WildcardPermission",
         "WorkloadLifecycle",
         "PrivilegeEscalation",
         "Persistence",
-        "Tampering"
+        "Tampering",
+        "PotentialPrivilegeEscalation",
+        "ClusterWideAccess"
       ],
       "matchedRiskRules": [
         {
@@ -263,13 +263,13 @@
       ],
       "riskLevel": "Critical",
       "tags": [
+        "PotentialPrivilegeEscalation",
         "ClusterWideAccess",
         "WildcardPermission",
         "WorkloadLifecycle",
         "PrivilegeEscalation",
         "Persistence",
-        "Tampering",
-        "PotentialPrivilegeEscalation"
+        "Tampering"
       ],
       "matchedRiskRules": [
         {
@@ -295,55 +295,6 @@
       "roleType": "ClusterRole",
       "roleName": "kube-starrocks-operator",
       "apiGroup": "",
-      "resource": "configmaps",
-      "resourceName": "",
-      "verbs": [
-        "*"
-      ],
-      "riskLevel": "Critical",
-      "tags": [
-        "PotentialPrivilegeEscalation",
-        "InformationDisclosure",
-        "DataExposure",
-        "ClusterWideAccess",
-        "WildcardPermission",
-        "Tampering",
-        "ConfigMapAccess"
-      ],
-      "matchedRiskRules": [
-        {
-          "id": 1024,
-          "name": "Modify ConfigMaps cluster-wide",
-          "link": "https://rbac-atlas.github.io/rules/1024/"
-        },
-        {
-          "id": 1022,
-          "name": "Read ConfigMaps cluster-wide",
-          "link": "https://rbac-atlas.github.io/rules/1022/"
-        },
-        {
-          "id": 1025,
-          "name": "Modify ConfigMaps in a namespace",
-          "link": "https://rbac-atlas.github.io/rules/1025/"
-        },
-        {
-          "id": 1023,
-          "name": "Read ConfigMaps in a namespace",
-          "link": "https://rbac-atlas.github.io/rules/1023/"
-        },
-        {
-          "id": 9998,
-          "name": "Base Risk Level - High",
-          "link": "https://rbac-atlas.github.io/rules/9998/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "starrocks",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "kube-starrocks-operator",
-      "apiGroup": "",
       "resource": "serviceaccounts",
       "resourceName": "",
       "verbs": [
@@ -351,14 +302,14 @@
       ],
       "riskLevel": "Critical",
       "tags": [
-        "WildcardPermission",
+        "ClusterWideAccess",
         "PrivilegeEscalation",
+        "Spoofing",
         "PotentialPrivilegeEscalation",
         "Tampering",
-        "ClusterWideAccess",
+        "WildcardPermission",
         "Impersonation",
         "ClusterAdminAccess",
-        "Spoofing",
         "IdentityManagement"
       ],
       "matchedRiskRules": [
@@ -397,12 +348,12 @@
       ],
       "riskLevel": "Critical",
       "tags": [
-        "Tampering",
-        "ClusterWideAccess",
-        "WildcardPermission",
         "NetworkManipulation",
         "ServiceExposure",
-        "DenialOfService"
+        "DenialOfService",
+        "Tampering",
+        "ClusterWideAccess",
+        "WildcardPermission"
       ],
       "matchedRiskRules": [
         {
@@ -512,6 +463,103 @@
       "namespace": "default",
       "roleType": "ClusterRole",
       "roleName": "kube-starrocks-operator",
+      "apiGroup": "",
+      "resource": "configmaps",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "WildcardPermission",
+        "Tampering",
+        "ConfigMapAccess",
+        "PotentialPrivilegeEscalation",
+        "InformationDisclosure",
+        "DataExposure",
+        "ClusterWideAccess"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1024,
+          "name": "Modify ConfigMaps cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1024/"
+        },
+        {
+          "id": 1022,
+          "name": "Read ConfigMaps cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1022/"
+        },
+        {
+          "id": 1025,
+          "name": "Modify ConfigMaps in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1025/"
+        },
+        {
+          "id": 1023,
+          "name": "Read ConfigMaps in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1023/"
+        },
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "starrocks",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kube-starrocks-operator",
+      "apiGroup": "starrocks.com",
+      "resource": "starrocksclusters",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "ClusterWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "starrocks",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kube-starrocks-operator",
+      "apiGroup": "starrocks.com",
+      "resource": "starrockswarehouses",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "ClusterWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "starrocks",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kube-starrocks-operator",
       "apiGroup": "starrocks.com",
       "resource": "starrocksclusters/finalizers",
       "resourceName": "",
@@ -592,54 +640,6 @@
           "id": 9996,
           "name": "Base Risk Level - Low",
           "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "starrocks",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "kube-starrocks-operator",
-      "apiGroup": "starrocks.com",
-      "resource": "starrocksclusters",
-      "resourceName": "",
-      "verbs": [
-        "*"
-      ],
-      "riskLevel": "High",
-      "tags": [
-        "ClusterWideAccess",
-        "WildcardPermission"
-      ],
-      "matchedRiskRules": [
-        {
-          "id": 9998,
-          "name": "Base Risk Level - High",
-          "link": "https://rbac-atlas.github.io/rules/9998/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "starrocks",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "kube-starrocks-operator",
-      "apiGroup": "starrocks.com",
-      "resource": "starrockswarehouses",
-      "resourceName": "",
-      "verbs": [
-        "*"
-      ],
-      "riskLevel": "High",
-      "tags": [
-        "ClusterWideAccess",
-        "WildcardPermission"
-      ],
-      "matchedRiskRules": [
-        {
-          "id": 9998,
-          "name": "Base Risk Level - High",
-          "link": "https://rbac-atlas.github.io/rules/9998/"
         }
       ]
     }

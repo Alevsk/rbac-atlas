@@ -1,0 +1,236 @@
+{
+  "metadata": {
+    "version": "2.0.13",
+    "name": "mimir-distributed",
+    "source": "charts/grafana__mimir-distributed__2.0.13/",
+    "timestamp": 1769793770,
+    "extra": {
+      "helm": {
+        "description": "Grafana Mimir",
+        "home": "https://grafana.com/docs/mimir/v2.0.x/",
+        "icon": "https://grafana.com/static/img/logos/logo-mimir.svg",
+        "keywords": null,
+        "kubeVersion": "^1.10.0-0",
+        "maintainers": null,
+        "sources": null
+      }
+    }
+  },
+  "serviceAccountData": [
+    {
+      "serviceAccountName": "mimir-distributed-minio-update-prometheus-secret",
+      "namespace": "default",
+      "automountToken": false,
+      "secrets": null,
+      "imagePullSecrets": null
+    },
+    {
+      "serviceAccountName": "mimir-distributed",
+      "namespace": "default",
+      "automountToken": false,
+      "secrets": null,
+      "imagePullSecrets": null
+    },
+    {
+      "serviceAccountName": "mimir-distributed-minio",
+      "namespace": "default",
+      "automountToken": false,
+      "secrets": null,
+      "imagePullSecrets": null
+    }
+  ],
+  "serviceAccountPermissions": [
+    {
+      "serviceAccountName": "mimir-distributed-minio-update-prometheus-secret",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "mimir-distributed-minio-update-prometheus-secret",
+      "apiGroup": "",
+      "resource": "secrets",
+      "resourceName": "mimir-distributed-minio-prometheus",
+      "verbs": [
+        "create",
+        "get",
+        "patch",
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [
+        "ResourceNameRestricted"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "mimir-distributed-minio-update-prometheus-secret",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "mimir-distributed-minio-update-prometheus-secret",
+      "apiGroup": "",
+      "resource": "secrets",
+      "resourceName": "",
+      "verbs": [
+        "create"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "mimir-distributed-minio-update-prometheus-secret",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "mimir-distributed-minio-update-prometheus-secret",
+      "apiGroup": "monitoring.coreos.com",
+      "resource": "servicemonitors",
+      "resourceName": "mimir-distributed-minio",
+      "verbs": [
+        "get"
+      ],
+      "riskLevel": "Low",
+      "tags": [
+        "ResourceNameRestricted"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    }
+  ],
+  "serviceAccountWorkloads": [
+    {
+      "serviceAccountName": "mimir-distributed-minio",
+      "namespace": "default",
+      "workloadType": "Job",
+      "workloadName": "mimir-distributed-minio-make-bucket-job",
+      "containerName": "minio-mc",
+      "image": "minio/mc:RELEASE.2021-02-14T04-28-06Z"
+    },
+    {
+      "serviceAccountName": "mimir-distributed-minio",
+      "namespace": "default",
+      "workloadType": "Deployment",
+      "workloadName": "mimir-distributed-minio",
+      "containerName": "minio",
+      "image": "minio/minio:RELEASE.2021-02-14T04-01-33Z"
+    },
+    {
+      "serviceAccountName": "mimir-distributed",
+      "namespace": "default",
+      "workloadType": "StatefulSet",
+      "workloadName": "mimir-distributed-alertmanager",
+      "containerName": "alertmanager",
+      "image": "grafana/mimir:2.0.0"
+    },
+    {
+      "serviceAccountName": "mimir-distributed",
+      "namespace": "default",
+      "workloadType": "StatefulSet",
+      "workloadName": "mimir-distributed-compactor",
+      "containerName": "compactor",
+      "image": "grafana/mimir:2.0.0"
+    },
+    {
+      "serviceAccountName": "mimir-distributed",
+      "namespace": "default",
+      "workloadType": "Deployment",
+      "workloadName": "mimir-distributed-ruler",
+      "containerName": "ruler",
+      "image": "grafana/mimir:2.0.0"
+    },
+    {
+      "serviceAccountName": "mimir-distributed",
+      "namespace": "default",
+      "workloadType": "Deployment",
+      "workloadName": "mimir-distributed-distributor",
+      "containerName": "distributor",
+      "image": "grafana/mimir:2.0.0"
+    },
+    {
+      "serviceAccountName": "mimir-distributed",
+      "namespace": "default",
+      "workloadType": "Deployment",
+      "workloadName": "mimir-distributed-nginx",
+      "containerName": "nginx",
+      "image": "docker.io/nginxinc/nginx-unprivileged:1.19-alpine"
+    },
+    {
+      "serviceAccountName": "mimir-distributed",
+      "namespace": "default",
+      "workloadType": "Deployment",
+      "workloadName": "mimir-distributed-query-frontend",
+      "containerName": "query-frontend",
+      "image": "grafana/mimir:2.0.0"
+    },
+    {
+      "serviceAccountName": "mimir-distributed",
+      "namespace": "default",
+      "workloadType": "StatefulSet",
+      "workloadName": "mimir-distributed-store-gateway",
+      "containerName": "store-gateway",
+      "image": "grafana/mimir:2.0.0"
+    },
+    {
+      "serviceAccountName": "mimir-distributed",
+      "namespace": "default",
+      "workloadType": "Deployment",
+      "workloadName": "mimir-distributed-overrides-exporter",
+      "containerName": "overrides-exporter",
+      "image": "grafana/mimir:2.0.0"
+    },
+    {
+      "serviceAccountName": "mimir-distributed",
+      "namespace": "default",
+      "workloadType": "StatefulSet",
+      "workloadName": "mimir-distributed-ingester",
+      "containerName": "ingester",
+      "image": "grafana/mimir:2.0.0"
+    },
+    {
+      "serviceAccountName": "mimir-distributed",
+      "namespace": "default",
+      "workloadType": "Deployment",
+      "workloadName": "mimir-distributed-querier",
+      "containerName": "querier",
+      "image": "grafana/mimir:2.0.0"
+    },
+    {
+      "serviceAccountName": "",
+      "namespace": "default",
+      "workloadType": "Job",
+      "workloadName": "mimir-distributed-make-bucket-job",
+      "containerName": "minio-mc",
+      "image": "minio/mc:RELEASE.2021-02-14T04-28-06Z"
+    },
+    {
+      "serviceAccountName": "",
+      "namespace": "default",
+      "workloadType": "StatefulSet",
+      "workloadName": "mimir-distributed-memcached",
+      "containerName": "memcached",
+      "image": "docker.io/memcached:1.6.9"
+    },
+    {
+      "serviceAccountName": "",
+      "namespace": "default",
+      "workloadType": "StatefulSet",
+      "workloadName": "mimir-distributed-memcached",
+      "containerName": "metrics",
+      "image": "quay.io/prometheus/memcached-exporter:v0.9.0"
+    }
+  ]
+}

@@ -1,0 +1,4215 @@
+{
+  "metadata": {
+    "version": "6.5.2",
+    "name": "gitlab",
+    "source": "charts/gitlab__gitlab__6.5.2/",
+    "timestamp": 1769798111,
+    "extra": {
+      "helm": {
+        "description": "The One DevOps Platform",
+        "home": "https://about.gitlab.com/",
+        "icon": "https://gitlab.com/gitlab-com/gitlab-artwork/raw/master/logo/logo-square.png",
+        "keywords": [
+          "gitlab"
+        ],
+        "kubeVersion": "",
+        "maintainers": [
+          {
+            "name": "GitLab Inc.",
+            "email": "support@gitlab.com"
+          }
+        ],
+        "sources": [
+          "https://gitlab.com/gitlab-org/charts/gitlab"
+        ]
+      }
+    }
+  },
+  "serviceAccountData": [
+    {
+      "serviceAccountName": "gitlab-certmanager-issuer",
+      "namespace": "default",
+      "automountToken": false,
+      "secrets": null,
+      "imagePullSecrets": null
+    },
+    {
+      "serviceAccountName": "gitlab-nginx-ingress",
+      "namespace": "default",
+      "automountToken": true,
+      "secrets": null,
+      "imagePullSecrets": null
+    },
+    {
+      "serviceAccountName": "gitlab-cert-manager-webhook",
+      "namespace": "default",
+      "automountToken": true,
+      "secrets": null,
+      "imagePullSecrets": null
+    },
+    {
+      "serviceAccountName": "gitlab-gitlab-runner",
+      "namespace": "default",
+      "automountToken": false,
+      "secrets": null,
+      "imagePullSecrets": null
+    },
+    {
+      "serviceAccountName": "gitlab-cert-manager-cainjector",
+      "namespace": "default",
+      "automountToken": true,
+      "secrets": null,
+      "imagePullSecrets": null
+    },
+    {
+      "serviceAccountName": "gitlab-shared-secrets",
+      "namespace": "default",
+      "automountToken": false,
+      "secrets": null,
+      "imagePullSecrets": null
+    },
+    {
+      "serviceAccountName": "gitlab-prometheus-server",
+      "namespace": "default",
+      "automountToken": false,
+      "secrets": null,
+      "imagePullSecrets": null
+    },
+    {
+      "serviceAccountName": "gitlab-cert-manager-startupapicheck",
+      "namespace": "default",
+      "automountToken": true,
+      "secrets": null,
+      "imagePullSecrets": null
+    },
+    {
+      "serviceAccountName": "gitlab-kube-state-metrics",
+      "namespace": "default",
+      "automountToken": false,
+      "secrets": null,
+      "imagePullSecrets": null
+    },
+    {
+      "serviceAccountName": "gitlab-cert-manager",
+      "namespace": "default",
+      "automountToken": true,
+      "secrets": null,
+      "imagePullSecrets": null
+    },
+    {
+      "serviceAccountName": "gitlab-grafana-app",
+      "namespace": "default",
+      "automountToken": false,
+      "secrets": null,
+      "imagePullSecrets": null
+    }
+  ],
+  "serviceAccountPermissions": [
+    {
+      "serviceAccountName": "gitlab-grafana-app",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "gitlab-grafana-app-clusterrole",
+      "apiGroup": "",
+      "resource": "configmaps",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "InformationDisclosure",
+        "ConfigMapAccess",
+        "DataExposure"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1022,
+          "name": "Read ConfigMaps cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1022/"
+        },
+        {
+          "id": 1023,
+          "name": "Read ConfigMaps in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1023/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "gitlab-grafana-app",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "gitlab-grafana-app-clusterrole",
+      "apiGroup": "",
+      "resource": "secrets",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "InformationDisclosure",
+        "SecretAccess",
+        "ClusterWideSecretAccess",
+        "CredentialAccess",
+        "DataExposure"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1010,
+          "name": "Read secrets cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1010/"
+        },
+        {
+          "id": 1011,
+          "name": "Read secrets in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1011/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "gitlab-grafana-app",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "gitlab-grafana-app",
+      "apiGroup": "extensions",
+      "resource": "podsecuritypolicies",
+      "resourceName": "gitlab-grafana-app",
+      "verbs": [
+        "use"
+      ],
+      "riskLevel": "Low",
+      "tags": [
+        "ResourceNameRestricted"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "gitlab-cert-manager-startupapicheck",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "gitlab-cert-manager-startupapicheck:create-cert",
+      "apiGroup": "cert-manager.io",
+      "resource": "certificates",
+      "resourceName": "",
+      "verbs": [
+        "create"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "gitlab-cert-manager",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "gitlab-cert-manager:leaderelection",
+      "apiGroup": "",
+      "resource": "configmaps",
+      "resourceName": "cert-manager-controller",
+      "verbs": [
+        "get",
+        "patch",
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [
+        "ResourceNameRestricted"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "gitlab-cert-manager",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "gitlab-cert-manager:leaderelection",
+      "apiGroup": "",
+      "resource": "configmaps",
+      "resourceName": "",
+      "verbs": [
+        "create"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "gitlab-cert-manager",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "gitlab-cert-manager:leaderelection",
+      "apiGroup": "coordination.k8s.io",
+      "resource": "leases",
+      "resourceName": "cert-manager-controller",
+      "verbs": [
+        "get",
+        "patch",
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [
+        "ResourceNameRestricted"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "gitlab-cert-manager",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "gitlab-cert-manager:leaderelection",
+      "apiGroup": "coordination.k8s.io",
+      "resource": "leases",
+      "resourceName": "",
+      "verbs": [
+        "create"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "gitlab-cert-manager",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "gitlab-cert-manager-controller-issuers",
+      "apiGroup": "cert-manager.io",
+      "resource": "issuers/status",
+      "resourceName": "",
+      "verbs": [
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "gitlab-cert-manager",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "gitlab-cert-manager-controller-issuers",
+      "apiGroup": "cert-manager.io",
+      "resource": "issuers",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "gitlab-cert-manager",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "gitlab-cert-manager-controller-issuers",
+      "apiGroup": "",
+      "resource": "secrets",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "DataExposure",
+        "InformationDisclosure",
+        "SecretAccess",
+        "ClusterWideSecretAccess",
+        "CredentialAccess"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1010,
+          "name": "Read secrets cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1010/"
+        },
+        {
+          "id": 1011,
+          "name": "Read secrets in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1011/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "gitlab-cert-manager",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "gitlab-cert-manager-controller-issuers",
+      "apiGroup": "",
+      "resource": "events",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "patch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "gitlab-cert-manager",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "gitlab-cert-manager-controller-clusterissuers",
+      "apiGroup": "cert-manager.io",
+      "resource": "clusterissuers",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "gitlab-cert-manager",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "gitlab-cert-manager-controller-clusterissuers",
+      "apiGroup": "cert-manager.io",
+      "resource": "clusterissuers/status",
+      "resourceName": "",
+      "verbs": [
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "gitlab-cert-manager",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "gitlab-cert-manager-controller-clusterissuers",
+      "apiGroup": "",
+      "resource": "secrets",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "InformationDisclosure",
+        "SecretAccess",
+        "ClusterWideSecretAccess",
+        "CredentialAccess",
+        "DataExposure"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1010,
+          "name": "Read secrets cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1010/"
+        },
+        {
+          "id": 1011,
+          "name": "Read secrets in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1011/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "gitlab-cert-manager",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "gitlab-cert-manager-controller-clusterissuers",
+      "apiGroup": "",
+      "resource": "events",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "patch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "gitlab-cert-manager",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "gitlab-cert-manager-controller-certificates",
+      "apiGroup": "cert-manager.io",
+      "resource": "certificates/finalizers",
+      "resourceName": "",
+      "verbs": [
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "gitlab-cert-manager",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "gitlab-cert-manager-controller-certificates",
+      "apiGroup": "cert-manager.io",
+      "resource": "certificaterequests/finalizers",
+      "resourceName": "",
+      "verbs": [
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "gitlab-cert-manager",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "gitlab-cert-manager-controller-certificates",
+      "apiGroup": "cert-manager.io",
+      "resource": "certificates",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "gitlab-cert-manager",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "gitlab-cert-manager-controller-certificates",
+      "apiGroup": "cert-manager.io",
+      "resource": "certificates/status",
+      "resourceName": "",
+      "verbs": [
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "gitlab-cert-manager",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "gitlab-cert-manager-controller-certificates",
+      "apiGroup": "cert-manager.io",
+      "resource": "certificaterequests",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "gitlab-cert-manager",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "gitlab-cert-manager-controller-certificates",
+      "apiGroup": "cert-manager.io",
+      "resource": "certificaterequests/status",
+      "resourceName": "",
+      "verbs": [
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "gitlab-cert-manager",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "gitlab-cert-manager-controller-certificates",
+      "apiGroup": "cert-manager.io",
+      "resource": "clusterissuers",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "gitlab-cert-manager",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "gitlab-cert-manager-controller-certificates",
+      "apiGroup": "cert-manager.io",
+      "resource": "issuers",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "gitlab-cert-manager",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "gitlab-cert-manager-controller-certificates",
+      "apiGroup": "acme.cert-manager.io",
+      "resource": "orders",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "gitlab-cert-manager",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "gitlab-cert-manager-controller-certificates",
+      "apiGroup": "",
+      "resource": "secrets",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "ClusterWideSecretAccess",
+        "CredentialAccess",
+        "DataExposure",
+        "InformationDisclosure",
+        "SecretAccess"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1010,
+          "name": "Read secrets cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1010/"
+        },
+        {
+          "id": 1011,
+          "name": "Read secrets in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1011/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "gitlab-cert-manager",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "gitlab-cert-manager-controller-certificates",
+      "apiGroup": "",
+      "resource": "events",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "patch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "gitlab-cert-manager",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "gitlab-cert-manager-controller-orders",
+      "apiGroup": "acme.cert-manager.io",
+      "resource": "challenges",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "gitlab-cert-manager",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "gitlab-cert-manager-controller-orders",
+      "apiGroup": "acme.cert-manager.io",
+      "resource": "orders/finalizers",
+      "resourceName": "",
+      "verbs": [
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "gitlab-cert-manager",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "gitlab-cert-manager-controller-orders",
+      "apiGroup": "acme.cert-manager.io",
+      "resource": "orders",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "gitlab-cert-manager",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "gitlab-cert-manager-controller-orders",
+      "apiGroup": "acme.cert-manager.io",
+      "resource": "orders/status",
+      "resourceName": "",
+      "verbs": [
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "gitlab-cert-manager",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "gitlab-cert-manager-controller-orders",
+      "apiGroup": "cert-manager.io",
+      "resource": "clusterissuers",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "gitlab-cert-manager",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "gitlab-cert-manager-controller-orders",
+      "apiGroup": "cert-manager.io",
+      "resource": "issuers",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "gitlab-cert-manager",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "gitlab-cert-manager-controller-orders",
+      "apiGroup": "",
+      "resource": "secrets",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "DataExposure",
+        "InformationDisclosure",
+        "SecretAccess",
+        "ClusterWideSecretAccess",
+        "CredentialAccess"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1010,
+          "name": "Read secrets cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1010/"
+        },
+        {
+          "id": 1011,
+          "name": "Read secrets in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1011/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "gitlab-cert-manager",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "gitlab-cert-manager-controller-orders",
+      "apiGroup": "",
+      "resource": "events",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "patch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "gitlab-cert-manager",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "gitlab-cert-manager-controller-challenges",
+      "apiGroup": "acme.cert-manager.io",
+      "resource": "challenges",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "gitlab-cert-manager",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "gitlab-cert-manager-controller-challenges",
+      "apiGroup": "acme.cert-manager.io",
+      "resource": "challenges/status",
+      "resourceName": "",
+      "verbs": [
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "gitlab-cert-manager",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "gitlab-cert-manager-controller-challenges",
+      "apiGroup": "acme.cert-manager.io",
+      "resource": "challenges/finalizers",
+      "resourceName": "",
+      "verbs": [
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "gitlab-cert-manager",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "gitlab-cert-manager-controller-challenges",
+      "apiGroup": "cert-manager.io",
+      "resource": "issuers",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "gitlab-cert-manager",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "gitlab-cert-manager-controller-challenges",
+      "apiGroup": "cert-manager.io",
+      "resource": "clusterissuers",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "gitlab-cert-manager",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "gitlab-cert-manager-controller-challenges",
+      "apiGroup": "",
+      "resource": "pods",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "Persistence",
+        "PotentialPrivilegeEscalation",
+        "WorkloadExecution",
+        "PrivilegeEscalation",
+        "LateralMovement"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1006,
+          "name": "Create pods cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1006/"
+        },
+        {
+          "id": 1007,
+          "name": "Create pods in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1007/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "gitlab-cert-manager",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "gitlab-cert-manager-controller-challenges",
+      "apiGroup": "",
+      "resource": "services",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "gitlab-cert-manager",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "gitlab-cert-manager-controller-challenges",
+      "apiGroup": "",
+      "resource": "secrets",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "InformationDisclosure",
+        "SecretAccess",
+        "ClusterWideSecretAccess",
+        "CredentialAccess",
+        "DataExposure"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1010,
+          "name": "Read secrets cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1010/"
+        },
+        {
+          "id": 1011,
+          "name": "Read secrets in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1011/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "gitlab-cert-manager",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "gitlab-cert-manager-controller-challenges",
+      "apiGroup": "",
+      "resource": "events",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "patch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "gitlab-cert-manager",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "gitlab-cert-manager-controller-challenges",
+      "apiGroup": "networking.k8s.io",
+      "resource": "ingresses",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "gitlab-cert-manager",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "gitlab-cert-manager-controller-challenges",
+      "apiGroup": "networking.x-k8s.io",
+      "resource": "httproutes",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "gitlab-cert-manager",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "gitlab-cert-manager-controller-challenges",
+      "apiGroup": "route.openshift.io",
+      "resource": "routes/custom-host",
+      "resourceName": "",
+      "verbs": [
+        "create"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "gitlab-cert-manager",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "gitlab-cert-manager-controller-ingress-shim",
+      "apiGroup": "networking.x-k8s.io",
+      "resource": "httproutes/finalizers",
+      "resourceName": "",
+      "verbs": [
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "gitlab-cert-manager",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "gitlab-cert-manager-controller-ingress-shim",
+      "apiGroup": "networking.x-k8s.io",
+      "resource": "gateways",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "gitlab-cert-manager",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "gitlab-cert-manager-controller-ingress-shim",
+      "apiGroup": "networking.x-k8s.io",
+      "resource": "httproutes",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "gitlab-cert-manager",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "gitlab-cert-manager-controller-ingress-shim",
+      "apiGroup": "networking.x-k8s.io",
+      "resource": "gateways/finalizers",
+      "resourceName": "",
+      "verbs": [
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "gitlab-cert-manager",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "gitlab-cert-manager-controller-ingress-shim",
+      "apiGroup": "",
+      "resource": "events",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "patch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "gitlab-cert-manager",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "gitlab-cert-manager-controller-ingress-shim",
+      "apiGroup": "cert-manager.io",
+      "resource": "certificates",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "gitlab-cert-manager",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "gitlab-cert-manager-controller-ingress-shim",
+      "apiGroup": "cert-manager.io",
+      "resource": "certificaterequests",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "gitlab-cert-manager",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "gitlab-cert-manager-controller-ingress-shim",
+      "apiGroup": "cert-manager.io",
+      "resource": "issuers",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "gitlab-cert-manager",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "gitlab-cert-manager-controller-ingress-shim",
+      "apiGroup": "cert-manager.io",
+      "resource": "clusterissuers",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "gitlab-cert-manager",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "gitlab-cert-manager-controller-ingress-shim",
+      "apiGroup": "networking.k8s.io",
+      "resource": "ingresses",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "gitlab-cert-manager",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "gitlab-cert-manager-controller-ingress-shim",
+      "apiGroup": "networking.k8s.io",
+      "resource": "ingresses/finalizers",
+      "resourceName": "",
+      "verbs": [
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "gitlab-cert-manager",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "gitlab-cert-manager-controller-approve:cert-manager-io",
+      "apiGroup": "cert-manager.io",
+      "resource": "signers",
+      "resourceName": "issuers.cert-manager.io/*",
+      "verbs": [
+        "approve"
+      ],
+      "riskLevel": "Low",
+      "tags": [
+        "ResourceNameRestricted"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "gitlab-cert-manager",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "gitlab-cert-manager-controller-approve:cert-manager-io",
+      "apiGroup": "cert-manager.io",
+      "resource": "signers",
+      "resourceName": "clusterissuers.cert-manager.io/*",
+      "verbs": [
+        "approve"
+      ],
+      "riskLevel": "Low",
+      "tags": [
+        "ResourceNameRestricted"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "gitlab-cert-manager",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "gitlab-cert-manager-controller-certificatesigningrequests",
+      "apiGroup": "certificates.k8s.io",
+      "resource": "signers",
+      "resourceName": "clusterissuers.cert-manager.io/*",
+      "verbs": [
+        "sign"
+      ],
+      "riskLevel": "Low",
+      "tags": [
+        "ResourceNameRestricted"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "gitlab-cert-manager",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "gitlab-cert-manager-controller-certificatesigningrequests",
+      "apiGroup": "certificates.k8s.io",
+      "resource": "signers",
+      "resourceName": "issuers.cert-manager.io/*",
+      "verbs": [
+        "sign"
+      ],
+      "riskLevel": "Low",
+      "tags": [
+        "ResourceNameRestricted"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "gitlab-cert-manager",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "gitlab-cert-manager-controller-certificatesigningrequests",
+      "apiGroup": "certificates.k8s.io",
+      "resource": "certificatesigningrequests",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "gitlab-cert-manager",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "gitlab-cert-manager-controller-certificatesigningrequests",
+      "apiGroup": "certificates.k8s.io",
+      "resource": "certificatesigningrequests/status",
+      "resourceName": "",
+      "verbs": [
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "gitlab-cert-manager",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "gitlab-cert-manager-controller-certificatesigningrequests",
+      "apiGroup": "authorization.k8s.io",
+      "resource": "subjectaccessreviews",
+      "resourceName": "",
+      "verbs": [
+        "create"
+      ],
+      "riskLevel": "Medium",
+      "tags": [
+        "InformationDisclosure",
+        "RBACQuery"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1050,
+          "name": "Create SubjectAccessReviews (check arbitrary permissions)",
+          "link": "https://rbac-atlas.github.io/rules/1050/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "gitlab-prometheus-server",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "gitlab-prometheus-server",
+      "apiGroup": "",
+      "resource": "endpoints",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "gitlab-prometheus-server",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "gitlab-prometheus-server",
+      "apiGroup": "",
+      "resource": "pods",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "gitlab-prometheus-server",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "gitlab-prometheus-server",
+      "apiGroup": "",
+      "resource": "ingresses",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "gitlab-prometheus-server",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "gitlab-prometheus-server",
+      "apiGroup": "",
+      "resource": "configmaps",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "InformationDisclosure",
+        "ConfigMapAccess",
+        "DataExposure"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1022,
+          "name": "Read ConfigMaps cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1022/"
+        },
+        {
+          "id": 1023,
+          "name": "Read ConfigMaps in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1023/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "gitlab-prometheus-server",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "gitlab-prometheus-server",
+      "apiGroup": "",
+      "resource": "nodes",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "gitlab-prometheus-server",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "gitlab-prometheus-server",
+      "apiGroup": "",
+      "resource": "nodes/proxy",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "LateralMovement",
+        "ElevationOfPrivilege",
+        "AuthorizationBypass",
+        "NodeAccess",
+        "ClusterAdminAccess",
+        "CodeExecution"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1104,
+          "name": "Node proxy GET RCE via WebSocket",
+          "link": "https://rbac-atlas.github.io/rules/1104/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "gitlab-prometheus-server",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "gitlab-prometheus-server",
+      "apiGroup": "",
+      "resource": "nodes/metrics",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "gitlab-prometheus-server",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "gitlab-prometheus-server",
+      "apiGroup": "",
+      "resource": "services",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "gitlab-prometheus-server",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "gitlab-prometheus-server",
+      "apiGroup": "extensions",
+      "resource": "ingresses/status",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "gitlab-prometheus-server",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "gitlab-prometheus-server",
+      "apiGroup": "extensions",
+      "resource": "ingresses",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "gitlab-prometheus-server",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "gitlab-prometheus-server",
+      "apiGroup": "networking.k8s.io",
+      "resource": "ingresses/status",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "gitlab-prometheus-server",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "gitlab-prometheus-server",
+      "apiGroup": "networking.k8s.io",
+      "resource": "ingresses",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "gitlab-shared-secrets",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "gitlab-shared-secrets",
+      "apiGroup": "",
+      "resource": "secrets",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "get",
+        "list",
+        "patch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "gitlab-gitlab-runner",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "gitlab-gitlab-runner",
+      "apiGroup": "",
+      "resource": "*",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "DenialOfService",
+        "PodPortForward",
+        "NamespaceAdmin",
+        "WildcardPermission",
+        "Persistence",
+        "WorkloadExecution",
+        "TrafficRedirection",
+        "PodAttach",
+        "IdentityManagement",
+        "CredentialAccess",
+        "InformationDisclosure",
+        "Tampering",
+        "LateralMovement",
+        "NetworkManipulation",
+        "ServiceExposure",
+        "PodExec",
+        "ConfigMapAccess",
+        "SecretAccess",
+        "PotentialPrivilegeEscalation",
+        "CodeExecution",
+        "LogAccess",
+        "Reconnaissance",
+        "ResourceConfiguration",
+        "QuotaTampering",
+        "NamespaceWideAccess",
+        "DataExposure"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1011,
+          "name": "Read secrets in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1011/"
+        },
+        {
+          "id": 1013,
+          "name": "Modify secrets in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1013/"
+        },
+        {
+          "id": 1021,
+          "name": "Manage ephemeral containers in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1021/"
+        },
+        {
+          "id": 1074,
+          "name": "Manage Endpoints or EndpointSlices in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1074/"
+        },
+        {
+          "id": 1009,
+          "name": "Update/Patch pods in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1009/"
+        },
+        {
+          "id": 1076,
+          "name": "Manage Services in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1076/"
+        },
+        {
+          "id": 1003,
+          "name": "Namespaced pod attach",
+          "link": "https://rbac-atlas.github.io/rules/1003/"
+        },
+        {
+          "id": 1007,
+          "name": "Create pods in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1007/"
+        },
+        {
+          "id": 1001,
+          "name": "Namespaced pod exec",
+          "link": "https://rbac-atlas.github.io/rules/1001/"
+        },
+        {
+          "id": 1025,
+          "name": "Modify ConfigMaps in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1025/"
+        },
+        {
+          "id": 1023,
+          "name": "Read ConfigMaps in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1023/"
+        },
+        {
+          "id": 1068,
+          "name": "Manage ServiceAccounts in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1068/"
+        },
+        {
+          "id": 1019,
+          "name": "Read pod logs in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1019/"
+        },
+        {
+          "id": 1005,
+          "name": "Namespaced pod port-forward",
+          "link": "https://rbac-atlas.github.io/rules/1005/"
+        },
+        {
+          "id": 1087,
+          "name": "Read LimitRanges (Namespace Information Disclosure)",
+          "link": "https://rbac-atlas.github.io/rules/1087/"
+        },
+        {
+          "id": 1088,
+          "name": "Read ResourceQuotas (Namespace Information Disclosure)",
+          "link": "https://rbac-atlas.github.io/rules/1088/"
+        },
+        {
+          "id": 9997,
+          "name": "Base Risk Level - Medium",
+          "link": "https://rbac-atlas.github.io/rules/9997/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "gitlab-cert-manager-webhook",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "gitlab-cert-manager-webhook:dynamic-serving",
+      "apiGroup": "",
+      "resource": "secrets",
+      "resourceName": "gitlab-cert-manager-webhook-ca",
+      "verbs": [
+        "get",
+        "list",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [
+        "SecretAccess",
+        "CredentialAccess",
+        "DataExposure",
+        "InformationDisclosure",
+        "ResourceNameRestricted"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1011,
+          "name": "Read secrets in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1011/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "gitlab-cert-manager-webhook",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "gitlab-cert-manager-webhook:dynamic-serving",
+      "apiGroup": "",
+      "resource": "secrets",
+      "resourceName": "",
+      "verbs": [
+        "create"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "gitlab-cert-manager-webhook",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "gitlab-cert-manager-webhook:subjectaccessreviews",
+      "apiGroup": "authorization.k8s.io",
+      "resource": "subjectaccessreviews",
+      "resourceName": "",
+      "verbs": [
+        "create"
+      ],
+      "riskLevel": "Medium",
+      "tags": [
+        "InformationDisclosure",
+        "RBACQuery"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1050,
+          "name": "Create SubjectAccessReviews (check arbitrary permissions)",
+          "link": "https://rbac-atlas.github.io/rules/1050/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "gitlab-certmanager-issuer",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "gitlab-certmanager-issuer",
+      "apiGroup": "cert-manager.io",
+      "resource": "issuers",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "get",
+        "list",
+        "patch",
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "gitlab-cert-manager-cainjector",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "gitlab-cert-manager-cainjector",
+      "apiGroup": "auditregistration.k8s.io",
+      "resource": "auditsinks",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "gitlab-cert-manager-cainjector",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "gitlab-cert-manager-cainjector",
+      "apiGroup": "cert-manager.io",
+      "resource": "certificates",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "gitlab-cert-manager-cainjector",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "gitlab-cert-manager-cainjector",
+      "apiGroup": "",
+      "resource": "events",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "get",
+        "patch",
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "gitlab-cert-manager-cainjector",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "gitlab-cert-manager-cainjector",
+      "apiGroup": "",
+      "resource": "secrets",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "SecretAccess",
+        "ClusterWideSecretAccess",
+        "CredentialAccess",
+        "DataExposure",
+        "InformationDisclosure"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1010,
+          "name": "Read secrets cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1010/"
+        },
+        {
+          "id": 1011,
+          "name": "Read secrets in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1011/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "gitlab-cert-manager-cainjector",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "gitlab-cert-manager-cainjector",
+      "apiGroup": "admissionregistration.k8s.io",
+      "resource": "validatingwebhookconfigurations",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Medium",
+      "tags": [
+        "InformationDisclosure",
+        "WebhookReconnaissance",
+        "Reconnaissance"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1083,
+          "name": "List ValidatingWebhookConfigurations (Reconnaissance)",
+          "link": "https://rbac-atlas.github.io/rules/1083/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "gitlab-cert-manager-cainjector",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "gitlab-cert-manager-cainjector",
+      "apiGroup": "admissionregistration.k8s.io",
+      "resource": "mutatingwebhookconfigurations",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Medium",
+      "tags": [
+        "WebhookReconnaissance",
+        "Reconnaissance",
+        "InformationDisclosure"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1084,
+          "name": "List MutatingWebhookConfigurations (Reconnaissance)",
+          "link": "https://rbac-atlas.github.io/rules/1084/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "gitlab-cert-manager-cainjector",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "gitlab-cert-manager-cainjector",
+      "apiGroup": "apiregistration.k8s.io",
+      "resource": "apiservices",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "gitlab-cert-manager-cainjector",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "gitlab-cert-manager-cainjector",
+      "apiGroup": "apiextensions.k8s.io",
+      "resource": "customresourcedefinitions",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "gitlab-cert-manager-cainjector",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "gitlab-cert-manager-cainjector:leaderelection",
+      "apiGroup": "coordination.k8s.io",
+      "resource": "leases",
+      "resourceName": "cert-manager-cainjector-leader-election",
+      "verbs": [
+        "get",
+        "patch",
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [
+        "ResourceNameRestricted"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "gitlab-cert-manager-cainjector",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "gitlab-cert-manager-cainjector:leaderelection",
+      "apiGroup": "coordination.k8s.io",
+      "resource": "leases",
+      "resourceName": "cert-manager-cainjector-leader-election-core",
+      "verbs": [
+        "get",
+        "patch",
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [
+        "ResourceNameRestricted"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "gitlab-cert-manager-cainjector",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "gitlab-cert-manager-cainjector:leaderelection",
+      "apiGroup": "coordination.k8s.io",
+      "resource": "leases",
+      "resourceName": "",
+      "verbs": [
+        "create"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "gitlab-cert-manager-cainjector",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "gitlab-cert-manager-cainjector:leaderelection",
+      "apiGroup": "",
+      "resource": "configmaps",
+      "resourceName": "cert-manager-cainjector-leader-election",
+      "verbs": [
+        "get",
+        "patch",
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [
+        "ResourceNameRestricted"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "gitlab-cert-manager-cainjector",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "gitlab-cert-manager-cainjector:leaderelection",
+      "apiGroup": "",
+      "resource": "configmaps",
+      "resourceName": "cert-manager-cainjector-leader-election-core",
+      "verbs": [
+        "get",
+        "patch",
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [
+        "ResourceNameRestricted"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "gitlab-cert-manager-cainjector",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "gitlab-cert-manager-cainjector:leaderelection",
+      "apiGroup": "",
+      "resource": "configmaps",
+      "resourceName": "",
+      "verbs": [
+        "create"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "gitlab-nginx-ingress",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "gitlab-nginx-ingress",
+      "apiGroup": "",
+      "resource": "pods",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "gitlab-nginx-ingress",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "gitlab-nginx-ingress",
+      "apiGroup": "",
+      "resource": "secrets",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "InformationDisclosure",
+        "SecretAccess",
+        "ClusterWideSecretAccess",
+        "CredentialAccess",
+        "DataExposure"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1010,
+          "name": "Read secrets cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1010/"
+        },
+        {
+          "id": 1011,
+          "name": "Read secrets in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1011/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "gitlab-nginx-ingress",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "gitlab-nginx-ingress",
+      "apiGroup": "",
+      "resource": "services",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "gitlab-nginx-ingress",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "gitlab-nginx-ingress",
+      "apiGroup": "",
+      "resource": "events",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "patch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "gitlab-nginx-ingress",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "gitlab-nginx-ingress",
+      "apiGroup": "",
+      "resource": "configmaps",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "DataExposure",
+        "InformationDisclosure",
+        "ConfigMapAccess"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1022,
+          "name": "Read ConfigMaps cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1022/"
+        },
+        {
+          "id": 1023,
+          "name": "Read ConfigMaps in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1023/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "gitlab-nginx-ingress",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "gitlab-nginx-ingress",
+      "apiGroup": "",
+      "resource": "endpoints",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "gitlab-nginx-ingress",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "gitlab-nginx-ingress",
+      "apiGroup": "",
+      "resource": "nodes",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "gitlab-nginx-ingress",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "gitlab-nginx-ingress",
+      "apiGroup": "networking.k8s.io",
+      "resource": "ingresses",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "gitlab-nginx-ingress",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "gitlab-nginx-ingress",
+      "apiGroup": "networking.k8s.io",
+      "resource": "ingresses/status",
+      "resourceName": "",
+      "verbs": [
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "gitlab-nginx-ingress",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "gitlab-nginx-ingress",
+      "apiGroup": "networking.k8s.io",
+      "resource": "ingressclasses",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "gitlab-nginx-ingress",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "gitlab-nginx-ingress",
+      "apiGroup": "",
+      "resource": "endpoints",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "gitlab-nginx-ingress",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "gitlab-nginx-ingress",
+      "apiGroup": "",
+      "resource": "services",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "gitlab-nginx-ingress",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "gitlab-nginx-ingress",
+      "apiGroup": "",
+      "resource": "events",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "patch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "gitlab-nginx-ingress",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "gitlab-nginx-ingress",
+      "apiGroup": "",
+      "resource": "namespaces",
+      "resourceName": "",
+      "verbs": [
+        "get"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "gitlab-nginx-ingress",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "gitlab-nginx-ingress",
+      "apiGroup": "",
+      "resource": "configmaps",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Medium",
+      "tags": [
+        "ConfigMapAccess",
+        "DataExposure",
+        "InformationDisclosure"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1023,
+          "name": "Read ConfigMaps in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1023/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "gitlab-nginx-ingress",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "gitlab-nginx-ingress",
+      "apiGroup": "",
+      "resource": "configmaps",
+      "resourceName": "ingress-controller-leader",
+      "verbs": [
+        "get",
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [
+        "ResourceNameRestricted"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "gitlab-nginx-ingress",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "gitlab-nginx-ingress",
+      "apiGroup": "",
+      "resource": "pods",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "gitlab-nginx-ingress",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "gitlab-nginx-ingress",
+      "apiGroup": "",
+      "resource": "secrets",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "SecretAccess",
+        "CredentialAccess",
+        "DataExposure",
+        "InformationDisclosure"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1011,
+          "name": "Read secrets in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1011/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "gitlab-nginx-ingress",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "gitlab-nginx-ingress",
+      "apiGroup": "networking.k8s.io",
+      "resource": "ingresses",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "gitlab-nginx-ingress",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "gitlab-nginx-ingress",
+      "apiGroup": "networking.k8s.io",
+      "resource": "ingresses/status",
+      "resourceName": "",
+      "verbs": [
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "gitlab-nginx-ingress",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "gitlab-nginx-ingress",
+      "apiGroup": "networking.k8s.io",
+      "resource": "ingressclasses",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "gitlab-kube-state-metrics",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "gitlab-kube-state-metrics",
+      "apiGroup": "apps",
+      "resource": "replicasets",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "gitlab-kube-state-metrics",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "gitlab-kube-state-metrics",
+      "apiGroup": "apps",
+      "resource": "statefulsets",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "gitlab-kube-state-metrics",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "gitlab-kube-state-metrics",
+      "apiGroup": "apps",
+      "resource": "daemonsets",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "gitlab-kube-state-metrics",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "gitlab-kube-state-metrics",
+      "apiGroup": "apps",
+      "resource": "deployments",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "gitlab-kube-state-metrics",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "gitlab-kube-state-metrics",
+      "apiGroup": "networking.k8s.io",
+      "resource": "ingresses",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "gitlab-kube-state-metrics",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "gitlab-kube-state-metrics",
+      "apiGroup": "networking.k8s.io",
+      "resource": "networkpolicies",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "gitlab-kube-state-metrics",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "gitlab-kube-state-metrics",
+      "apiGroup": "policy",
+      "resource": "poddisruptionbudgets",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "gitlab-kube-state-metrics",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "gitlab-kube-state-metrics",
+      "apiGroup": "storage.k8s.io",
+      "resource": "storageclasses",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "gitlab-kube-state-metrics",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "gitlab-kube-state-metrics",
+      "apiGroup": "storage.k8s.io",
+      "resource": "volumeattachments",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "gitlab-kube-state-metrics",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "gitlab-kube-state-metrics",
+      "apiGroup": "extensions",
+      "resource": "daemonsets",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "gitlab-kube-state-metrics",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "gitlab-kube-state-metrics",
+      "apiGroup": "extensions",
+      "resource": "deployments",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "gitlab-kube-state-metrics",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "gitlab-kube-state-metrics",
+      "apiGroup": "extensions",
+      "resource": "ingresses",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "gitlab-kube-state-metrics",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "gitlab-kube-state-metrics",
+      "apiGroup": "extensions",
+      "resource": "replicasets",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "gitlab-kube-state-metrics",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "gitlab-kube-state-metrics",
+      "apiGroup": "autoscaling",
+      "resource": "horizontalpodautoscalers",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "gitlab-kube-state-metrics",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "gitlab-kube-state-metrics",
+      "apiGroup": "admissionregistration.k8s.io",
+      "resource": "mutatingwebhookconfigurations",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Medium",
+      "tags": [
+        "InformationDisclosure",
+        "WebhookReconnaissance",
+        "Reconnaissance"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1084,
+          "name": "List MutatingWebhookConfigurations (Reconnaissance)",
+          "link": "https://rbac-atlas.github.io/rules/1084/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "gitlab-kube-state-metrics",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "gitlab-kube-state-metrics",
+      "apiGroup": "admissionregistration.k8s.io",
+      "resource": "validatingwebhookconfigurations",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Medium",
+      "tags": [
+        "InformationDisclosure",
+        "WebhookReconnaissance",
+        "Reconnaissance"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1083,
+          "name": "List ValidatingWebhookConfigurations (Reconnaissance)",
+          "link": "https://rbac-atlas.github.io/rules/1083/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "gitlab-kube-state-metrics",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "gitlab-kube-state-metrics",
+      "apiGroup": "certificates.k8s.io",
+      "resource": "certificatesigningrequests",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "gitlab-kube-state-metrics",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "gitlab-kube-state-metrics",
+      "apiGroup": "",
+      "resource": "secrets",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "ClusterWideSecretAccess",
+        "CredentialAccess",
+        "DataExposure",
+        "InformationDisclosure",
+        "SecretAccess"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1010,
+          "name": "Read secrets cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1010/"
+        },
+        {
+          "id": 1011,
+          "name": "Read secrets in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1011/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "gitlab-kube-state-metrics",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "gitlab-kube-state-metrics",
+      "apiGroup": "",
+      "resource": "limitranges",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [
+        "Reconnaissance",
+        "ResourceConfiguration",
+        "InformationDisclosure"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1087,
+          "name": "Read LimitRanges (Namespace Information Disclosure)",
+          "link": "https://rbac-atlas.github.io/rules/1087/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "gitlab-kube-state-metrics",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "gitlab-kube-state-metrics",
+      "apiGroup": "",
+      "resource": "namespaces",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [
+        "InformationDisclosure",
+        "Reconnaissance",
+        "ClusterStructure"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1082,
+          "name": "List Namespaces (Cluster Reconnaissance)",
+          "link": "https://rbac-atlas.github.io/rules/1082/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "gitlab-kube-state-metrics",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "gitlab-kube-state-metrics",
+      "apiGroup": "",
+      "resource": "nodes",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "gitlab-kube-state-metrics",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "gitlab-kube-state-metrics",
+      "apiGroup": "",
+      "resource": "pods",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "gitlab-kube-state-metrics",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "gitlab-kube-state-metrics",
+      "apiGroup": "",
+      "resource": "resourcequotas",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Medium",
+      "tags": [
+        "InformationDisclosure",
+        "Reconnaissance",
+        "ResourceConfiguration",
+        "QuotaTampering"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1089,
+          "name": "Read All ResourceQuotas (Cluster-wide Information Disclosure)",
+          "link": "https://rbac-atlas.github.io/rules/1089/"
+        },
+        {
+          "id": 1088,
+          "name": "Read ResourceQuotas (Namespace Information Disclosure)",
+          "link": "https://rbac-atlas.github.io/rules/1088/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "gitlab-kube-state-metrics",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "gitlab-kube-state-metrics",
+      "apiGroup": "",
+      "resource": "services",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "gitlab-kube-state-metrics",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "gitlab-kube-state-metrics",
+      "apiGroup": "",
+      "resource": "configmaps",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "InformationDisclosure",
+        "ConfigMapAccess",
+        "DataExposure"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1022,
+          "name": "Read ConfigMaps cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1022/"
+        },
+        {
+          "id": 1023,
+          "name": "Read ConfigMaps in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1023/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "gitlab-kube-state-metrics",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "gitlab-kube-state-metrics",
+      "apiGroup": "",
+      "resource": "endpoints",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "gitlab-kube-state-metrics",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "gitlab-kube-state-metrics",
+      "apiGroup": "",
+      "resource": "persistentvolumeclaims",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "gitlab-kube-state-metrics",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "gitlab-kube-state-metrics",
+      "apiGroup": "",
+      "resource": "persistentvolumes",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "gitlab-kube-state-metrics",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "gitlab-kube-state-metrics",
+      "apiGroup": "",
+      "resource": "replicationcontrollers",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "gitlab-kube-state-metrics",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "gitlab-kube-state-metrics",
+      "apiGroup": "batch",
+      "resource": "jobs",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "gitlab-kube-state-metrics",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "gitlab-kube-state-metrics",
+      "apiGroup": "batch",
+      "resource": "cronjobs",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    }
+  ],
+  "serviceAccountWorkloads": [
+    {
+      "serviceAccountName": "gitlab-gitlab-runner",
+      "namespace": "default",
+      "workloadType": "Deployment",
+      "workloadName": "gitlab-gitlab-runner",
+      "containerName": "gitlab-gitlab-runner",
+      "image": "registry.gitlab.com/gitlab-org/gitlab-runner:alpine-v15.4.0"
+    },
+    {
+      "serviceAccountName": "",
+      "namespace": "default",
+      "workloadType": "Deployment",
+      "workloadName": "gitlab-registry",
+      "containerName": "registry",
+      "image": "registry.gitlab.com/gitlab-org/build/cng/gitlab-container-registry:v3.58.0-gitlab"
+    },
+    {
+      "serviceAccountName": "",
+      "namespace": "default",
+      "workloadType": "Deployment",
+      "workloadName": "gitlab-gitlab-shell",
+      "containerName": "gitlab-shell",
+      "image": "registry.gitlab.com/gitlab-org/build/cng/gitlab-shell:v14.12.0"
+    },
+    {
+      "serviceAccountName": "",
+      "namespace": "default",
+      "workloadType": "StatefulSet",
+      "workloadName": "gitlab-praefect",
+      "containerName": "praefect",
+      "image": "registry.gitlab.com/gitlab-org/build/cng/gitaly:v15.5.2"
+    },
+    {
+      "serviceAccountName": "",
+      "namespace": "default",
+      "workloadType": "StatefulSet",
+      "workloadName": "gitlab-postgresql",
+      "containerName": "gitlab-postgresql",
+      "image": "docker.io/bitnami/postgresql:12.7.0"
+    },
+    {
+      "serviceAccountName": "",
+      "namespace": "default",
+      "workloadType": "StatefulSet",
+      "workloadName": "gitlab-postgresql",
+      "containerName": "metrics",
+      "image": "docker.io/bitnami/postgres-exporter:0.8.0-debian-10-r99"
+    },
+    {
+      "serviceAccountName": "",
+      "namespace": "default",
+      "workloadType": "Deployment",
+      "workloadName": "gitlab-kas",
+      "containerName": "kas",
+      "image": "registry.gitlab.com/gitlab-org/build/cng/gitlab-kas:v15.5.1"
+    },
+    {
+      "serviceAccountName": "",
+      "namespace": "default",
+      "workloadType": "Deployment",
+      "workloadName": "gitlab-sidekiq-all-in-1-v2",
+      "containerName": "sidekiq",
+      "image": "registry.gitlab.com/gitlab-org/build/cng/gitlab-sidekiq-ee:v15.5.2"
+    },
+    {
+      "serviceAccountName": "",
+      "namespace": "default",
+      "workloadType": "Deployment",
+      "workloadName": "gitlab-toolbox",
+      "containerName": "toolbox",
+      "image": "registry.gitlab.com/gitlab-org/build/cng/gitlab-toolbox-ee:v15.5.2"
+    },
+    {
+      "serviceAccountName": "",
+      "namespace": "default",
+      "workloadType": "Job",
+      "workloadName": "gitlab-migrations-1",
+      "containerName": "migrations",
+      "image": "registry.gitlab.com/gitlab-org/build/cng/gitlab-toolbox-ee:v15.5.2"
+    },
+    {
+      "serviceAccountName": "",
+      "namespace": "default",
+      "workloadType": "Deployment",
+      "workloadName": "gitlab-gitlab-pages",
+      "containerName": "gitlab-pages",
+      "image": "registry.gitlab.com/gitlab-org/build/cng/gitlab-pages:v1.62.0"
+    },
+    {
+      "serviceAccountName": "",
+      "namespace": "default",
+      "workloadType": "Deployment",
+      "workloadName": "gitlab-gitlab-exporter",
+      "containerName": "gitlab-exporter",
+      "image": "registry.gitlab.com/gitlab-org/build/cng/gitlab-exporter:11.18.2"
+    },
+    {
+      "serviceAccountName": "",
+      "namespace": "default",
+      "workloadType": "Job",
+      "workloadName": "gitlab-gitlab-upgrade-check",
+      "containerName": "run-check",
+      "image": "registry.gitlab.com/gitlab-org/cloud-native/mirror/images/busybox:latest"
+    },
+    {
+      "serviceAccountName": "",
+      "namespace": "default",
+      "workloadType": "Pod",
+      "workloadName": "gitlab-webservice-test-runner-ooywo",
+      "containerName": "test-runner",
+      "image": "registry.gitlab.com/gitlab-org/build/cng/gitlab-webservice-ee:v15.5.2"
+    },
+    {
+      "serviceAccountName": "",
+      "namespace": "default",
+      "workloadType": "Job",
+      "workloadName": "gitlab-minio-create-buckets-1",
+      "containerName": "minio-mc",
+      "image": "minio/mc:RELEASE.2018-07-13T00-53-22Z"
+    },
+    {
+      "serviceAccountName": "",
+      "namespace": "default",
+      "workloadType": "StatefulSet",
+      "workloadName": "gitlab-gitaly",
+      "containerName": "gitaly",
+      "image": "registry.gitlab.com/gitlab-org/build/cng/gitaly:v15.5.2"
+    },
+    {
+      "serviceAccountName": "",
+      "namespace": "default",
+      "workloadType": "Deployment",
+      "workloadName": "gitlab-minio",
+      "containerName": "minio",
+      "image": "minio/minio:RELEASE.2017-12-28T01-21-00Z"
+    },
+    {
+      "serviceAccountName": "",
+      "namespace": "default",
+      "workloadType": "Deployment",
+      "workloadName": "gitlab-webservice-default",
+      "containerName": "webservice",
+      "image": "registry.gitlab.com/gitlab-org/build/cng/gitlab-webservice-ee:v15.5.2"
+    },
+    {
+      "serviceAccountName": "",
+      "namespace": "default",
+      "workloadType": "Deployment",
+      "workloadName": "gitlab-webservice-default",
+      "containerName": "gitlab-workhorse",
+      "image": "registry.gitlab.com/gitlab-org/build/cng/gitlab-workhorse-ee:v15.5.2"
+    },
+    {
+      "serviceAccountName": "default",
+      "namespace": "default",
+      "workloadType": "StatefulSet",
+      "workloadName": "gitlab-redis-master",
+      "containerName": "redis",
+      "image": "docker.io/bitnami/redis:6.0.9-debian-10-r0"
+    },
+    {
+      "serviceAccountName": "default",
+      "namespace": "default",
+      "workloadType": "StatefulSet",
+      "workloadName": "gitlab-redis-master",
+      "containerName": "metrics",
+      "image": "docker.io/bitnami/redis-exporter:1.12.1-debian-10-r11"
+    },
+    {
+      "serviceAccountName": "gitlab-shared-secrets",
+      "namespace": "default",
+      "workloadType": "Job",
+      "workloadName": "gitlab-shared-secrets-1-pen",
+      "containerName": "gitlab",
+      "image": "registry.gitlab.com/gitlab-org/build/cng/kubectl:1.18.20@sha256:8d27c191af306cafddba2f293c5613f8966363f779d79a5599ad0231e60069e4"
+    },
+    {
+      "serviceAccountName": "gitlab-nginx-ingress",
+      "namespace": "default",
+      "workloadType": "Deployment",
+      "workloadName": "gitlab-nginx-ingress-controller",
+      "containerName": "controller",
+      "image": "registry.gitlab.com/gitlab-org/cloud-native/mirror/images/ingress-nginx/controller:v1.0.4@sha256:545cff00370f28363dad31e3b59a94ba377854d3a11f18988f5f9e56841ef9ef"
+    },
+    {
+      "serviceAccountName": "gitlab-kube-state-metrics",
+      "namespace": "default",
+      "workloadType": "Deployment",
+      "workloadName": "gitlab-kube-state-metrics",
+      "containerName": "kube-state-metrics",
+      "image": "k8s.gcr.io/kube-state-metrics/kube-state-metrics:v2.2.4"
+    },
+    {
+      "serviceAccountName": "gitlab-cert-manager-cainjector",
+      "namespace": "default",
+      "workloadType": "Deployment",
+      "workloadName": "gitlab-cert-manager-cainjector",
+      "containerName": "cert-manager",
+      "image": "quay.io/jetstack/cert-manager-cainjector:v1.5.4"
+    },
+    {
+      "serviceAccountName": "gitlab-prometheus-server",
+      "namespace": "default",
+      "workloadType": "Deployment",
+      "workloadName": "gitlab-prometheus-server",
+      "containerName": "prometheus-server-configmap-reload",
+      "image": "jimmidyson/configmap-reload:v0.5.0"
+    },
+    {
+      "serviceAccountName": "gitlab-prometheus-server",
+      "namespace": "default",
+      "workloadType": "Deployment",
+      "workloadName": "gitlab-prometheus-server",
+      "containerName": "prometheus-server",
+      "image": "quay.io/prometheus/prometheus:v2.31.1"
+    },
+    {
+      "serviceAccountName": "gitlab-certmanager-issuer",
+      "namespace": "default",
+      "workloadType": "Job",
+      "workloadName": "gitlab-issuer-1",
+      "containerName": "create-issuer",
+      "image": "registry.gitlab.com/gitlab-org/build/cng/kubectl:1.18.20@sha256:8d27c191af306cafddba2f293c5613f8966363f779d79a5599ad0231e60069e4"
+    },
+    {
+      "serviceAccountName": "gitlab-cert-manager-webhook",
+      "namespace": "default",
+      "workloadType": "Deployment",
+      "workloadName": "gitlab-cert-manager-webhook",
+      "containerName": "cert-manager",
+      "image": "quay.io/jetstack/cert-manager-webhook:v1.5.4"
+    },
+    {
+      "serviceAccountName": "gitlab-cert-manager-startupapicheck",
+      "namespace": "default",
+      "workloadType": "Job",
+      "workloadName": "gitlab-cert-manager-startupapicheck",
+      "containerName": "cert-manager",
+      "image": "quay.io/jetstack/cert-manager-ctl:v1.5.4"
+    },
+    {
+      "serviceAccountName": "gitlab-cert-manager",
+      "namespace": "default",
+      "workloadType": "Deployment",
+      "workloadName": "gitlab-cert-manager",
+      "containerName": "cert-manager",
+      "image": "quay.io/jetstack/cert-manager-controller:v1.5.4"
+    },
+    {
+      "serviceAccountName": "gitlab-grafana-app",
+      "namespace": "default",
+      "workloadType": "Deployment",
+      "workloadName": "gitlab-grafana-app",
+      "containerName": "grafana-app-sc-dashboard",
+      "image": "quay.io/kiwigrid/k8s-sidecar:1.10.7"
+    },
+    {
+      "serviceAccountName": "gitlab-grafana-app",
+      "namespace": "default",
+      "workloadType": "Deployment",
+      "workloadName": "gitlab-grafana-app",
+      "containerName": "grafana",
+      "image": "grafana/grafana:7.5.16"
+    }
+  ]
+}

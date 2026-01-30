@@ -1,0 +1,58 @@
+{
+  "metadata": {
+    "version": "0.12.0",
+    "name": "alertmanager",
+    "source": "charts/prometheus-community__alertmanager__0.12.0/",
+    "timestamp": 1769798274,
+    "extra": {
+      "helm": {
+        "description": "The Alertmanager handles alerts sent by client applications such as the Prometheus server.",
+        "home": "https://prometheus.io/",
+        "icon": "https://raw.githubusercontent.com/prometheus/prometheus.github.io/master/assets/prometheus_logo-cb55bb5c346.png",
+        "keywords": null,
+        "kubeVersion": "",
+        "maintainers": [
+          {
+            "name": "monotek",
+            "email": "monotek23@gmail.com"
+          },
+          {
+            "name": "naseemkullah",
+            "email": "naseem@transit.app"
+          }
+        ],
+        "sources": [
+          "https://github.com/prometheus/alertmanager"
+        ]
+      }
+    }
+  },
+  "serviceAccountData": [
+    {
+      "serviceAccountName": "alertmanager",
+      "namespace": "default",
+      "automountToken": false,
+      "secrets": null,
+      "imagePullSecrets": null
+    }
+  ],
+  "serviceAccountPermissions": [],
+  "serviceAccountWorkloads": [
+    {
+      "serviceAccountName": "",
+      "namespace": "default",
+      "workloadType": "Pod",
+      "workloadName": "alertmanager-test-connection",
+      "containerName": "wget",
+      "image": "busybox"
+    },
+    {
+      "serviceAccountName": "alertmanager",
+      "namespace": "default",
+      "workloadType": "StatefulSet",
+      "workloadName": "alertmanager",
+      "containerName": "alertmanager",
+      "image": "quay.io/prometheus/alertmanager:v0.22.1"
+    }
+  ]
+}

@@ -3,7 +3,7 @@
     "version": "1.61.0",
     "name": "tempo-distributed",
     "source": "charts/grafana__tempo-distributed__1.61.0/",
-    "timestamp": 1769479920,
+    "timestamp": 1769793820,
     "extra": {
       "helm": {
         "description": "Grafana Tempo in MicroService mode",
@@ -55,21 +55,14 @@
   },
   "serviceAccountData": [
     {
-      "serviceAccountName": "minio-sa",
-      "namespace": "default",
-      "automountToken": false,
-      "secrets": null,
-      "imagePullSecrets": null
-    },
-    {
-      "serviceAccountName": "grafana-agent-test-sa",
-      "namespace": "default",
-      "automountToken": false,
-      "secrets": null,
-      "imagePullSecrets": null
-    },
-    {
       "serviceAccountName": "tempo-distributed",
+      "namespace": "default",
+      "automountToken": false,
+      "secrets": null,
+      "imagePullSecrets": null
+    },
+    {
+      "serviceAccountName": "minio-sa",
       "namespace": "default",
       "automountToken": false,
       "secrets": null,
@@ -88,9 +81,39 @@
       "automountToken": false,
       "secrets": null,
       "imagePullSecrets": null
+    },
+    {
+      "serviceAccountName": "grafana-agent-test-sa",
+      "namespace": "default",
+      "automountToken": false,
+      "secrets": null,
+      "imagePullSecrets": null
     }
   ],
   "serviceAccountPermissions": [
+    {
+      "serviceAccountName": "grafana-agent-test-sa",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "grafana-agent-test-cr",
+      "apiGroup": "",
+      "resource": "pods",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
     {
       "serviceAccountName": "grafana-agent-test-sa",
       "namespace": "default",
@@ -129,12 +152,12 @@
       ],
       "riskLevel": "Critical",
       "tags": [
+        "AuthorizationBypass",
         "NodeAccess",
         "ClusterAdminAccess",
         "CodeExecution",
         "LateralMovement",
-        "ElevationOfPrivilege",
-        "AuthorizationBypass"
+        "ElevationOfPrivilege"
       ],
       "matchedRiskRules": [
         {
@@ -223,29 +246,6 @@
       "namespace": "default",
       "roleType": "ClusterRole",
       "roleName": "grafana-agent-test-cr",
-      "apiGroup": "",
-      "resource": "pods",
-      "resourceName": "",
-      "verbs": [
-        "get",
-        "list",
-        "watch"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "grafana-agent-test-sa",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "grafana-agent-test-cr",
       "apiGroup": "networking.k8s.io",
       "resource": "ingresses",
       "resourceName": "",
@@ -265,224 +265,106 @@
       ]
     },
     {
-      "serviceAccountName": "tempo-distributed-grafana-agent-operator",
+      "serviceAccountName": "tempo-distributed-rollout-operator",
       "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "tempo-distributed-grafana-agent-operator",
+      "roleType": "Role",
+      "roleName": "tempo-distributed-rollout-operator-webhook-role",
+      "apiGroup": "",
+      "resource": "secrets",
+      "resourceName": "certificate",
+      "verbs": [
+        "get",
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [
+        "ResourceNameRestricted"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "tempo-distributed-rollout-operator",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "tempo-distributed-rollout-operator-webhook-role",
       "apiGroup": "",
       "resource": "secrets",
       "resourceName": "",
       "verbs": [
-        "create",
-        "delete",
-        "get",
-        "list",
-        "patch",
-        "update",
-        "watch"
-      ],
-      "riskLevel": "Critical",
-      "tags": [
-        "PrivilegeEscalation",
-        "PotentialPrivilegeEscalation",
-        "Tampering",
-        "Persistence",
-        "ClusterWideSecretAccess",
-        "CredentialAccess",
-        "DataExposure",
-        "InformationDisclosure",
-        "SecretAccess"
-      ],
-      "matchedRiskRules": [
-        {
-          "id": 1010,
-          "name": "Read secrets cluster-wide",
-          "link": "https://rbac-atlas.github.io/rules/1010/"
-        },
-        {
-          "id": 1011,
-          "name": "Read secrets in a namespace",
-          "link": "https://rbac-atlas.github.io/rules/1011/"
-        },
-        {
-          "id": 1012,
-          "name": "Modify secrets cluster-wide",
-          "link": "https://rbac-atlas.github.io/rules/1012/"
-        },
-        {
-          "id": 1013,
-          "name": "Modify secrets in a namespace",
-          "link": "https://rbac-atlas.github.io/rules/1013/"
-        },
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "tempo-distributed-grafana-agent-operator",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "tempo-distributed-grafana-agent-operator",
-      "apiGroup": "",
-      "resource": "services",
-      "resourceName": "",
-      "verbs": [
-        "create",
-        "delete",
-        "get",
-        "list",
-        "patch",
-        "update",
-        "watch"
-      ],
-      "riskLevel": "Critical",
-      "tags": [
-        "NetworkManipulation",
-        "ServiceExposure",
-        "DenialOfService",
-        "Tampering"
-      ],
-      "matchedRiskRules": [
-        {
-          "id": 1075,
-          "name": "Manage Services cluster-wide",
-          "link": "https://rbac-atlas.github.io/rules/1075/"
-        },
-        {
-          "id": 1076,
-          "name": "Manage Services in a namespace",
-          "link": "https://rbac-atlas.github.io/rules/1076/"
-        },
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "tempo-distributed-grafana-agent-operator",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "tempo-distributed-grafana-agent-operator",
-      "apiGroup": "",
-      "resource": "configmaps",
-      "resourceName": "",
-      "verbs": [
-        "create",
-        "delete",
-        "get",
-        "list",
-        "patch",
-        "update",
-        "watch"
-      ],
-      "riskLevel": "Critical",
-      "tags": [
-        "ConfigMapAccess",
-        "PotentialPrivilegeEscalation",
-        "InformationDisclosure",
-        "DataExposure",
-        "Tampering"
-      ],
-      "matchedRiskRules": [
-        {
-          "id": 1024,
-          "name": "Modify ConfigMaps cluster-wide",
-          "link": "https://rbac-atlas.github.io/rules/1024/"
-        },
-        {
-          "id": 1022,
-          "name": "Read ConfigMaps cluster-wide",
-          "link": "https://rbac-atlas.github.io/rules/1022/"
-        },
-        {
-          "id": 1025,
-          "name": "Modify ConfigMaps in a namespace",
-          "link": "https://rbac-atlas.github.io/rules/1025/"
-        },
-        {
-          "id": 1023,
-          "name": "Read ConfigMaps in a namespace",
-          "link": "https://rbac-atlas.github.io/rules/1023/"
-        },
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "tempo-distributed-grafana-agent-operator",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "tempo-distributed-grafana-agent-operator",
-      "apiGroup": "",
-      "resource": "endpoints",
-      "resourceName": "",
-      "verbs": [
-        "create",
-        "delete",
-        "get",
-        "list",
-        "patch",
-        "update",
-        "watch"
-      ],
-      "riskLevel": "Critical",
-      "tags": [
-        "ManInTheMiddle",
-        "DenialOfService",
-        "Tampering",
-        "NetworkManipulation",
-        "TrafficRedirection"
-      ],
-      "matchedRiskRules": [
-        {
-          "id": 1073,
-          "name": "Manage Endpoints or EndpointSlices cluster-wide",
-          "link": "https://rbac-atlas.github.io/rules/1073/"
-        },
-        {
-          "id": 1074,
-          "name": "Manage Endpoints or EndpointSlices in a namespace",
-          "link": "https://rbac-atlas.github.io/rules/1074/"
-        },
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "tempo-distributed-grafana-agent-operator",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "tempo-distributed-grafana-agent-operator",
-      "apiGroup": "",
-      "resource": "namespaces",
-      "resourceName": "",
-      "verbs": [
-        "get",
-        "list",
-        "watch"
+        "create"
       ],
       "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "tempo-distributed-rollout-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "tempo-distributed-rollout-operator-webhook-clusterrole",
+      "apiGroup": "admissionregistration.k8s.io",
+      "resource": "validatingwebhookconfigurations",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "patch",
+        "watch"
+      ],
+      "riskLevel": "Medium",
       "tags": [
         "InformationDisclosure",
-        "Reconnaissance",
-        "ClusterStructure"
+        "WebhookReconnaissance",
+        "Reconnaissance"
       ],
       "matchedRiskRules": [
         {
-          "id": 1082,
-          "name": "List Namespaces (Cluster Reconnaissance)",
-          "link": "https://rbac-atlas.github.io/rules/1082/"
+          "id": 1083,
+          "name": "List ValidatingWebhookConfigurations (Reconnaissance)",
+          "link": "https://rbac-atlas.github.io/rules/1083/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "tempo-distributed-rollout-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "tempo-distributed-rollout-operator-webhook-clusterrole",
+      "apiGroup": "admissionregistration.k8s.io",
+      "resource": "mutatingwebhookconfigurations",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "patch",
+        "watch"
+      ],
+      "riskLevel": "Medium",
+      "tags": [
+        "InformationDisclosure",
+        "WebhookReconnaissance",
+        "Reconnaissance"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1084,
+          "name": "List MutatingWebhookConfigurations (Reconnaissance)",
+          "link": "https://rbac-atlas.github.io/rules/1084/"
         },
         {
           "id": 9996,
@@ -496,8 +378,8 @@
       "namespace": "default",
       "roleType": "ClusterRole",
       "roleName": "tempo-distributed-grafana-agent-operator",
-      "apiGroup": "",
-      "resource": "nodes",
+      "apiGroup": "monitoring.grafana.com",
+      "resource": "logsinstances",
       "resourceName": "",
       "verbs": [
         "get",
@@ -519,123 +401,17 @@
       "namespace": "default",
       "roleType": "ClusterRole",
       "roleName": "tempo-distributed-grafana-agent-operator",
-      "apiGroup": "apps",
-      "resource": "daemonsets",
+      "apiGroup": "monitoring.grafana.com",
+      "resource": "integrations",
       "resourceName": "",
       "verbs": [
-        "create",
-        "delete",
         "get",
         "list",
-        "patch",
-        "update",
         "watch"
       ],
-      "riskLevel": "Critical",
-      "tags": [
-        "Tampering",
-        "WorkloadLifecycle",
-        "PrivilegeEscalation",
-        "Persistence",
-        "NodeAccess"
-      ],
+      "riskLevel": "Low",
+      "tags": [],
       "matchedRiskRules": [
-        {
-          "id": 1035,
-          "name": "Manage DaemonSets cluster-wide (runs on all nodes, high impact)",
-          "link": "https://rbac-atlas.github.io/rules/1035/"
-        },
-        {
-          "id": 1036,
-          "name": "Manage DaemonSets in a namespace (runs on nodes, high impact)",
-          "link": "https://rbac-atlas.github.io/rules/1036/"
-        },
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "tempo-distributed-grafana-agent-operator",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "tempo-distributed-grafana-agent-operator",
-      "apiGroup": "apps",
-      "resource": "deployments",
-      "resourceName": "",
-      "verbs": [
-        "create",
-        "delete",
-        "get",
-        "list",
-        "patch",
-        "update",
-        "watch"
-      ],
-      "riskLevel": "Critical",
-      "tags": [
-        "PotentialPrivilegeEscalation",
-        "WorkloadLifecycle",
-        "PrivilegeEscalation",
-        "Persistence",
-        "Tampering"
-      ],
-      "matchedRiskRules": [
-        {
-          "id": 1033,
-          "name": "Manage Deployments cluster-wide (potential for privileged pod execution)",
-          "link": "https://rbac-atlas.github.io/rules/1033/"
-        },
-        {
-          "id": 1034,
-          "name": "Manage Deployments in a namespace (potential for privileged pod execution)",
-          "link": "https://rbac-atlas.github.io/rules/1034/"
-        },
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "tempo-distributed-grafana-agent-operator",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "tempo-distributed-grafana-agent-operator",
-      "apiGroup": "apps",
-      "resource": "statefulsets",
-      "resourceName": "",
-      "verbs": [
-        "create",
-        "delete",
-        "get",
-        "list",
-        "patch",
-        "update",
-        "watch"
-      ],
-      "riskLevel": "Critical",
-      "tags": [
-        "PotentialPrivilegeEscalation",
-        "WorkloadLifecycle",
-        "PrivilegeEscalation",
-        "Persistence",
-        "Tampering"
-      ],
-      "matchedRiskRules": [
-        {
-          "id": 1037,
-          "name": "Manage StatefulSets cluster-wide",
-          "link": "https://rbac-atlas.github.io/rules/1037/"
-        },
-        {
-          "id": 1038,
-          "name": "Manage StatefulSets in a namespace",
-          "link": "https://rbac-atlas.github.io/rules/1038/"
-        },
         {
           "id": 9996,
           "name": "Base Risk Level - Low",
@@ -649,11 +425,36 @@
       "roleType": "ClusterRole",
       "roleName": "tempo-distributed-grafana-agent-operator",
       "apiGroup": "monitoring.grafana.com",
-      "resource": "grafanaagents",
+      "resource": "podlogs/finalizers",
       "resourceName": "",
       "verbs": [
         "get",
         "list",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "tempo-distributed-grafana-agent-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "tempo-distributed-grafana-agent-operator",
+      "apiGroup": "monitoring.grafana.com",
+      "resource": "integrations/finalizers",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "update",
         "watch"
       ],
       "riskLevel": "Low",
@@ -695,7 +496,7 @@
       "roleType": "ClusterRole",
       "roleName": "tempo-distributed-grafana-agent-operator",
       "apiGroup": "monitoring.grafana.com",
-      "resource": "logsinstances",
+      "resource": "podlogs",
       "resourceName": "",
       "verbs": [
         "get",
@@ -790,106 +591,11 @@
       "roleType": "ClusterRole",
       "roleName": "tempo-distributed-grafana-agent-operator",
       "apiGroup": "monitoring.grafana.com",
-      "resource": "integrations/finalizers",
+      "resource": "grafanaagents",
       "resourceName": "",
       "verbs": [
         "get",
         "list",
-        "update",
-        "watch"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "tempo-distributed-grafana-agent-operator",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "tempo-distributed-grafana-agent-operator",
-      "apiGroup": "monitoring.grafana.com",
-      "resource": "podlogs",
-      "resourceName": "",
-      "verbs": [
-        "get",
-        "list",
-        "watch"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "tempo-distributed-grafana-agent-operator",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "tempo-distributed-grafana-agent-operator",
-      "apiGroup": "monitoring.grafana.com",
-      "resource": "integrations",
-      "resourceName": "",
-      "verbs": [
-        "get",
-        "list",
-        "watch"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "tempo-distributed-grafana-agent-operator",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "tempo-distributed-grafana-agent-operator",
-      "apiGroup": "monitoring.grafana.com",
-      "resource": "podlogs/finalizers",
-      "resourceName": "",
-      "verbs": [
-        "get",
-        "list",
-        "update",
-        "watch"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "tempo-distributed-grafana-agent-operator",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "tempo-distributed-grafana-agent-operator",
-      "apiGroup": "monitoring.coreos.com",
-      "resource": "probes/finalizers",
-      "resourceName": "",
-      "verbs": [
-        "get",
-        "list",
-        "update",
         "watch"
       ],
       "riskLevel": "Low",
@@ -1020,79 +726,18 @@
       ]
     },
     {
-      "serviceAccountName": "tempo-distributed-rollout-operator",
+      "serviceAccountName": "tempo-distributed-grafana-agent-operator",
       "namespace": "default",
       "roleType": "ClusterRole",
-      "roleName": "tempo-distributed-rollout-operator-webhook-clusterrole",
-      "apiGroup": "admissionregistration.k8s.io",
-      "resource": "validatingwebhookconfigurations",
+      "roleName": "tempo-distributed-grafana-agent-operator",
+      "apiGroup": "monitoring.coreos.com",
+      "resource": "probes/finalizers",
       "resourceName": "",
       "verbs": [
+        "get",
         "list",
-        "patch",
+        "update",
         "watch"
-      ],
-      "riskLevel": "Medium",
-      "tags": [
-        "InformationDisclosure",
-        "WebhookReconnaissance",
-        "Reconnaissance"
-      ],
-      "matchedRiskRules": [
-        {
-          "id": 1083,
-          "name": "List ValidatingWebhookConfigurations (Reconnaissance)",
-          "link": "https://rbac-atlas.github.io/rules/1083/"
-        },
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "tempo-distributed-rollout-operator",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "tempo-distributed-rollout-operator-webhook-clusterrole",
-      "apiGroup": "admissionregistration.k8s.io",
-      "resource": "mutatingwebhookconfigurations",
-      "resourceName": "",
-      "verbs": [
-        "list",
-        "patch",
-        "watch"
-      ],
-      "riskLevel": "Medium",
-      "tags": [
-        "WebhookReconnaissance",
-        "Reconnaissance",
-        "InformationDisclosure"
-      ],
-      "matchedRiskRules": [
-        {
-          "id": 1084,
-          "name": "List MutatingWebhookConfigurations (Reconnaissance)",
-          "link": "https://rbac-atlas.github.io/rules/1084/"
-        },
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "tempo-distributed-rollout-operator",
-      "namespace": "default",
-      "roleType": "Role",
-      "roleName": "tempo-distributed-rollout-operator-webhook-role",
-      "apiGroup": "",
-      "resource": "secrets",
-      "resourceName": "",
-      "verbs": [
-        "create"
       ],
       "riskLevel": "Low",
       "tags": [],
@@ -1105,22 +750,377 @@
       ]
     },
     {
-      "serviceAccountName": "tempo-distributed-rollout-operator",
+      "serviceAccountName": "tempo-distributed-grafana-agent-operator",
       "namespace": "default",
-      "roleType": "Role",
-      "roleName": "tempo-distributed-rollout-operator-webhook-role",
+      "roleType": "ClusterRole",
+      "roleName": "tempo-distributed-grafana-agent-operator",
       "apiGroup": "",
-      "resource": "secrets",
-      "resourceName": "certificate",
+      "resource": "namespaces",
+      "resourceName": "",
       "verbs": [
         "get",
-        "update"
+        "list",
+        "watch"
       ],
       "riskLevel": "Low",
       "tags": [
-        "ResourceNameRestricted"
+        "ClusterStructure",
+        "InformationDisclosure",
+        "Reconnaissance"
       ],
       "matchedRiskRules": [
+        {
+          "id": 1082,
+          "name": "List Namespaces (Cluster Reconnaissance)",
+          "link": "https://rbac-atlas.github.io/rules/1082/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "tempo-distributed-grafana-agent-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "tempo-distributed-grafana-agent-operator",
+      "apiGroup": "",
+      "resource": "nodes",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "tempo-distributed-grafana-agent-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "tempo-distributed-grafana-agent-operator",
+      "apiGroup": "",
+      "resource": "secrets",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "CredentialAccess",
+        "DataExposure",
+        "SecretAccess",
+        "Tampering",
+        "PrivilegeEscalation",
+        "Persistence",
+        "ClusterWideSecretAccess",
+        "InformationDisclosure",
+        "PotentialPrivilegeEscalation"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1010,
+          "name": "Read secrets cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1010/"
+        },
+        {
+          "id": 1011,
+          "name": "Read secrets in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1011/"
+        },
+        {
+          "id": 1012,
+          "name": "Modify secrets cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1012/"
+        },
+        {
+          "id": 1013,
+          "name": "Modify secrets in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1013/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "tempo-distributed-grafana-agent-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "tempo-distributed-grafana-agent-operator",
+      "apiGroup": "",
+      "resource": "services",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "DenialOfService",
+        "Tampering",
+        "NetworkManipulation",
+        "ServiceExposure"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1075,
+          "name": "Manage Services cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1075/"
+        },
+        {
+          "id": 1076,
+          "name": "Manage Services in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1076/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "tempo-distributed-grafana-agent-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "tempo-distributed-grafana-agent-operator",
+      "apiGroup": "",
+      "resource": "configmaps",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "Tampering",
+        "ConfigMapAccess",
+        "PotentialPrivilegeEscalation",
+        "InformationDisclosure",
+        "DataExposure"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1024,
+          "name": "Modify ConfigMaps cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1024/"
+        },
+        {
+          "id": 1022,
+          "name": "Read ConfigMaps cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1022/"
+        },
+        {
+          "id": 1025,
+          "name": "Modify ConfigMaps in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1025/"
+        },
+        {
+          "id": 1023,
+          "name": "Read ConfigMaps in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1023/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "tempo-distributed-grafana-agent-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "tempo-distributed-grafana-agent-operator",
+      "apiGroup": "",
+      "resource": "endpoints",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "Tampering",
+        "NetworkManipulation",
+        "TrafficRedirection",
+        "ManInTheMiddle",
+        "DenialOfService"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1073,
+          "name": "Manage Endpoints or EndpointSlices cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1073/"
+        },
+        {
+          "id": 1074,
+          "name": "Manage Endpoints or EndpointSlices in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1074/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "tempo-distributed-grafana-agent-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "tempo-distributed-grafana-agent-operator",
+      "apiGroup": "apps",
+      "resource": "deployments",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "WorkloadLifecycle",
+        "PrivilegeEscalation",
+        "Persistence",
+        "Tampering",
+        "PotentialPrivilegeEscalation"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1033,
+          "name": "Manage Deployments cluster-wide (potential for privileged pod execution)",
+          "link": "https://rbac-atlas.github.io/rules/1033/"
+        },
+        {
+          "id": 1034,
+          "name": "Manage Deployments in a namespace (potential for privileged pod execution)",
+          "link": "https://rbac-atlas.github.io/rules/1034/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "tempo-distributed-grafana-agent-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "tempo-distributed-grafana-agent-operator",
+      "apiGroup": "apps",
+      "resource": "statefulsets",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "WorkloadLifecycle",
+        "PrivilegeEscalation",
+        "Persistence",
+        "Tampering",
+        "PotentialPrivilegeEscalation"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1037,
+          "name": "Manage StatefulSets cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1037/"
+        },
+        {
+          "id": 1038,
+          "name": "Manage StatefulSets in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1038/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "tempo-distributed-grafana-agent-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "tempo-distributed-grafana-agent-operator",
+      "apiGroup": "apps",
+      "resource": "daemonsets",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "WorkloadLifecycle",
+        "PrivilegeEscalation",
+        "Persistence",
+        "NodeAccess",
+        "Tampering"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1035,
+          "name": "Manage DaemonSets cluster-wide (runs on all nodes, high impact)",
+          "link": "https://rbac-atlas.github.io/rules/1035/"
+        },
+        {
+          "id": 1036,
+          "name": "Manage DaemonSets in a namespace (runs on nodes, high impact)",
+          "link": "https://rbac-atlas.github.io/rules/1036/"
+        },
         {
           "id": 9996,
           "name": "Base Risk Level - Low",
@@ -1133,6 +1133,14 @@
     {
       "serviceAccountName": "minio-sa",
       "namespace": "default",
+      "workloadType": "Job",
+      "workloadName": "tempo-distributed-minio-make-bucket-job",
+      "containerName": "minio-mc",
+      "image": "quay.io/minio/mc:RELEASE.2022-10-20T23-26-33Z"
+    },
+    {
+      "serviceAccountName": "minio-sa",
+      "namespace": "default",
       "workloadType": "Deployment",
       "workloadName": "tempo-distributed-minio",
       "containerName": "minio",
@@ -1142,25 +1150,9 @@
       "serviceAccountName": "minio-sa",
       "namespace": "default",
       "workloadType": "Job",
-      "workloadName": "tempo-distributed-minio-make-bucket-job",
-      "containerName": "minio-mc",
-      "image": "quay.io/minio/mc:RELEASE.2022-10-20T23-26-33Z"
-    },
-    {
-      "serviceAccountName": "minio-sa",
-      "namespace": "default",
-      "workloadType": "Job",
       "workloadName": "tempo-distributed-minio-make-user-job",
       "containerName": "minio-mc",
       "image": "quay.io/minio/mc:RELEASE.2022-10-20T23-26-33Z"
-    },
-    {
-      "serviceAccountName": "tempo-distributed",
-      "namespace": "default",
-      "workloadType": "StatefulSet",
-      "workloadName": "tempo-distributed-memcached",
-      "containerName": "memcached",
-      "image": "docker.io/memcached:1.6.39-alpine"
     },
     {
       "serviceAccountName": "tempo-distributed",
@@ -1189,6 +1181,14 @@
     {
       "serviceAccountName": "tempo-distributed",
       "namespace": "default",
+      "workloadType": "StatefulSet",
+      "workloadName": "tempo-distributed-memcached",
+      "containerName": "memcached",
+      "image": "docker.io/memcached:1.6.39-alpine"
+    },
+    {
+      "serviceAccountName": "tempo-distributed",
+      "namespace": "default",
       "workloadType": "Deployment",
       "workloadName": "tempo-distributed-querier",
       "containerName": "querier",
@@ -1203,20 +1203,20 @@
       "image": "docker.io/grafana/tempo:2.9.0"
     },
     {
-      "serviceAccountName": "tempo-distributed-rollout-operator",
-      "namespace": "default",
-      "workloadType": "Deployment",
-      "workloadName": "tempo-distributed-rollout-operator",
-      "containerName": "rollout-operator",
-      "image": "docker.io/grafana/rollout-operator:v0.33.0"
-    },
-    {
       "serviceAccountName": "tempo-distributed-grafana-agent-operator",
       "namespace": "default",
       "workloadType": "Deployment",
       "workloadName": "tempo-distributed-grafana-agent-operator",
       "containerName": "grafana-agent-operator",
       "image": "docker.io/grafana/agent-operator:v0.44.2"
+    },
+    {
+      "serviceAccountName": "tempo-distributed-rollout-operator",
+      "namespace": "default",
+      "workloadType": "Deployment",
+      "workloadName": "tempo-distributed-rollout-operator",
+      "containerName": "rollout-operator",
+      "image": "docker.io/grafana/rollout-operator:v0.33.0"
     },
     {
       "serviceAccountName": "",

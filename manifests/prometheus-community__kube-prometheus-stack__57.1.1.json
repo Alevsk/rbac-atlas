@@ -1,0 +1,2060 @@
+{
+  "metadata": {
+    "version": "57.1.1",
+    "name": "kube-prometheus-stack",
+    "source": "charts/prometheus-community__kube-prometheus-stack__57.1.1/",
+    "timestamp": 1769794243,
+    "extra": {
+      "helm": {
+        "description": "kube-prometheus-stack collects Kubernetes manifests, Grafana dashboards, and Prometheus rules combined with documentation and scripts to provide easy to operate end-to-end Kubernetes cluster monitoring with Prometheus using the Prometheus Operator.",
+        "home": "https://github.com/prometheus-operator/kube-prometheus",
+        "icon": "https://raw.githubusercontent.com/prometheus/prometheus.github.io/master/assets/prometheus_logo-cb55bb5c346.png",
+        "keywords": [
+          "operator",
+          "prometheus",
+          "kube-prometheus"
+        ],
+        "kubeVersion": "\u003e=1.19.0-0",
+        "maintainers": [
+          {
+            "name": "andrewgkew",
+            "email": "andrew@quadcorps.co.uk"
+          },
+          {
+            "name": "gianrubio",
+            "email": "gianrubio@gmail.com"
+          },
+          {
+            "name": "gkarthiks",
+            "email": "github.gkarthiks@gmail.com"
+          },
+          {
+            "name": "GMartinez-Sisti",
+            "email": "kube-prometheus-stack@sisti.pt"
+          },
+          {
+            "name": "jkroepke",
+            "email": "github@jkroepke.de"
+          },
+          {
+            "name": "scottrigby",
+            "email": "scott@r6by.com"
+          },
+          {
+            "name": "Xtigyro",
+            "email": "miroslav.hadzhiev@gmail.com"
+          },
+          {
+            "name": "QuentinBisson",
+            "email": "quentin.bisson@gmail.com"
+          }
+        ],
+        "sources": [
+          "https://github.com/prometheus-community/helm-charts",
+          "https://github.com/prometheus-operator/kube-prometheus"
+        ]
+      }
+    }
+  },
+  "serviceAccountData": [
+    {
+      "serviceAccountName": "kube-prometheus-stack-prometheus",
+      "namespace": "default",
+      "automountToken": true,
+      "secrets": null,
+      "imagePullSecrets": null
+    },
+    {
+      "serviceAccountName": "kube-prometheus-stack-admission",
+      "namespace": "default",
+      "automountToken": false,
+      "secrets": null,
+      "imagePullSecrets": null
+    },
+    {
+      "serviceAccountName": "kube-prometheus-stack-prometheus-node-exporter",
+      "namespace": "default",
+      "automountToken": false,
+      "secrets": null,
+      "imagePullSecrets": null
+    },
+    {
+      "serviceAccountName": "kube-prometheus-stack-prometheus-windows-exporter",
+      "namespace": "default",
+      "automountToken": false,
+      "secrets": null,
+      "imagePullSecrets": null
+    },
+    {
+      "serviceAccountName": "kube-prometheus-stack-grafana-test",
+      "namespace": "default",
+      "automountToken": false,
+      "secrets": null,
+      "imagePullSecrets": null
+    },
+    {
+      "serviceAccountName": "kube-prometheus-stack-operator",
+      "namespace": "default",
+      "automountToken": true,
+      "secrets": null,
+      "imagePullSecrets": null
+    },
+    {
+      "serviceAccountName": "kube-prometheus-stack-kube-state-metrics",
+      "namespace": "default",
+      "automountToken": false,
+      "secrets": null,
+      "imagePullSecrets": null
+    },
+    {
+      "serviceAccountName": "kube-prometheus-stack-grafana",
+      "namespace": "default",
+      "automountToken": true,
+      "secrets": null,
+      "imagePullSecrets": null
+    },
+    {
+      "serviceAccountName": "kube-prometheus-stack-alertmanager",
+      "namespace": "default",
+      "automountToken": true,
+      "secrets": null,
+      "imagePullSecrets": null
+    }
+  ],
+  "serviceAccountPermissions": [
+    {
+      "serviceAccountName": "kube-prometheus-stack-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kube-prometheus-stack-operator",
+      "apiGroup": "",
+      "resource": "configmaps",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "InformationDisclosure",
+        "DataExposure",
+        "ClusterWideAccess",
+        "WildcardPermission",
+        "Tampering",
+        "ConfigMapAccess",
+        "PotentialPrivilegeEscalation"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1024,
+          "name": "Modify ConfigMaps cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1024/"
+        },
+        {
+          "id": 1022,
+          "name": "Read ConfigMaps cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1022/"
+        },
+        {
+          "id": 1025,
+          "name": "Modify ConfigMaps in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1025/"
+        },
+        {
+          "id": 1023,
+          "name": "Read ConfigMaps in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1023/"
+        },
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kube-prometheus-stack-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kube-prometheus-stack-operator",
+      "apiGroup": "",
+      "resource": "services",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kube-prometheus-stack-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kube-prometheus-stack-operator",
+      "apiGroup": "",
+      "resource": "services/finalizers",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kube-prometheus-stack-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kube-prometheus-stack-operator",
+      "apiGroup": "",
+      "resource": "endpoints",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kube-prometheus-stack-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kube-prometheus-stack-operator",
+      "apiGroup": "",
+      "resource": "nodes",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kube-prometheus-stack-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kube-prometheus-stack-operator",
+      "apiGroup": "",
+      "resource": "secrets",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "ClusterWideSecretAccess",
+        "CredentialAccess",
+        "DataExposure",
+        "InformationDisclosure",
+        "Tampering",
+        "Persistence",
+        "WildcardPermission",
+        "SecretAccess",
+        "PrivilegeEscalation",
+        "PotentialPrivilegeEscalation",
+        "ClusterWideAccess"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1010,
+          "name": "Read secrets cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1010/"
+        },
+        {
+          "id": 1011,
+          "name": "Read secrets in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1011/"
+        },
+        {
+          "id": 1012,
+          "name": "Modify secrets cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1012/"
+        },
+        {
+          "id": 1013,
+          "name": "Modify secrets in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1013/"
+        },
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kube-prometheus-stack-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kube-prometheus-stack-operator",
+      "apiGroup": "",
+      "resource": "pods",
+      "resourceName": "",
+      "verbs": [
+        "delete",
+        "list"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kube-prometheus-stack-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kube-prometheus-stack-operator",
+      "apiGroup": "",
+      "resource": "namespaces",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [
+        "InformationDisclosure",
+        "Reconnaissance",
+        "ClusterStructure"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1082,
+          "name": "List Namespaces (Cluster Reconnaissance)",
+          "link": "https://rbac-atlas.github.io/rules/1082/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kube-prometheus-stack-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kube-prometheus-stack-operator",
+      "apiGroup": "",
+      "resource": "events",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "patch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kube-prometheus-stack-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kube-prometheus-stack-operator",
+      "apiGroup": "networking.k8s.io",
+      "resource": "ingresses",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kube-prometheus-stack-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kube-prometheus-stack-operator",
+      "apiGroup": "storage.k8s.io",
+      "resource": "storageclasses",
+      "resourceName": "",
+      "verbs": [
+        "get"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kube-prometheus-stack-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kube-prometheus-stack-operator",
+      "apiGroup": "monitoring.coreos.com",
+      "resource": "alertmanagerconfigs",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "WildcardPermission",
+        "ClusterWideAccess"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kube-prometheus-stack-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kube-prometheus-stack-operator",
+      "apiGroup": "monitoring.coreos.com",
+      "resource": "prometheuses",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "ClusterWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kube-prometheus-stack-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kube-prometheus-stack-operator",
+      "apiGroup": "monitoring.coreos.com",
+      "resource": "prometheuses/finalizers",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "ClusterWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kube-prometheus-stack-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kube-prometheus-stack-operator",
+      "apiGroup": "monitoring.coreos.com",
+      "resource": "thanosrulers",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "ClusterWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kube-prometheus-stack-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kube-prometheus-stack-operator",
+      "apiGroup": "monitoring.coreos.com",
+      "resource": "servicemonitors",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "ClusterWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kube-prometheus-stack-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kube-prometheus-stack-operator",
+      "apiGroup": "monitoring.coreos.com",
+      "resource": "probes",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "ClusterWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kube-prometheus-stack-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kube-prometheus-stack-operator",
+      "apiGroup": "monitoring.coreos.com",
+      "resource": "prometheusrules",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "ClusterWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kube-prometheus-stack-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kube-prometheus-stack-operator",
+      "apiGroup": "monitoring.coreos.com",
+      "resource": "thanosrulers/finalizers",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "ClusterWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kube-prometheus-stack-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kube-prometheus-stack-operator",
+      "apiGroup": "monitoring.coreos.com",
+      "resource": "thanosrulers/status",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "ClusterWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kube-prometheus-stack-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kube-prometheus-stack-operator",
+      "apiGroup": "monitoring.coreos.com",
+      "resource": "alertmanagers",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "ClusterWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kube-prometheus-stack-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kube-prometheus-stack-operator",
+      "apiGroup": "monitoring.coreos.com",
+      "resource": "prometheusagents",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "ClusterWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kube-prometheus-stack-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kube-prometheus-stack-operator",
+      "apiGroup": "monitoring.coreos.com",
+      "resource": "alertmanagers/finalizers",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "ClusterWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kube-prometheus-stack-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kube-prometheus-stack-operator",
+      "apiGroup": "monitoring.coreos.com",
+      "resource": "alertmanagers/status",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "WildcardPermission",
+        "ClusterWideAccess"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kube-prometheus-stack-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kube-prometheus-stack-operator",
+      "apiGroup": "monitoring.coreos.com",
+      "resource": "prometheuses/status",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "ClusterWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kube-prometheus-stack-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kube-prometheus-stack-operator",
+      "apiGroup": "monitoring.coreos.com",
+      "resource": "prometheusagents/finalizers",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "ClusterWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kube-prometheus-stack-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kube-prometheus-stack-operator",
+      "apiGroup": "monitoring.coreos.com",
+      "resource": "prometheusagents/status",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "WildcardPermission",
+        "ClusterWideAccess"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kube-prometheus-stack-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kube-prometheus-stack-operator",
+      "apiGroup": "monitoring.coreos.com",
+      "resource": "scrapeconfigs",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "ClusterWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kube-prometheus-stack-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kube-prometheus-stack-operator",
+      "apiGroup": "monitoring.coreos.com",
+      "resource": "podmonitors",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "ClusterWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kube-prometheus-stack-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kube-prometheus-stack-operator",
+      "apiGroup": "apps",
+      "resource": "statefulsets",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "Tampering",
+        "PotentialPrivilegeEscalation",
+        "ClusterWideAccess",
+        "WildcardPermission",
+        "WorkloadLifecycle",
+        "PrivilegeEscalation",
+        "Persistence"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1037,
+          "name": "Manage StatefulSets cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1037/"
+        },
+        {
+          "id": 1038,
+          "name": "Manage StatefulSets in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1038/"
+        },
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kube-prometheus-stack-admission",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kube-prometheus-stack-admission",
+      "apiGroup": "admissionregistration.k8s.io",
+      "resource": "validatingwebhookconfigurations",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kube-prometheus-stack-admission",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kube-prometheus-stack-admission",
+      "apiGroup": "admissionregistration.k8s.io",
+      "resource": "mutatingwebhookconfigurations",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kube-prometheus-stack-admission",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "kube-prometheus-stack-admission",
+      "apiGroup": "",
+      "resource": "secrets",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "get"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kube-prometheus-stack-kube-state-metrics",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kube-prometheus-stack-kube-state-metrics",
+      "apiGroup": "networking.k8s.io",
+      "resource": "ingresses",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kube-prometheus-stack-kube-state-metrics",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kube-prometheus-stack-kube-state-metrics",
+      "apiGroup": "networking.k8s.io",
+      "resource": "networkpolicies",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kube-prometheus-stack-kube-state-metrics",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kube-prometheus-stack-kube-state-metrics",
+      "apiGroup": "coordination.k8s.io",
+      "resource": "leases",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kube-prometheus-stack-kube-state-metrics",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kube-prometheus-stack-kube-state-metrics",
+      "apiGroup": "admissionregistration.k8s.io",
+      "resource": "mutatingwebhookconfigurations",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Medium",
+      "tags": [
+        "Reconnaissance",
+        "InformationDisclosure",
+        "WebhookReconnaissance"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1084,
+          "name": "List MutatingWebhookConfigurations (Reconnaissance)",
+          "link": "https://rbac-atlas.github.io/rules/1084/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kube-prometheus-stack-kube-state-metrics",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kube-prometheus-stack-kube-state-metrics",
+      "apiGroup": "admissionregistration.k8s.io",
+      "resource": "validatingwebhookconfigurations",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Medium",
+      "tags": [
+        "InformationDisclosure",
+        "WebhookReconnaissance",
+        "Reconnaissance"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1083,
+          "name": "List ValidatingWebhookConfigurations (Reconnaissance)",
+          "link": "https://rbac-atlas.github.io/rules/1083/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kube-prometheus-stack-kube-state-metrics",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kube-prometheus-stack-kube-state-metrics",
+      "apiGroup": "policy",
+      "resource": "poddisruptionbudgets",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kube-prometheus-stack-kube-state-metrics",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kube-prometheus-stack-kube-state-metrics",
+      "apiGroup": "storage.k8s.io",
+      "resource": "storageclasses",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kube-prometheus-stack-kube-state-metrics",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kube-prometheus-stack-kube-state-metrics",
+      "apiGroup": "storage.k8s.io",
+      "resource": "volumeattachments",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kube-prometheus-stack-kube-state-metrics",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kube-prometheus-stack-kube-state-metrics",
+      "apiGroup": "certificates.k8s.io",
+      "resource": "certificatesigningrequests",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kube-prometheus-stack-kube-state-metrics",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kube-prometheus-stack-kube-state-metrics",
+      "apiGroup": "",
+      "resource": "persistentvolumes",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kube-prometheus-stack-kube-state-metrics",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kube-prometheus-stack-kube-state-metrics",
+      "apiGroup": "",
+      "resource": "replicationcontrollers",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kube-prometheus-stack-kube-state-metrics",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kube-prometheus-stack-kube-state-metrics",
+      "apiGroup": "",
+      "resource": "resourcequotas",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Medium",
+      "tags": [
+        "InformationDisclosure",
+        "Reconnaissance",
+        "ResourceConfiguration",
+        "QuotaTampering"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1089,
+          "name": "Read All ResourceQuotas (Cluster-wide Information Disclosure)",
+          "link": "https://rbac-atlas.github.io/rules/1089/"
+        },
+        {
+          "id": 1088,
+          "name": "Read ResourceQuotas (Namespace Information Disclosure)",
+          "link": "https://rbac-atlas.github.io/rules/1088/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kube-prometheus-stack-kube-state-metrics",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kube-prometheus-stack-kube-state-metrics",
+      "apiGroup": "",
+      "resource": "secrets",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "ClusterWideSecretAccess",
+        "CredentialAccess",
+        "DataExposure",
+        "InformationDisclosure",
+        "SecretAccess"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1010,
+          "name": "Read secrets cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1010/"
+        },
+        {
+          "id": 1011,
+          "name": "Read secrets in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1011/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kube-prometheus-stack-kube-state-metrics",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kube-prometheus-stack-kube-state-metrics",
+      "apiGroup": "",
+      "resource": "configmaps",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "InformationDisclosure",
+        "ConfigMapAccess",
+        "DataExposure"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1022,
+          "name": "Read ConfigMaps cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1022/"
+        },
+        {
+          "id": 1023,
+          "name": "Read ConfigMaps in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1023/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kube-prometheus-stack-kube-state-metrics",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kube-prometheus-stack-kube-state-metrics",
+      "apiGroup": "",
+      "resource": "endpoints",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kube-prometheus-stack-kube-state-metrics",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kube-prometheus-stack-kube-state-metrics",
+      "apiGroup": "",
+      "resource": "namespaces",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [
+        "InformationDisclosure",
+        "Reconnaissance",
+        "ClusterStructure"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1082,
+          "name": "List Namespaces (Cluster Reconnaissance)",
+          "link": "https://rbac-atlas.github.io/rules/1082/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kube-prometheus-stack-kube-state-metrics",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kube-prometheus-stack-kube-state-metrics",
+      "apiGroup": "",
+      "resource": "nodes",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kube-prometheus-stack-kube-state-metrics",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kube-prometheus-stack-kube-state-metrics",
+      "apiGroup": "",
+      "resource": "pods",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kube-prometheus-stack-kube-state-metrics",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kube-prometheus-stack-kube-state-metrics",
+      "apiGroup": "",
+      "resource": "services",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kube-prometheus-stack-kube-state-metrics",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kube-prometheus-stack-kube-state-metrics",
+      "apiGroup": "",
+      "resource": "limitranges",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [
+        "InformationDisclosure",
+        "Reconnaissance",
+        "ResourceConfiguration"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1087,
+          "name": "Read LimitRanges (Namespace Information Disclosure)",
+          "link": "https://rbac-atlas.github.io/rules/1087/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kube-prometheus-stack-kube-state-metrics",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kube-prometheus-stack-kube-state-metrics",
+      "apiGroup": "",
+      "resource": "persistentvolumeclaims",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kube-prometheus-stack-kube-state-metrics",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kube-prometheus-stack-kube-state-metrics",
+      "apiGroup": "apps",
+      "resource": "daemonsets",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kube-prometheus-stack-kube-state-metrics",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kube-prometheus-stack-kube-state-metrics",
+      "apiGroup": "apps",
+      "resource": "deployments",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kube-prometheus-stack-kube-state-metrics",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kube-prometheus-stack-kube-state-metrics",
+      "apiGroup": "apps",
+      "resource": "replicasets",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kube-prometheus-stack-kube-state-metrics",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kube-prometheus-stack-kube-state-metrics",
+      "apiGroup": "apps",
+      "resource": "statefulsets",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kube-prometheus-stack-kube-state-metrics",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kube-prometheus-stack-kube-state-metrics",
+      "apiGroup": "autoscaling",
+      "resource": "horizontalpodautoscalers",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kube-prometheus-stack-kube-state-metrics",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kube-prometheus-stack-kube-state-metrics",
+      "apiGroup": "batch",
+      "resource": "cronjobs",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kube-prometheus-stack-kube-state-metrics",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kube-prometheus-stack-kube-state-metrics",
+      "apiGroup": "batch",
+      "resource": "jobs",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kube-prometheus-stack-kube-state-metrics",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kube-prometheus-stack-kube-state-metrics",
+      "apiGroup": "extensions",
+      "resource": "daemonsets",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kube-prometheus-stack-kube-state-metrics",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kube-prometheus-stack-kube-state-metrics",
+      "apiGroup": "extensions",
+      "resource": "deployments",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kube-prometheus-stack-kube-state-metrics",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kube-prometheus-stack-kube-state-metrics",
+      "apiGroup": "extensions",
+      "resource": "ingresses",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kube-prometheus-stack-kube-state-metrics",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kube-prometheus-stack-kube-state-metrics",
+      "apiGroup": "extensions",
+      "resource": "replicasets",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kube-prometheus-stack-prometheus",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kube-prometheus-stack-prometheus",
+      "apiGroup": "networking.k8s.io",
+      "resource": "ingresses",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kube-prometheus-stack-prometheus",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kube-prometheus-stack-prometheus",
+      "apiGroup": "",
+      "resource": "nodes",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kube-prometheus-stack-prometheus",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kube-prometheus-stack-prometheus",
+      "apiGroup": "",
+      "resource": "nodes/metrics",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kube-prometheus-stack-prometheus",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kube-prometheus-stack-prometheus",
+      "apiGroup": "",
+      "resource": "services",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kube-prometheus-stack-prometheus",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kube-prometheus-stack-prometheus",
+      "apiGroup": "",
+      "resource": "endpoints",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kube-prometheus-stack-prometheus",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kube-prometheus-stack-prometheus",
+      "apiGroup": "",
+      "resource": "pods",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kube-prometheus-stack-grafana",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kube-prometheus-stack-grafana-clusterrole",
+      "apiGroup": "",
+      "resource": "configmaps",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "InformationDisclosure",
+        "ConfigMapAccess",
+        "DataExposure"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1022,
+          "name": "Read ConfigMaps cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1022/"
+        },
+        {
+          "id": 1023,
+          "name": "Read ConfigMaps in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1023/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kube-prometheus-stack-grafana",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kube-prometheus-stack-grafana-clusterrole",
+      "apiGroup": "",
+      "resource": "secrets",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "InformationDisclosure",
+        "SecretAccess",
+        "ClusterWideSecretAccess",
+        "CredentialAccess",
+        "DataExposure"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1010,
+          "name": "Read secrets cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1010/"
+        },
+        {
+          "id": 1011,
+          "name": "Read secrets in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1011/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    }
+  ],
+  "serviceAccountWorkloads": [
+    {
+      "serviceAccountName": "kube-prometheus-stack-kube-state-metrics",
+      "namespace": "default",
+      "workloadType": "Deployment",
+      "workloadName": "kube-prometheus-stack-kube-state-metrics",
+      "containerName": "kube-state-metrics",
+      "image": "registry.k8s.io/kube-state-metrics/kube-state-metrics:v2.10.1"
+    },
+    {
+      "serviceAccountName": "kube-prometheus-stack-grafana",
+      "namespace": "default",
+      "workloadType": "Deployment",
+      "workloadName": "kube-prometheus-stack-grafana",
+      "containerName": "grafana-sc-dashboard",
+      "image": "quay.io/kiwigrid/k8s-sidecar:1.26.1"
+    },
+    {
+      "serviceAccountName": "kube-prometheus-stack-grafana",
+      "namespace": "default",
+      "workloadType": "Deployment",
+      "workloadName": "kube-prometheus-stack-grafana",
+      "containerName": "grafana-sc-datasources",
+      "image": "quay.io/kiwigrid/k8s-sidecar:1.26.1"
+    },
+    {
+      "serviceAccountName": "kube-prometheus-stack-grafana",
+      "namespace": "default",
+      "workloadType": "Deployment",
+      "workloadName": "kube-prometheus-stack-grafana",
+      "containerName": "grafana",
+      "image": "docker.io/grafana/grafana:10.4.0"
+    },
+    {
+      "serviceAccountName": "kube-prometheus-stack-operator",
+      "namespace": "default",
+      "workloadType": "Deployment",
+      "workloadName": "kube-prometheus-stack-operator",
+      "containerName": "kube-prometheus-stack",
+      "image": "quay.io/prometheus-operator/prometheus-operator:v0.72.0"
+    },
+    {
+      "serviceAccountName": "kube-prometheus-stack-prometheus-windows-exporter",
+      "namespace": "default",
+      "workloadType": "DaemonSet",
+      "workloadName": "kube-prometheus-stack-prometheus-windows-exporter",
+      "containerName": "windows-exporter",
+      "image": "ghcr.io/prometheus-community/windows-exporter:0.25.1"
+    },
+    {
+      "serviceAccountName": "kube-prometheus-stack-admission",
+      "namespace": "default",
+      "workloadType": "Job",
+      "workloadName": "kube-prometheus-stack-admission-patch",
+      "containerName": "patch",
+      "image": "registry.k8s.io/ingress-nginx/kube-webhook-certgen:v20221220-controller-v1.5.1-58-g787ea74b6"
+    },
+    {
+      "serviceAccountName": "kube-prometheus-stack-admission",
+      "namespace": "default",
+      "workloadType": "Job",
+      "workloadName": "kube-prometheus-stack-admission-create",
+      "containerName": "create",
+      "image": "registry.k8s.io/ingress-nginx/kube-webhook-certgen:v20221220-controller-v1.5.1-58-g787ea74b6"
+    },
+    {
+      "serviceAccountName": "kube-prometheus-stack-grafana-test",
+      "namespace": "default",
+      "workloadType": "Pod",
+      "workloadName": "kube-prometheus-stack-grafana-test",
+      "containerName": "kube-prometheus-stack-test",
+      "image": "docker.io/bats/bats:v1.4.1"
+    },
+    {
+      "serviceAccountName": "kube-prometheus-stack-prometheus-node-exporter",
+      "namespace": "default",
+      "workloadType": "DaemonSet",
+      "workloadName": "kube-prometheus-stack-prometheus-node-exporter",
+      "containerName": "node-exporter",
+      "image": "quay.io/prometheus/node-exporter:v1.7.0"
+    }
+  ]
+}

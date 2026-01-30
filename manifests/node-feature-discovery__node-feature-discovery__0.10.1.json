@@ -1,0 +1,111 @@
+{
+  "metadata": {
+    "version": "0.10.1",
+    "name": "node-feature-discovery",
+    "source": "charts/node-feature-discovery__node-feature-discovery__0.10.1/",
+    "timestamp": 1769794136,
+    "extra": {
+      "helm": {
+        "description": "Detects hardware features available on each node in a Kubernetes cluster, and advertises those features using node labels. ",
+        "home": "https://github.com/kubernetes-sigs/node-feature-discovery",
+        "icon": "",
+        "keywords": [
+          "feature-discovery",
+          "feature-detection",
+          "node-labels"
+        ],
+        "kubeVersion": "",
+        "maintainers": null,
+        "sources": [
+          "https://github.com/kubernetes-sigs/node-feature-discovery"
+        ]
+      }
+    }
+  },
+  "serviceAccountData": [
+    {
+      "serviceAccountName": "node-feature-discovery",
+      "namespace": "default",
+      "automountToken": false,
+      "secrets": null,
+      "imagePullSecrets": null
+    }
+  ],
+  "serviceAccountPermissions": [
+    {
+      "serviceAccountName": "node-feature-discovery",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "node-feature-discovery",
+      "apiGroup": "nfd.k8s-sigs.io",
+      "resource": "nodefeaturerules",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "node-feature-discovery",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "node-feature-discovery",
+      "apiGroup": "",
+      "resource": "nodes",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "patch",
+        "update"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "DenialOfService",
+        "NodeAccess",
+        "Tampering",
+        "PotentialPrivilegeEscalation"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1015,
+          "name": "Modify node configuration (labels, taints)",
+          "link": "https://rbac-atlas.github.io/rules/1015/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    }
+  ],
+  "serviceAccountWorkloads": [
+    {
+      "serviceAccountName": "",
+      "namespace": "default",
+      "workloadType": "DaemonSet",
+      "workloadName": "node-feature-discovery-worker",
+      "containerName": "worker",
+      "image": "k8s.gcr.io/nfd/node-feature-discovery:v0.10.1"
+    },
+    {
+      "serviceAccountName": "node-feature-discovery",
+      "namespace": "default",
+      "workloadType": "Deployment",
+      "workloadName": "node-feature-discovery-master",
+      "containerName": "master",
+      "image": "k8s.gcr.io/nfd/node-feature-discovery:v0.10.1"
+    }
+  ]
+}

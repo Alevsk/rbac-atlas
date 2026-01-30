@@ -3,7 +3,7 @@
     "version": "12.5.0",
     "name": "gitea",
     "source": "charts/gitea__gitea__12.5.0/",
-    "timestamp": 1769219530,
+    "timestamp": 1769793492,
     "extra": {
       "helm": {
         "description": "Gitea Helm chart for Kubernetes",
@@ -46,7 +46,7 @@
   },
   "serviceAccountData": [
     {
-      "serviceAccountName": "gitea-postgresql",
+      "serviceAccountName": "gitea-valkey-cluster",
       "namespace": "default",
       "automountToken": false,
       "secrets": null,
@@ -60,14 +60,14 @@
       "imagePullSecrets": null
     },
     {
-      "serviceAccountName": "gitea-valkey-cluster",
+      "serviceAccountName": "gitea-valkey-primary",
       "namespace": "default",
       "automountToken": false,
       "secrets": null,
       "imagePullSecrets": null
     },
     {
-      "serviceAccountName": "gitea-valkey-primary",
+      "serviceAccountName": "gitea-postgresql",
       "namespace": "default",
       "automountToken": false,
       "secrets": null,
@@ -76,6 +76,46 @@
   ],
   "serviceAccountPermissions": [],
   "serviceAccountWorkloads": [
+    {
+      "serviceAccountName": "gitea-valkey-cluster",
+      "namespace": "default",
+      "workloadType": "StatefulSet",
+      "workloadName": "gitea-valkey-cluster",
+      "containerName": "gitea-valkey-cluster",
+      "image": "docker.io/bitnamilegacy/valkey-cluster:8.1.3-debian-12-r3"
+    },
+    {
+      "serviceAccountName": "gitea-valkey-primary",
+      "namespace": "default",
+      "workloadType": "StatefulSet",
+      "workloadName": "gitea-valkey-primary",
+      "containerName": "valkey",
+      "image": "docker.io/bitnamilegacy/valkey:8.1.3-debian-12-r3"
+    },
+    {
+      "serviceAccountName": "gitea-postgresql",
+      "namespace": "default",
+      "workloadType": "StatefulSet",
+      "workloadName": "gitea-postgresql",
+      "containerName": "postgresql",
+      "image": "docker.io/bitnamilegacy/postgresql:17.6.0-debian-12-r4"
+    },
+    {
+      "serviceAccountName": "",
+      "namespace": "default",
+      "workloadType": "Pod",
+      "workloadName": "gitea-test-connection",
+      "containerName": "wget",
+      "image": "busybox:latest"
+    },
+    {
+      "serviceAccountName": "",
+      "namespace": "default",
+      "workloadType": "Deployment",
+      "workloadName": "gitea",
+      "containerName": "gitea",
+      "image": "docker.gitea.com/gitea:1.25.4-rootless"
+    },
     {
       "serviceAccountName": "gitea-postgresql-ha",
       "namespace": "default",
@@ -91,46 +131,6 @@
       "workloadName": "gitea-postgresql-ha-postgresql",
       "containerName": "postgresql",
       "image": "docker.io/bitnamilegacy/postgresql-repmgr:17.6.0-debian-12-r2"
-    },
-    {
-      "serviceAccountName": "gitea-valkey-cluster",
-      "namespace": "default",
-      "workloadType": "StatefulSet",
-      "workloadName": "gitea-valkey-cluster",
-      "containerName": "gitea-valkey-cluster",
-      "image": "docker.io/bitnamilegacy/valkey-cluster:8.1.3-debian-12-r3"
-    },
-    {
-      "serviceAccountName": "gitea-postgresql",
-      "namespace": "default",
-      "workloadType": "StatefulSet",
-      "workloadName": "gitea-postgresql",
-      "containerName": "postgresql",
-      "image": "docker.io/bitnamilegacy/postgresql:17.6.0-debian-12-r4"
-    },
-    {
-      "serviceAccountName": "",
-      "namespace": "default",
-      "workloadType": "Deployment",
-      "workloadName": "gitea",
-      "containerName": "gitea",
-      "image": "docker.gitea.com/gitea:1.25.4-rootless"
-    },
-    {
-      "serviceAccountName": "",
-      "namespace": "default",
-      "workloadType": "Pod",
-      "workloadName": "gitea-test-connection",
-      "containerName": "wget",
-      "image": "busybox:latest"
-    },
-    {
-      "serviceAccountName": "gitea-valkey-primary",
-      "namespace": "default",
-      "workloadType": "StatefulSet",
-      "workloadName": "gitea-valkey-primary",
-      "containerName": "valkey",
-      "image": "docker.io/bitnamilegacy/valkey:8.1.3-debian-12-r3"
     }
   ]
 }

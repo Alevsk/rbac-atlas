@@ -1,0 +1,60 @@
+{
+  "metadata": {
+    "version": "0.11.0",
+    "name": "ollama",
+    "source": "charts/ollama__ollama__0.11.0/",
+    "timestamp": 1769794145,
+    "extra": {
+      "helm": {
+        "description": "Get up and running with large language models locally.",
+        "home": "https://ollama.ai/",
+        "icon": "https://ollama.ai/public/ollama.png",
+        "keywords": [
+          "ai",
+          "llm",
+          "llama",
+          "mistral"
+        ],
+        "kubeVersion": "^1.16.0-0",
+        "maintainers": [
+          {
+            "name": "Outworld",
+            "email": "tech@outworld.fr"
+          }
+        ],
+        "sources": [
+          "https://github.com/ollama/ollama",
+          "https://github.com/otwld/ollama-helm"
+        ]
+      }
+    }
+  },
+  "serviceAccountData": [
+    {
+      "serviceAccountName": "ollama",
+      "namespace": "default",
+      "automountToken": true,
+      "secrets": null,
+      "imagePullSecrets": null
+    }
+  ],
+  "serviceAccountPermissions": [],
+  "serviceAccountWorkloads": [
+    {
+      "serviceAccountName": "",
+      "namespace": "default",
+      "workloadType": "Pod",
+      "workloadName": "ollama-test-connection",
+      "containerName": "wget",
+      "image": "busybox"
+    },
+    {
+      "serviceAccountName": "ollama",
+      "namespace": "default",
+      "workloadType": "Deployment",
+      "workloadName": "ollama",
+      "containerName": "ollama",
+      "image": "ollama/ollama:0.1.21"
+    }
+  ]
+}

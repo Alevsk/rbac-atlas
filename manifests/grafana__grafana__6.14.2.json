@@ -1,0 +1,124 @@
+{
+  "metadata": {
+    "version": "6.14.2",
+    "name": "grafana",
+    "source": "charts/grafana__grafana__6.14.2/",
+    "timestamp": 1769793739,
+    "extra": {
+      "helm": {
+        "description": "The leading tool for querying and visualizing time series and metrics.",
+        "home": "https://grafana.net",
+        "icon": "https://raw.githubusercontent.com/grafana/grafana/master/public/img/logo_transparent_400x.png",
+        "keywords": null,
+        "kubeVersion": "^1.8.0-0",
+        "maintainers": [
+          {
+            "name": "zanhsieh",
+            "email": "zanhsieh@gmail.com"
+          },
+          {
+            "name": "rtluckie",
+            "email": "rluckie@cisco.com"
+          },
+          {
+            "name": "maorfr",
+            "email": "maor.friedman@redhat.com"
+          },
+          {
+            "name": "Xtigyro",
+            "email": "miroslav.hadzhiev@gmail.com"
+          },
+          {
+            "name": "torstenwalter",
+            "email": "mail@torstenwalter.de"
+          }
+        ],
+        "sources": [
+          "https://github.com/grafana/grafana"
+        ]
+      }
+    }
+  },
+  "serviceAccountData": [
+    {
+      "serviceAccountName": "grafana",
+      "namespace": "default",
+      "automountToken": false,
+      "secrets": null,
+      "imagePullSecrets": null
+    },
+    {
+      "serviceAccountName": "grafana-test",
+      "namespace": "default",
+      "automountToken": false,
+      "secrets": null,
+      "imagePullSecrets": null
+    }
+  ],
+  "serviceAccountPermissions": [
+    {
+      "serviceAccountName": "grafana-test",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "grafana-test",
+      "apiGroup": "policy",
+      "resource": "podsecuritypolicies",
+      "resourceName": "grafana-test",
+      "verbs": [
+        "use"
+      ],
+      "riskLevel": "Low",
+      "tags": [
+        "ResourceNameRestricted"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "grafana",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "grafana",
+      "apiGroup": "extensions",
+      "resource": "podsecuritypolicies",
+      "resourceName": "grafana",
+      "verbs": [
+        "use"
+      ],
+      "riskLevel": "Low",
+      "tags": [
+        "ResourceNameRestricted"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    }
+  ],
+  "serviceAccountWorkloads": [
+    {
+      "serviceAccountName": "grafana",
+      "namespace": "default",
+      "workloadType": "Deployment",
+      "workloadName": "grafana",
+      "containerName": "grafana",
+      "image": "grafana/grafana:8.0.5"
+    },
+    {
+      "serviceAccountName": "grafana-test",
+      "namespace": "default",
+      "workloadType": "Pod",
+      "workloadName": "grafana-test",
+      "containerName": "grafana-test",
+      "image": "bats/bats:v1.1.0"
+    }
+  ]
+}

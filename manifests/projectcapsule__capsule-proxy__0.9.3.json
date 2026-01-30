@@ -1,0 +1,125 @@
+{
+  "metadata": {
+    "version": "0.9.3",
+    "name": "capsule-proxy",
+    "source": "charts/projectcapsule__capsule-proxy__0.9.3/",
+    "timestamp": 1769798274,
+    "extra": {
+      "helm": {
+        "description": "Helm Chart for Capsule Proxy, addon for Capsule, the multi-tenant Operator",
+        "home": "https://github.com/projectcapsule/capsule-proxy",
+        "icon": "https://github.com/projectcapsule/capsule/raw/main/assets/logo/capsule_small.png",
+        "keywords": [
+          "kubernetes",
+          "operator",
+          "multi-tenancy",
+          "multi-tenant",
+          "multitenancy",
+          "multitenant",
+          "namespace",
+          "proxy"
+        ],
+        "kubeVersion": "",
+        "maintainers": [
+          {
+            "name": "capsule-maintainers",
+            "email": "cncf-capsule-maintainers@lists.cncf.io"
+          }
+        ],
+        "sources": [
+          "https://projectcapsule.dev/integrations/addons/capsule-proxy/"
+        ]
+      }
+    }
+  },
+  "serviceAccountData": [
+    {
+      "serviceAccountName": "capsule-proxy-crds",
+      "namespace": "default",
+      "automountToken": false,
+      "secrets": null,
+      "imagePullSecrets": null
+    },
+    {
+      "serviceAccountName": "capsule-proxy",
+      "namespace": "default",
+      "automountToken": false,
+      "secrets": null,
+      "imagePullSecrets": null
+    }
+  ],
+  "serviceAccountPermissions": [
+    {
+      "serviceAccountName": "capsule-proxy-crds",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "capsule-proxy-crds",
+      "apiGroup": "",
+      "resource": "jobs",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "capsule-proxy-crds",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "capsule-proxy-crds",
+      "apiGroup": "apiextensions.k8s.io",
+      "resource": "customresourcedefinitions",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "patch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    }
+  ],
+  "serviceAccountWorkloads": [
+    {
+      "serviceAccountName": "capsule-proxy",
+      "namespace": "default",
+      "workloadType": "Deployment",
+      "workloadName": "capsule-proxy",
+      "containerName": "capsule-proxy",
+      "image": "ghcr.io/projectcapsule/capsule-proxy:v0.9.3"
+    },
+    {
+      "serviceAccountName": "capsule-proxy",
+      "namespace": "default",
+      "workloadType": "Job",
+      "workloadName": "capsule-proxy-certgen",
+      "containerName": "post-install-job",
+      "image": "registry.k8s.io/ingress-nginx/kube-webhook-certgen:v1.4.3"
+    },
+    {
+      "serviceAccountName": "capsule-proxy-crds",
+      "namespace": "default",
+      "workloadType": "Job",
+      "workloadName": "capsule-proxy-crds",
+      "containerName": "crds-hook",
+      "image": "docker.io/clastix/kubectl:v1.20"
+    }
+  ]
+}

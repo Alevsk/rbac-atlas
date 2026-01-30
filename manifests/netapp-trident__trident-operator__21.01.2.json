@@ -1,0 +1,1897 @@
+{
+  "metadata": {
+    "version": "21.01.2",
+    "name": "trident-operator",
+    "source": "charts/netapp-trident__trident-operator__21.01.2/",
+    "timestamp": 1769794098,
+    "extra": {
+      "helm": {
+        "description": "A Helm chart for deploying NetApp's Trident CSI storage provisioner using the Trident Operator.",
+        "home": "https://github.com/NetApp/trident",
+        "icon": "https://raw.githubusercontent.com/NetApp/trident/master/logo/trident.png",
+        "keywords": [
+          "NetApp",
+          "Trident",
+          "operator",
+          "CSI"
+        ],
+        "kubeVersion": "\u003e= 1.16.0 \u003c 1.21.0",
+        "maintainers": null,
+        "sources": null
+      }
+    }
+  },
+  "serviceAccountData": [
+    {
+      "serviceAccountName": "trident-operator",
+      "namespace": "default",
+      "automountToken": false,
+      "secrets": null,
+      "imagePullSecrets": null
+    }
+  ],
+  "serviceAccountPermissions": [
+    {
+      "serviceAccountName": "trident-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "trident-operator",
+      "apiGroup": "",
+      "resource": "services",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "list"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "trident-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "trident-operator",
+      "apiGroup": "",
+      "resource": "services",
+      "resourceName": "trident-csi",
+      "verbs": [
+        "delete",
+        "patch",
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [
+        "ResourceNameRestricted"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "trident-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "trident-operator",
+      "apiGroup": "",
+      "resource": "services",
+      "resourceName": "trident",
+      "verbs": [
+        "delete",
+        "patch",
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [
+        "ResourceNameRestricted"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "trident-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "trident-operator",
+      "apiGroup": "",
+      "resource": "namespaces",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "get",
+        "list"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "trident-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "trident-operator",
+      "apiGroup": "",
+      "resource": "persistentvolumes",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "trident-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "trident-operator",
+      "apiGroup": "",
+      "resource": "persistentvolumeclaims/status",
+      "resourceName": "",
+      "verbs": [
+        "patch",
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "trident-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "trident-operator",
+      "apiGroup": "",
+      "resource": "events",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Medium",
+      "tags": [
+        "InformationDisclosure",
+        "Reconnaissance",
+        "OperationalData"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1070,
+          "name": "Read events cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1070/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "trident-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "trident-operator",
+      "apiGroup": "",
+      "resource": "pods",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "Persistence",
+        "Tampering",
+        "PotentialPrivilegeEscalation",
+        "WorkloadExecution",
+        "PrivilegeEscalation",
+        "LateralMovement"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1006,
+          "name": "Create pods cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1006/"
+        },
+        {
+          "id": 1008,
+          "name": "Update/Patch pods cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1008/"
+        },
+        {
+          "id": 1007,
+          "name": "Create pods in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1007/"
+        },
+        {
+          "id": 1009,
+          "name": "Update/Patch pods in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1009/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "trident-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "trident-operator",
+      "apiGroup": "",
+      "resource": "nodes",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "trident-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "trident-operator",
+      "apiGroup": "",
+      "resource": "pods/exec",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "list"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "PodExec",
+        "PotentialPrivilegeEscalation",
+        "ClusterWidePodExec",
+        "CodeExecution",
+        "LateralMovement",
+        "ElevationOfPrivilege"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1000,
+          "name": "Cluster-wide pod exec",
+          "link": "https://rbac-atlas.github.io/rules/1000/"
+        },
+        {
+          "id": 1001,
+          "name": "Namespaced pod exec",
+          "link": "https://rbac-atlas.github.io/rules/1001/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "trident-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "trident-operator",
+      "apiGroup": "",
+      "resource": "pods/exec",
+      "resourceName": "trident-csi",
+      "verbs": [
+        "delete",
+        "patch",
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [
+        "ResourceNameRestricted"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "trident-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "trident-operator",
+      "apiGroup": "",
+      "resource": "pods/exec",
+      "resourceName": "trident",
+      "verbs": [
+        "delete",
+        "patch",
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [
+        "ResourceNameRestricted"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "trident-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "trident-operator",
+      "apiGroup": "",
+      "resource": "serviceaccounts",
+      "resourceName": "trident",
+      "verbs": [
+        "delete",
+        "patch",
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [
+        "ResourceNameRestricted"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "trident-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "trident-operator",
+      "apiGroup": "",
+      "resource": "serviceaccounts",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "list"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "trident-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "trident-operator",
+      "apiGroup": "",
+      "resource": "serviceaccounts",
+      "resourceName": "trident-csi",
+      "verbs": [
+        "delete",
+        "patch",
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [
+        "ResourceNameRestricted"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "trident-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "trident-operator",
+      "apiGroup": "",
+      "resource": "persistentvolumeclaims",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "trident-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "trident-operator",
+      "apiGroup": "",
+      "resource": "secrets",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "ClusterWideSecretAccess",
+        "CredentialAccess",
+        "SecretAccess",
+        "Tampering",
+        "Persistence",
+        "PotentialPrivilegeEscalation",
+        "DataExposure",
+        "InformationDisclosure",
+        "PrivilegeEscalation"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1010,
+          "name": "Read secrets cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1010/"
+        },
+        {
+          "id": 1011,
+          "name": "Read secrets in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1011/"
+        },
+        {
+          "id": 1012,
+          "name": "Modify secrets cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1012/"
+        },
+        {
+          "id": 1013,
+          "name": "Modify secrets in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1013/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "trident-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "trident-operator",
+      "apiGroup": "",
+      "resource": "pods/log",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "DataExposure",
+        "LogAccess",
+        "ClusterWideLogAccess",
+        "InformationDisclosure"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1018,
+          "name": "Read pod logs cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1018/"
+        },
+        {
+          "id": 1019,
+          "name": "Read pod logs in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1019/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "trident-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "trident-operator",
+      "apiGroup": "storage.k8s.io",
+      "resource": "csidrivers",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "PrivilegeEscalation",
+        "NodeAccess",
+        "StorageManipulation",
+        "Tampering"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1055,
+          "name": "Manage CSIDrivers (potential node compromise)",
+          "link": "https://rbac-atlas.github.io/rules/1055/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "trident-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "trident-operator",
+      "apiGroup": "storage.k8s.io",
+      "resource": "csinodes",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Medium",
+      "tags": [
+        "Reconnaissance",
+        "NodeAccess",
+        "StorageDetailsDisclosure",
+        "InformationDisclosure"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1100,
+          "name": "Read CSINode Objects (Node \u0026 Storage Reconnaissance)",
+          "link": "https://rbac-atlas.github.io/rules/1100/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "trident-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "trident-operator",
+      "apiGroup": "storage.k8s.io",
+      "resource": "storageclasses",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "StorageManipulation",
+        "Tampering",
+        "DenialOfService"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1056,
+          "name": "Manage StorageClasses",
+          "link": "https://rbac-atlas.github.io/rules/1056/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "trident-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "trident-operator",
+      "apiGroup": "storage.k8s.io",
+      "resource": "volumeattachments",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "trident-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "trident-operator",
+      "apiGroup": "storage.k8s.io",
+      "resource": "volumeattachments/status",
+      "resourceName": "",
+      "verbs": [
+        "patch",
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "trident-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "trident-operator",
+      "apiGroup": "csi.storage.k8s.io",
+      "resource": "csidrivers",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "trident-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "trident-operator",
+      "apiGroup": "csi.storage.k8s.io",
+      "resource": "csinodeinfos",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "trident-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "trident-operator",
+      "apiGroup": "apiextensions.k8s.io",
+      "resource": "customresourcedefinitions",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "Tampering",
+        "PotentialPrivilegeEscalation",
+        "CRDManipulation"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1045,
+          "name": "Manage CustomResourceDefinitions",
+          "link": "https://rbac-atlas.github.io/rules/1045/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "trident-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "trident-operator",
+      "apiGroup": "trident.netapp.io",
+      "resource": "tridentprovisioners/status",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "trident-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "trident-operator",
+      "apiGroup": "trident.netapp.io",
+      "resource": "tridentversions",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "trident-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "trident-operator",
+      "apiGroup": "trident.netapp.io",
+      "resource": "tridentstorageclasses",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "trident-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "trident-operator",
+      "apiGroup": "trident.netapp.io",
+      "resource": "tridentvolumes",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "trident-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "trident-operator",
+      "apiGroup": "trident.netapp.io",
+      "resource": "tridentnodes",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "trident-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "trident-operator",
+      "apiGroup": "trident.netapp.io",
+      "resource": "tridentprovisioners",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "trident-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "trident-operator",
+      "apiGroup": "trident.netapp.io",
+      "resource": "tridentorchestrators",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "trident-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "trident-operator",
+      "apiGroup": "trident.netapp.io",
+      "resource": "tridentorchestrators/status",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "trident-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "trident-operator",
+      "apiGroup": "trident.netapp.io",
+      "resource": "tridentbackends",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "trident-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "trident-operator",
+      "apiGroup": "trident.netapp.io",
+      "resource": "tridenttransactions",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "trident-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "trident-operator",
+      "apiGroup": "trident.netapp.io",
+      "resource": "tridentsnapshots",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "trident-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "trident-operator",
+      "apiGroup": "apps",
+      "resource": "deployments",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "trident-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "trident-operator",
+      "apiGroup": "apps",
+      "resource": "deployments",
+      "resourceName": "trident-csi",
+      "verbs": [
+        "delete",
+        "patch",
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [
+        "ResourceNameRestricted"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "trident-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "trident-operator",
+      "apiGroup": "apps",
+      "resource": "deployments",
+      "resourceName": "trident",
+      "verbs": [
+        "delete",
+        "patch",
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [
+        "ResourceNameRestricted"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "trident-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "trident-operator",
+      "apiGroup": "apps",
+      "resource": "daemonsets",
+      "resourceName": "trident-csi",
+      "verbs": [
+        "delete",
+        "patch",
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [
+        "ResourceNameRestricted"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "trident-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "trident-operator",
+      "apiGroup": "apps",
+      "resource": "daemonsets",
+      "resourceName": "trident",
+      "verbs": [
+        "delete",
+        "patch",
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [
+        "ResourceNameRestricted"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "trident-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "trident-operator",
+      "apiGroup": "apps",
+      "resource": "daemonsets",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "trident-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "trident-operator",
+      "apiGroup": "apps",
+      "resource": "statefulsets",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "trident-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "trident-operator",
+      "apiGroup": "apps",
+      "resource": "statefulsets",
+      "resourceName": "trident-csi",
+      "verbs": [
+        "delete",
+        "patch",
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [
+        "ResourceNameRestricted"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "trident-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "trident-operator",
+      "apiGroup": "apps",
+      "resource": "statefulsets",
+      "resourceName": "trident",
+      "verbs": [
+        "delete",
+        "patch",
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [
+        "ResourceNameRestricted"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "trident-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "trident-operator",
+      "apiGroup": "security.openshift.io",
+      "resource": "securitycontextconstraints",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "get",
+        "list"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "trident-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "trident-operator",
+      "apiGroup": "security.openshift.io",
+      "resource": "securitycontextconstraints",
+      "resourceName": "trident",
+      "verbs": [
+        "delete",
+        "patch",
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [
+        "ResourceNameRestricted"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "trident-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "trident-operator",
+      "apiGroup": "snapshot.storage.k8s.io",
+      "resource": "volumesnapshots",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "trident-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "trident-operator",
+      "apiGroup": "snapshot.storage.k8s.io",
+      "resource": "volumesnapshotclasses",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "trident-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "trident-operator",
+      "apiGroup": "snapshot.storage.k8s.io",
+      "resource": "volumesnapshots/status",
+      "resourceName": "",
+      "verbs": [
+        "patch",
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "trident-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "trident-operator",
+      "apiGroup": "snapshot.storage.k8s.io",
+      "resource": "volumesnapshotcontents/status",
+      "resourceName": "",
+      "verbs": [
+        "patch",
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "trident-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "trident-operator",
+      "apiGroup": "snapshot.storage.k8s.io",
+      "resource": "volumesnapshotcontents",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "trident-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "trident-operator",
+      "apiGroup": "policy",
+      "resource": "podsecuritypolicies",
+      "resourceName": "tridentpods",
+      "verbs": [
+        "delete",
+        "patch",
+        "update",
+        "use"
+      ],
+      "riskLevel": "Low",
+      "tags": [
+        "PrivilegeEscalation",
+        "PodSecurityPolicy",
+        "DeprecatedFeature",
+        "NodeAccess",
+        "ResourceNameRestricted"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1078,
+          "name": "Use privileged PodSecurityPolicy (deprecated)",
+          "link": "https://rbac-atlas.github.io/rules/1078/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "trident-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "trident-operator",
+      "apiGroup": "policy",
+      "resource": "podsecuritypolicies",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "list"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "trident-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "trident-operator",
+      "apiGroup": "policy",
+      "resource": "podsecuritypolicies",
+      "resourceName": "tridentoperatorpods",
+      "verbs": [
+        "use"
+      ],
+      "riskLevel": "Low",
+      "tags": [
+        "ResourceNameRestricted",
+        "PrivilegeEscalation",
+        "PodSecurityPolicy",
+        "DeprecatedFeature",
+        "NodeAccess"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1078,
+          "name": "Use privileged PodSecurityPolicy (deprecated)",
+          "link": "https://rbac-atlas.github.io/rules/1078/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "trident-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "trident-operator",
+      "apiGroup": "authorization.openshift.io",
+      "resource": "clusterroles",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "list"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "trident-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "trident-operator",
+      "apiGroup": "authorization.openshift.io",
+      "resource": "clusterroles",
+      "resourceName": "trident-csi",
+      "verbs": [
+        "delete",
+        "patch",
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [
+        "ResourceNameRestricted"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "trident-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "trident-operator",
+      "apiGroup": "authorization.openshift.io",
+      "resource": "clusterroles",
+      "resourceName": "trident",
+      "verbs": [
+        "delete",
+        "patch",
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [
+        "ResourceNameRestricted"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "trident-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "trident-operator",
+      "apiGroup": "authorization.openshift.io",
+      "resource": "clusterrolebindings",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "list"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "trident-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "trident-operator",
+      "apiGroup": "authorization.openshift.io",
+      "resource": "clusterrolebindings",
+      "resourceName": "trident-csi",
+      "verbs": [
+        "delete",
+        "patch",
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [
+        "ResourceNameRestricted"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "trident-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "trident-operator",
+      "apiGroup": "authorization.openshift.io",
+      "resource": "clusterrolebindings",
+      "resourceName": "trident",
+      "verbs": [
+        "delete",
+        "patch",
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [
+        "ResourceNameRestricted"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "trident-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "trident-operator",
+      "apiGroup": "rbac.authorization.k8s.io",
+      "resource": "clusterroles",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "list"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "trident-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "trident-operator",
+      "apiGroup": "rbac.authorization.k8s.io",
+      "resource": "clusterroles",
+      "resourceName": "trident-csi",
+      "verbs": [
+        "delete",
+        "patch",
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [
+        "ResourceNameRestricted"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "trident-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "trident-operator",
+      "apiGroup": "rbac.authorization.k8s.io",
+      "resource": "clusterroles",
+      "resourceName": "trident",
+      "verbs": [
+        "delete",
+        "patch",
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [
+        "ResourceNameRestricted"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "trident-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "trident-operator",
+      "apiGroup": "rbac.authorization.k8s.io",
+      "resource": "clusterrolebindings",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "list"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "trident-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "trident-operator",
+      "apiGroup": "rbac.authorization.k8s.io",
+      "resource": "clusterrolebindings",
+      "resourceName": "trident-csi",
+      "verbs": [
+        "delete",
+        "patch",
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [
+        "ResourceNameRestricted"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "trident-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "trident-operator",
+      "apiGroup": "rbac.authorization.k8s.io",
+      "resource": "clusterrolebindings",
+      "resourceName": "trident",
+      "verbs": [
+        "delete",
+        "patch",
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [
+        "ResourceNameRestricted"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    }
+  ],
+  "serviceAccountWorkloads": [
+    {
+      "serviceAccountName": "trident-operator",
+      "namespace": "default",
+      "workloadType": "Deployment",
+      "workloadName": "trident-operator",
+      "containerName": "trident-operator",
+      "image": "netapp/trident-operator:21.01.2"
+    }
+  ]
+}

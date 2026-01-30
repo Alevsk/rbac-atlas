@@ -3,7 +3,7 @@
     "version": "1.8.11",
     "name": "loki-simple-scalable",
     "source": "charts/grafana__loki-simple-scalable__1.8.11/",
-    "timestamp": 1769479920,
+    "timestamp": 1769793769,
     "extra": {
       "helm": {
         "description": "Helm chart for Grafana Loki in simple, scalable mode",
@@ -26,7 +26,14 @@
   },
   "serviceAccountData": [
     {
-      "serviceAccountName": "loki-simple-scalable-minio",
+      "serviceAccountName": "loki-simple-scalable-minio-update-prometheus-secret",
+      "namespace": "default",
+      "automountToken": false,
+      "secrets": null,
+      "imagePullSecrets": null
+    },
+    {
+      "serviceAccountName": "loki-simple-scalable-grafana-agent-operator",
       "namespace": "default",
       "automountToken": false,
       "secrets": null,
@@ -40,9 +47,9 @@
       "imagePullSecrets": null
     },
     {
-      "serviceAccountName": "loki-simple-scalable-minio-update-prometheus-secret",
+      "serviceAccountName": "loki",
       "namespace": "default",
-      "automountToken": false,
+      "automountToken": true,
       "secrets": null,
       "imagePullSecrets": null
     },
@@ -54,14 +61,7 @@
       "imagePullSecrets": null
     },
     {
-      "serviceAccountName": "loki",
-      "namespace": "default",
-      "automountToken": true,
-      "secrets": null,
-      "imagePullSecrets": null
-    },
-    {
-      "serviceAccountName": "loki-simple-scalable-grafana-agent-operator",
+      "serviceAccountName": "loki-simple-scalable-minio",
       "namespace": "default",
       "automountToken": false,
       "secrets": null,
@@ -74,387 +74,8 @@
       "namespace": "default",
       "roleType": "ClusterRole",
       "roleName": "loki-simple-scalable-grafana-agent-operator",
-      "apiGroup": "",
-      "resource": "configmaps",
-      "resourceName": "",
-      "verbs": [
-        "create",
-        "delete",
-        "get",
-        "list",
-        "patch",
-        "update",
-        "watch"
-      ],
-      "riskLevel": "Critical",
-      "tags": [
-        "ConfigMapAccess",
-        "PotentialPrivilegeEscalation",
-        "InformationDisclosure",
-        "DataExposure",
-        "Tampering"
-      ],
-      "matchedRiskRules": [
-        {
-          "id": 1024,
-          "name": "Modify ConfigMaps cluster-wide",
-          "link": "https://rbac-atlas.github.io/rules/1024/"
-        },
-        {
-          "id": 1022,
-          "name": "Read ConfigMaps cluster-wide",
-          "link": "https://rbac-atlas.github.io/rules/1022/"
-        },
-        {
-          "id": 1025,
-          "name": "Modify ConfigMaps in a namespace",
-          "link": "https://rbac-atlas.github.io/rules/1025/"
-        },
-        {
-          "id": 1023,
-          "name": "Read ConfigMaps in a namespace",
-          "link": "https://rbac-atlas.github.io/rules/1023/"
-        },
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "loki-simple-scalable-grafana-agent-operator",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "loki-simple-scalable-grafana-agent-operator",
-      "apiGroup": "",
-      "resource": "endpoints",
-      "resourceName": "",
-      "verbs": [
-        "create",
-        "delete",
-        "get",
-        "list",
-        "patch",
-        "update",
-        "watch"
-      ],
-      "riskLevel": "Critical",
-      "tags": [
-        "NetworkManipulation",
-        "TrafficRedirection",
-        "ManInTheMiddle",
-        "DenialOfService",
-        "Tampering"
-      ],
-      "matchedRiskRules": [
-        {
-          "id": 1073,
-          "name": "Manage Endpoints or EndpointSlices cluster-wide",
-          "link": "https://rbac-atlas.github.io/rules/1073/"
-        },
-        {
-          "id": 1074,
-          "name": "Manage Endpoints or EndpointSlices in a namespace",
-          "link": "https://rbac-atlas.github.io/rules/1074/"
-        },
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "loki-simple-scalable-grafana-agent-operator",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "loki-simple-scalable-grafana-agent-operator",
-      "apiGroup": "",
-      "resource": "namespaces",
-      "resourceName": "",
-      "verbs": [
-        "get",
-        "list",
-        "watch"
-      ],
-      "riskLevel": "Low",
-      "tags": [
-        "InformationDisclosure",
-        "Reconnaissance",
-        "ClusterStructure"
-      ],
-      "matchedRiskRules": [
-        {
-          "id": 1082,
-          "name": "List Namespaces (Cluster Reconnaissance)",
-          "link": "https://rbac-atlas.github.io/rules/1082/"
-        },
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "loki-simple-scalable-grafana-agent-operator",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "loki-simple-scalable-grafana-agent-operator",
-      "apiGroup": "",
-      "resource": "nodes",
-      "resourceName": "",
-      "verbs": [
-        "get",
-        "list",
-        "watch"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "loki-simple-scalable-grafana-agent-operator",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "loki-simple-scalable-grafana-agent-operator",
-      "apiGroup": "",
-      "resource": "secrets",
-      "resourceName": "",
-      "verbs": [
-        "create",
-        "delete",
-        "get",
-        "list",
-        "patch",
-        "update",
-        "watch"
-      ],
-      "riskLevel": "Critical",
-      "tags": [
-        "ClusterWideSecretAccess",
-        "CredentialAccess",
-        "DataExposure",
-        "PrivilegeEscalation",
-        "PotentialPrivilegeEscalation",
-        "InformationDisclosure",
-        "SecretAccess",
-        "Tampering",
-        "Persistence"
-      ],
-      "matchedRiskRules": [
-        {
-          "id": 1010,
-          "name": "Read secrets cluster-wide",
-          "link": "https://rbac-atlas.github.io/rules/1010/"
-        },
-        {
-          "id": 1011,
-          "name": "Read secrets in a namespace",
-          "link": "https://rbac-atlas.github.io/rules/1011/"
-        },
-        {
-          "id": 1012,
-          "name": "Modify secrets cluster-wide",
-          "link": "https://rbac-atlas.github.io/rules/1012/"
-        },
-        {
-          "id": 1013,
-          "name": "Modify secrets in a namespace",
-          "link": "https://rbac-atlas.github.io/rules/1013/"
-        },
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "loki-simple-scalable-grafana-agent-operator",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "loki-simple-scalable-grafana-agent-operator",
-      "apiGroup": "",
-      "resource": "services",
-      "resourceName": "",
-      "verbs": [
-        "create",
-        "delete",
-        "get",
-        "list",
-        "patch",
-        "update",
-        "watch"
-      ],
-      "riskLevel": "Critical",
-      "tags": [
-        "NetworkManipulation",
-        "ServiceExposure",
-        "DenialOfService",
-        "Tampering"
-      ],
-      "matchedRiskRules": [
-        {
-          "id": 1075,
-          "name": "Manage Services cluster-wide",
-          "link": "https://rbac-atlas.github.io/rules/1075/"
-        },
-        {
-          "id": 1076,
-          "name": "Manage Services in a namespace",
-          "link": "https://rbac-atlas.github.io/rules/1076/"
-        },
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "loki-simple-scalable-grafana-agent-operator",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "loki-simple-scalable-grafana-agent-operator",
-      "apiGroup": "apps",
-      "resource": "statefulsets",
-      "resourceName": "",
-      "verbs": [
-        "create",
-        "delete",
-        "get",
-        "list",
-        "patch",
-        "update",
-        "watch"
-      ],
-      "riskLevel": "Critical",
-      "tags": [
-        "WorkloadLifecycle",
-        "PrivilegeEscalation",
-        "Persistence",
-        "Tampering",
-        "PotentialPrivilegeEscalation"
-      ],
-      "matchedRiskRules": [
-        {
-          "id": 1037,
-          "name": "Manage StatefulSets cluster-wide",
-          "link": "https://rbac-atlas.github.io/rules/1037/"
-        },
-        {
-          "id": 1038,
-          "name": "Manage StatefulSets in a namespace",
-          "link": "https://rbac-atlas.github.io/rules/1038/"
-        },
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "loki-simple-scalable-grafana-agent-operator",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "loki-simple-scalable-grafana-agent-operator",
-      "apiGroup": "apps",
-      "resource": "daemonsets",
-      "resourceName": "",
-      "verbs": [
-        "create",
-        "delete",
-        "get",
-        "list",
-        "patch",
-        "update",
-        "watch"
-      ],
-      "riskLevel": "Critical",
-      "tags": [
-        "PrivilegeEscalation",
-        "Persistence",
-        "NodeAccess",
-        "Tampering",
-        "WorkloadLifecycle"
-      ],
-      "matchedRiskRules": [
-        {
-          "id": 1035,
-          "name": "Manage DaemonSets cluster-wide (runs on all nodes, high impact)",
-          "link": "https://rbac-atlas.github.io/rules/1035/"
-        },
-        {
-          "id": 1036,
-          "name": "Manage DaemonSets in a namespace (runs on nodes, high impact)",
-          "link": "https://rbac-atlas.github.io/rules/1036/"
-        },
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "loki-simple-scalable-grafana-agent-operator",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "loki-simple-scalable-grafana-agent-operator",
-      "apiGroup": "apps",
-      "resource": "deployments",
-      "resourceName": "",
-      "verbs": [
-        "create",
-        "delete",
-        "get",
-        "list",
-        "patch",
-        "update",
-        "watch"
-      ],
-      "riskLevel": "Critical",
-      "tags": [
-        "WorkloadLifecycle",
-        "PrivilegeEscalation",
-        "Persistence",
-        "Tampering",
-        "PotentialPrivilegeEscalation"
-      ],
-      "matchedRiskRules": [
-        {
-          "id": 1033,
-          "name": "Manage Deployments cluster-wide (potential for privileged pod execution)",
-          "link": "https://rbac-atlas.github.io/rules/1033/"
-        },
-        {
-          "id": 1034,
-          "name": "Manage Deployments in a namespace (potential for privileged pod execution)",
-          "link": "https://rbac-atlas.github.io/rules/1034/"
-        },
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "loki-simple-scalable-grafana-agent-operator",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "loki-simple-scalable-grafana-agent-operator",
       "apiGroup": "monitoring.grafana.com",
-      "resource": "logsinstances",
+      "resource": "grafanaagents",
       "resourceName": "",
       "verbs": [
         "get",
@@ -477,58 +98,11 @@
       "roleType": "ClusterRole",
       "roleName": "loki-simple-scalable-grafana-agent-operator",
       "apiGroup": "monitoring.grafana.com",
-      "resource": "podlogs",
+      "resource": "metricsinstances",
       "resourceName": "",
       "verbs": [
         "get",
         "list",
-        "watch"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "loki-simple-scalable-grafana-agent-operator",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "loki-simple-scalable-grafana-agent-operator",
-      "apiGroup": "monitoring.grafana.com",
-      "resource": "integrations",
-      "resourceName": "",
-      "verbs": [
-        "get",
-        "list",
-        "watch"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "loki-simple-scalable-grafana-agent-operator",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "loki-simple-scalable-grafana-agent-operator",
-      "apiGroup": "monitoring.grafana.com",
-      "resource": "grafanaagents/finalizers",
-      "resourceName": "",
-      "verbs": [
-        "get",
-        "list",
-        "update",
         "watch"
       ],
       "riskLevel": "Low",
@@ -619,7 +193,7 @@
       "roleType": "ClusterRole",
       "roleName": "loki-simple-scalable-grafana-agent-operator",
       "apiGroup": "monitoring.grafana.com",
-      "resource": "grafanaagents",
+      "resource": "logsinstances",
       "resourceName": "",
       "verbs": [
         "get",
@@ -642,11 +216,58 @@
       "roleType": "ClusterRole",
       "roleName": "loki-simple-scalable-grafana-agent-operator",
       "apiGroup": "monitoring.grafana.com",
-      "resource": "metricsinstances",
+      "resource": "podlogs",
       "resourceName": "",
       "verbs": [
         "get",
         "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "loki-simple-scalable-grafana-agent-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "loki-simple-scalable-grafana-agent-operator",
+      "apiGroup": "monitoring.grafana.com",
+      "resource": "integrations",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "loki-simple-scalable-grafana-agent-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "loki-simple-scalable-grafana-agent-operator",
+      "apiGroup": "monitoring.grafana.com",
+      "resource": "grafanaagents/finalizers",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "update",
         "watch"
       ],
       "riskLevel": "Low",
@@ -825,24 +446,30 @@
       ]
     },
     {
-      "serviceAccountName": "loki-simple-scalable-minio-update-prometheus-secret",
+      "serviceAccountName": "loki-simple-scalable-grafana-agent-operator",
       "namespace": "default",
-      "roleType": "Role",
-      "roleName": "loki-simple-scalable-minio-update-prometheus-secret",
+      "roleType": "ClusterRole",
+      "roleName": "loki-simple-scalable-grafana-agent-operator",
       "apiGroup": "",
-      "resource": "secrets",
-      "resourceName": "loki-simple-scalable-minio-prometheus",
+      "resource": "namespaces",
+      "resourceName": "",
       "verbs": [
-        "create",
         "get",
-        "patch",
-        "update"
+        "list",
+        "watch"
       ],
       "riskLevel": "Low",
       "tags": [
-        "ResourceNameRestricted"
+        "Reconnaissance",
+        "ClusterStructure",
+        "InformationDisclosure"
       ],
       "matchedRiskRules": [
+        {
+          "id": 1082,
+          "name": "List Namespaces (Cluster Reconnaissance)",
+          "link": "https://rbac-atlas.github.io/rules/1082/"
+        },
         {
           "id": 9996,
           "name": "Base Risk Level - Low",
@@ -851,15 +478,17 @@
       ]
     },
     {
-      "serviceAccountName": "loki-simple-scalable-minio-update-prometheus-secret",
+      "serviceAccountName": "loki-simple-scalable-grafana-agent-operator",
       "namespace": "default",
-      "roleType": "Role",
-      "roleName": "loki-simple-scalable-minio-update-prometheus-secret",
+      "roleType": "ClusterRole",
+      "roleName": "loki-simple-scalable-grafana-agent-operator",
       "apiGroup": "",
-      "resource": "secrets",
+      "resource": "nodes",
       "resourceName": "",
       "verbs": [
-        "create"
+        "get",
+        "list",
+        "watch"
       ],
       "riskLevel": "Low",
       "tags": [],
@@ -872,20 +501,344 @@
       ]
     },
     {
-      "serviceAccountName": "loki-simple-scalable-minio-update-prometheus-secret",
+      "serviceAccountName": "loki-simple-scalable-grafana-agent-operator",
       "namespace": "default",
-      "roleType": "Role",
-      "roleName": "loki-simple-scalable-minio-update-prometheus-secret",
-      "apiGroup": "monitoring.coreos.com",
-      "resource": "servicemonitors",
-      "resourceName": "loki-simple-scalable-minio",
+      "roleType": "ClusterRole",
+      "roleName": "loki-simple-scalable-grafana-agent-operator",
+      "apiGroup": "",
+      "resource": "secrets",
+      "resourceName": "",
       "verbs": [
-        "get"
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "ClusterWideSecretAccess",
+        "CredentialAccess",
+        "InformationDisclosure",
+        "PotentialPrivilegeEscalation",
+        "DataExposure",
+        "SecretAccess",
+        "Tampering",
+        "PrivilegeEscalation",
+        "Persistence"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1010,
+          "name": "Read secrets cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1010/"
+        },
+        {
+          "id": 1011,
+          "name": "Read secrets in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1011/"
+        },
+        {
+          "id": 1012,
+          "name": "Modify secrets cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1012/"
+        },
+        {
+          "id": 1013,
+          "name": "Modify secrets in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1013/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "loki-simple-scalable-grafana-agent-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "loki-simple-scalable-grafana-agent-operator",
+      "apiGroup": "",
+      "resource": "services",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "Tampering",
+        "NetworkManipulation",
+        "ServiceExposure",
+        "DenialOfService"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1075,
+          "name": "Manage Services cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1075/"
+        },
+        {
+          "id": 1076,
+          "name": "Manage Services in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1076/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "loki-simple-scalable-grafana-agent-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "loki-simple-scalable-grafana-agent-operator",
+      "apiGroup": "",
+      "resource": "configmaps",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "DataExposure",
+        "Tampering",
+        "ConfigMapAccess",
+        "PotentialPrivilegeEscalation",
+        "InformationDisclosure"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1024,
+          "name": "Modify ConfigMaps cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1024/"
+        },
+        {
+          "id": 1022,
+          "name": "Read ConfigMaps cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1022/"
+        },
+        {
+          "id": 1025,
+          "name": "Modify ConfigMaps in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1025/"
+        },
+        {
+          "id": 1023,
+          "name": "Read ConfigMaps in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1023/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "loki-simple-scalable-grafana-agent-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "loki-simple-scalable-grafana-agent-operator",
+      "apiGroup": "",
+      "resource": "endpoints",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "ManInTheMiddle",
+        "DenialOfService",
+        "Tampering",
+        "NetworkManipulation",
+        "TrafficRedirection"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1073,
+          "name": "Manage Endpoints or EndpointSlices cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1073/"
+        },
+        {
+          "id": 1074,
+          "name": "Manage Endpoints or EndpointSlices in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1074/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "loki-simple-scalable-grafana-agent-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "loki-simple-scalable-grafana-agent-operator",
+      "apiGroup": "apps",
+      "resource": "statefulsets",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "WorkloadLifecycle",
+        "PrivilegeEscalation",
+        "Persistence",
+        "Tampering",
+        "PotentialPrivilegeEscalation"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1037,
+          "name": "Manage StatefulSets cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1037/"
+        },
+        {
+          "id": 1038,
+          "name": "Manage StatefulSets in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1038/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "loki-simple-scalable-grafana-agent-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "loki-simple-scalable-grafana-agent-operator",
+      "apiGroup": "apps",
+      "resource": "daemonsets",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "WorkloadLifecycle",
+        "PrivilegeEscalation",
+        "Persistence",
+        "NodeAccess",
+        "Tampering"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1035,
+          "name": "Manage DaemonSets cluster-wide (runs on all nodes, high impact)",
+          "link": "https://rbac-atlas.github.io/rules/1035/"
+        },
+        {
+          "id": 1036,
+          "name": "Manage DaemonSets in a namespace (runs on nodes, high impact)",
+          "link": "https://rbac-atlas.github.io/rules/1036/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "loki-simple-scalable-grafana-agent-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "loki-simple-scalable-grafana-agent-operator",
+      "apiGroup": "apps",
+      "resource": "deployments",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "PrivilegeEscalation",
+        "Persistence",
+        "Tampering",
+        "PotentialPrivilegeEscalation",
+        "WorkloadLifecycle"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1033,
+          "name": "Manage Deployments cluster-wide (potential for privileged pod execution)",
+          "link": "https://rbac-atlas.github.io/rules/1033/"
+        },
+        {
+          "id": 1034,
+          "name": "Manage Deployments in a namespace (potential for privileged pod execution)",
+          "link": "https://rbac-atlas.github.io/rules/1034/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "grafana-agent-test-sa",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "grafana-agent-test-cr",
+      "apiGroup": "",
+      "resource": "pods",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
       ],
       "riskLevel": "Low",
-      "tags": [
-        "ResourceNameRestricted"
-      ],
+      "tags": [],
       "matchedRiskRules": [
         {
           "id": 9996,
@@ -895,10 +848,91 @@
       ]
     },
     {
-      "serviceAccountName": "loki-simple-scalable-grafana-agent",
+      "serviceAccountName": "grafana-agent-test-sa",
       "namespace": "default",
       "roleType": "ClusterRole",
-      "roleName": "loki-simple-scalable-grafana-agent",
+      "roleName": "grafana-agent-test-cr",
+      "apiGroup": "",
+      "resource": "nodes",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "grafana-agent-test-sa",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "grafana-agent-test-cr",
+      "apiGroup": "",
+      "resource": "nodes/proxy",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "NodeAccess",
+        "ClusterAdminAccess",
+        "CodeExecution",
+        "LateralMovement",
+        "ElevationOfPrivilege",
+        "AuthorizationBypass"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1104,
+          "name": "Node proxy GET RCE via WebSocket",
+          "link": "https://rbac-atlas.github.io/rules/1104/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "grafana-agent-test-sa",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "grafana-agent-test-cr",
+      "apiGroup": "",
+      "resource": "nodes/metrics",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "grafana-agent-test-sa",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "grafana-agent-test-cr",
       "apiGroup": "",
       "resource": "services",
       "resourceName": "",
@@ -918,12 +952,35 @@
       ]
     },
     {
-      "serviceAccountName": "loki-simple-scalable-grafana-agent",
+      "serviceAccountName": "grafana-agent-test-sa",
       "namespace": "default",
       "roleType": "ClusterRole",
-      "roleName": "loki-simple-scalable-grafana-agent",
+      "roleName": "grafana-agent-test-cr",
       "apiGroup": "",
       "resource": "endpoints",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "grafana-agent-test-sa",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "grafana-agent-test-cr",
+      "apiGroup": "networking.k8s.io",
+      "resource": "ingresses",
       "resourceName": "",
       "verbs": [
         "get",
@@ -978,9 +1035,9 @@
       ],
       "riskLevel": "Medium",
       "tags": [
+        "InformationDisclosure",
         "Reconnaissance",
-        "OperationalData",
-        "InformationDisclosure"
+        "OperationalData"
       ],
       "matchedRiskRules": [
         {
@@ -1081,52 +1138,6 @@
       "namespace": "default",
       "roleType": "ClusterRole",
       "roleName": "loki-simple-scalable-grafana-agent",
-      "apiGroup": "networking.k8s.io",
-      "resource": "ingresses",
-      "resourceName": "",
-      "verbs": [
-        "get",
-        "list",
-        "watch"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "grafana-agent-test-sa",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "grafana-agent-test-cr",
-      "apiGroup": "",
-      "resource": "nodes/metrics",
-      "resourceName": "",
-      "verbs": [
-        "get",
-        "list",
-        "watch"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "grafana-agent-test-sa",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "grafana-agent-test-cr",
       "apiGroup": "",
       "resource": "services",
       "resourceName": "",
@@ -1146,10 +1157,10 @@
       ]
     },
     {
-      "serviceAccountName": "grafana-agent-test-sa",
+      "serviceAccountName": "loki-simple-scalable-grafana-agent",
       "namespace": "default",
       "roleType": "ClusterRole",
-      "roleName": "grafana-agent-test-cr",
+      "roleName": "loki-simple-scalable-grafana-agent",
       "apiGroup": "",
       "resource": "endpoints",
       "resourceName": "",
@@ -1169,91 +1180,10 @@
       ]
     },
     {
-      "serviceAccountName": "grafana-agent-test-sa",
+      "serviceAccountName": "loki-simple-scalable-grafana-agent",
       "namespace": "default",
       "roleType": "ClusterRole",
-      "roleName": "grafana-agent-test-cr",
-      "apiGroup": "",
-      "resource": "pods",
-      "resourceName": "",
-      "verbs": [
-        "get",
-        "list",
-        "watch"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "grafana-agent-test-sa",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "grafana-agent-test-cr",
-      "apiGroup": "",
-      "resource": "nodes",
-      "resourceName": "",
-      "verbs": [
-        "get",
-        "list",
-        "watch"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "grafana-agent-test-sa",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "grafana-agent-test-cr",
-      "apiGroup": "",
-      "resource": "nodes/proxy",
-      "resourceName": "",
-      "verbs": [
-        "get",
-        "list",
-        "watch"
-      ],
-      "riskLevel": "Critical",
-      "tags": [
-        "NodeAccess",
-        "ClusterAdminAccess",
-        "CodeExecution",
-        "LateralMovement",
-        "ElevationOfPrivilege",
-        "AuthorizationBypass"
-      ],
-      "matchedRiskRules": [
-        {
-          "id": 1104,
-          "name": "Node proxy GET RCE via WebSocket",
-          "link": "https://rbac-atlas.github.io/rules/1104/"
-        },
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "grafana-agent-test-sa",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "grafana-agent-test-cr",
+      "roleName": "loki-simple-scalable-grafana-agent",
       "apiGroup": "networking.k8s.io",
       "resource": "ingresses",
       "resourceName": "",
@@ -1271,17 +1201,79 @@
           "link": "https://rbac-atlas.github.io/rules/9996/"
         }
       ]
+    },
+    {
+      "serviceAccountName": "loki-simple-scalable-minio-update-prometheus-secret",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "loki-simple-scalable-minio-update-prometheus-secret",
+      "apiGroup": "",
+      "resource": "secrets",
+      "resourceName": "loki-simple-scalable-minio-prometheus",
+      "verbs": [
+        "create",
+        "get",
+        "patch",
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [
+        "ResourceNameRestricted"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "loki-simple-scalable-minio-update-prometheus-secret",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "loki-simple-scalable-minio-update-prometheus-secret",
+      "apiGroup": "",
+      "resource": "secrets",
+      "resourceName": "",
+      "verbs": [
+        "create"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "loki-simple-scalable-minio-update-prometheus-secret",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "loki-simple-scalable-minio-update-prometheus-secret",
+      "apiGroup": "monitoring.coreos.com",
+      "resource": "servicemonitors",
+      "resourceName": "loki-simple-scalable-minio",
+      "verbs": [
+        "get"
+      ],
+      "riskLevel": "Low",
+      "tags": [
+        "ResourceNameRestricted"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
     }
   ],
   "serviceAccountWorkloads": [
-    {
-      "serviceAccountName": "loki-simple-scalable-grafana-agent-operator",
-      "namespace": "default",
-      "workloadType": "Deployment",
-      "workloadName": "loki-simple-scalable-grafana-agent-operator",
-      "containerName": "grafana-agent-operator",
-      "image": "docker.io/grafana/agent-operator:v0.25.1"
-    },
     {
       "serviceAccountName": "loki",
       "namespace": "default",
@@ -1293,26 +1285,26 @@
     {
       "serviceAccountName": "loki",
       "namespace": "default",
-      "workloadType": "StatefulSet",
-      "workloadName": "loki-write",
-      "containerName": "write",
-      "image": "docker.io/grafana/loki:2.6.1"
-    },
-    {
-      "serviceAccountName": "loki",
-      "namespace": "default",
       "workloadType": "Deployment",
       "workloadName": "loki-gateway",
       "containerName": "nginx",
       "image": "docker.io/nginxinc/nginx-unprivileged:1.19-alpine"
     },
     {
-      "serviceAccountName": "loki-simple-scalable-minio",
+      "serviceAccountName": "loki",
       "namespace": "default",
-      "workloadType": "Job",
-      "workloadName": "loki-simple-scalable-minio-make-bucket-job",
-      "containerName": "minio-mc",
-      "image": "minio/mc:RELEASE.2020-11-25T23-04-07Z"
+      "workloadType": "StatefulSet",
+      "workloadName": "loki-write",
+      "containerName": "write",
+      "image": "docker.io/grafana/loki:2.6.1"
+    },
+    {
+      "serviceAccountName": "loki-simple-scalable-grafana-agent-operator",
+      "namespace": "default",
+      "workloadType": "Deployment",
+      "workloadName": "loki-simple-scalable-grafana-agent-operator",
+      "containerName": "grafana-agent-operator",
+      "image": "docker.io/grafana/agent-operator:v0.25.1"
     },
     {
       "serviceAccountName": "loki-simple-scalable-minio",
@@ -1321,6 +1313,14 @@
       "workloadName": "loki-simple-scalable-minio",
       "containerName": "minio",
       "image": "minio/minio:RELEASE.2020-12-03T05-49-24Z"
+    },
+    {
+      "serviceAccountName": "loki-simple-scalable-minio",
+      "namespace": "default",
+      "workloadType": "Job",
+      "workloadName": "loki-simple-scalable-minio-make-bucket-job",
+      "containerName": "minio-mc",
+      "image": "minio/mc:RELEASE.2020-11-25T23-04-07Z"
     },
     {
       "serviceAccountName": "",

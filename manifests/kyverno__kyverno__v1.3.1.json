@@ -1,0 +1,1352 @@
+{
+  "metadata": {
+    "version": "v1.3.1",
+    "name": "kyverno",
+    "source": "charts/kyverno__kyverno__v1.3.1/",
+    "timestamp": 1769793980,
+    "extra": {
+      "helm": {
+        "description": "Kubernetes Native Policy Management",
+        "home": "https://kyverno.io/",
+        "icon": "https://github.com/kyverno/kyverno/blob/master/documentation/images/Kyverno_Horizontal.png",
+        "keywords": [
+          "kubernetes",
+          "nirmata",
+          "policy agent",
+          "validating webhook",
+          "admissions controller"
+        ],
+        "kubeVersion": "\u003e=1.10.0-0",
+        "maintainers": [
+          {
+            "name": "Nirmata",
+            "url": "https://kyverno.io/"
+          }
+        ],
+        "sources": [
+          "https://github.com/kyverno/kyverno"
+        ]
+      }
+    }
+  },
+  "serviceAccountData": [
+    {
+      "serviceAccountName": "kyverno",
+      "namespace": "default",
+      "automountToken": false,
+      "secrets": null,
+      "imagePullSecrets": null
+    }
+  ],
+  "serviceAccountPermissions": [
+    {
+      "serviceAccountName": "kyverno",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kyverno:webhook",
+      "apiGroup": "*",
+      "resource": "events",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Medium",
+      "tags": [
+        "OperationalData",
+        "ClusterWideAccess",
+        "WildcardPermission",
+        "InformationDisclosure",
+        "Reconnaissance"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1070,
+          "name": "Read events cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1070/"
+        },
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kyverno",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kyverno:webhook",
+      "apiGroup": "*",
+      "resource": "mutatingwebhookconfigurations",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "WebhookManipulation",
+        "Tampering",
+        "InformationDisclosure",
+        "Reconnaissance",
+        "WildcardPermission",
+        "PrivilegeEscalation",
+        "DenialOfService",
+        "WebhookReconnaissance",
+        "ClusterWideAccess"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1043,
+          "name": "Manage MutatingWebhookConfigurations",
+          "link": "https://rbac-atlas.github.io/rules/1043/"
+        },
+        {
+          "id": 1084,
+          "name": "List MutatingWebhookConfigurations (Reconnaissance)",
+          "link": "https://rbac-atlas.github.io/rules/1084/"
+        },
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kyverno",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kyverno:webhook",
+      "apiGroup": "*",
+      "resource": "validatingwebhookconfigurations",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "WebhookReconnaissance",
+        "Reconnaissance",
+        "ClusterWideAccess",
+        "WildcardPermission",
+        "WebhookManipulation",
+        "Tampering",
+        "DenialOfService",
+        "InformationDisclosure"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1044,
+          "name": "Manage ValidatingWebhookConfigurations",
+          "link": "https://rbac-atlas.github.io/rules/1044/"
+        },
+        {
+          "id": 1083,
+          "name": "List ValidatingWebhookConfigurations (Reconnaissance)",
+          "link": "https://rbac-atlas.github.io/rules/1083/"
+        },
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kyverno",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kyverno:webhook",
+      "apiGroup": "*",
+      "resource": "certificatesigningrequests",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Medium",
+      "tags": [
+        "InformationDisclosure",
+        "Tampering",
+        "DenialOfService",
+        "ClusterWideAccess",
+        "WildcardPermission",
+        "CSRCreation",
+        "PotentialPrivilegeEscalation",
+        "Spoofing"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1053,
+          "name": "Create CertificateSigningRequests",
+          "link": "https://rbac-atlas.github.io/rules/1053/"
+        },
+        {
+          "id": 1054,
+          "name": "Manage (get, list, watch, delete) CertificateSigningRequests",
+          "link": "https://rbac-atlas.github.io/rules/1054/"
+        },
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kyverno",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kyverno:webhook",
+      "apiGroup": "*",
+      "resource": "certificatesigningrequests/approval",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "ClusterWideAccess",
+        "WildcardPermission",
+        "CSRApproval",
+        "PrivilegeEscalation",
+        "Spoofing",
+        "ClusterAdminAccess"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1052,
+          "name": "Approve CertificateSigningRequests",
+          "link": "https://rbac-atlas.github.io/rules/1052/"
+        },
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kyverno",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kyverno:webhook",
+      "apiGroup": "certificates.k8s.io",
+      "resource": "certificatesigningrequests",
+      "resourceName": "kubernetes.io/legacy-unknown",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [
+        "PotentialPrivilegeEscalation",
+        "Spoofing",
+        "ResourceNameRestricted",
+        "CSRCreation"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1053,
+          "name": "Create CertificateSigningRequests",
+          "link": "https://rbac-atlas.github.io/rules/1053/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kyverno",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kyverno:webhook",
+      "apiGroup": "certificates.k8s.io",
+      "resource": "certificatesigningrequests/approval",
+      "resourceName": "kubernetes.io/legacy-unknown",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [
+        "ResourceNameRestricted"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kyverno",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kyverno:webhook",
+      "apiGroup": "certificates.k8s.io",
+      "resource": "certificatesigningrequests/status",
+      "resourceName": "kubernetes.io/legacy-unknown",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [
+        "ResourceNameRestricted"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kyverno",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kyverno:webhook",
+      "apiGroup": "certificates.k8s.io",
+      "resource": "signers",
+      "resourceName": "kubernetes.io/legacy-unknown",
+      "verbs": [
+        "approve"
+      ],
+      "riskLevel": "Low",
+      "tags": [
+        "ResourceNameRestricted"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kyverno",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kyverno:userinfo",
+      "apiGroup": "*",
+      "resource": "clusterrolebindings",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Medium",
+      "tags": [
+        "InformationDisclosure",
+        "RBACQuery",
+        "Reconnaissance",
+        "ClusterWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1077,
+          "name": "Read RBAC configuration cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1077/"
+        },
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kyverno",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kyverno:userinfo",
+      "apiGroup": "*",
+      "resource": "configmaps",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "ClusterWideAccess",
+        "WildcardPermission",
+        "InformationDisclosure",
+        "ConfigMapAccess",
+        "DataExposure"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1022,
+          "name": "Read ConfigMaps cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1022/"
+        },
+        {
+          "id": 1023,
+          "name": "Read ConfigMaps in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1023/"
+        },
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kyverno",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kyverno:userinfo",
+      "apiGroup": "*",
+      "resource": "namespaces",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [
+        "Reconnaissance",
+        "ClusterStructure",
+        "ClusterWideAccess",
+        "WildcardPermission",
+        "InformationDisclosure"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1082,
+          "name": "List Namespaces (Cluster Reconnaissance)",
+          "link": "https://rbac-atlas.github.io/rules/1082/"
+        },
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kyverno",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kyverno:userinfo",
+      "apiGroup": "*",
+      "resource": "roles",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Medium",
+      "tags": [
+        "InformationDisclosure",
+        "RBACQuery",
+        "Reconnaissance",
+        "ClusterWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1077,
+          "name": "Read RBAC configuration cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1077/"
+        },
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kyverno",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kyverno:userinfo",
+      "apiGroup": "*",
+      "resource": "clusterroles",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Medium",
+      "tags": [
+        "InformationDisclosure",
+        "RBACQuery",
+        "Reconnaissance",
+        "ClusterWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1077,
+          "name": "Read RBAC configuration cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1077/"
+        },
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kyverno",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kyverno:userinfo",
+      "apiGroup": "*",
+      "resource": "rolebindings",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Medium",
+      "tags": [
+        "InformationDisclosure",
+        "RBACQuery",
+        "Reconnaissance",
+        "ClusterWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1077,
+          "name": "Read RBAC configuration cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1077/"
+        },
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kyverno",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kyverno:customresources",
+      "apiGroup": "*",
+      "resource": "policies/status",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "ClusterWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kyverno",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kyverno:customresources",
+      "apiGroup": "*",
+      "resource": "clusterpolicies",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "ClusterWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kyverno",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kyverno:customresources",
+      "apiGroup": "*",
+      "resource": "clusterpolicies/status",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "ClusterWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kyverno",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kyverno:customresources",
+      "apiGroup": "*",
+      "resource": "policyreports",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "ClusterWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kyverno",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kyverno:customresources",
+      "apiGroup": "*",
+      "resource": "generaterequests",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "ClusterWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kyverno",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kyverno:customresources",
+      "apiGroup": "*",
+      "resource": "generaterequests/status",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "ClusterWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kyverno",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kyverno:customresources",
+      "apiGroup": "*",
+      "resource": "reportchangerequests/status",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "ClusterWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kyverno",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kyverno:customresources",
+      "apiGroup": "*",
+      "resource": "clusterreportchangerequests/status",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "ClusterWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kyverno",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kyverno:customresources",
+      "apiGroup": "*",
+      "resource": "policies",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "ClusterWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kyverno",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kyverno:customresources",
+      "apiGroup": "*",
+      "resource": "policyreports/status",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "ClusterWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kyverno",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kyverno:customresources",
+      "apiGroup": "*",
+      "resource": "clusterpolicyreports",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "ClusterWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kyverno",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kyverno:customresources",
+      "apiGroup": "*",
+      "resource": "clusterpolicyreports/status",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "ClusterWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kyverno",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kyverno:customresources",
+      "apiGroup": "*",
+      "resource": "reportchangerequests",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "ClusterWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kyverno",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kyverno:customresources",
+      "apiGroup": "*",
+      "resource": "clusterreportchangerequests",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "ClusterWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kyverno",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kyverno:customresources",
+      "apiGroup": "apiextensions.k8s.io",
+      "resource": "customresourcedefinitions",
+      "resourceName": "",
+      "verbs": [
+        "delete"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kyverno",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kyverno:policycontroller",
+      "apiGroup": "*",
+      "resource": "*",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "update"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "Reconnaissance",
+        "ClusterAdminAccess",
+        "ElevationOfPrivilege",
+        "ClusterWideLogAccess",
+        "ControlPlaneDisruption",
+        "ClusterWideAccess",
+        "WildcardPermission",
+        "NodeAccess",
+        "CodeExecution",
+        "LateralMovement",
+        "AuthorizationBypass",
+        "InformationDisclosure",
+        "DataExposure",
+        "LogAccess"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1104,
+          "name": "Node proxy GET RCE via WebSocket",
+          "link": "https://rbac-atlas.github.io/rules/1104/"
+        },
+        {
+          "id": 1018,
+          "name": "Read pod logs cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1018/"
+        },
+        {
+          "id": 1019,
+          "name": "Read pod logs in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1019/"
+        },
+        {
+          "id": 1095,
+          "name": "Read ComponentStatuses (Control Plane Reconnaissance)",
+          "link": "https://rbac-atlas.github.io/rules/1095/"
+        },
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kyverno",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kyverno:generatecontroller",
+      "apiGroup": "*",
+      "resource": "namespaces",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "WildcardPermission",
+        "NamespaceLifecycle",
+        "ResourceDeletion",
+        "DenialOfService",
+        "InformationDisclosure",
+        "Reconnaissance",
+        "ClusterStructure",
+        "ClusterWideAccess"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1026,
+          "name": "Delete namespaces",
+          "link": "https://rbac-atlas.github.io/rules/1026/"
+        },
+        {
+          "id": 1082,
+          "name": "List Namespaces (Cluster Reconnaissance)",
+          "link": "https://rbac-atlas.github.io/rules/1082/"
+        },
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kyverno",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kyverno:generatecontroller",
+      "apiGroup": "*",
+      "resource": "networkpolicies",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "update"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "ClusterWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kyverno",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kyverno:generatecontroller",
+      "apiGroup": "*",
+      "resource": "configmaps",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "update"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "ClusterWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kyverno",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kyverno:generatecontroller",
+      "apiGroup": "*",
+      "resource": "resourcequotas",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "update"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "ClusterWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kyverno",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kyverno:generatecontroller",
+      "apiGroup": "*",
+      "resource": "limitranges",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "update"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "ClusterWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kyverno",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kyverno:generatecontroller",
+      "apiGroup": "*",
+      "resource": "rolebindings",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "update"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "ClusterWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kyverno",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kyverno:generatecontroller",
+      "apiGroup": "*",
+      "resource": "secrets",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "update"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "ClusterWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kyverno",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kyverno:generatecontroller",
+      "apiGroup": "*",
+      "resource": "clusterroles",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "update"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "ClusterWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kyverno",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kyverno:generatecontroller",
+      "apiGroup": "*",
+      "resource": "clusterrolebindings",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "update"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "ClusterWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    }
+  ],
+  "serviceAccountWorkloads": [
+    {
+      "serviceAccountName": "kyverno",
+      "namespace": "default",
+      "workloadType": "Deployment",
+      "workloadName": "kyverno",
+      "containerName": "kyverno",
+      "image": "ghcr.io/kyverno/kyverno:v1.3.1"
+    }
+  ]
+}

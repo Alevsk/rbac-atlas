@@ -1,0 +1,159 @@
+{
+  "metadata": {
+    "version": "7.22.2-31",
+    "name": "redis-enterprise-operator",
+    "source": "charts/redis-enterprise-operator-official__redis-enterprise-operator__7.22.2-31/",
+    "timestamp": 1769794295,
+    "extra": {
+      "helm": {
+        "description": "A Helm chart for Redis Enterprise Operator for Kubernetes",
+        "home": "https://redis.com",
+        "icon": "https://redis.io/wp-content/uploads/2024/04/Logotype.svg",
+        "keywords": [
+          "redis",
+          "database"
+        ],
+        "kubeVersion": "",
+        "maintainers": [
+          {
+            "name": "Redis",
+            "url": "https://redis.com/company/contact/"
+          }
+        ],
+        "sources": null
+      }
+    }
+  },
+  "serviceAccountData": [
+    {
+      "serviceAccountName": "redis-enterprise-operator",
+      "namespace": "default",
+      "automountToken": false,
+      "secrets": null,
+      "imagePullSecrets": null
+    },
+    {
+      "serviceAccountName": "redis-enterprise-uninstaller",
+      "namespace": "default",
+      "automountToken": false,
+      "secrets": null,
+      "imagePullSecrets": null
+    },
+    {
+      "serviceAccountName": "redis-enterprise-installer",
+      "namespace": "default",
+      "automountToken": false,
+      "secrets": null,
+      "imagePullSecrets": null
+    }
+  ],
+  "serviceAccountPermissions": [
+    {
+      "serviceAccountName": "redis-enterprise-uninstaller",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "redis-enterprise-uninstaller",
+      "apiGroup": "",
+      "resource": "namespaces",
+      "resourceName": "",
+      "verbs": [
+        "patch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "redis-enterprise-installer",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "redis-enterprise-installer",
+      "apiGroup": "apiextensions.k8s.io",
+      "resource": "customresourcedefinitions",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "get",
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "redis-enterprise-installer",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "redis-enterprise-installer",
+      "apiGroup": "",
+      "resource": "namespaces",
+      "resourceName": "",
+      "verbs": [
+        "patch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    }
+  ],
+  "serviceAccountWorkloads": [
+    {
+      "serviceAccountName": "redis-enterprise-operator",
+      "namespace": "default",
+      "workloadType": "Deployment",
+      "workloadName": "redis-enterprise-operator",
+      "containerName": "redis-enterprise-operator",
+      "image": "redislabs/operator:7.22.2-31"
+    },
+    {
+      "serviceAccountName": "redis-enterprise-operator",
+      "namespace": "default",
+      "workloadType": "Deployment",
+      "workloadName": "redis-enterprise-operator",
+      "containerName": "admission",
+      "image": "redislabs/operator:7.22.2-31"
+    },
+    {
+      "serviceAccountName": "redis-enterprise-uninstaller",
+      "namespace": "default",
+      "workloadType": "Job",
+      "workloadName": "redis-enterprise-uninstaller",
+      "containerName": "unlabel-namespace",
+      "image": "redislabs/operator:7.22.2-31"
+    },
+    {
+      "serviceAccountName": "redis-enterprise-installer",
+      "namespace": "default",
+      "workloadType": "Job",
+      "workloadName": "redis-enterprise-installer",
+      "containerName": "install-crds",
+      "image": "redislabs/operator:7.22.2-31"
+    },
+    {
+      "serviceAccountName": "redis-enterprise-installer",
+      "namespace": "default",
+      "workloadType": "Job",
+      "workloadName": "redis-enterprise-installer",
+      "containerName": "label-namespace",
+      "image": "redislabs/operator:7.22.2-31"
+    }
+  ]
+}

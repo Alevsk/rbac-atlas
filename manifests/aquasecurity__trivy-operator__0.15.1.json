@@ -1,0 +1,82 @@
+{
+  "metadata": {
+    "version": "0.17.0",
+    "name": "trivy-operator",
+    "source": "charts/aquasecurity__trivy-operator__0.15.1/",
+    "timestamp": 1769792975,
+    "extra": {
+      "helm": {
+        "description": "Keeps security report resources updated",
+        "home": "",
+        "icon": "",
+        "keywords": [
+          "aquasecurity",
+          "trivyoperator",
+          "trivy"
+        ],
+        "kubeVersion": "",
+        "maintainers": null,
+        "sources": [
+          "https://github.com/aquasecurity/trivy-operator"
+        ]
+      }
+    }
+  },
+  "serviceAccountData": [],
+  "serviceAccountPermissions": [
+    {
+      "serviceAccountName": "trivy-operator",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "trivy-operator-leader-election",
+      "apiGroup": "coordination.k8s.io",
+      "resource": "leases",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "get",
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "trivy-operator",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "trivy-operator-leader-election",
+      "apiGroup": "",
+      "resource": "events",
+      "resourceName": "",
+      "verbs": [
+        "create"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    }
+  ],
+  "serviceAccountWorkloads": [
+    {
+      "serviceAccountName": "trivy-operator",
+      "namespace": "default",
+      "workloadType": "Deployment",
+      "workloadName": "trivy-operator",
+      "containerName": "trivy-operator",
+      "image": "ghcr.io/aquasecurity/trivy-operator:0.15.1"
+    }
+  ]
+}

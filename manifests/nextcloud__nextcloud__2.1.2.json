@@ -1,0 +1,85 @@
+{
+  "metadata": {
+    "version": "2.1.2",
+    "name": "nextcloud",
+    "source": "charts/nextcloud__nextcloud__2.1.2/",
+    "timestamp": 1769794124,
+    "extra": {
+      "helm": {
+        "description": "A file sharing server that puts the control and security of your own data back into your hands.",
+        "home": "https://nextcloud.com/",
+        "icon": "https://cdn.rawgit.com/docker-library/docs/defa5ffc7123177acd60ddef6e16bddf694cc35f/nextcloud/logo.svg",
+        "keywords": [
+          "nextcloud",
+          "storage",
+          "http",
+          "web",
+          "php"
+        ],
+        "kubeVersion": "",
+        "maintainers": [
+          {
+            "name": "skjnldsv",
+            "email": "skjnldsv@protonmail.com"
+          },
+          {
+            "name": "chrisingenhaag",
+            "email": "christian.ingenhaag@googlemail.com"
+          },
+          {
+            "name": "billimek",
+            "email": "jeff@billimek.com"
+          }
+        ],
+        "sources": [
+          "https://github.com/nextcloud/helm",
+          "https://github.com/nextcloud/docker"
+        ]
+      }
+    }
+  },
+  "serviceAccountData": [],
+  "serviceAccountPermissions": [],
+  "serviceAccountWorkloads": [
+    {
+      "serviceAccountName": "",
+      "namespace": "default",
+      "workloadType": "Deployment",
+      "workloadName": "nextcloud",
+      "containerName": "nextcloud",
+      "image": "nextcloud:17.0.0-apache"
+    },
+    {
+      "serviceAccountName": "",
+      "namespace": "default",
+      "workloadType": "StatefulSet",
+      "workloadName": "nextcloud-postgresql",
+      "containerName": "nextcloud-postgresql",
+      "image": "docker.io/bitnami/postgresql:11.8.0-debian-10-r72"
+    },
+    {
+      "serviceAccountName": "default",
+      "namespace": "default",
+      "workloadType": "StatefulSet",
+      "workloadName": "nextcloud-redis-master",
+      "containerName": "redis",
+      "image": "docker.io/bitnami/redis:6.0.6-debian-10-r22"
+    },
+    {
+      "serviceAccountName": "default",
+      "namespace": "default",
+      "workloadType": "StatefulSet",
+      "workloadName": "nextcloud-mariadb",
+      "containerName": "mariadb",
+      "image": "docker.io/bitnami/mariadb:10.3.23-debian-10-r65"
+    },
+    {
+      "serviceAccountName": "default",
+      "namespace": "default",
+      "workloadType": "StatefulSet",
+      "workloadName": "nextcloud-redis-slave",
+      "containerName": "redis",
+      "image": "docker.io/bitnami/redis:6.0.6-debian-10-r22"
+    }
+  ]
+}

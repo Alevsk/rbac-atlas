@@ -3,7 +3,7 @@
     "version": "0.2.1-alpha.0",
     "name": "vcluster-pro",
     "source": "charts/loft__vcluster-pro__0.2.1-alpha.0/",
-    "timestamp": 1769482632,
+    "timestamp": 1769794079,
     "extra": {
       "helm": {
         "description": "vcluster-pro - Virtual Kubernetes Clusters",
@@ -38,14 +38,14 @@
   },
   "serviceAccountData": [
     {
-      "serviceAccountName": "vc-workload-vcluster-pro",
+      "serviceAccountName": "vc-vcluster-pro",
       "namespace": "default",
       "automountToken": false,
       "secrets": null,
       "imagePullSecrets": null
     },
     {
-      "serviceAccountName": "vc-vcluster-pro",
+      "serviceAccountName": "vc-workload-vcluster-pro",
       "namespace": "default",
       "automountToken": false,
       "secrets": null,
@@ -58,17 +58,30 @@
       "namespace": "default",
       "roleType": "Role",
       "roleName": "vcluster-pro",
-      "apiGroup": "apps",
-      "resource": "deployments",
+      "apiGroup": "",
+      "resource": "pods/portforward",
       "resourceName": "",
       "verbs": [
+        "create",
+        "delete",
         "get",
         "list",
+        "patch",
+        "update",
         "watch"
       ],
-      "riskLevel": "Low",
-      "tags": [],
+      "riskLevel": "Medium",
+      "tags": [
+        "PodPortForward",
+        "LateralMovement",
+        "NetworkManipulation"
+      ],
       "matchedRiskRules": [
+        {
+          "id": 1005,
+          "name": "Namespaced pod port-forward",
+          "link": "https://rbac-atlas.github.io/rules/1005/"
+        },
         {
           "id": 9996,
           "name": "Base Risk Level - Low",
@@ -81,17 +94,31 @@
       "namespace": "default",
       "roleType": "Role",
       "roleName": "vcluster-pro",
-      "apiGroup": "apps",
-      "resource": "statefulsets",
+      "apiGroup": "",
+      "resource": "pods/exec",
       "resourceName": "",
       "verbs": [
+        "create",
+        "delete",
         "get",
         "list",
+        "patch",
+        "update",
         "watch"
       ],
-      "riskLevel": "Low",
-      "tags": [],
+      "riskLevel": "High",
+      "tags": [
+        "PodExec",
+        "CodeExecution",
+        "LateralMovement",
+        "PotentialPrivilegeEscalation"
+      ],
       "matchedRiskRules": [
+        {
+          "id": 1001,
+          "name": "Namespaced pod exec",
+          "link": "https://rbac-atlas.github.io/rules/1001/"
+        },
         {
           "id": 9996,
           "name": "Base Risk Level - Low",
@@ -104,8 +131,8 @@
       "namespace": "default",
       "roleType": "Role",
       "roleName": "vcluster-pro",
-      "apiGroup": "apps",
-      "resource": "replicasets",
+      "apiGroup": "",
+      "resource": "events",
       "resourceName": "",
       "verbs": [
         "get",
@@ -160,6 +187,115 @@
       "roleType": "Role",
       "roleName": "vcluster-pro",
       "apiGroup": "",
+      "resource": "secrets",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "PotentialPrivilegeEscalation",
+        "Persistence",
+        "SecretAccess",
+        "CredentialAccess",
+        "DataExposure",
+        "InformationDisclosure",
+        "Tampering"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1011,
+          "name": "Read secrets in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1011/"
+        },
+        {
+          "id": 1013,
+          "name": "Modify secrets in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1013/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "vc-vcluster-pro",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "vcluster-pro",
+      "apiGroup": "",
+      "resource": "persistentvolumeclaims",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "vc-vcluster-pro",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "vcluster-pro",
+      "apiGroup": "",
+      "resource": "endpoints",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "Tampering",
+        "NetworkManipulation",
+        "TrafficRedirection",
+        "DenialOfService"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1074,
+          "name": "Manage Endpoints or EndpointSlices in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1074/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "vc-vcluster-pro",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "vcluster-pro",
+      "apiGroup": "",
       "resource": "configmaps",
       "resourceName": "",
       "verbs": [
@@ -173,11 +309,11 @@
       ],
       "riskLevel": "High",
       "tags": [
+        "Tampering",
+        "ConfigMapAccess",
         "PotentialPrivilegeEscalation",
         "InformationDisclosure",
-        "DataExposure",
-        "Tampering",
-        "ConfigMapAccess"
+        "DataExposure"
       ],
       "matchedRiskRules": [
         {
@@ -240,151 +376,6 @@
       "roleType": "Role",
       "roleName": "vcluster-pro",
       "apiGroup": "",
-      "resource": "pods/portforward",
-      "resourceName": "",
-      "verbs": [
-        "create",
-        "delete",
-        "get",
-        "list",
-        "patch",
-        "update",
-        "watch"
-      ],
-      "riskLevel": "Medium",
-      "tags": [
-        "PodPortForward",
-        "LateralMovement",
-        "NetworkManipulation"
-      ],
-      "matchedRiskRules": [
-        {
-          "id": 1005,
-          "name": "Namespaced pod port-forward",
-          "link": "https://rbac-atlas.github.io/rules/1005/"
-        },
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "vc-vcluster-pro",
-      "namespace": "default",
-      "roleType": "Role",
-      "roleName": "vcluster-pro",
-      "apiGroup": "",
-      "resource": "persistentvolumeclaims",
-      "resourceName": "",
-      "verbs": [
-        "create",
-        "delete",
-        "get",
-        "list",
-        "patch",
-        "update",
-        "watch"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "vc-vcluster-pro",
-      "namespace": "default",
-      "roleType": "Role",
-      "roleName": "vcluster-pro",
-      "apiGroup": "",
-      "resource": "endpoints",
-      "resourceName": "",
-      "verbs": [
-        "create",
-        "delete",
-        "get",
-        "list",
-        "patch",
-        "update",
-        "watch"
-      ],
-      "riskLevel": "High",
-      "tags": [
-        "NetworkManipulation",
-        "TrafficRedirection",
-        "DenialOfService",
-        "Tampering"
-      ],
-      "matchedRiskRules": [
-        {
-          "id": 1074,
-          "name": "Manage Endpoints or EndpointSlices in a namespace",
-          "link": "https://rbac-atlas.github.io/rules/1074/"
-        },
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "vc-vcluster-pro",
-      "namespace": "default",
-      "roleType": "Role",
-      "roleName": "vcluster-pro",
-      "apiGroup": "",
-      "resource": "secrets",
-      "resourceName": "",
-      "verbs": [
-        "create",
-        "delete",
-        "get",
-        "list",
-        "patch",
-        "update",
-        "watch"
-      ],
-      "riskLevel": "Critical",
-      "tags": [
-        "DataExposure",
-        "InformationDisclosure",
-        "Tampering",
-        "PotentialPrivilegeEscalation",
-        "Persistence",
-        "SecretAccess",
-        "CredentialAccess"
-      ],
-      "matchedRiskRules": [
-        {
-          "id": 1011,
-          "name": "Read secrets in a namespace",
-          "link": "https://rbac-atlas.github.io/rules/1011/"
-        },
-        {
-          "id": 1013,
-          "name": "Modify secrets in a namespace",
-          "link": "https://rbac-atlas.github.io/rules/1013/"
-        },
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "vc-vcluster-pro",
-      "namespace": "default",
-      "roleType": "Role",
-      "roleName": "vcluster-pro",
-      "apiGroup": "",
       "resource": "pods",
       "resourceName": "",
       "verbs": [
@@ -398,11 +389,11 @@
       ],
       "riskLevel": "High",
       "tags": [
-        "LateralMovement",
         "Persistence",
         "Tampering",
         "WorkloadExecution",
-        "PotentialPrivilegeEscalation"
+        "PotentialPrivilegeEscalation",
+        "LateralMovement"
       ],
       "matchedRiskRules": [
         {
@@ -464,31 +455,17 @@
       "namespace": "default",
       "roleType": "Role",
       "roleName": "vcluster-pro",
-      "apiGroup": "",
-      "resource": "pods/exec",
+      "apiGroup": "apps",
+      "resource": "statefulsets",
       "resourceName": "",
       "verbs": [
-        "create",
-        "delete",
         "get",
         "list",
-        "patch",
-        "update",
         "watch"
       ],
-      "riskLevel": "High",
-      "tags": [
-        "PodExec",
-        "CodeExecution",
-        "LateralMovement",
-        "PotentialPrivilegeEscalation"
-      ],
+      "riskLevel": "Low",
+      "tags": [],
       "matchedRiskRules": [
-        {
-          "id": 1001,
-          "name": "Namespaced pod exec",
-          "link": "https://rbac-atlas.github.io/rules/1001/"
-        },
         {
           "id": 9996,
           "name": "Base Risk Level - Low",
@@ -501,8 +478,31 @@
       "namespace": "default",
       "roleType": "Role",
       "roleName": "vcluster-pro",
-      "apiGroup": "",
-      "resource": "events",
+      "apiGroup": "apps",
+      "resource": "replicasets",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "vc-vcluster-pro",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "vcluster-pro",
+      "apiGroup": "apps",
+      "resource": "deployments",
       "resourceName": "",
       "verbs": [
         "get",

@@ -1,0 +1,125 @@
+{
+  "metadata": {
+    "version": "7.12.1",
+    "name": "filebeat",
+    "source": "charts/elastic__filebeat__7.12.1/",
+    "timestamp": 1769793454,
+    "extra": {
+      "helm": {
+        "description": "Official Elastic helm chart for Filebeat",
+        "home": "https://github.com/elastic/helm-charts",
+        "icon": "https://helm.elastic.co/icons/beats.png",
+        "keywords": null,
+        "kubeVersion": "",
+        "maintainers": [
+          {
+            "name": "Elastic",
+            "email": "helm-charts@elastic.co"
+          }
+        ],
+        "sources": [
+          "https://github.com/elastic/beats"
+        ]
+      }
+    }
+  },
+  "serviceAccountData": [
+    {
+      "serviceAccountName": "filebeat-filebeat",
+      "namespace": "default",
+      "automountToken": false,
+      "secrets": null,
+      "imagePullSecrets": null
+    }
+  ],
+  "serviceAccountPermissions": [
+    {
+      "serviceAccountName": "filebeat-filebeat",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "filebeat-filebeat-cluster-role",
+      "apiGroup": "",
+      "resource": "nodes",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "filebeat-filebeat",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "filebeat-filebeat-cluster-role",
+      "apiGroup": "",
+      "resource": "pods",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "filebeat-filebeat",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "filebeat-filebeat-cluster-role",
+      "apiGroup": "",
+      "resource": "namespaces",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [
+        "InformationDisclosure",
+        "Reconnaissance",
+        "ClusterStructure"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1082,
+          "name": "List Namespaces (Cluster Reconnaissance)",
+          "link": "https://rbac-atlas.github.io/rules/1082/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    }
+  ],
+  "serviceAccountWorkloads": [
+    {
+      "serviceAccountName": "filebeat-filebeat",
+      "namespace": "default",
+      "workloadType": "DaemonSet",
+      "workloadName": "filebeat-filebeat",
+      "containerName": "filebeat",
+      "image": "docker.elastic.co/beats/filebeat:7.12.1"
+    }
+  ]
+}

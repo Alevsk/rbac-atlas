@@ -3,7 +3,7 @@
     "version": "7.1.0",
     "name": "kube-state-metrics",
     "source": "charts/prometheus-community__kube-state-metrics__7.1.0/",
-    "timestamp": 1768788009,
+    "timestamp": 1769794273,
     "extra": {
       "helm": {
         "description": "Install kube-state-metrics to generate and expose cluster-level metrics",
@@ -54,39 +54,8 @@
       "namespace": "default",
       "roleType": "ClusterRole",
       "roleName": "kube-state-metrics",
-      "apiGroup": "",
-      "resource": "namespaces",
-      "resourceName": "",
-      "verbs": [
-        "list",
-        "watch"
-      ],
-      "riskLevel": "Low",
-      "tags": [
-        "InformationDisclosure",
-        "Reconnaissance",
-        "ClusterStructure"
-      ],
-      "matchedRiskRules": [
-        {
-          "id": 1082,
-          "name": "List Namespaces (Cluster Reconnaissance)",
-          "link": "https://rbac-atlas.github.io/rules/1082/"
-        },
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "kube-state-metrics",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "kube-state-metrics",
-      "apiGroup": "",
-      "resource": "nodes",
+      "apiGroup": "autoscaling",
+      "resource": "horizontalpodautoscalers",
       "resourceName": "",
       "verbs": [
         "list",
@@ -107,8 +76,8 @@
       "namespace": "default",
       "roleType": "ClusterRole",
       "roleName": "kube-state-metrics",
-      "apiGroup": "",
-      "resource": "persistentvolumes",
+      "apiGroup": "policy",
+      "resource": "poddisruptionbudgets",
       "resourceName": "",
       "verbs": [
         "list",
@@ -129,8 +98,8 @@
       "namespace": "default",
       "roleType": "ClusterRole",
       "roleName": "kube-state-metrics",
-      "apiGroup": "",
-      "resource": "replicationcontrollers",
+      "apiGroup": "storage.k8s.io",
+      "resource": "storageclasses",
       "resourceName": "",
       "verbs": [
         "list",
@@ -151,81 +120,8 @@
       "namespace": "default",
       "roleType": "ClusterRole",
       "roleName": "kube-state-metrics",
-      "apiGroup": "",
-      "resource": "resourcequotas",
-      "resourceName": "",
-      "verbs": [
-        "list",
-        "watch"
-      ],
-      "riskLevel": "Medium",
-      "tags": [
-        "ResourceConfiguration",
-        "QuotaTampering",
-        "InformationDisclosure",
-        "Reconnaissance"
-      ],
-      "matchedRiskRules": [
-        {
-          "id": 1089,
-          "name": "Read All ResourceQuotas (Cluster-wide Information Disclosure)",
-          "link": "https://rbac-atlas.github.io/rules/1089/"
-        },
-        {
-          "id": 1088,
-          "name": "Read ResourceQuotas (Namespace Information Disclosure)",
-          "link": "https://rbac-atlas.github.io/rules/1088/"
-        },
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "kube-state-metrics",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "kube-state-metrics",
-      "apiGroup": "",
-      "resource": "configmaps",
-      "resourceName": "",
-      "verbs": [
-        "list",
-        "watch"
-      ],
-      "riskLevel": "High",
-      "tags": [
-        "InformationDisclosure",
-        "ConfigMapAccess",
-        "DataExposure"
-      ],
-      "matchedRiskRules": [
-        {
-          "id": 1022,
-          "name": "Read ConfigMaps cluster-wide",
-          "link": "https://rbac-atlas.github.io/rules/1022/"
-        },
-        {
-          "id": 1023,
-          "name": "Read ConfigMaps in a namespace",
-          "link": "https://rbac-atlas.github.io/rules/1023/"
-        },
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "kube-state-metrics",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "kube-state-metrics",
-      "apiGroup": "",
-      "resource": "persistentvolumeclaims",
+      "apiGroup": "storage.k8s.io",
+      "resource": "volumeattachments",
       "resourceName": "",
       "verbs": [
         "list",
@@ -246,8 +142,8 @@
       "namespace": "default",
       "roleType": "ClusterRole",
       "roleName": "kube-state-metrics",
-      "apiGroup": "",
-      "resource": "pods",
+      "apiGroup": "certificates.k8s.io",
+      "resource": "certificatesigningrequests",
       "resourceName": "",
       "verbs": [
         "list",
@@ -256,97 +152,6 @@
       "riskLevel": "Low",
       "tags": [],
       "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "kube-state-metrics",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "kube-state-metrics",
-      "apiGroup": "",
-      "resource": "secrets",
-      "resourceName": "",
-      "verbs": [
-        "list",
-        "watch"
-      ],
-      "riskLevel": "Critical",
-      "tags": [
-        "ClusterWideSecretAccess",
-        "CredentialAccess",
-        "DataExposure",
-        "InformationDisclosure",
-        "SecretAccess"
-      ],
-      "matchedRiskRules": [
-        {
-          "id": 1010,
-          "name": "Read secrets cluster-wide",
-          "link": "https://rbac-atlas.github.io/rules/1010/"
-        },
-        {
-          "id": 1011,
-          "name": "Read secrets in a namespace",
-          "link": "https://rbac-atlas.github.io/rules/1011/"
-        },
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "kube-state-metrics",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "kube-state-metrics",
-      "apiGroup": "",
-      "resource": "services",
-      "resourceName": "",
-      "verbs": [
-        "list",
-        "watch"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "kube-state-metrics",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "kube-state-metrics",
-      "apiGroup": "",
-      "resource": "limitranges",
-      "resourceName": "",
-      "verbs": [
-        "list",
-        "watch"
-      ],
-      "riskLevel": "Low",
-      "tags": [
-        "InformationDisclosure",
-        "Reconnaissance",
-        "ResourceConfiguration"
-      ],
-      "matchedRiskRules": [
-        {
-          "id": 1087,
-          "name": "Read LimitRanges (Namespace Information Disclosure)",
-          "link": "https://rbac-atlas.github.io/rules/1087/"
-        },
         {
           "id": 9996,
           "name": "Base Risk Level - Low",
@@ -383,6 +188,116 @@
       "roleName": "kube-state-metrics",
       "apiGroup": "batch",
       "resource": "jobs",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kube-state-metrics",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kube-state-metrics",
+      "apiGroup": "apps",
+      "resource": "daemonsets",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kube-state-metrics",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kube-state-metrics",
+      "apiGroup": "apps",
+      "resource": "deployments",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kube-state-metrics",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kube-state-metrics",
+      "apiGroup": "apps",
+      "resource": "replicasets",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kube-state-metrics",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kube-state-metrics",
+      "apiGroup": "apps",
+      "resource": "statefulsets",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kube-state-metrics",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kube-state-metrics",
+      "apiGroup": "discovery.k8s.io",
+      "resource": "endpointslices",
       "resourceName": "",
       "verbs": [
         "list",
@@ -509,9 +424,9 @@
       ],
       "riskLevel": "Medium",
       "tags": [
-        "InformationDisclosure",
         "WebhookReconnaissance",
-        "Reconnaissance"
+        "Reconnaissance",
+        "InformationDisclosure"
       ],
       "matchedRiskRules": [
         {
@@ -531,8 +446,39 @@
       "namespace": "default",
       "roleType": "ClusterRole",
       "roleName": "kube-state-metrics",
-      "apiGroup": "policy",
-      "resource": "poddisruptionbudgets",
+      "apiGroup": "",
+      "resource": "namespaces",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [
+        "InformationDisclosure",
+        "Reconnaissance",
+        "ClusterStructure"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1082,
+          "name": "List Namespaces (Cluster Reconnaissance)",
+          "link": "https://rbac-atlas.github.io/rules/1082/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kube-state-metrics",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kube-state-metrics",
+      "apiGroup": "",
+      "resource": "nodes",
       "resourceName": "",
       "verbs": [
         "list",
@@ -553,8 +499,8 @@
       "namespace": "default",
       "roleType": "ClusterRole",
       "roleName": "kube-state-metrics",
-      "apiGroup": "apps",
-      "resource": "deployments",
+      "apiGroup": "",
+      "resource": "persistentvolumeclaims",
       "resourceName": "",
       "verbs": [
         "list",
@@ -575,8 +521,8 @@
       "namespace": "default",
       "roleType": "ClusterRole",
       "roleName": "kube-state-metrics",
-      "apiGroup": "apps",
-      "resource": "replicasets",
+      "apiGroup": "",
+      "resource": "pods",
       "resourceName": "",
       "verbs": [
         "list",
@@ -597,8 +543,8 @@
       "namespace": "default",
       "roleType": "ClusterRole",
       "roleName": "kube-state-metrics",
-      "apiGroup": "apps",
-      "resource": "statefulsets",
+      "apiGroup": "",
+      "resource": "replicationcontrollers",
       "resourceName": "",
       "verbs": [
         "list",
@@ -619,8 +565,39 @@
       "namespace": "default",
       "roleType": "ClusterRole",
       "roleName": "kube-state-metrics",
-      "apiGroup": "apps",
-      "resource": "daemonsets",
+      "apiGroup": "",
+      "resource": "limitranges",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [
+        "InformationDisclosure",
+        "Reconnaissance",
+        "ResourceConfiguration"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1087,
+          "name": "Read LimitRanges (Namespace Information Disclosure)",
+          "link": "https://rbac-atlas.github.io/rules/1087/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kube-state-metrics",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kube-state-metrics",
+      "apiGroup": "",
+      "resource": "persistentvolumes",
       "resourceName": "",
       "verbs": [
         "list",
@@ -641,8 +618,83 @@
       "namespace": "default",
       "roleType": "ClusterRole",
       "roleName": "kube-state-metrics",
-      "apiGroup": "discovery.k8s.io",
-      "resource": "endpointslices",
+      "apiGroup": "",
+      "resource": "resourcequotas",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Medium",
+      "tags": [
+        "QuotaTampering",
+        "InformationDisclosure",
+        "Reconnaissance",
+        "ResourceConfiguration"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1089,
+          "name": "Read All ResourceQuotas (Cluster-wide Information Disclosure)",
+          "link": "https://rbac-atlas.github.io/rules/1089/"
+        },
+        {
+          "id": 1088,
+          "name": "Read ResourceQuotas (Namespace Information Disclosure)",
+          "link": "https://rbac-atlas.github.io/rules/1088/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kube-state-metrics",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kube-state-metrics",
+      "apiGroup": "",
+      "resource": "secrets",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "ClusterWideSecretAccess",
+        "CredentialAccess",
+        "DataExposure",
+        "InformationDisclosure",
+        "SecretAccess"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1010,
+          "name": "Read secrets cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1010/"
+        },
+        {
+          "id": 1011,
+          "name": "Read secrets in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1011/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kube-state-metrics",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kube-state-metrics",
+      "apiGroup": "",
+      "resource": "services",
       "resourceName": "",
       "verbs": [
         "list",
@@ -663,82 +715,30 @@
       "namespace": "default",
       "roleType": "ClusterRole",
       "roleName": "kube-state-metrics",
-      "apiGroup": "autoscaling",
-      "resource": "horizontalpodautoscalers",
+      "apiGroup": "",
+      "resource": "configmaps",
       "resourceName": "",
       "verbs": [
         "list",
         "watch"
       ],
-      "riskLevel": "Low",
-      "tags": [],
+      "riskLevel": "High",
+      "tags": [
+        "InformationDisclosure",
+        "ConfigMapAccess",
+        "DataExposure"
+      ],
       "matchedRiskRules": [
         {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "kube-state-metrics",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "kube-state-metrics",
-      "apiGroup": "storage.k8s.io",
-      "resource": "volumeattachments",
-      "resourceName": "",
-      "verbs": [
-        "list",
-        "watch"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
+          "id": 1022,
+          "name": "Read ConfigMaps cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1022/"
+        },
         {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "kube-state-metrics",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "kube-state-metrics",
-      "apiGroup": "storage.k8s.io",
-      "resource": "storageclasses",
-      "resourceName": "",
-      "verbs": [
-        "list",
-        "watch"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "kube-state-metrics",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "kube-state-metrics",
-      "apiGroup": "certificates.k8s.io",
-      "resource": "certificatesigningrequests",
-      "resourceName": "",
-      "verbs": [
-        "list",
-        "watch"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
+          "id": 1023,
+          "name": "Read ConfigMaps in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1023/"
+        },
         {
           "id": 9996,
           "name": "Base Risk Level - Low",

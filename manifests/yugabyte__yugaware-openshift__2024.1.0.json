@@ -1,0 +1,72 @@
+{
+  "metadata": {
+    "version": "2024.1.0",
+    "name": "yugaware-openshift",
+    "source": "charts/yugabyte__yugaware-openshift__2024.1.0/",
+    "timestamp": 1769794545,
+    "extra": {
+      "helm": {
+        "description": "YugabyteDB Anywhere provides deployment, orchestration, and monitoring for managing YugabyteDB clusters. YugabyteDB Anywhere can create a YugabyteDB cluster with multiple pods provided by Kubernetes or OpenShift and logically grouped together to form one logical distributed database.",
+        "home": "https://www.yugabyte.com",
+        "icon": "https://avatars0.githubusercontent.com/u/17074854?s=200\u0026v=4",
+        "keywords": null,
+        "kubeVersion": "\u003e=1.17.0-0",
+        "maintainers": [
+          {
+            "name": "Sanketh Indarapu",
+            "email": "sanketh@yugabyte.com"
+          },
+          {
+            "name": "Govardhan Reddy Jalla",
+            "email": "gjalla@yugabyte.com"
+          }
+        ],
+        "sources": null
+      }
+    }
+  },
+  "serviceAccountData": [
+    {
+      "serviceAccountName": "yugaware-openshift",
+      "namespace": "default",
+      "automountToken": false,
+      "secrets": null,
+      "imagePullSecrets": null
+    }
+  ],
+  "serviceAccountPermissions": [],
+  "serviceAccountWorkloads": [
+    {
+      "serviceAccountName": "",
+      "namespace": "default",
+      "workloadType": "Pod",
+      "workloadName": "yugaware-openshift-yugaware-test",
+      "containerName": "yugaware-test",
+      "image": "quay.io/yugabyte/yugaware-ubi:2024.1.0.0-b129"
+    },
+    {
+      "serviceAccountName": "yugaware-openshift",
+      "namespace": "default",
+      "workloadType": "StatefulSet",
+      "workloadName": "yugaware-openshift-yugaware",
+      "containerName": "postgres",
+      "image": "registry.redhat.io/rhscl/postgresql-13-rhel7:1-88.1661531722"
+    },
+    {
+      "serviceAccountName": "yugaware-openshift",
+      "namespace": "default",
+      "workloadType": "StatefulSet",
+      "workloadName": "yugaware-openshift-yugaware",
+      "containerName": "prometheus",
+      "image": "registry.redhat.io/openshift4/ose-prometheus:v4.11.0"
+    },
+    {
+      "serviceAccountName": "yugaware-openshift",
+      "namespace": "default",
+      "workloadType": "StatefulSet",
+      "workloadName": "yugaware-openshift-yugaware",
+      "containerName": "yugaware",
+      "image": "quay.io/yugabyte/yugaware-ubi:2024.1.0.0-b129"
+    }
+  ]
+}

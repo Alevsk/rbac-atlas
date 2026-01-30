@@ -1,0 +1,86 @@
+{
+  "metadata": {
+    "version": "1.14.0",
+    "name": "prometheus-node-exporter",
+    "source": "charts/prometheus-community__prometheus-node-exporter__1.14.0/",
+    "timestamp": 1769794284,
+    "extra": {
+      "helm": {
+        "description": "A Helm chart for prometheus node-exporter",
+        "home": "https://github.com/prometheus/node_exporter/",
+        "icon": "",
+        "keywords": [
+          "node-exporter",
+          "prometheus",
+          "exporter"
+        ],
+        "kubeVersion": "",
+        "maintainers": [
+          {
+            "name": "gianrubio",
+            "email": "gianrubio@gmail.com"
+          },
+          {
+            "name": "vsliouniaev"
+          }
+        ],
+        "sources": [
+          "https://github.com/prometheus/node_exporter/"
+        ]
+      }
+    }
+  },
+  "serviceAccountData": [
+    {
+      "serviceAccountName": "prometheus-node-exporter",
+      "namespace": "default",
+      "automountToken": false,
+      "secrets": null,
+      "imagePullSecrets": null
+    }
+  ],
+  "serviceAccountPermissions": [
+    {
+      "serviceAccountName": "prometheus-node-exporter",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "psp-prometheus-node-exporter",
+      "apiGroup": "extensions",
+      "resource": "podsecuritypolicies",
+      "resourceName": "prometheus-node-exporter",
+      "verbs": [
+        "use"
+      ],
+      "riskLevel": "Low",
+      "tags": [
+        "DeprecatedFeature",
+        "NodeAccess",
+        "ResourceNameRestricted",
+        "PrivilegeEscalation",
+        "PodSecurityPolicy"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1078,
+          "name": "Use privileged PodSecurityPolicy (deprecated)",
+          "link": "https://rbac-atlas.github.io/rules/1078/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    }
+  ],
+  "serviceAccountWorkloads": [
+    {
+      "serviceAccountName": "prometheus-node-exporter",
+      "namespace": "default",
+      "workloadType": "DaemonSet",
+      "workloadName": "prometheus-node-exporter",
+      "containerName": "node-exporter",
+      "image": "quay.io/prometheus/node-exporter:v1.0.1"
+    }
+  ]
+}

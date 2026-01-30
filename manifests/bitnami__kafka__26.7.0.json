@@ -1,0 +1,67 @@
+{
+  "metadata": {
+    "version": "26.7.0",
+    "name": "kafka",
+    "source": "charts/bitnami__kafka__26.7.0/",
+    "timestamp": 1769793256,
+    "extra": {
+      "helm": {
+        "description": "Apache Kafka is a distributed streaming platform designed to build real-time pipelines and can be used as a message broker or as a replacement for a log aggregation solution for big data applications.",
+        "home": "https://bitnami.com",
+        "icon": "https://bitnami.com/assets/stacks/kafka/img/kafka-stack-220x234.png",
+        "keywords": [
+          "kafka",
+          "zookeeper",
+          "streaming",
+          "producer",
+          "consumer"
+        ],
+        "kubeVersion": "",
+        "maintainers": [
+          {
+            "name": "VMware, Inc.",
+            "url": "https://github.com/bitnami/charts"
+          }
+        ],
+        "sources": [
+          "https://github.com/bitnami/charts/tree/main/bitnami/kafka"
+        ]
+      }
+    }
+  },
+  "serviceAccountData": [
+    {
+      "serviceAccountName": "kafka-provisioning",
+      "namespace": "default",
+      "automountToken": false,
+      "secrets": null,
+      "imagePullSecrets": null
+    },
+    {
+      "serviceAccountName": "kafka",
+      "namespace": "default",
+      "automountToken": false,
+      "secrets": null,
+      "imagePullSecrets": null
+    }
+  ],
+  "serviceAccountPermissions": [],
+  "serviceAccountWorkloads": [
+    {
+      "serviceAccountName": "default",
+      "namespace": "default",
+      "workloadType": "StatefulSet",
+      "workloadName": "kafka-zookeeper",
+      "containerName": "zookeeper",
+      "image": "docker.io/bitnami/zookeeper:3.9.1-debian-11-r2"
+    },
+    {
+      "serviceAccountName": "kafka",
+      "namespace": "default",
+      "workloadType": "StatefulSet",
+      "workloadName": "kafka-controller",
+      "containerName": "kafka",
+      "image": "docker.io/bitnami/kafka:3.6.1-debian-11-r0"
+    }
+  ]
+}

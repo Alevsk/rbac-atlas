@@ -1,0 +1,107 @@
+{
+  "metadata": {
+    "version": "9.6.1",
+    "name": "gitea",
+    "source": "charts/gitea__gitea__9.6.1/",
+    "timestamp": 1769798058,
+    "extra": {
+      "helm": {
+        "description": "Gitea Helm chart for Kubernetes",
+        "home": "",
+        "icon": "https://gitea.com/assets/img/logo.svg",
+        "keywords": [
+          "git",
+          "issue tracker",
+          "code review",
+          "wiki",
+          "gitea",
+          "gogs"
+        ],
+        "kubeVersion": "",
+        "maintainers": [
+          {
+            "name": "Charlie Drage",
+            "email": "charlie@charliedrage.com"
+          },
+          {
+            "name": "Gitea Authors",
+            "email": "maintainers@gitea.io"
+          },
+          {
+            "name": "Konrad Lother",
+            "email": "konrad.lother@novum-rgi.de"
+          },
+          {
+            "name": "Lucas Hahn",
+            "email": "lucas.hahn@novum-rgi.de"
+          },
+          {
+            "name": "Steven Kriegler",
+            "email": "sk.bunsenbrenner@gmail.com"
+          },
+          {
+            "name": "Patrick Schratz",
+            "email": "patrick.schratz@gmail.com"
+          }
+        ],
+        "sources": [
+          "https://gitea.com/gitea/helm-chart",
+          "https://github.com/go-gitea/gitea",
+          "https://hub.docker.com/r/gitea/gitea/"
+        ]
+      }
+    }
+  },
+  "serviceAccountData": [],
+  "serviceAccountPermissions": [],
+  "serviceAccountWorkloads": [
+    {
+      "serviceAccountName": "",
+      "namespace": "default",
+      "workloadType": "Deployment",
+      "workloadName": "gitea-postgresql-ha-pgpool",
+      "containerName": "pgpool",
+      "image": "docker.io/bitnami/pgpool:4.4.4-debian-11-r24"
+    },
+    {
+      "serviceAccountName": "",
+      "namespace": "default",
+      "workloadType": "Pod",
+      "workloadName": "gitea-test-connection",
+      "containerName": "wget",
+      "image": "busybox:latest"
+    },
+    {
+      "serviceAccountName": "",
+      "namespace": "default",
+      "workloadType": "Deployment",
+      "workloadName": "gitea",
+      "containerName": "gitea",
+      "image": "gitea/gitea:1.21.1-rootless"
+    },
+    {
+      "serviceAccountName": "",
+      "namespace": "default",
+      "workloadType": "StatefulSet",
+      "workloadName": "gitea-postgresql-ha-postgresql",
+      "containerName": "postgresql",
+      "image": "docker.io/bitnami/postgresql-repmgr:15.4.0-debian-11-r31"
+    },
+    {
+      "serviceAccountName": "default",
+      "namespace": "default",
+      "workloadType": "StatefulSet",
+      "workloadName": "gitea-postgresql",
+      "containerName": "postgresql",
+      "image": "docker.io/bitnami/postgresql:15.4.0-debian-11-r45"
+    },
+    {
+      "serviceAccountName": "default",
+      "namespace": "default",
+      "workloadType": "StatefulSet",
+      "workloadName": "gitea-redis-cluster",
+      "containerName": "gitea-redis-cluster",
+      "image": "docker.io/bitnami/redis-cluster:7.2.3-debian-11-r1"
+    }
+  ]
+}

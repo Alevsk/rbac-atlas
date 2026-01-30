@@ -124,19 +124,22 @@ cover: ##@ Run tests and generate an HTML coverage report
 #
 # These targets manage fetching Helm charts and generating content from them.
 # ==============================================================================
-.PHONY: update pull-projects get-manifests generate-pages
+.PHONY: update pull-projects get-manifests generate-pages check-manifests
 
 update: pull-projects get-manifests generate-pages ##@ Full data pipeline: pull projects, analyze manifests, generate pages
 
 pull-projects: ##@ Pull remote project sources defined in projects.yaml
 	@echo "INFO: Pulling project sources..."
-	@$(UV) run pull_projects.py -c projects.yaml
+	@$(UV) run pull_projects.py -c projects.yaml $(PULL_ARGS)
 
 get-manifests: ##@ Analyze Helm charts to generate JSON manifests (use FORCE=true to regenerate all)
 	@echo "INFO: Fetching and analyzing manifests from Helm charts..."
 	@# Complex shell logic is moved to an external script for clarity.
 	@# This makes the Makefile cleaner and the script more maintainable and testable.
 	@FORCE=$(FORCE) scripts/get_manifests.sh
+
+check-manifests: ##@ Report charts with missing or invalid JSON manifests
+	@$(UV) run check_manifests.py --charts-dir charts --manifests-dir $(MANIFESTS_DIR)
 
 generate-pages: json-to-markdown fmt lint ##@ Generate Hugo content from JSON manifests (use FORCE=true to overwrite)
 	@echo "SUCCESS: Pages generated successfully."

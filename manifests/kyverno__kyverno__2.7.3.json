@@ -1,0 +1,246 @@
+{
+  "metadata": {
+    "version": "2.7.3",
+    "name": "kyverno",
+    "source": "charts/kyverno__kyverno__2.7.3/",
+    "timestamp": 1769793975,
+    "extra": {
+      "helm": {
+        "description": "Kubernetes Native Policy Management",
+        "home": "https://kyverno.io/",
+        "icon": "https://github.com/kyverno/kyverno/raw/main/img/logo.png",
+        "keywords": [
+          "kubernetes",
+          "nirmata",
+          "policy agent",
+          "validating webhook",
+          "admissions controller"
+        ],
+        "kubeVersion": "\u003e=1.16.0-0",
+        "maintainers": [
+          {
+            "name": "Nirmata",
+            "url": "https://kyverno.io/"
+          }
+        ],
+        "sources": [
+          "https://github.com/kyverno/kyverno"
+        ]
+      }
+    }
+  },
+  "serviceAccountData": [
+    {
+      "serviceAccountName": "kyverno",
+      "namespace": "default",
+      "automountToken": false,
+      "secrets": null,
+      "imagePullSecrets": null
+    },
+    {
+      "serviceAccountName": "kyverno-cleanup-controller",
+      "namespace": "default",
+      "automountToken": false,
+      "secrets": null,
+      "imagePullSecrets": null
+    }
+  ],
+  "serviceAccountPermissions": [
+    {
+      "serviceAccountName": "kyverno",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "kyverno:leaderelection",
+      "apiGroup": "coordination.k8s.io",
+      "resource": "leases",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "patch",
+        "update"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "Tampering",
+        "DenialOfService",
+        "ControlPlaneDisruption",
+        "CriticalNamespace"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1081,
+          "name": "Manage Leases in kube-system or kube-node-lease namespace",
+          "link": "https://rbac-atlas.github.io/rules/1081/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kyverno",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "kyverno:leaderelection",
+      "apiGroup": "apps",
+      "resource": "deployments",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kyverno-cleanup-controller",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "kyverno:cleanup-controller",
+      "apiGroup": "coordination.k8s.io",
+      "resource": "leases",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "patch",
+        "update"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "Tampering",
+        "DenialOfService",
+        "ControlPlaneDisruption",
+        "CriticalNamespace"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1081,
+          "name": "Manage Leases in kube-system or kube-node-lease namespace",
+          "link": "https://rbac-atlas.github.io/rules/1081/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kyverno-cleanup-controller",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "kyverno:cleanup-controller",
+      "apiGroup": "",
+      "resource": "secrets",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "get",
+        "list",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "CredentialAccess",
+        "DataExposure",
+        "InformationDisclosure",
+        "SecretAccess"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1011,
+          "name": "Read secrets in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1011/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kyverno-cleanup-controller",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "kyverno:cleanup-controller",
+      "apiGroup": "",
+      "resource": "configmaps",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Medium",
+      "tags": [
+        "ConfigMapAccess",
+        "DataExposure",
+        "InformationDisclosure"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1023,
+          "name": "Read ConfigMaps in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1023/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    }
+  ],
+  "serviceAccountWorkloads": [
+    {
+      "serviceAccountName": "kyverno-cleanup-controller",
+      "namespace": "default",
+      "workloadType": "Deployment",
+      "workloadName": "kyverno-cleanup-controller",
+      "containerName": "controller",
+      "image": "ghcr.io/kyverno/cleanup-controller:v1.9.3"
+    },
+    {
+      "serviceAccountName": "kyverno",
+      "namespace": "default",
+      "workloadType": "Deployment",
+      "workloadName": "kyverno",
+      "containerName": "kyverno",
+      "image": "ghcr.io/kyverno/kyverno:v1.9.3"
+    },
+    {
+      "serviceAccountName": "",
+      "namespace": "default",
+      "workloadType": "Pod",
+      "workloadName": "kyverno-test",
+      "containerName": "wget",
+      "image": "busybox:1.35"
+    },
+    {
+      "serviceAccountName": "",
+      "namespace": "default",
+      "workloadType": "Pod",
+      "workloadName": "kyverno-test",
+      "containerName": "wget-metrics",
+      "image": "busybox:1.35"
+    }
+  ]
+}

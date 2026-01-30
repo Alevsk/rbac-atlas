@@ -1,0 +1,324 @@
+{
+  "metadata": {
+    "version": "3.7.122",
+    "name": "netdata",
+    "source": "charts/netdata__netdata__3.7.122/",
+    "timestamp": 1769794114,
+    "extra": {
+      "helm": {
+        "description": "Real-time performance monitoring, done right!",
+        "home": "https://netdata.cloud/",
+        "icon": "https://netdata.github.io/helmchart/logo.png",
+        "keywords": [
+          "alerting",
+          "metric",
+          "monitoring"
+        ],
+        "kubeVersion": "",
+        "maintainers": [
+          {
+            "name": "Netdata Cloud SRE team",
+            "email": "cloud-sre@netdata.cloud"
+          }
+        ],
+        "sources": [
+          "https://github.com/netdata/helmchart",
+          "https://github.com/netdata/netdata"
+        ]
+      }
+    }
+  },
+  "serviceAccountData": [
+    {
+      "serviceAccountName": "netdata",
+      "namespace": "default",
+      "automountToken": false,
+      "secrets": null,
+      "imagePullSecrets": null
+    }
+  ],
+  "serviceAccountPermissions": [
+    {
+      "serviceAccountName": "netdata",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "netdata",
+      "apiGroup": "",
+      "resource": "configmaps",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "InformationDisclosure",
+        "ConfigMapAccess",
+        "DataExposure"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1022,
+          "name": "Read ConfigMaps cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1022/"
+        },
+        {
+          "id": 1023,
+          "name": "Read ConfigMaps in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1023/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "netdata",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "netdata",
+      "apiGroup": "",
+      "resource": "secrets",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "ClusterWideSecretAccess",
+        "CredentialAccess",
+        "DataExposure",
+        "InformationDisclosure",
+        "SecretAccess"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1010,
+          "name": "Read secrets cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1010/"
+        },
+        {
+          "id": 1011,
+          "name": "Read secrets in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1011/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "netdata",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "netdata",
+      "apiGroup": "",
+      "resource": "nodes",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "netdata",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "netdata",
+      "apiGroup": "",
+      "resource": "nodes/metrics",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "netdata",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "netdata",
+      "apiGroup": "",
+      "resource": "nodes/proxy",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "CodeExecution",
+        "LateralMovement",
+        "ElevationOfPrivilege",
+        "AuthorizationBypass",
+        "NodeAccess",
+        "ClusterAdminAccess"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1104,
+          "name": "Node proxy GET RCE via WebSocket",
+          "link": "https://rbac-atlas.github.io/rules/1104/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "netdata",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "netdata",
+      "apiGroup": "",
+      "resource": "namespaces",
+      "resourceName": "",
+      "verbs": [
+        "get"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "netdata",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "netdata",
+      "apiGroup": "",
+      "resource": "pods",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "netdata",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "netdata",
+      "apiGroup": "",
+      "resource": "services",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "netdata",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "netdata-psp",
+      "apiGroup": "policy",
+      "resource": "podsecuritypolicies",
+      "resourceName": "netdata-psp",
+      "verbs": [
+        "use"
+      ],
+      "riskLevel": "Low",
+      "tags": [
+        "DeprecatedFeature",
+        "NodeAccess",
+        "ResourceNameRestricted",
+        "PrivilegeEscalation",
+        "PodSecurityPolicy"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1078,
+          "name": "Use privileged PodSecurityPolicy (deprecated)",
+          "link": "https://rbac-atlas.github.io/rules/1078/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    }
+  ],
+  "serviceAccountWorkloads": [
+    {
+      "serviceAccountName": "netdata",
+      "namespace": "default",
+      "workloadType": "Deployment",
+      "workloadName": "netdata-k8s-state",
+      "containerName": "netdata",
+      "image": "netdata/netdata:v2.2.4"
+    },
+    {
+      "serviceAccountName": "netdata",
+      "namespace": "default",
+      "workloadType": "Deployment",
+      "workloadName": "netdata-parent",
+      "containerName": "netdata",
+      "image": "netdata/netdata:v2.2.4"
+    },
+    {
+      "serviceAccountName": "netdata",
+      "namespace": "default",
+      "workloadType": "DaemonSet",
+      "workloadName": "netdata-child",
+      "containerName": "netdata",
+      "image": "netdata/netdata:v2.2.4"
+    }
+  ]
+}

@@ -1,0 +1,182 @@
+{
+  "metadata": {
+    "version": "0.5.0",
+    "name": "loki",
+    "source": "charts/grafana__loki__0.5.0/",
+    "timestamp": 1769793753,
+    "extra": {
+      "helm": {
+        "description": "Loki: like Prometheus, but for logs.",
+        "home": "https://grafana.com/loki",
+        "icon": "https://github.com/grafana/loki/raw/master/docs/logo.png",
+        "keywords": null,
+        "kubeVersion": "^1.10.0-0",
+        "maintainers": [
+          {
+            "name": "Loki Maintainers",
+            "email": "lokiproject@googlegroups.com"
+          }
+        ],
+        "sources": [
+          "https://github.com/grafana/loki"
+        ]
+      }
+    }
+  },
+  "serviceAccountData": [
+    {
+      "serviceAccountName": "loki",
+      "namespace": "default",
+      "automountToken": false,
+      "secrets": null,
+      "imagePullSecrets": null
+    }
+  ],
+  "serviceAccountPermissions": [
+    {
+      "serviceAccountName": "loki",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "loki-promtail-clusterrole",
+      "apiGroup": "",
+      "resource": "nodes",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "loki",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "loki-promtail-clusterrole",
+      "apiGroup": "",
+      "resource": "nodes/proxy",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "ElevationOfPrivilege",
+        "AuthorizationBypass",
+        "NodeAccess",
+        "ClusterAdminAccess",
+        "CodeExecution",
+        "LateralMovement"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1104,
+          "name": "Node proxy GET RCE via WebSocket",
+          "link": "https://rbac-atlas.github.io/rules/1104/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "loki",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "loki-promtail-clusterrole",
+      "apiGroup": "",
+      "resource": "services",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "loki",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "loki-promtail-clusterrole",
+      "apiGroup": "",
+      "resource": "endpoints",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "loki",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "loki-promtail-clusterrole",
+      "apiGroup": "",
+      "resource": "pods",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    }
+  ],
+  "serviceAccountWorkloads": [
+    {
+      "serviceAccountName": "loki",
+      "namespace": "default",
+      "workloadType": "DaemonSet",
+      "workloadName": "loki-promtail",
+      "containerName": "promtail",
+      "image": "grafana/promtail:latest"
+    },
+    {
+      "serviceAccountName": "loki",
+      "namespace": "default",
+      "workloadType": "Deployment",
+      "workloadName": "loki",
+      "containerName": "loki",
+      "image": "grafana/loki:latest"
+    }
+  ]
+}

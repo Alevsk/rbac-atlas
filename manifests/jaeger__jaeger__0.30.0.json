@@ -1,0 +1,164 @@
+{
+  "metadata": {
+    "version": "0.30.0",
+    "name": "jaeger",
+    "source": "charts/jaeger__jaeger__0.30.0/",
+    "timestamp": 1769793860,
+    "extra": {
+      "helm": {
+        "description": "A Jaeger Helm chart for Kubernetes",
+        "home": "https://jaegertracing.io",
+        "icon": "https://camo.githubusercontent.com/afa87494e0753b4b1f5719a2f35aa5263859dffb/687474703a2f2f6a61656765722e72656164746865646f63732e696f2f656e2f6c61746573742f696d616765732f6a61656765722d766563746f722e737667",
+        "keywords": [
+          "jaeger",
+          "opentracing",
+          "tracing",
+          "instrumentation"
+        ],
+        "kubeVersion": "",
+        "maintainers": [
+          {
+            "name": "dvonthenen",
+            "email": "david.vonthenen@dell.com"
+          },
+          {
+            "name": "mikelorant",
+            "email": "michael.lorant@fairfaxmedia.com.au"
+          },
+          {
+            "name": "naseemkullah",
+            "email": "naseem@transit.app"
+          },
+          {
+            "name": "pavelnikolov",
+            "email": "pavel.nikolov@fairfaxmedia.com.au"
+          }
+        ],
+        "sources": [
+          "https://hub.docker.com/u/jaegertracing/"
+        ]
+      }
+    }
+  },
+  "serviceAccountData": [
+    {
+      "serviceAccountName": "jaeger-cassandra-schema",
+      "namespace": "default",
+      "automountToken": false,
+      "secrets": null,
+      "imagePullSecrets": null
+    },
+    {
+      "serviceAccountName": "jaeger-agent",
+      "namespace": "default",
+      "automountToken": false,
+      "secrets": null,
+      "imagePullSecrets": null
+    },
+    {
+      "serviceAccountName": "jaeger-query",
+      "namespace": "default",
+      "automountToken": false,
+      "secrets": null,
+      "imagePullSecrets": null
+    },
+    {
+      "serviceAccountName": "jaeger-collector",
+      "namespace": "default",
+      "automountToken": false,
+      "secrets": null,
+      "imagePullSecrets": null
+    }
+  ],
+  "serviceAccountPermissions": [],
+  "serviceAccountWorkloads": [
+    {
+      "serviceAccountName": "jaeger-query",
+      "namespace": "default",
+      "workloadType": "Deployment",
+      "workloadName": "jaeger-query",
+      "containerName": "jaeger-query",
+      "image": "jaegertracing/jaeger-query:1.18.0"
+    },
+    {
+      "serviceAccountName": "jaeger-query",
+      "namespace": "default",
+      "workloadType": "Deployment",
+      "workloadName": "jaeger-query",
+      "containerName": "jaeger-agent-sidecar",
+      "image": "jaegertracing/jaeger-agent:1.18.0"
+    },
+    {
+      "serviceAccountName": "jaeger-collector",
+      "namespace": "default",
+      "workloadType": "Deployment",
+      "workloadName": "jaeger-collector",
+      "containerName": "jaeger-collector",
+      "image": "jaegertracing/jaeger-collector:1.18.0"
+    },
+    {
+      "serviceAccountName": "jaeger-agent",
+      "namespace": "default",
+      "workloadType": "DaemonSet",
+      "workloadName": "jaeger-agent",
+      "containerName": "jaeger-agent",
+      "image": "jaegertracing/jaeger-agent:1.18.0"
+    },
+    {
+      "serviceAccountName": "jaeger-cassandra-schema",
+      "namespace": "default",
+      "workloadType": "Job",
+      "workloadName": "jaeger-cassandra-schema",
+      "containerName": "jaeger-cassandra-schema",
+      "image": "jaegertracing/jaeger-cassandra-schema:1.18.0"
+    },
+    {
+      "serviceAccountName": "",
+      "namespace": "default",
+      "workloadType": "StatefulSet",
+      "workloadName": "elasticsearch-master",
+      "containerName": "elasticsearch",
+      "image": "docker.elastic.co/elasticsearch/elasticsearch:7.7.0"
+    },
+    {
+      "serviceAccountName": "",
+      "namespace": "default",
+      "workloadType": "Pod",
+      "workloadName": "jaeger-test-topic-create-consume-produce",
+      "containerName": "jaeger-test-consume",
+      "image": "confluentinc/cp-kafka:5.0.1"
+    },
+    {
+      "serviceAccountName": "",
+      "namespace": "default",
+      "workloadType": "StatefulSet",
+      "workloadName": "jaeger-cassandra",
+      "containerName": "jaeger-cassandra",
+      "image": "cassandra:3.11.6"
+    },
+    {
+      "serviceAccountName": "",
+      "namespace": "default",
+      "workloadType": "StatefulSet",
+      "workloadName": "jaeger-zookeeper",
+      "containerName": "zookeeper",
+      "image": "zookeeper:3.5.5"
+    },
+    {
+      "serviceAccountName": "",
+      "namespace": "default",
+      "workloadType": "Pod",
+      "workloadName": "jaeger-oulfj-test",
+      "containerName": "jaeger-rckgr-test",
+      "image": "docker.elastic.co/elasticsearch/elasticsearch:7.7.0"
+    },
+    {
+      "serviceAccountName": "",
+      "namespace": "default",
+      "workloadType": "StatefulSet",
+      "workloadName": "jaeger-kafka",
+      "containerName": "kafka-broker",
+      "image": "confluentinc/cp-kafka:5.0.1"
+    }
+  ]
+}

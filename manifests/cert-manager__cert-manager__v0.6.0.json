@@ -1,0 +1,551 @@
+{
+  "metadata": {
+    "version": "v0.6.0",
+    "name": "cert-manager",
+    "source": "charts/cert-manager__cert-manager__v0.6.0/",
+    "timestamp": 1769793364,
+    "extra": {
+      "helm": {
+        "description": "A Helm chart for cert-manager",
+        "home": "https://github.com/jetstack/cert-manager",
+        "icon": "",
+        "keywords": [
+          "cert-manager",
+          "kube-lego",
+          "letsencrypt",
+          "tls"
+        ],
+        "kubeVersion": "",
+        "maintainers": [
+          {
+            "name": "munnerz",
+            "email": "james@jetstack.io"
+          }
+        ],
+        "sources": [
+          "https://github.com/jetstack/cert-manager"
+        ]
+      }
+    }
+  },
+  "serviceAccountData": [
+    {
+      "serviceAccountName": "cert-manager-webhook",
+      "namespace": "default",
+      "automountToken": false,
+      "secrets": null,
+      "imagePullSecrets": null
+    },
+    {
+      "serviceAccountName": "cert-manager-webhook-ca-sync",
+      "namespace": "default",
+      "automountToken": false,
+      "secrets": null,
+      "imagePullSecrets": null
+    },
+    {
+      "serviceAccountName": "cert-manager",
+      "namespace": "default",
+      "automountToken": false,
+      "secrets": null,
+      "imagePullSecrets": null
+    }
+  ],
+  "serviceAccountPermissions": [
+    {
+      "serviceAccountName": "cert-manager",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "cert-manager",
+      "apiGroup": "certmanager.k8s.io",
+      "resource": "certificates",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "ClusterWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "cert-manager",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "cert-manager",
+      "apiGroup": "certmanager.k8s.io",
+      "resource": "issuers",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "WildcardPermission",
+        "ClusterWideAccess"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "cert-manager",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "cert-manager",
+      "apiGroup": "certmanager.k8s.io",
+      "resource": "clusterissuers",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "ClusterWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "cert-manager",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "cert-manager",
+      "apiGroup": "certmanager.k8s.io",
+      "resource": "orders",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "WildcardPermission",
+        "ClusterWideAccess"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "cert-manager",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "cert-manager",
+      "apiGroup": "certmanager.k8s.io",
+      "resource": "challenges",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "ClusterWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "cert-manager",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "cert-manager",
+      "apiGroup": "",
+      "resource": "events",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "Medium",
+      "tags": [
+        "WildcardPermission",
+        "InformationDisclosure",
+        "Reconnaissance",
+        "OperationalData",
+        "ClusterWideAccess"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1070,
+          "name": "Read events cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1070/"
+        },
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "cert-manager",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "cert-manager",
+      "apiGroup": "",
+      "resource": "services",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "NetworkManipulation",
+        "ServiceExposure",
+        "DenialOfService",
+        "Tampering",
+        "ClusterWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1075,
+          "name": "Manage Services cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1075/"
+        },
+        {
+          "id": 1076,
+          "name": "Manage Services in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1076/"
+        },
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "cert-manager",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "cert-manager",
+      "apiGroup": "",
+      "resource": "pods",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "WorkloadExecution",
+        "PrivilegeEscalation",
+        "LateralMovement",
+        "Persistence",
+        "Tampering",
+        "PotentialPrivilegeEscalation",
+        "ClusterWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1006,
+          "name": "Create pods cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1006/"
+        },
+        {
+          "id": 1008,
+          "name": "Update/Patch pods cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1008/"
+        },
+        {
+          "id": 1007,
+          "name": "Create pods in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1007/"
+        },
+        {
+          "id": 1009,
+          "name": "Update/Patch pods in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1009/"
+        },
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "cert-manager",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "cert-manager",
+      "apiGroup": "",
+      "resource": "configmaps",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "Tampering",
+        "ConfigMapAccess",
+        "PotentialPrivilegeEscalation",
+        "InformationDisclosure",
+        "DataExposure",
+        "ClusterWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1024,
+          "name": "Modify ConfigMaps cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1024/"
+        },
+        {
+          "id": 1022,
+          "name": "Read ConfigMaps cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1022/"
+        },
+        {
+          "id": 1025,
+          "name": "Modify ConfigMaps in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1025/"
+        },
+        {
+          "id": 1023,
+          "name": "Read ConfigMaps in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1023/"
+        },
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "cert-manager",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "cert-manager",
+      "apiGroup": "",
+      "resource": "secrets",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "CredentialAccess",
+        "DataExposure",
+        "Tampering",
+        "PrivilegeEscalation",
+        "Persistence",
+        "PotentialPrivilegeEscalation",
+        "ClusterWideAccess",
+        "ClusterWideSecretAccess",
+        "InformationDisclosure",
+        "SecretAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1010,
+          "name": "Read secrets cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1010/"
+        },
+        {
+          "id": 1011,
+          "name": "Read secrets in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1011/"
+        },
+        {
+          "id": 1012,
+          "name": "Modify secrets cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1012/"
+        },
+        {
+          "id": 1013,
+          "name": "Modify secrets in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1013/"
+        },
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "cert-manager",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "cert-manager",
+      "apiGroup": "extensions",
+      "resource": "ingresses",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "ClusterWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "cert-manager-webhook-ca-sync",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "cert-manager-webhook-ca-sync",
+      "apiGroup": "admissionregistration.k8s.io",
+      "resource": "validatingwebhookconfigurations",
+      "resourceName": "cert-manager-webhook",
+      "verbs": [
+        "get",
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [
+        "ResourceNameRestricted"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "cert-manager-webhook-ca-sync",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "cert-manager-webhook-ca-sync",
+      "apiGroup": "admissionregistration.k8s.io",
+      "resource": "mutatingwebhookconfigurations",
+      "resourceName": "cert-manager-webhook",
+      "verbs": [
+        "get",
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [
+        "ResourceNameRestricted"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "cert-manager-webhook-ca-sync",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "cert-manager-webhook-ca-sync",
+      "apiGroup": "apiregistration.k8s.io",
+      "resource": "apiservices",
+      "resourceName": "v1beta1.admission.certmanager.k8s.io",
+      "verbs": [
+        "get",
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [
+        "ResourceNameRestricted"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "cert-manager-webhook-ca-sync",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "cert-manager-webhook-ca-sync",
+      "apiGroup": "",
+      "resource": "secrets",
+      "resourceName": "cert-manager-webhook-ca",
+      "verbs": [
+        "get"
+      ],
+      "riskLevel": "Low",
+      "tags": [
+        "ResourceNameRestricted"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    }
+  ],
+  "serviceAccountWorkloads": [
+    {
+      "serviceAccountName": "cert-manager",
+      "namespace": "default",
+      "workloadType": "Deployment",
+      "workloadName": "cert-manager",
+      "containerName": "cert-manager",
+      "image": "quay.io/jetstack/cert-manager-controller:v0.6.0"
+    },
+    {
+      "serviceAccountName": "cert-manager-webhook",
+      "namespace": "default",
+      "workloadType": "Deployment",
+      "workloadName": "cert-manager-webhook",
+      "containerName": "webhook",
+      "image": "quay.io/jetstack/cert-manager-webhook:v0.6.0"
+    },
+    {
+      "serviceAccountName": "cert-manager-webhook-ca-sync",
+      "namespace": "default",
+      "workloadType": "CronJob",
+      "workloadName": "cert-manager-webhook-ca-sync",
+      "containerName": "ca-helper",
+      "image": "quay.io/munnerz/apiextensions-ca-helper:v0.1.0"
+    },
+    {
+      "serviceAccountName": "cert-manager-webhook-ca-sync",
+      "namespace": "default",
+      "workloadType": "Job",
+      "workloadName": "cert-manager-webhook-ca-sync",
+      "containerName": "ca-helper",
+      "image": "quay.io/munnerz/apiextensions-ca-helper:v0.1.0"
+    }
+  ]
+}

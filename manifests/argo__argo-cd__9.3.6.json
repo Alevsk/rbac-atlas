@@ -3,7 +3,7 @@
     "version": "9.3.6",
     "name": "argo-cd",
     "source": "charts/argo__argo-cd__9.3.6/",
-    "timestamp": 1769479284,
+    "timestamp": 1769793026,
     "extra": {
       "helm": {
         "description": "A Helm chart for Argo CD, a declarative, GitOps continuous delivery tool for Kubernetes.",
@@ -30,29 +30,6 @@
   },
   "serviceAccountData": [
     {
-      "serviceAccountName": "argocd-applicationset-controller",
-      "namespace": "default",
-      "automountToken": true,
-      "secrets": null,
-      "imagePullSecrets": null
-    },
-    {
-      "serviceAccountName": "argo-cd-redis-ha-haproxy",
-      "namespace": "default",
-      "automountToken": false,
-      "secrets": null,
-      "imagePullSecrets": null
-    },
-    {
-      "serviceAccountName": "argo-cd-redis-ha",
-      "namespace": "default",
-      "automountToken": false,
-      "secrets": [
-        "argocd-redis"
-      ],
-      "imagePullSecrets": null
-    },
-    {
       "serviceAccountName": "argocd-notifications-controller",
       "namespace": "default",
       "automountToken": true,
@@ -64,6 +41,22 @@
       "namespace": "default",
       "automountToken": true,
       "secrets": null,
+      "imagePullSecrets": null
+    },
+    {
+      "serviceAccountName": "argocd-application-controller",
+      "namespace": "default",
+      "automountToken": true,
+      "secrets": null,
+      "imagePullSecrets": null
+    },
+    {
+      "serviceAccountName": "argo-cd-redis-ha",
+      "namespace": "default",
+      "automountToken": false,
+      "secrets": [
+        "argocd-redis"
+      ],
       "imagePullSecrets": null
     },
     {
@@ -81,6 +74,13 @@
       "imagePullSecrets": null
     },
     {
+      "serviceAccountName": "argocd-applicationset-controller",
+      "namespace": "default",
+      "automountToken": true,
+      "secrets": null,
+      "imagePullSecrets": null
+    },
+    {
       "serviceAccountName": "argocd-dex-server",
       "namespace": "default",
       "automountToken": true,
@@ -88,155 +88,24 @@
       "imagePullSecrets": null
     },
     {
-      "serviceAccountName": "argocd-application-controller",
+      "serviceAccountName": "argo-cd-redis-ha-haproxy",
       "namespace": "default",
-      "automountToken": true,
+      "automountToken": false,
       "secrets": null,
       "imagePullSecrets": null
     }
   ],
   "serviceAccountPermissions": [
     {
-      "serviceAccountName": "argocd-dex-server",
+      "serviceAccountName": "argocd-applicationset-controller",
       "namespace": "default",
       "roleType": "Role",
-      "roleName": "argo-cd-argocd-dex-server",
-      "apiGroup": "",
-      "resource": "secrets",
+      "roleName": "argo-cd-argocd-applicationset-controller",
+      "apiGroup": "coordination.k8s.io",
+      "resource": "leases",
       "resourceName": "",
       "verbs": [
-        "get",
-        "list",
-        "watch"
-      ],
-      "riskLevel": "Critical",
-      "tags": [
-        "SecretAccess",
-        "CredentialAccess",
-        "DataExposure",
-        "InformationDisclosure"
-      ],
-      "matchedRiskRules": [
-        {
-          "id": 1011,
-          "name": "Read secrets in a namespace",
-          "link": "https://rbac-atlas.github.io/rules/1011/"
-        },
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "argocd-dex-server",
-      "namespace": "default",
-      "roleType": "Role",
-      "roleName": "argo-cd-argocd-dex-server",
-      "apiGroup": "",
-      "resource": "configmaps",
-      "resourceName": "",
-      "verbs": [
-        "get",
-        "list",
-        "watch"
-      ],
-      "riskLevel": "Medium",
-      "tags": [
-        "InformationDisclosure",
-        "ConfigMapAccess",
-        "DataExposure"
-      ],
-      "matchedRiskRules": [
-        {
-          "id": 1023,
-          "name": "Read ConfigMaps in a namespace",
-          "link": "https://rbac-atlas.github.io/rules/1023/"
-        },
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "argocd-application-controller",
-      "namespace": "default",
-      "roleType": "Role",
-      "roleName": "argo-cd-argocd-application-controller",
-      "apiGroup": "",
-      "resource": "secrets",
-      "resourceName": "",
-      "verbs": [
-        "get",
-        "list",
-        "watch"
-      ],
-      "riskLevel": "Critical",
-      "tags": [
-        "SecretAccess",
-        "CredentialAccess",
-        "DataExposure",
-        "InformationDisclosure"
-      ],
-      "matchedRiskRules": [
-        {
-          "id": 1011,
-          "name": "Read secrets in a namespace",
-          "link": "https://rbac-atlas.github.io/rules/1011/"
-        },
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "argocd-application-controller",
-      "namespace": "default",
-      "roleType": "Role",
-      "roleName": "argo-cd-argocd-application-controller",
-      "apiGroup": "",
-      "resource": "configmaps",
-      "resourceName": "",
-      "verbs": [
-        "get",
-        "list",
-        "watch"
-      ],
-      "riskLevel": "Medium",
-      "tags": [
-        "DataExposure",
-        "InformationDisclosure",
-        "ConfigMapAccess"
-      ],
-      "matchedRiskRules": [
-        {
-          "id": 1023,
-          "name": "Read ConfigMaps in a namespace",
-          "link": "https://rbac-atlas.github.io/rules/1023/"
-        },
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "argocd-application-controller",
-      "namespace": "default",
-      "roleType": "Role",
-      "roleName": "argo-cd-argocd-application-controller",
-      "apiGroup": "",
-      "resource": "events",
-      "resourceName": "",
-      "verbs": [
-        "create",
-        "list"
+        "create"
       ],
       "riskLevel": "Low",
       "tags": [],
@@ -249,10 +118,58 @@
       ]
     },
     {
-      "serviceAccountName": "argocd-application-controller",
+      "serviceAccountName": "argocd-applicationset-controller",
       "namespace": "default",
       "roleType": "Role",
-      "roleName": "argo-cd-argocd-application-controller",
+      "roleName": "argo-cd-argocd-applicationset-controller",
+      "apiGroup": "coordination.k8s.io",
+      "resource": "leases",
+      "resourceName": "58ac56fa.applicationsets.argoproj.io",
+      "verbs": [
+        "create",
+        "get",
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [
+        "ResourceNameRestricted"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "argocd-applicationset-controller",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "argo-cd-argocd-applicationset-controller",
+      "apiGroup": "argoproj.io",
+      "resource": "appprojects",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "argocd-applicationset-controller",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "argo-cd-argocd-applicationset-controller",
       "apiGroup": "argoproj.io",
       "resource": "applications",
       "resourceName": "",
@@ -276,10 +193,10 @@
       ]
     },
     {
-      "serviceAccountName": "argocd-application-controller",
+      "serviceAccountName": "argocd-applicationset-controller",
       "namespace": "default",
       "roleType": "Role",
-      "roleName": "argo-cd-argocd-application-controller",
+      "roleName": "argo-cd-argocd-applicationset-controller",
       "apiGroup": "argoproj.io",
       "resource": "applicationsets",
       "resourceName": "",
@@ -303,10 +220,489 @@
       ]
     },
     {
-      "serviceAccountName": "argocd-application-controller",
+      "serviceAccountName": "argocd-applicationset-controller",
       "namespace": "default",
       "roleType": "Role",
-      "roleName": "argo-cd-argocd-application-controller",
+      "roleName": "argo-cd-argocd-applicationset-controller",
+      "apiGroup": "argoproj.io",
+      "resource": "applicationsets/finalizers",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "argocd-applicationset-controller",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "argo-cd-argocd-applicationset-controller",
+      "apiGroup": "argoproj.io",
+      "resource": "applicationsets/status",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "patch",
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "argocd-applicationset-controller",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "argo-cd-argocd-applicationset-controller",
+      "apiGroup": "",
+      "resource": "events",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "get",
+        "list",
+        "patch",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "argocd-applicationset-controller",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "argo-cd-argocd-applicationset-controller",
+      "apiGroup": "",
+      "resource": "configmaps",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "Tampering",
+        "ConfigMapAccess",
+        "PotentialPrivilegeEscalation",
+        "InformationDisclosure",
+        "DataExposure"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1025,
+          "name": "Modify ConfigMaps in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1025/"
+        },
+        {
+          "id": 1023,
+          "name": "Read ConfigMaps in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1023/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "argocd-applicationset-controller",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "argo-cd-argocd-applicationset-controller",
+      "apiGroup": "",
+      "resource": "secrets",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "SecretAccess",
+        "CredentialAccess",
+        "DataExposure",
+        "InformationDisclosure"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1011,
+          "name": "Read secrets in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1011/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "argocd-applicationset-controller",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "argo-cd-argocd-applicationset-controller",
+      "apiGroup": "apps",
+      "resource": "deployments",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "argocd-applicationset-controller",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "argo-cd-argocd-applicationset-controller",
+      "apiGroup": "extensions",
+      "resource": "deployments",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "argocd-server",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "argo-cd-argocd-server",
+      "apiGroup": "*",
+      "resource": "*",
+      "resourceName": "",
+      "verbs": [
+        "delete",
+        "get",
+        "patch"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "ClusterWideLogAccess",
+        "InformationDisclosure",
+        "NamespaceLifecycle",
+        "NodeAccess",
+        "ClusterAdminAccess",
+        "CodeExecution",
+        "ClusterWideAccess",
+        "LateralMovement",
+        "AuthorizationBypass",
+        "DataExposure",
+        "ResourceDeletion",
+        "LogAccess",
+        "WildcardPermission",
+        "ElevationOfPrivilege",
+        "DenialOfService"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1104,
+          "name": "Node proxy GET RCE via WebSocket",
+          "link": "https://rbac-atlas.github.io/rules/1104/"
+        },
+        {
+          "id": 1018,
+          "name": "Read pod logs cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1018/"
+        },
+        {
+          "id": 1026,
+          "name": "Delete namespaces",
+          "link": "https://rbac-atlas.github.io/rules/1026/"
+        },
+        {
+          "id": 1019,
+          "name": "Read pod logs in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1019/"
+        },
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "argocd-server",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "argo-cd-argocd-server",
+      "apiGroup": "",
+      "resource": "events",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "list"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "argocd-server",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "argo-cd-argocd-server",
+      "apiGroup": "",
+      "resource": "pods",
+      "resourceName": "",
+      "verbs": [
+        "get"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "argocd-server",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "argo-cd-argocd-server",
+      "apiGroup": "",
+      "resource": "pods/log",
+      "resourceName": "",
+      "verbs": [
+        "get"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "ClusterWideLogAccess",
+        "InformationDisclosure",
+        "DataExposure",
+        "LogAccess"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1018,
+          "name": "Read pod logs cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1018/"
+        },
+        {
+          "id": 1019,
+          "name": "Read pod logs in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1019/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "argocd-server",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "argo-cd-argocd-server",
+      "apiGroup": "argoproj.io",
+      "resource": "applications",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "argocd-server",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "argo-cd-argocd-server",
+      "apiGroup": "argoproj.io",
+      "resource": "applicationsets",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "argocd-server",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "argo-cd-argocd-server",
+      "apiGroup": "argoproj.io",
+      "resource": "workflows",
+      "resourceName": "",
+      "verbs": [
+        "create"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "argocd-server",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "argo-cd-argocd-server",
+      "apiGroup": "batch",
+      "resource": "jobs",
+      "resourceName": "",
+      "verbs": [
+        "create"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "argocd-server",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "argo-cd-argocd-server",
+      "apiGroup": "argoproj.io",
+      "resource": "applications",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "argocd-server",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "argo-cd-argocd-server",
+      "apiGroup": "argoproj.io",
+      "resource": "applicationsets",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "argocd-server",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "argo-cd-argocd-server",
       "apiGroup": "argoproj.io",
       "resource": "appprojects",
       "resourceName": "",
@@ -330,17 +726,104 @@
       ]
     },
     {
-      "serviceAccountName": "argocd-application-controller",
+      "serviceAccountName": "argocd-server",
       "namespace": "default",
       "roleType": "Role",
-      "roleName": "argo-cd-argocd-application-controller",
-      "apiGroup": "apps",
-      "resource": "deployments",
+      "roleName": "argo-cd-argocd-server",
+      "apiGroup": "",
+      "resource": "secrets",
       "resourceName": "",
       "verbs": [
+        "create",
+        "delete",
         "get",
         "list",
+        "patch",
+        "update",
         "watch"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "DataExposure",
+        "InformationDisclosure",
+        "Tampering",
+        "PotentialPrivilegeEscalation",
+        "Persistence",
+        "SecretAccess",
+        "CredentialAccess"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1011,
+          "name": "Read secrets in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1011/"
+        },
+        {
+          "id": 1013,
+          "name": "Modify secrets in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1013/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "argocd-server",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "argo-cd-argocd-server",
+      "apiGroup": "",
+      "resource": "configmaps",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "PotentialPrivilegeEscalation",
+        "InformationDisclosure",
+        "DataExposure",
+        "Tampering",
+        "ConfigMapAccess"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1025,
+          "name": "Modify ConfigMaps in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1025/"
+        },
+        {
+          "id": 1023,
+          "name": "Read ConfigMaps in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1023/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "argocd-server",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "argo-cd-argocd-server",
+      "apiGroup": "",
+      "resource": "events",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "list"
       ],
       "riskLevel": "Low",
       "tags": [],
@@ -365,79 +848,79 @@
       ],
       "riskLevel": "Critical",
       "tags": [
-        "NetworkManipulation",
-        "AuthorizationBypass",
-        "LeaderElectionAbuse",
-        "CSRCreation",
-        "PodPortForward",
-        "WebhookManipulation",
-        "LateralMovement",
-        "TrafficRedirection",
-        "CriticalNamespace",
-        "DataLoss",
-        "WebhookReconnaissance",
-        "RBACQuery",
-        "ClusterAdminAccess",
-        "RBACManipulation",
-        "SchedulingAbuse",
-        "ResourceConfiguration",
-        "ConfigMapAccess",
-        "CertificateManagement",
-        "QuotaTampering",
-        "CodeExecution",
-        "CRDManipulation",
-        "LogAccess",
-        "SelfPermissionReviewQuery",
-        "NetworkPolicyManagement",
-        "WorkloadExecution",
-        "ServiceExposure",
-        "AvailabilityImpact",
-        "Persistence",
-        "DeprecatedFeature",
-        "BackupAccess",
-        "IdentityManagement",
-        "CredentialAccess",
-        "ClusterWidePodAttach",
-        "StorageManipulation",
-        "Impersonation",
-        "BindingToPrivilegedRole",
-        "WildcardPermission",
-        "APIServerDoS",
-        "Spoofing",
         "TokenCreation",
-        "ClusterWideLogAccess",
-        "InformationDisclosure",
+        "CredentialAccess",
         "PodSecurityPolicy",
-        "CSRApproval",
-        "NamespaceLifecycle",
-        "OperationalData",
-        "NodeAccess",
-        "APIServiceManipulation",
-        "DataExposure",
-        "ManInTheMiddle",
         "PrivilegeEscalation",
+        "CodeExecution",
+        "NetworkPolicyManagement",
+        "ClusterAdminAccess",
+        "ClusterWideLogAccess",
+        "LogAccess",
         "ControlPlaneDisruption",
-        "ResourceModification",
-        "NodeManipulation",
-        "ClusterStructure",
-        "Tampering",
-        "PotentialPrivilegeEscalation",
-        "Reconnaissance",
-        "PodAttach",
-        "ControllerRevisionTampering",
-        "DenialOfService",
-        "ElevationOfPrivilege",
-        "ClusterWideSecretAccess",
-        "SecretAccess",
         "WorkloadLifecycle",
-        "NamespaceAdmin",
         "WorkloadDeployment",
-        "StorageDetailsDisclosure",
+        "ResourceModification",
+        "NamespaceLifecycle",
+        "SchedulingAbuse",
+        "AvailabilityImpact",
+        "LeaderElectionAbuse",
+        "CriticalNamespace",
         "ResourceDeletion",
-        "ClusterWidePodExec",
+        "APIServiceManipulation",
         "ClusterWidePodPortForward",
         "PodExec",
-        "ClusterWideAccess"
+        "RBACQuery",
+        "ClusterWideAccess",
+        "WorkloadExecution",
+        "InformationDisclosure",
+        "Impersonation",
+        "CSRCreation",
+        "Tampering",
+        "ManInTheMiddle",
+        "SelfPermissionReviewQuery",
+        "ConfigMapAccess",
+        "DenialOfService",
+        "StorageManipulation",
+        "APIServerDoS",
+        "ClusterStructure",
+        "DeprecatedFeature",
+        "NamespaceAdmin",
+        "ControllerRevisionTampering",
+        "QuotaTampering",
+        "AuthorizationBypass",
+        "Spoofing",
+        "CertificateManagement",
+        "CRDManipulation",
+        "SecretAccess",
+        "ElevationOfPrivilege",
+        "NodeAccess",
+        "RBACManipulation",
+        "ResourceConfiguration",
+        "PotentialPrivilegeEscalation",
+        "CSRApproval",
+        "IdentityManagement",
+        "DataExposure",
+        "ClusterWidePodExec",
+        "OperationalData",
+        "WebhookManipulation",
+        "ClusterWidePodAttach",
+        "NodeManipulation",
+        "ClusterWideSecretAccess",
+        "TrafficRedirection",
+        "DataLoss",
+        "ServiceExposure",
+        "WildcardPermission",
+        "Reconnaissance",
+        "PodAttach",
+        "PodPortForward",
+        "LateralMovement",
+        "NetworkManipulation",
+        "WebhookReconnaissance",
+        "StorageDetailsDisclosure",
+        "Persistence",
+        "BackupAccess",
+        "BindingToPrivilegedRole"
       ],
       "matchedRiskRules": [
         {
@@ -973,41 +1456,82 @@
       ]
     },
     {
-      "serviceAccountName": "argocd-applicationset-controller",
+      "serviceAccountName": "argocd-application-controller",
       "namespace": "default",
       "roleType": "Role",
-      "roleName": "argo-cd-argocd-applicationset-controller",
-      "apiGroup": "argoproj.io",
-      "resource": "applicationsets/status",
-      "resourceName": "",
-      "verbs": [
-        "get",
-        "patch",
-        "update"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "argocd-applicationset-controller",
-      "namespace": "default",
-      "roleType": "Role",
-      "roleName": "argo-cd-argocd-applicationset-controller",
-      "apiGroup": "argoproj.io",
-      "resource": "appprojects",
+      "roleName": "argo-cd-argocd-application-controller",
+      "apiGroup": "",
+      "resource": "secrets",
       "resourceName": "",
       "verbs": [
         "get",
         "list",
         "watch"
       ],
+      "riskLevel": "Critical",
+      "tags": [
+        "CredentialAccess",
+        "DataExposure",
+        "InformationDisclosure",
+        "SecretAccess"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1011,
+          "name": "Read secrets in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1011/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "argocd-application-controller",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "argo-cd-argocd-application-controller",
+      "apiGroup": "",
+      "resource": "configmaps",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Medium",
+      "tags": [
+        "ConfigMapAccess",
+        "DataExposure",
+        "InformationDisclosure"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1023,
+          "name": "Read ConfigMaps in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1023/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "argocd-application-controller",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "argo-cd-argocd-application-controller",
+      "apiGroup": "",
+      "resource": "events",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "list"
+      ],
       "riskLevel": "Low",
       "tags": [],
       "matchedRiskRules": [
@@ -1019,10 +1543,10 @@
       ]
     },
     {
-      "serviceAccountName": "argocd-applicationset-controller",
+      "serviceAccountName": "argocd-application-controller",
       "namespace": "default",
       "roleType": "Role",
-      "roleName": "argo-cd-argocd-applicationset-controller",
+      "roleName": "argo-cd-argocd-application-controller",
       "apiGroup": "argoproj.io",
       "resource": "applications",
       "resourceName": "",
@@ -1046,10 +1570,10 @@
       ]
     },
     {
-      "serviceAccountName": "argocd-applicationset-controller",
+      "serviceAccountName": "argocd-application-controller",
       "namespace": "default",
       "roleType": "Role",
-      "roleName": "argo-cd-argocd-applicationset-controller",
+      "roleName": "argo-cd-argocd-application-controller",
       "apiGroup": "argoproj.io",
       "resource": "applicationsets",
       "resourceName": "",
@@ -1073,12 +1597,12 @@
       ]
     },
     {
-      "serviceAccountName": "argocd-applicationset-controller",
+      "serviceAccountName": "argocd-application-controller",
       "namespace": "default",
       "roleType": "Role",
-      "roleName": "argo-cd-argocd-applicationset-controller",
+      "roleName": "argo-cd-argocd-application-controller",
       "apiGroup": "argoproj.io",
-      "resource": "applicationsets/finalizers",
+      "resource": "appprojects",
       "resourceName": "",
       "verbs": [
         "create",
@@ -1100,111 +1624,10 @@
       ]
     },
     {
-      "serviceAccountName": "argocd-applicationset-controller",
+      "serviceAccountName": "argocd-application-controller",
       "namespace": "default",
       "roleType": "Role",
-      "roleName": "argo-cd-argocd-applicationset-controller",
-      "apiGroup": "",
-      "resource": "events",
-      "resourceName": "",
-      "verbs": [
-        "create",
-        "get",
-        "list",
-        "patch",
-        "watch"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "argocd-applicationset-controller",
-      "namespace": "default",
-      "roleType": "Role",
-      "roleName": "argo-cd-argocd-applicationset-controller",
-      "apiGroup": "",
-      "resource": "configmaps",
-      "resourceName": "",
-      "verbs": [
-        "create",
-        "delete",
-        "get",
-        "list",
-        "patch",
-        "update",
-        "watch"
-      ],
-      "riskLevel": "High",
-      "tags": [
-        "InformationDisclosure",
-        "DataExposure",
-        "Tampering",
-        "ConfigMapAccess",
-        "PotentialPrivilegeEscalation"
-      ],
-      "matchedRiskRules": [
-        {
-          "id": 1025,
-          "name": "Modify ConfigMaps in a namespace",
-          "link": "https://rbac-atlas.github.io/rules/1025/"
-        },
-        {
-          "id": 1023,
-          "name": "Read ConfigMaps in a namespace",
-          "link": "https://rbac-atlas.github.io/rules/1023/"
-        },
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "argocd-applicationset-controller",
-      "namespace": "default",
-      "roleType": "Role",
-      "roleName": "argo-cd-argocd-applicationset-controller",
-      "apiGroup": "",
-      "resource": "secrets",
-      "resourceName": "",
-      "verbs": [
-        "get",
-        "list",
-        "watch"
-      ],
-      "riskLevel": "Critical",
-      "tags": [
-        "SecretAccess",
-        "CredentialAccess",
-        "DataExposure",
-        "InformationDisclosure"
-      ],
-      "matchedRiskRules": [
-        {
-          "id": 1011,
-          "name": "Read secrets in a namespace",
-          "link": "https://rbac-atlas.github.io/rules/1011/"
-        },
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "argocd-applicationset-controller",
-      "namespace": "default",
-      "roleType": "Role",
-      "roleName": "argo-cd-argocd-applicationset-controller",
+      "roleName": "argo-cd-argocd-application-controller",
       "apiGroup": "apps",
       "resource": "deployments",
       "resourceName": "",
@@ -1224,16 +1647,18 @@
       ]
     },
     {
-      "serviceAccountName": "argocd-applicationset-controller",
+      "serviceAccountName": "argocd-notifications-controller",
       "namespace": "default",
       "roleType": "Role",
-      "roleName": "argo-cd-argocd-applicationset-controller",
-      "apiGroup": "extensions",
-      "resource": "deployments",
+      "roleName": "argo-cd-argocd-notifications-controller",
+      "apiGroup": "argoproj.io",
+      "resource": "applications",
       "resourceName": "",
       "verbs": [
         "get",
         "list",
+        "patch",
+        "update",
         "watch"
       ],
       "riskLevel": "Low",
@@ -1247,15 +1672,19 @@
       ]
     },
     {
-      "serviceAccountName": "argocd-applicationset-controller",
+      "serviceAccountName": "argocd-notifications-controller",
       "namespace": "default",
       "roleType": "Role",
-      "roleName": "argo-cd-argocd-applicationset-controller",
-      "apiGroup": "coordination.k8s.io",
-      "resource": "leases",
+      "roleName": "argo-cd-argocd-notifications-controller",
+      "apiGroup": "argoproj.io",
+      "resource": "appprojects",
       "resourceName": "",
       "verbs": [
-        "create"
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
       ],
       "riskLevel": "Low",
       "tags": [],
@@ -1268,17 +1697,101 @@
       ]
     },
     {
-      "serviceAccountName": "argocd-applicationset-controller",
+      "serviceAccountName": "argocd-notifications-controller",
       "namespace": "default",
       "roleType": "Role",
-      "roleName": "argo-cd-argocd-applicationset-controller",
-      "apiGroup": "coordination.k8s.io",
-      "resource": "leases",
-      "resourceName": "58ac56fa.applicationsets.argoproj.io",
+      "roleName": "argo-cd-argocd-notifications-controller",
+      "apiGroup": "",
+      "resource": "secrets",
+      "resourceName": "",
       "verbs": [
-        "create",
-        "get",
-        "update"
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "CredentialAccess",
+        "DataExposure",
+        "InformationDisclosure",
+        "SecretAccess"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1011,
+          "name": "Read secrets in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1011/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "argocd-notifications-controller",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "argo-cd-argocd-notifications-controller",
+      "apiGroup": "",
+      "resource": "secrets",
+      "resourceName": "argocd-notifications-secret",
+      "verbs": [
+        "get"
+      ],
+      "riskLevel": "Low",
+      "tags": [
+        "ResourceNameRestricted"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "argocd-notifications-controller",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "argo-cd-argocd-notifications-controller",
+      "apiGroup": "",
+      "resource": "configmaps",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Medium",
+      "tags": [
+        "InformationDisclosure",
+        "ConfigMapAccess",
+        "DataExposure"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1023,
+          "name": "Read ConfigMaps in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1023/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "argocd-notifications-controller",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "argo-cd-argocd-notifications-controller",
+      "apiGroup": "",
+      "resource": "configmaps",
+      "resourceName": "argocd-notifications-cm",
+      "verbs": [
+        "get"
       ],
       "riskLevel": "Low",
       "tags": [
@@ -1356,9 +1869,9 @@
       ],
       "riskLevel": "High",
       "tags": [
+        "DataExposure",
         "InformationDisclosure",
-        "ConfigMapAccess",
-        "DataExposure"
+        "ConfigMapAccess"
       ],
       "matchedRiskRules": [
         {
@@ -1463,23 +1976,31 @@
       ]
     },
     {
-      "serviceAccountName": "argocd-notifications-controller",
+      "serviceAccountName": "argocd-dex-server",
       "namespace": "default",
       "roleType": "Role",
-      "roleName": "argo-cd-argocd-notifications-controller",
-      "apiGroup": "argoproj.io",
-      "resource": "appprojects",
+      "roleName": "argo-cd-argocd-dex-server",
+      "apiGroup": "",
+      "resource": "secrets",
       "resourceName": "",
       "verbs": [
         "get",
         "list",
-        "patch",
-        "update",
         "watch"
       ],
-      "riskLevel": "Low",
-      "tags": [],
+      "riskLevel": "Critical",
+      "tags": [
+        "SecretAccess",
+        "CredentialAccess",
+        "DataExposure",
+        "InformationDisclosure"
+      ],
       "matchedRiskRules": [
+        {
+          "id": 1011,
+          "name": "Read secrets in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1011/"
+        },
         {
           "id": 9996,
           "name": "Base Risk Level - Low",
@@ -1488,47 +2009,23 @@
       ]
     },
     {
-      "serviceAccountName": "argocd-notifications-controller",
+      "serviceAccountName": "argocd-dex-server",
       "namespace": "default",
       "roleType": "Role",
-      "roleName": "argo-cd-argocd-notifications-controller",
-      "apiGroup": "argoproj.io",
-      "resource": "applications",
-      "resourceName": "",
-      "verbs": [
-        "get",
-        "list",
-        "patch",
-        "update",
-        "watch"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "argocd-notifications-controller",
-      "namespace": "default",
-      "roleType": "Role",
-      "roleName": "argo-cd-argocd-notifications-controller",
+      "roleName": "argo-cd-argocd-dex-server",
       "apiGroup": "",
       "resource": "configmaps",
       "resourceName": "",
       "verbs": [
+        "get",
         "list",
         "watch"
       ],
       "riskLevel": "Medium",
       "tags": [
-        "ConfigMapAccess",
         "DataExposure",
-        "InformationDisclosure"
+        "InformationDisclosure",
+        "ConfigMapAccess"
       ],
       "matchedRiskRules": [
         {
@@ -1536,503 +2033,6 @@
           "name": "Read ConfigMaps in a namespace",
           "link": "https://rbac-atlas.github.io/rules/1023/"
         },
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "argocd-notifications-controller",
-      "namespace": "default",
-      "roleType": "Role",
-      "roleName": "argo-cd-argocd-notifications-controller",
-      "apiGroup": "",
-      "resource": "configmaps",
-      "resourceName": "argocd-notifications-cm",
-      "verbs": [
-        "get"
-      ],
-      "riskLevel": "Low",
-      "tags": [
-        "ResourceNameRestricted"
-      ],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "argocd-notifications-controller",
-      "namespace": "default",
-      "roleType": "Role",
-      "roleName": "argo-cd-argocd-notifications-controller",
-      "apiGroup": "",
-      "resource": "secrets",
-      "resourceName": "",
-      "verbs": [
-        "list",
-        "watch"
-      ],
-      "riskLevel": "Critical",
-      "tags": [
-        "DataExposure",
-        "InformationDisclosure",
-        "SecretAccess",
-        "CredentialAccess"
-      ],
-      "matchedRiskRules": [
-        {
-          "id": 1011,
-          "name": "Read secrets in a namespace",
-          "link": "https://rbac-atlas.github.io/rules/1011/"
-        },
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "argocd-notifications-controller",
-      "namespace": "default",
-      "roleType": "Role",
-      "roleName": "argo-cd-argocd-notifications-controller",
-      "apiGroup": "",
-      "resource": "secrets",
-      "resourceName": "argocd-notifications-secret",
-      "verbs": [
-        "get"
-      ],
-      "riskLevel": "Low",
-      "tags": [
-        "ResourceNameRestricted"
-      ],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "argocd-server",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "argo-cd-argocd-server",
-      "apiGroup": "",
-      "resource": "events",
-      "resourceName": "",
-      "verbs": [
-        "create",
-        "list"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "argocd-server",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "argo-cd-argocd-server",
-      "apiGroup": "",
-      "resource": "pods",
-      "resourceName": "",
-      "verbs": [
-        "get"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "argocd-server",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "argo-cd-argocd-server",
-      "apiGroup": "",
-      "resource": "pods/log",
-      "resourceName": "",
-      "verbs": [
-        "get"
-      ],
-      "riskLevel": "High",
-      "tags": [
-        "ClusterWideLogAccess",
-        "InformationDisclosure",
-        "DataExposure",
-        "LogAccess"
-      ],
-      "matchedRiskRules": [
-        {
-          "id": 1018,
-          "name": "Read pod logs cluster-wide",
-          "link": "https://rbac-atlas.github.io/rules/1018/"
-        },
-        {
-          "id": 1019,
-          "name": "Read pod logs in a namespace",
-          "link": "https://rbac-atlas.github.io/rules/1019/"
-        },
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "argocd-server",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "argo-cd-argocd-server",
-      "apiGroup": "argoproj.io",
-      "resource": "applications",
-      "resourceName": "",
-      "verbs": [
-        "get",
-        "list",
-        "update",
-        "watch"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "argocd-server",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "argo-cd-argocd-server",
-      "apiGroup": "argoproj.io",
-      "resource": "applicationsets",
-      "resourceName": "",
-      "verbs": [
-        "get",
-        "list",
-        "update",
-        "watch"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "argocd-server",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "argo-cd-argocd-server",
-      "apiGroup": "argoproj.io",
-      "resource": "workflows",
-      "resourceName": "",
-      "verbs": [
-        "create"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "argocd-server",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "argo-cd-argocd-server",
-      "apiGroup": "batch",
-      "resource": "jobs",
-      "resourceName": "",
-      "verbs": [
-        "create"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "argocd-server",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "argo-cd-argocd-server",
-      "apiGroup": "*",
-      "resource": "*",
-      "resourceName": "",
-      "verbs": [
-        "delete",
-        "get",
-        "patch"
-      ],
-      "riskLevel": "Critical",
-      "tags": [
-        "DataExposure",
-        "NamespaceLifecycle",
-        "DenialOfService",
-        "CodeExecution",
-        "ElevationOfPrivilege",
-        "ClusterWideLogAccess",
-        "InformationDisclosure",
-        "ResourceDeletion",
-        "LogAccess",
-        "WildcardPermission",
-        "NodeAccess",
-        "ClusterAdminAccess",
-        "AuthorizationBypass",
-        "ClusterWideAccess",
-        "LateralMovement"
-      ],
-      "matchedRiskRules": [
-        {
-          "id": 1104,
-          "name": "Node proxy GET RCE via WebSocket",
-          "link": "https://rbac-atlas.github.io/rules/1104/"
-        },
-        {
-          "id": 1018,
-          "name": "Read pod logs cluster-wide",
-          "link": "https://rbac-atlas.github.io/rules/1018/"
-        },
-        {
-          "id": 1026,
-          "name": "Delete namespaces",
-          "link": "https://rbac-atlas.github.io/rules/1026/"
-        },
-        {
-          "id": 1019,
-          "name": "Read pod logs in a namespace",
-          "link": "https://rbac-atlas.github.io/rules/1019/"
-        },
-        {
-          "id": 9998,
-          "name": "Base Risk Level - High",
-          "link": "https://rbac-atlas.github.io/rules/9998/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "argocd-server",
-      "namespace": "default",
-      "roleType": "Role",
-      "roleName": "argo-cd-argocd-server",
-      "apiGroup": "",
-      "resource": "events",
-      "resourceName": "",
-      "verbs": [
-        "create",
-        "list"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "argocd-server",
-      "namespace": "default",
-      "roleType": "Role",
-      "roleName": "argo-cd-argocd-server",
-      "apiGroup": "",
-      "resource": "secrets",
-      "resourceName": "",
-      "verbs": [
-        "create",
-        "delete",
-        "get",
-        "list",
-        "patch",
-        "update",
-        "watch"
-      ],
-      "riskLevel": "Critical",
-      "tags": [
-        "Persistence",
-        "SecretAccess",
-        "CredentialAccess",
-        "DataExposure",
-        "InformationDisclosure",
-        "Tampering",
-        "PotentialPrivilegeEscalation"
-      ],
-      "matchedRiskRules": [
-        {
-          "id": 1011,
-          "name": "Read secrets in a namespace",
-          "link": "https://rbac-atlas.github.io/rules/1011/"
-        },
-        {
-          "id": 1013,
-          "name": "Modify secrets in a namespace",
-          "link": "https://rbac-atlas.github.io/rules/1013/"
-        },
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "argocd-server",
-      "namespace": "default",
-      "roleType": "Role",
-      "roleName": "argo-cd-argocd-server",
-      "apiGroup": "",
-      "resource": "configmaps",
-      "resourceName": "",
-      "verbs": [
-        "create",
-        "delete",
-        "get",
-        "list",
-        "patch",
-        "update",
-        "watch"
-      ],
-      "riskLevel": "High",
-      "tags": [
-        "DataExposure",
-        "Tampering",
-        "ConfigMapAccess",
-        "PotentialPrivilegeEscalation",
-        "InformationDisclosure"
-      ],
-      "matchedRiskRules": [
-        {
-          "id": 1025,
-          "name": "Modify ConfigMaps in a namespace",
-          "link": "https://rbac-atlas.github.io/rules/1025/"
-        },
-        {
-          "id": 1023,
-          "name": "Read ConfigMaps in a namespace",
-          "link": "https://rbac-atlas.github.io/rules/1023/"
-        },
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "argocd-server",
-      "namespace": "default",
-      "roleType": "Role",
-      "roleName": "argo-cd-argocd-server",
-      "apiGroup": "argoproj.io",
-      "resource": "appprojects",
-      "resourceName": "",
-      "verbs": [
-        "create",
-        "delete",
-        "get",
-        "list",
-        "patch",
-        "update",
-        "watch"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "argocd-server",
-      "namespace": "default",
-      "roleType": "Role",
-      "roleName": "argo-cd-argocd-server",
-      "apiGroup": "argoproj.io",
-      "resource": "applications",
-      "resourceName": "",
-      "verbs": [
-        "create",
-        "delete",
-        "get",
-        "list",
-        "patch",
-        "update",
-        "watch"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "argocd-server",
-      "namespace": "default",
-      "roleType": "Role",
-      "roleName": "argo-cd-argocd-server",
-      "apiGroup": "argoproj.io",
-      "resource": "applicationsets",
-      "resourceName": "",
-      "verbs": [
-        "create",
-        "delete",
-        "get",
-        "list",
-        "patch",
-        "update",
-        "watch"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
         {
           "id": 9996,
           "name": "Base Risk Level - Low",
@@ -2042,6 +2042,70 @@
     }
   ],
   "serviceAccountWorkloads": [
+    {
+      "serviceAccountName": "argocd-application-controller",
+      "namespace": "default",
+      "workloadType": "StatefulSet",
+      "workloadName": "argo-cd-argocd-application-controller",
+      "containerName": "application-controller",
+      "image": "quay.io/argoproj/argocd:v3.2.6"
+    },
+    {
+      "serviceAccountName": "argocd-server",
+      "namespace": "default",
+      "workloadType": "Deployment",
+      "workloadName": "argo-cd-argocd-server",
+      "containerName": "server",
+      "image": "quay.io/argoproj/argocd:v3.2.6"
+    },
+    {
+      "serviceAccountName": "",
+      "namespace": "default",
+      "workloadType": "Pod",
+      "workloadName": "argo-cd-redis-ha-configmap-test",
+      "containerName": "check-init",
+      "image": "koalaman/shellcheck:v0.10.0"
+    },
+    {
+      "serviceAccountName": "",
+      "namespace": "default",
+      "workloadType": "Pod",
+      "workloadName": "argo-cd-redis-ha-service-test",
+      "containerName": "argo-cd-service-test",
+      "image": "ecr-public.aws.com/docker/library/redis:8.2.2-alpine"
+    },
+    {
+      "serviceAccountName": "argocd-notifications-controller",
+      "namespace": "default",
+      "workloadType": "Deployment",
+      "workloadName": "argo-cd-argocd-notifications-controller",
+      "containerName": "notifications-controller",
+      "image": "quay.io/argoproj/argocd:v3.2.6"
+    },
+    {
+      "serviceAccountName": "argo-cd-redis-ha-haproxy",
+      "namespace": "default",
+      "workloadType": "Deployment",
+      "workloadName": "argo-cd-redis-ha-haproxy",
+      "containerName": "haproxy",
+      "image": "ecr-public.aws.com/docker/library/haproxy:3.0.8-alpine"
+    },
+    {
+      "serviceAccountName": "default",
+      "namespace": "default",
+      "workloadType": "Deployment",
+      "workloadName": "argo-cd-argocd-redis",
+      "containerName": "redis",
+      "image": "ecr-public.aws.com/docker/library/redis:8.2.2-alpine"
+    },
+    {
+      "serviceAccountName": "argocd-applicationset-controller",
+      "namespace": "default",
+      "workloadType": "Deployment",
+      "workloadName": "argo-cd-argocd-applicationset-controller",
+      "containerName": "applicationset-controller",
+      "image": "quay.io/argoproj/argocd:v3.2.6"
+    },
     {
       "serviceAccountName": "argo-cd-redis-ha",
       "namespace": "default",
@@ -2067,20 +2131,12 @@
       "image": "ecr-public.aws.com/docker/library/redis:8.2.2-alpine"
     },
     {
-      "serviceAccountName": "argo-cd-redis-ha-haproxy",
+      "serviceAccountName": "argocd-dex-server",
       "namespace": "default",
       "workloadType": "Deployment",
-      "workloadName": "argo-cd-redis-ha-haproxy",
-      "containerName": "haproxy",
-      "image": "ecr-public.aws.com/docker/library/haproxy:3.0.8-alpine"
-    },
-    {
-      "serviceAccountName": "argocd-server",
-      "namespace": "default",
-      "workloadType": "Deployment",
-      "workloadName": "argo-cd-argocd-server",
-      "containerName": "server",
-      "image": "quay.io/argoproj/argocd:v3.2.6"
+      "workloadName": "argo-cd-argocd-dex-server",
+      "containerName": "dex-server",
+      "image": "ghcr.io/dexidp/dex:v2.44.0"
     },
     {
       "serviceAccountName": "argo-cd-argocd-redis-secret-init",
@@ -2096,62 +2152,6 @@
       "workloadType": "Deployment",
       "workloadName": "argo-cd-argocd-repo-server",
       "containerName": "repo-server",
-      "image": "quay.io/argoproj/argocd:v3.2.6"
-    },
-    {
-      "serviceAccountName": "argocd-dex-server",
-      "namespace": "default",
-      "workloadType": "Deployment",
-      "workloadName": "argo-cd-argocd-dex-server",
-      "containerName": "dex-server",
-      "image": "ghcr.io/dexidp/dex:v2.44.0"
-    },
-    {
-      "serviceAccountName": "",
-      "namespace": "default",
-      "workloadType": "Pod",
-      "workloadName": "argo-cd-redis-ha-service-test",
-      "containerName": "argo-cd-service-test",
-      "image": "ecr-public.aws.com/docker/library/redis:8.2.2-alpine"
-    },
-    {
-      "serviceAccountName": "",
-      "namespace": "default",
-      "workloadType": "Pod",
-      "workloadName": "argo-cd-redis-ha-configmap-test",
-      "containerName": "check-init",
-      "image": "koalaman/shellcheck:v0.10.0"
-    },
-    {
-      "serviceAccountName": "argocd-applicationset-controller",
-      "namespace": "default",
-      "workloadType": "Deployment",
-      "workloadName": "argo-cd-argocd-applicationset-controller",
-      "containerName": "applicationset-controller",
-      "image": "quay.io/argoproj/argocd:v3.2.6"
-    },
-    {
-      "serviceAccountName": "default",
-      "namespace": "default",
-      "workloadType": "Deployment",
-      "workloadName": "argo-cd-argocd-redis",
-      "containerName": "redis",
-      "image": "ecr-public.aws.com/docker/library/redis:8.2.2-alpine"
-    },
-    {
-      "serviceAccountName": "argocd-application-controller",
-      "namespace": "default",
-      "workloadType": "StatefulSet",
-      "workloadName": "argo-cd-argocd-application-controller",
-      "containerName": "application-controller",
-      "image": "quay.io/argoproj/argocd:v3.2.6"
-    },
-    {
-      "serviceAccountName": "argocd-notifications-controller",
-      "namespace": "default",
-      "workloadType": "Deployment",
-      "workloadName": "argo-cd-argocd-notifications-controller",
-      "containerName": "notifications-controller",
       "image": "quay.io/argoproj/argocd:v3.2.6"
     }
   ]

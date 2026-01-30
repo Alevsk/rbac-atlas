@@ -1,0 +1,113 @@
+{
+  "metadata": {
+    "version": "0.21.7",
+    "name": "tempo-distributed",
+    "source": "charts/grafana__tempo-distributed__0.21.7/",
+    "timestamp": 1769793808,
+    "extra": {
+      "helm": {
+        "description": "Grafana Tempo in MicroService mode",
+        "home": "https://grafana.com/docs/tempo/latest/",
+        "icon": "https://raw.githubusercontent.com/grafana/tempo/master/docs/tempo/website/logo_and_name.png",
+        "keywords": null,
+        "kubeVersion": "",
+        "maintainers": [
+          {
+            "name": "joe-elliott",
+            "email": "number101010@gmail.com"
+          },
+          {
+            "name": "swartz-k",
+            "email": "9215868@gmail.com"
+          },
+          {
+            "name": "annanay25"
+          },
+          {
+            "name": "mdisibio"
+          },
+          {
+            "name": "mapno"
+          },
+          {
+            "name": "BitProcessor"
+          },
+          {
+            "name": "faustodavid"
+          }
+        ],
+        "sources": [
+          "https://github.com/grafana/tempo"
+        ]
+      }
+    }
+  },
+  "serviceAccountData": [
+    {
+      "serviceAccountName": "tempo-distributed",
+      "namespace": "default",
+      "automountToken": false,
+      "secrets": null,
+      "imagePullSecrets": null
+    }
+  ],
+  "serviceAccountPermissions": [],
+  "serviceAccountWorkloads": [
+    {
+      "serviceAccountName": "tempo-distributed",
+      "namespace": "default",
+      "workloadType": "StatefulSet",
+      "workloadName": "tempo-distributed-ingester",
+      "containerName": "ingester",
+      "image": "docker.io/grafana/tempo:1.4.1"
+    },
+    {
+      "serviceAccountName": "tempo-distributed",
+      "namespace": "default",
+      "workloadType": "StatefulSet",
+      "workloadName": "tempo-distributed-memcached",
+      "containerName": "memcached",
+      "image": "docker.io/memcached:1.5.17-alpine"
+    },
+    {
+      "serviceAccountName": "tempo-distributed",
+      "namespace": "default",
+      "workloadType": "Deployment",
+      "workloadName": "tempo-distributed-compactor",
+      "containerName": "compactor",
+      "image": "docker.io/grafana/tempo:1.4.1"
+    },
+    {
+      "serviceAccountName": "tempo-distributed",
+      "namespace": "default",
+      "workloadType": "Deployment",
+      "workloadName": "tempo-distributed-querier",
+      "containerName": "querier",
+      "image": "docker.io/grafana/tempo:1.4.1"
+    },
+    {
+      "serviceAccountName": "tempo-distributed",
+      "namespace": "default",
+      "workloadType": "Deployment",
+      "workloadName": "tempo-distributed-query-frontend",
+      "containerName": "query-frontend",
+      "image": "docker.io/grafana/tempo:1.4.1"
+    },
+    {
+      "serviceAccountName": "tempo-distributed",
+      "namespace": "default",
+      "workloadType": "Deployment",
+      "workloadName": "tempo-distributed-query-frontend",
+      "containerName": "tempo-query",
+      "image": "docker.io/grafana/tempo-query:1.4.1"
+    },
+    {
+      "serviceAccountName": "tempo-distributed",
+      "namespace": "default",
+      "workloadType": "Deployment",
+      "workloadName": "tempo-distributed-distributor",
+      "containerName": "distributor",
+      "image": "docker.io/grafana/tempo:1.4.1"
+    }
+  ]
+}

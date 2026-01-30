@@ -1,0 +1,81 @@
+{
+  "metadata": {
+    "version": "7.3.12",
+    "name": "grafana",
+    "source": "charts/grafana__grafana__7.3.12/",
+    "timestamp": 1769793747,
+    "extra": {
+      "helm": {
+        "description": "The leading tool for querying and visualizing time series and metrics.",
+        "home": "https://grafana.com",
+        "icon": "https://artifacthub.io/image/b4fed1a7-6c8f-4945-b99d-096efa3e4116",
+        "keywords": [
+          "monitoring",
+          "metric"
+        ],
+        "kubeVersion": "^1.8.0-0",
+        "maintainers": [
+          {
+            "name": "zanhsieh",
+            "email": "zanhsieh@gmail.com"
+          },
+          {
+            "name": "rtluckie",
+            "email": "rluckie@cisco.com"
+          },
+          {
+            "name": "maorfr",
+            "email": "maor.friedman@redhat.com"
+          },
+          {
+            "name": "Xtigyro",
+            "email": "miroslav.hadzhiev@gmail.com"
+          },
+          {
+            "name": "torstenwalter",
+            "email": "mail@torstenwalter.de"
+          }
+        ],
+        "sources": [
+          "https://github.com/grafana/grafana",
+          "https://github.com/grafana/helm-charts"
+        ]
+      }
+    }
+  },
+  "serviceAccountData": [
+    {
+      "serviceAccountName": "grafana",
+      "namespace": "default",
+      "automountToken": false,
+      "secrets": null,
+      "imagePullSecrets": null
+    },
+    {
+      "serviceAccountName": "grafana-test",
+      "namespace": "default",
+      "automountToken": false,
+      "secrets": null,
+      "imagePullSecrets": null
+    }
+  ],
+  "serviceAccountPermissions": [],
+  "serviceAccountWorkloads": [
+    {
+      "serviceAccountName": "grafana-test",
+      "namespace": "default",
+      "workloadType": "Pod",
+      "workloadName": "grafana-test",
+      "containerName": "grafana-test",
+      "image": "docker.io/bats/bats:v1.4.1"
+    },
+    {
+      "serviceAccountName": "grafana",
+      "namespace": "default",
+      "workloadType": "Deployment",
+      "workloadName": "grafana",
+      "containerName": "grafana",
+      "image": "docker.io/grafana/grafana:10.4.3"
+    }
+  ]
+}

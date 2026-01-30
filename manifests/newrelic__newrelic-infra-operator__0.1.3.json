@@ -1,0 +1,406 @@
+{
+  "metadata": {
+    "version": "0.1.3",
+    "name": "newrelic-infra-operator",
+    "source": "charts/newrelic__newrelic-infra-operator__0.1.3/",
+    "timestamp": 1769798258,
+    "extra": {
+      "helm": {
+        "description": "A Helm chart to deploy the New Relic Infrastructure Kubernetes Operator.",
+        "home": "https://hub.docker.com/r/newrelic/newrelic-infra-operator",
+        "icon": "https://newrelic.com/assets/newrelic/source/NewRelic-logo-square.svg",
+        "keywords": [
+          "infrastructure",
+          "newrelic",
+          "monitoring"
+        ],
+        "kubeVersion": "",
+        "maintainers": [
+          {
+            "name": "douglascamata"
+          },
+          {
+            "name": "paologallinaharbur"
+          },
+          {
+            "name": "davidbrota"
+          },
+          {
+            "name": "gsanchezgavier"
+          },
+          {
+            "name": "roobre"
+          }
+        ],
+        "sources": [
+          "https://github.com/newrelic/newrelic-infra-operator"
+        ]
+      }
+    }
+  },
+  "serviceAccountData": [
+    {
+      "serviceAccountName": "newrelic-infra-operator",
+      "namespace": "default",
+      "automountToken": false,
+      "secrets": null,
+      "imagePullSecrets": null
+    },
+    {
+      "serviceAccountName": "newrelic-infra-operator-admission",
+      "namespace": "default",
+      "automountToken": false,
+      "secrets": null,
+      "imagePullSecrets": null
+    }
+  ],
+  "serviceAccountPermissions": [
+    {
+      "serviceAccountName": "newrelic-infra-operator-admission",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "newrelic-infra-operator-admission",
+      "apiGroup": "",
+      "resource": "secrets",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "get"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "newrelic-infra-operator-admission",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "newrelic-infra-operator-admission",
+      "apiGroup": "admissionregistration.k8s.io",
+      "resource": "mutatingwebhookconfigurations",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "newrelic-infra-operator-admission",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "newrelic-infra-operator-admission",
+      "apiGroup": "policy",
+      "resource": "podsecuritypolicies",
+      "resourceName": "newrelic-infra-operator-admission",
+      "verbs": [
+        "use"
+      ],
+      "riskLevel": "Low",
+      "tags": [
+        "PrivilegeEscalation",
+        "PodSecurityPolicy",
+        "DeprecatedFeature",
+        "NodeAccess",
+        "ResourceNameRestricted"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1078,
+          "name": "Use privileged PodSecurityPolicy (deprecated)",
+          "link": "https://rbac-atlas.github.io/rules/1078/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "newrelic-infra-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "newrelic-infra-operator",
+      "apiGroup": "",
+      "resource": "services",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "newrelic-infra-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "newrelic-infra-operator",
+      "apiGroup": "",
+      "resource": "secrets",
+      "resourceName": "newrelic-infra-operator-config",
+      "verbs": [
+        "get",
+        "patch",
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [
+        "ResourceNameRestricted"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "newrelic-infra-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "newrelic-infra-operator",
+      "apiGroup": "",
+      "resource": "secrets",
+      "resourceName": "",
+      "verbs": [
+        "create"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "newrelic-infra-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "newrelic-infra-operator",
+      "apiGroup": "",
+      "resource": "nodes",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "newrelic-infra-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "newrelic-infra-operator",
+      "apiGroup": "",
+      "resource": "nodes/metrics",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "newrelic-infra-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "newrelic-infra-operator",
+      "apiGroup": "",
+      "resource": "nodes/stats",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "newrelic-infra-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "newrelic-infra-operator",
+      "apiGroup": "",
+      "resource": "nodes/proxy",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "ElevationOfPrivilege",
+        "AuthorizationBypass",
+        "NodeAccess",
+        "ClusterAdminAccess",
+        "CodeExecution",
+        "LateralMovement"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1104,
+          "name": "Node proxy GET RCE via WebSocket",
+          "link": "https://rbac-atlas.github.io/rules/1104/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "newrelic-infra-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "newrelic-infra-operator",
+      "apiGroup": "",
+      "resource": "pods",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "newrelic-infra-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "newrelic-infra-operator",
+      "apiGroup": "rbac.authorization.k8s.io",
+      "resource": "clusterrolebindings",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Medium",
+      "tags": [
+        "Reconnaissance",
+        "InformationDisclosure",
+        "RBACQuery"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1077,
+          "name": "Read RBAC configuration cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1077/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "newrelic-infra-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "newrelic-infra-operator",
+      "apiGroup": "rbac.authorization.k8s.io",
+      "resource": "clusterrolebindings",
+      "resourceName": "newrelic-infra-operator-infra-agent",
+      "verbs": [
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [
+        "ResourceNameRestricted"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    }
+  ],
+  "serviceAccountWorkloads": [
+    {
+      "serviceAccountName": "newrelic-infra-operator-admission",
+      "namespace": "default",
+      "workloadType": "Job",
+      "workloadName": "newrelic-infra-operator-admission-patch",
+      "containerName": "patch",
+      "image": "jettech/kube-webhook-certgen:v1.5.0"
+    },
+    {
+      "serviceAccountName": "newrelic-infra-operator-admission",
+      "namespace": "default",
+      "workloadType": "Job",
+      "workloadName": "newrelic-infra-operator-admission-create",
+      "containerName": "create",
+      "image": "jettech/kube-webhook-certgen:v1.5.0"
+    },
+    {
+      "serviceAccountName": "newrelic-infra-operator",
+      "namespace": "default",
+      "workloadType": "Deployment",
+      "workloadName": "newrelic-infra-operator",
+      "containerName": "newrelic-infra-operator",
+      "image": "newrelic/newrelic-infra-operator:0.4.0"
+    }
+  ]
+}

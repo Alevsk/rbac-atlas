@@ -1,0 +1,1124 @@
+{
+  "metadata": {
+    "version": "2.6.0",
+    "name": "zfs-localpv",
+    "source": "charts/openebs-zfs-localpv__zfs-localpv__2.6.0/",
+    "timestamp": 1769794161,
+    "extra": {
+      "helm": {
+        "description": "Helm chart for CSI Driver for dynamic provisioning of ZFS Persistent Local Volumes. For instructions on how to use this helm chart, see - https://openebs.github.io/zfs-localpv/",
+        "home": "https://openebs.io/",
+        "icon": "https://raw.githubusercontent.com/cncf/artwork/master/projects/openebs/icon/color/openebs-icon-color.png",
+        "keywords": [
+          "cloud-native-storage",
+          "block-storage",
+          "filesystem",
+          "ZFS",
+          "Local Persistent Volumes",
+          "storage"
+        ],
+        "kubeVersion": "",
+        "maintainers": null,
+        "sources": [
+          "https://github.com/openebs/zfs-localpv"
+        ]
+      }
+    }
+  },
+  "serviceAccountData": [
+    {
+      "serviceAccountName": "openebs-zfs-node-sa",
+      "namespace": "default",
+      "automountToken": false,
+      "secrets": null,
+      "imagePullSecrets": null
+    },
+    {
+      "serviceAccountName": "openebs-zfs-controller-sa",
+      "namespace": "default",
+      "automountToken": false,
+      "secrets": null,
+      "imagePullSecrets": null
+    }
+  ],
+  "serviceAccountPermissions": [
+    {
+      "serviceAccountName": "openebs-zfs-controller-sa",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "openebs-zfs-provisioner-role",
+      "apiGroup": "",
+      "resource": "secrets",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "openebs-zfs-controller-sa",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "openebs-zfs-provisioner-role",
+      "apiGroup": "",
+      "resource": "events",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Medium",
+      "tags": [
+        "OperationalData",
+        "InformationDisclosure",
+        "Reconnaissance"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1070,
+          "name": "Read events cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1070/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "openebs-zfs-controller-sa",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "openebs-zfs-provisioner-role",
+      "apiGroup": "",
+      "resource": "namespaces",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "ClusterWideAccess",
+        "WildcardPermission",
+        "NamespaceLifecycle",
+        "ResourceDeletion",
+        "DenialOfService",
+        "InformationDisclosure",
+        "Reconnaissance",
+        "ClusterStructure"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1026,
+          "name": "Delete namespaces",
+          "link": "https://rbac-atlas.github.io/rules/1026/"
+        },
+        {
+          "id": 1082,
+          "name": "List Namespaces (Cluster Reconnaissance)",
+          "link": "https://rbac-atlas.github.io/rules/1082/"
+        },
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "openebs-zfs-controller-sa",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "openebs-zfs-provisioner-role",
+      "apiGroup": "",
+      "resource": "persistentvolumes",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "openebs-zfs-controller-sa",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "openebs-zfs-provisioner-role",
+      "apiGroup": "",
+      "resource": "services",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "DenialOfService",
+        "Tampering",
+        "NetworkManipulation",
+        "ServiceExposure"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1075,
+          "name": "Manage Services cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1075/"
+        },
+        {
+          "id": 1076,
+          "name": "Manage Services in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1076/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "openebs-zfs-controller-sa",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "openebs-zfs-provisioner-role",
+      "apiGroup": "",
+      "resource": "persistentvolumeclaims",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "openebs-zfs-controller-sa",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "openebs-zfs-provisioner-role",
+      "apiGroup": "",
+      "resource": "persistentvolumeclaims/status",
+      "resourceName": "",
+      "verbs": [
+        "patch",
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "openebs-zfs-controller-sa",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "openebs-zfs-provisioner-role",
+      "apiGroup": "",
+      "resource": "nodes",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "openebs-zfs-controller-sa",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "openebs-zfs-provisioner-role",
+      "apiGroup": "",
+      "resource": "pods",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "WorkloadExecution",
+        "PrivilegeEscalation",
+        "Tampering",
+        "PotentialPrivilegeEscalation"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1008,
+          "name": "Update/Patch pods cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1008/"
+        },
+        {
+          "id": 1009,
+          "name": "Update/Patch pods in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1009/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "openebs-zfs-controller-sa",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "openebs-zfs-provisioner-role",
+      "apiGroup": "storage.k8s.io",
+      "resource": "csistoragecapacities",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "Low",
+      "tags": [
+        "InformationDisclosure",
+        "Reconnaissance",
+        "StorageDetailsDisclosure",
+        "ClusterWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1101,
+          "name": "Read CSIStorageCapacities (Namespace Storage Reconnaissance)",
+          "link": "https://rbac-atlas.github.io/rules/1101/"
+        },
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "openebs-zfs-controller-sa",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "openebs-zfs-provisioner-role",
+      "apiGroup": "storage.k8s.io",
+      "resource": "storageclasses",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "openebs-zfs-controller-sa",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "openebs-zfs-provisioner-role",
+      "apiGroup": "storage.k8s.io",
+      "resource": "csinodes",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Medium",
+      "tags": [
+        "Reconnaissance",
+        "NodeAccess",
+        "StorageDetailsDisclosure",
+        "InformationDisclosure"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1100,
+          "name": "Read CSINode Objects (Node \u0026 Storage Reconnaissance)",
+          "link": "https://rbac-atlas.github.io/rules/1100/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "openebs-zfs-controller-sa",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "openebs-zfs-provisioner-role",
+      "apiGroup": "coordination.k8s.io",
+      "resource": "leases",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "openebs-zfs-controller-sa",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "openebs-zfs-provisioner-role",
+      "apiGroup": "*",
+      "resource": "zfsvolumes",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "ClusterWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "openebs-zfs-controller-sa",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "openebs-zfs-provisioner-role",
+      "apiGroup": "*",
+      "resource": "zfssnapshots",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "ClusterWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "openebs-zfs-controller-sa",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "openebs-zfs-provisioner-role",
+      "apiGroup": "*",
+      "resource": "zfsbackups",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "ClusterWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "openebs-zfs-controller-sa",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "openebs-zfs-provisioner-role",
+      "apiGroup": "*",
+      "resource": "zfsrestores",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "ClusterWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "openebs-zfs-controller-sa",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "openebs-zfs-provisioner-role",
+      "apiGroup": "*",
+      "resource": "zfsnodes",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "WildcardPermission",
+        "ClusterWideAccess"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "openebs-zfs-controller-sa",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "openebs-zfs-snapshotter-role",
+      "apiGroup": "",
+      "resource": "persistentvolumes",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "openebs-zfs-controller-sa",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "openebs-zfs-snapshotter-role",
+      "apiGroup": "",
+      "resource": "persistentvolumeclaims",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "openebs-zfs-controller-sa",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "openebs-zfs-snapshotter-role",
+      "apiGroup": "",
+      "resource": "events",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Medium",
+      "tags": [
+        "InformationDisclosure",
+        "Reconnaissance",
+        "OperationalData"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1070,
+          "name": "Read events cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1070/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "openebs-zfs-controller-sa",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "openebs-zfs-snapshotter-role",
+      "apiGroup": "",
+      "resource": "secrets",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "openebs-zfs-controller-sa",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "openebs-zfs-snapshotter-role",
+      "apiGroup": "storage.k8s.io",
+      "resource": "storageclasses",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "openebs-zfs-controller-sa",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "openebs-zfs-snapshotter-role",
+      "apiGroup": "snapshot.storage.k8s.io",
+      "resource": "volumesnapshots/status",
+      "resourceName": "",
+      "verbs": [
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "openebs-zfs-controller-sa",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "openebs-zfs-snapshotter-role",
+      "apiGroup": "snapshot.storage.k8s.io",
+      "resource": "volumesnapshotclasses",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "openebs-zfs-controller-sa",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "openebs-zfs-snapshotter-role",
+      "apiGroup": "snapshot.storage.k8s.io",
+      "resource": "volumesnapshotcontents",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "openebs-zfs-controller-sa",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "openebs-zfs-snapshotter-role",
+      "apiGroup": "snapshot.storage.k8s.io",
+      "resource": "volumesnapshots",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "openebs-zfs-controller-sa",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "openebs-zfs-snapshotter-role",
+      "apiGroup": "snapshot.storage.k8s.io",
+      "resource": "volumesnapshotcontents/status",
+      "resourceName": "",
+      "verbs": [
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "openebs-zfs-controller-sa",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "openebs-zfs-snapshotter-role",
+      "apiGroup": "apiextensions.k8s.io",
+      "resource": "customresourcedefinitions",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "openebs-zfs-node-sa",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "openebs-zfs-driver-registrar-role",
+      "apiGroup": "",
+      "resource": "events",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Medium",
+      "tags": [
+        "InformationDisclosure",
+        "Reconnaissance",
+        "OperationalData"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1070,
+          "name": "Read events cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1070/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "openebs-zfs-node-sa",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "openebs-zfs-driver-registrar-role",
+      "apiGroup": "",
+      "resource": "persistentvolumes",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "openebs-zfs-node-sa",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "openebs-zfs-driver-registrar-role",
+      "apiGroup": "",
+      "resource": "nodes",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "openebs-zfs-node-sa",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "openebs-zfs-driver-registrar-role",
+      "apiGroup": "",
+      "resource": "services",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "openebs-zfs-node-sa",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "openebs-zfs-driver-registrar-role",
+      "apiGroup": "*",
+      "resource": "zfsvolumes",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "ClusterWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "openebs-zfs-node-sa",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "openebs-zfs-driver-registrar-role",
+      "apiGroup": "*",
+      "resource": "zfssnapshots",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "ClusterWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "openebs-zfs-node-sa",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "openebs-zfs-driver-registrar-role",
+      "apiGroup": "*",
+      "resource": "zfsbackups",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "ClusterWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "openebs-zfs-node-sa",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "openebs-zfs-driver-registrar-role",
+      "apiGroup": "*",
+      "resource": "zfsrestores",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "ClusterWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "openebs-zfs-node-sa",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "openebs-zfs-driver-registrar-role",
+      "apiGroup": "*",
+      "resource": "zfsnodes",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "ClusterWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    }
+  ],
+  "serviceAccountWorkloads": [
+    {
+      "serviceAccountName": "openebs-zfs-node-sa",
+      "namespace": "default",
+      "workloadType": "DaemonSet",
+      "workloadName": "zfs-localpv-node",
+      "containerName": "csi-node-driver-registrar",
+      "image": "registry.k8s.io/sig-storage/csi-node-driver-registrar:v2.8.0"
+    },
+    {
+      "serviceAccountName": "openebs-zfs-node-sa",
+      "namespace": "default",
+      "workloadType": "DaemonSet",
+      "workloadName": "zfs-localpv-node",
+      "containerName": "openebs-zfs-plugin",
+      "image": "openebs/zfs-driver:2.6.0"
+    },
+    {
+      "serviceAccountName": "openebs-zfs-controller-sa",
+      "namespace": "default",
+      "workloadType": "Deployment",
+      "workloadName": "zfs-localpv-controller",
+      "containerName": "csi-resizer",
+      "image": "registry.k8s.io/sig-storage/csi-resizer:v1.8.0"
+    },
+    {
+      "serviceAccountName": "openebs-zfs-controller-sa",
+      "namespace": "default",
+      "workloadType": "Deployment",
+      "workloadName": "zfs-localpv-controller",
+      "containerName": "csi-snapshotter",
+      "image": "registry.k8s.io/sig-storage/csi-snapshotter:v6.2.2"
+    },
+    {
+      "serviceAccountName": "openebs-zfs-controller-sa",
+      "namespace": "default",
+      "workloadType": "Deployment",
+      "workloadName": "zfs-localpv-controller",
+      "containerName": "snapshot-controller",
+      "image": "registry.k8s.io/sig-storage/snapshot-controller:v6.2.2"
+    },
+    {
+      "serviceAccountName": "openebs-zfs-controller-sa",
+      "namespace": "default",
+      "workloadType": "Deployment",
+      "workloadName": "zfs-localpv-controller",
+      "containerName": "csi-provisioner",
+      "image": "registry.k8s.io/sig-storage/csi-provisioner:v3.5.0"
+    },
+    {
+      "serviceAccountName": "openebs-zfs-controller-sa",
+      "namespace": "default",
+      "workloadType": "Deployment",
+      "workloadName": "zfs-localpv-controller",
+      "containerName": "openebs-zfs-plugin",
+      "image": "openebs/zfs-driver:2.6.0"
+    }
+  ]
+}

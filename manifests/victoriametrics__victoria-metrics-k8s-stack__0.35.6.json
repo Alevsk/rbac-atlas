@@ -1,0 +1,4616 @@
+{
+  "metadata": {
+    "version": "0.35.6",
+    "name": "victoria-metrics-k8s-stack",
+    "source": "charts/victoriametrics__victoria-metrics-k8s-stack__0.35.6/",
+    "timestamp": 1769794480,
+    "extra": {
+      "helm": {
+        "description": "Kubernetes monitoring on VictoriaMetrics stack. Includes VictoriaMetrics Operator, Grafana dashboards, ServiceScrapes and VMRules",
+        "home": "https://github.com/VictoriaMetrics/helm-charts",
+        "icon": "https://avatars.githubusercontent.com/u/43720803?s=200\u0026v=4",
+        "keywords": [
+          "victoriametrics",
+          "operator",
+          "monitoring",
+          "kubernetes",
+          "observability",
+          "tsdb",
+          "metrics",
+          "metricsql",
+          "timeseries"
+        ],
+        "kubeVersion": "\u003e=1.25.0-0",
+        "maintainers": null,
+        "sources": [
+          "https://github.com/VictoriaMetrics/helm-charts"
+        ]
+      }
+    }
+  },
+  "serviceAccountData": [
+    {
+      "serviceAccountName": "victoria-metrics-k8s-stack-grafana-test",
+      "namespace": "default",
+      "automountToken": false,
+      "secrets": null,
+      "imagePullSecrets": null
+    },
+    {
+      "serviceAccountName": "victoria-metrics-k8s-stack-victoria-metrics-operator",
+      "namespace": "default",
+      "automountToken": true,
+      "secrets": null,
+      "imagePullSecrets": null
+    },
+    {
+      "serviceAccountName": "victoria-metrics-k8s-stack-victoria-metrics-operator-cleanup-hook",
+      "namespace": "default",
+      "automountToken": false,
+      "secrets": null,
+      "imagePullSecrets": null
+    },
+    {
+      "serviceAccountName": "victoria-metrics-k8s-stack-grafana",
+      "namespace": "default",
+      "automountToken": false,
+      "secrets": null,
+      "imagePullSecrets": null
+    },
+    {
+      "serviceAccountName": "victoria-metrics-k8s-stack-prometheus-node-exporter",
+      "namespace": "default",
+      "automountToken": false,
+      "secrets": null,
+      "imagePullSecrets": null
+    },
+    {
+      "serviceAccountName": "victoria-metrics-k8s-stack-kube-state-metrics",
+      "namespace": "default",
+      "automountToken": true,
+      "secrets": null,
+      "imagePullSecrets": null
+    }
+  ],
+  "serviceAccountPermissions": [
+    {
+      "serviceAccountName": "victoria-metrics-k8s-stack-grafana",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "victoria-metrics-k8s-stack-grafana-clusterrole",
+      "apiGroup": "",
+      "resource": "configmaps",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "InformationDisclosure",
+        "ConfigMapAccess",
+        "DataExposure"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1022,
+          "name": "Read ConfigMaps cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1022/"
+        },
+        {
+          "id": 1023,
+          "name": "Read ConfigMaps in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1023/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "victoria-metrics-k8s-stack-grafana",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "victoria-metrics-k8s-stack-grafana-clusterrole",
+      "apiGroup": "",
+      "resource": "secrets",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "ClusterWideSecretAccess",
+        "CredentialAccess",
+        "DataExposure",
+        "InformationDisclosure",
+        "SecretAccess"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1010,
+          "name": "Read secrets cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1010/"
+        },
+        {
+          "id": 1011,
+          "name": "Read secrets in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1011/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "victoria-metrics-k8s-stack-kube-state-metrics",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "victoria-metrics-k8s-stack-kube-state-metrics",
+      "apiGroup": "batch",
+      "resource": "cronjobs",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "victoria-metrics-k8s-stack-kube-state-metrics",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "victoria-metrics-k8s-stack-kube-state-metrics",
+      "apiGroup": "batch",
+      "resource": "jobs",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "victoria-metrics-k8s-stack-kube-state-metrics",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "victoria-metrics-k8s-stack-kube-state-metrics",
+      "apiGroup": "extensions",
+      "resource": "daemonsets",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "victoria-metrics-k8s-stack-kube-state-metrics",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "victoria-metrics-k8s-stack-kube-state-metrics",
+      "apiGroup": "extensions",
+      "resource": "deployments",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "victoria-metrics-k8s-stack-kube-state-metrics",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "victoria-metrics-k8s-stack-kube-state-metrics",
+      "apiGroup": "extensions",
+      "resource": "ingresses",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "victoria-metrics-k8s-stack-kube-state-metrics",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "victoria-metrics-k8s-stack-kube-state-metrics",
+      "apiGroup": "extensions",
+      "resource": "replicasets",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "victoria-metrics-k8s-stack-kube-state-metrics",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "victoria-metrics-k8s-stack-kube-state-metrics",
+      "apiGroup": "apps",
+      "resource": "daemonsets",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "victoria-metrics-k8s-stack-kube-state-metrics",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "victoria-metrics-k8s-stack-kube-state-metrics",
+      "apiGroup": "apps",
+      "resource": "deployments",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "victoria-metrics-k8s-stack-kube-state-metrics",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "victoria-metrics-k8s-stack-kube-state-metrics",
+      "apiGroup": "apps",
+      "resource": "replicasets",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "victoria-metrics-k8s-stack-kube-state-metrics",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "victoria-metrics-k8s-stack-kube-state-metrics",
+      "apiGroup": "apps",
+      "resource": "statefulsets",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "victoria-metrics-k8s-stack-kube-state-metrics",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "victoria-metrics-k8s-stack-kube-state-metrics",
+      "apiGroup": "autoscaling",
+      "resource": "horizontalpodautoscalers",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "victoria-metrics-k8s-stack-kube-state-metrics",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "victoria-metrics-k8s-stack-kube-state-metrics",
+      "apiGroup": "admissionregistration.k8s.io",
+      "resource": "mutatingwebhookconfigurations",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Medium",
+      "tags": [
+        "InformationDisclosure",
+        "WebhookReconnaissance",
+        "Reconnaissance"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1084,
+          "name": "List MutatingWebhookConfigurations (Reconnaissance)",
+          "link": "https://rbac-atlas.github.io/rules/1084/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "victoria-metrics-k8s-stack-kube-state-metrics",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "victoria-metrics-k8s-stack-kube-state-metrics",
+      "apiGroup": "admissionregistration.k8s.io",
+      "resource": "validatingwebhookconfigurations",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Medium",
+      "tags": [
+        "InformationDisclosure",
+        "WebhookReconnaissance",
+        "Reconnaissance"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1083,
+          "name": "List ValidatingWebhookConfigurations (Reconnaissance)",
+          "link": "https://rbac-atlas.github.io/rules/1083/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "victoria-metrics-k8s-stack-kube-state-metrics",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "victoria-metrics-k8s-stack-kube-state-metrics",
+      "apiGroup": "certificates.k8s.io",
+      "resource": "certificatesigningrequests",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "victoria-metrics-k8s-stack-kube-state-metrics",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "victoria-metrics-k8s-stack-kube-state-metrics",
+      "apiGroup": "",
+      "resource": "endpoints",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "victoria-metrics-k8s-stack-kube-state-metrics",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "victoria-metrics-k8s-stack-kube-state-metrics",
+      "apiGroup": "",
+      "resource": "limitranges",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [
+        "InformationDisclosure",
+        "Reconnaissance",
+        "ResourceConfiguration"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1087,
+          "name": "Read LimitRanges (Namespace Information Disclosure)",
+          "link": "https://rbac-atlas.github.io/rules/1087/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "victoria-metrics-k8s-stack-kube-state-metrics",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "victoria-metrics-k8s-stack-kube-state-metrics",
+      "apiGroup": "",
+      "resource": "nodes",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "victoria-metrics-k8s-stack-kube-state-metrics",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "victoria-metrics-k8s-stack-kube-state-metrics",
+      "apiGroup": "",
+      "resource": "persistentvolumeclaims",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "victoria-metrics-k8s-stack-kube-state-metrics",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "victoria-metrics-k8s-stack-kube-state-metrics",
+      "apiGroup": "",
+      "resource": "pods",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "victoria-metrics-k8s-stack-kube-state-metrics",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "victoria-metrics-k8s-stack-kube-state-metrics",
+      "apiGroup": "",
+      "resource": "replicationcontrollers",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "victoria-metrics-k8s-stack-kube-state-metrics",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "victoria-metrics-k8s-stack-kube-state-metrics",
+      "apiGroup": "",
+      "resource": "resourcequotas",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Medium",
+      "tags": [
+        "InformationDisclosure",
+        "Reconnaissance",
+        "ResourceConfiguration",
+        "QuotaTampering"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1089,
+          "name": "Read All ResourceQuotas (Cluster-wide Information Disclosure)",
+          "link": "https://rbac-atlas.github.io/rules/1089/"
+        },
+        {
+          "id": 1088,
+          "name": "Read ResourceQuotas (Namespace Information Disclosure)",
+          "link": "https://rbac-atlas.github.io/rules/1088/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "victoria-metrics-k8s-stack-kube-state-metrics",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "victoria-metrics-k8s-stack-kube-state-metrics",
+      "apiGroup": "",
+      "resource": "configmaps",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "InformationDisclosure",
+        "ConfigMapAccess",
+        "DataExposure"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1022,
+          "name": "Read ConfigMaps cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1022/"
+        },
+        {
+          "id": 1023,
+          "name": "Read ConfigMaps in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1023/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "victoria-metrics-k8s-stack-kube-state-metrics",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "victoria-metrics-k8s-stack-kube-state-metrics",
+      "apiGroup": "",
+      "resource": "namespaces",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [
+        "InformationDisclosure",
+        "Reconnaissance",
+        "ClusterStructure"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1082,
+          "name": "List Namespaces (Cluster Reconnaissance)",
+          "link": "https://rbac-atlas.github.io/rules/1082/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "victoria-metrics-k8s-stack-kube-state-metrics",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "victoria-metrics-k8s-stack-kube-state-metrics",
+      "apiGroup": "",
+      "resource": "persistentvolumes",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "victoria-metrics-k8s-stack-kube-state-metrics",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "victoria-metrics-k8s-stack-kube-state-metrics",
+      "apiGroup": "",
+      "resource": "secrets",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "ClusterWideSecretAccess",
+        "CredentialAccess",
+        "DataExposure",
+        "InformationDisclosure",
+        "SecretAccess"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1010,
+          "name": "Read secrets cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1010/"
+        },
+        {
+          "id": 1011,
+          "name": "Read secrets in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1011/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "victoria-metrics-k8s-stack-kube-state-metrics",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "victoria-metrics-k8s-stack-kube-state-metrics",
+      "apiGroup": "",
+      "resource": "services",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "victoria-metrics-k8s-stack-kube-state-metrics",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "victoria-metrics-k8s-stack-kube-state-metrics",
+      "apiGroup": "networking.k8s.io",
+      "resource": "networkpolicies",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "victoria-metrics-k8s-stack-kube-state-metrics",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "victoria-metrics-k8s-stack-kube-state-metrics",
+      "apiGroup": "networking.k8s.io",
+      "resource": "ingresses",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "victoria-metrics-k8s-stack-kube-state-metrics",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "victoria-metrics-k8s-stack-kube-state-metrics",
+      "apiGroup": "coordination.k8s.io",
+      "resource": "leases",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "victoria-metrics-k8s-stack-kube-state-metrics",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "victoria-metrics-k8s-stack-kube-state-metrics",
+      "apiGroup": "policy",
+      "resource": "poddisruptionbudgets",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "victoria-metrics-k8s-stack-kube-state-metrics",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "victoria-metrics-k8s-stack-kube-state-metrics",
+      "apiGroup": "storage.k8s.io",
+      "resource": "storageclasses",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "victoria-metrics-k8s-stack-kube-state-metrics",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "victoria-metrics-k8s-stack-kube-state-metrics",
+      "apiGroup": "storage.k8s.io",
+      "resource": "volumeattachments",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "victoria-metrics-k8s-stack-victoria-metrics-operator",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "victoria-metrics-k8s-stack-victoria-metrics-operator",
+      "apiGroup": "coordination.k8s.io",
+      "resource": "leases",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "get",
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "victoria-metrics-k8s-stack-victoria-metrics-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "victoria-metrics-k8s-stack-victoria-metrics-operator",
+      "apiGroup": "policy",
+      "resource": "poddisruptionbudgets",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "Medium",
+      "tags": [
+        "DenialOfService",
+        "AvailabilityImpact",
+        "Tampering",
+        "ClusterWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1079,
+          "name": "Manage PodDisruptionBudgets cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1079/"
+        },
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "victoria-metrics-k8s-stack-victoria-metrics-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "victoria-metrics-k8s-stack-victoria-metrics-operator",
+      "apiGroup": "policy",
+      "resource": "poddisruptionbudgets/finalizers",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "ClusterWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "victoria-metrics-k8s-stack-victoria-metrics-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "victoria-metrics-k8s-stack-victoria-metrics-operator",
+      "apiGroup": "route.openshift.io",
+      "resource": "registry/metrics",
+      "resourceName": "",
+      "verbs": [
+        "get"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "victoria-metrics-k8s-stack-victoria-metrics-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "victoria-metrics-k8s-stack-victoria-metrics-operator",
+      "apiGroup": "route.openshift.io",
+      "resource": "routers/metrics",
+      "resourceName": "",
+      "verbs": [
+        "get"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "victoria-metrics-k8s-stack-victoria-metrics-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "victoria-metrics-k8s-stack-victoria-metrics-operator",
+      "apiGroup": "image.openshift.io",
+      "resource": "routers/metrics",
+      "resourceName": "",
+      "verbs": [
+        "get"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "victoria-metrics-k8s-stack-victoria-metrics-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "victoria-metrics-k8s-stack-victoria-metrics-operator",
+      "apiGroup": "image.openshift.io",
+      "resource": "registry/metrics",
+      "resourceName": "",
+      "verbs": [
+        "get"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "victoria-metrics-k8s-stack-victoria-metrics-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "victoria-metrics-k8s-stack-victoria-metrics-operator",
+      "apiGroup": "autoscaling",
+      "resource": "horizontalpodautoscalers",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "ClusterWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "victoria-metrics-k8s-stack-victoria-metrics-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "victoria-metrics-k8s-stack-victoria-metrics-operator",
+      "apiGroup": "monitoring.coreos.com",
+      "resource": "*",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "ClusterWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "victoria-metrics-k8s-stack-victoria-metrics-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "victoria-metrics-k8s-stack-victoria-metrics-operator",
+      "apiGroup": "networking.k8s.io",
+      "resource": "ingresses",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "Tampering",
+        "DenialOfService",
+        "ClusterWideAccess",
+        "WildcardPermission",
+        "NetworkManipulation",
+        "ServiceExposure"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1091,
+          "name": "Manage Ingresses (Namespace Service Exposure/Traffic Redirection)",
+          "link": "https://rbac-atlas.github.io/rules/1091/"
+        },
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "victoria-metrics-k8s-stack-victoria-metrics-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "victoria-metrics-k8s-stack-victoria-metrics-operator",
+      "apiGroup": "networking.k8s.io",
+      "resource": "ingresses/finalizers",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "ClusterWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "victoria-metrics-k8s-stack-victoria-metrics-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "victoria-metrics-k8s-stack-victoria-metrics-operator",
+      "apiGroup": "apiextensions.k8s.io",
+      "resource": "customresourcedefinitions",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "victoria-metrics-k8s-stack-victoria-metrics-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "victoria-metrics-k8s-stack-victoria-metrics-operator",
+      "apiGroup": "discovery.k8s.io",
+      "resource": "endpointslices",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "victoria-metrics-k8s-stack-victoria-metrics-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "victoria-metrics-k8s-stack-victoria-metrics-operator",
+      "apiGroup": "operator.victoriametrics.com",
+      "resource": "vmalerts/finalizers",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "ClusterWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "victoria-metrics-k8s-stack-victoria-metrics-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "victoria-metrics-k8s-stack-victoria-metrics-operator",
+      "apiGroup": "operator.victoriametrics.com",
+      "resource": "vlogs",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "ClusterWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "victoria-metrics-k8s-stack-victoria-metrics-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "victoria-metrics-k8s-stack-victoria-metrics-operator",
+      "apiGroup": "operator.victoriametrics.com",
+      "resource": "vmalertmanagerconfigs",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "ClusterWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "victoria-metrics-k8s-stack-victoria-metrics-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "victoria-metrics-k8s-stack-victoria-metrics-operator",
+      "apiGroup": "operator.victoriametrics.com",
+      "resource": "vmalertmanagers/finalizers",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "ClusterWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "victoria-metrics-k8s-stack-victoria-metrics-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "victoria-metrics-k8s-stack-victoria-metrics-operator",
+      "apiGroup": "operator.victoriametrics.com",
+      "resource": "vmusers",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "ClusterWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "victoria-metrics-k8s-stack-victoria-metrics-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "victoria-metrics-k8s-stack-victoria-metrics-operator",
+      "apiGroup": "operator.victoriametrics.com",
+      "resource": "vmnodescrapes",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "ClusterWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "victoria-metrics-k8s-stack-victoria-metrics-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "victoria-metrics-k8s-stack-victoria-metrics-operator",
+      "apiGroup": "operator.victoriametrics.com",
+      "resource": "vmservicescrapes",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "ClusterWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "victoria-metrics-k8s-stack-victoria-metrics-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "victoria-metrics-k8s-stack-victoria-metrics-operator",
+      "apiGroup": "operator.victoriametrics.com",
+      "resource": "vmsingles/finalizers",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "ClusterWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "victoria-metrics-k8s-stack-victoria-metrics-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "victoria-metrics-k8s-stack-victoria-metrics-operator",
+      "apiGroup": "operator.victoriametrics.com",
+      "resource": "vmsingles/status",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "ClusterWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "victoria-metrics-k8s-stack-victoria-metrics-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "victoria-metrics-k8s-stack-victoria-metrics-operator",
+      "apiGroup": "operator.victoriametrics.com",
+      "resource": "vmusers/status",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "ClusterWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "victoria-metrics-k8s-stack-victoria-metrics-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "victoria-metrics-k8s-stack-victoria-metrics-operator",
+      "apiGroup": "operator.victoriametrics.com",
+      "resource": "vmalertmanagers/status",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "ClusterWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "victoria-metrics-k8s-stack-victoria-metrics-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "victoria-metrics-k8s-stack-victoria-metrics-operator",
+      "apiGroup": "operator.victoriametrics.com",
+      "resource": "vmalerts/status",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "ClusterWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "victoria-metrics-k8s-stack-victoria-metrics-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "victoria-metrics-k8s-stack-victoria-metrics-operator",
+      "apiGroup": "operator.victoriametrics.com",
+      "resource": "vmpodscrapes",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "ClusterWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "victoria-metrics-k8s-stack-victoria-metrics-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "victoria-metrics-k8s-stack-victoria-metrics-operator",
+      "apiGroup": "operator.victoriametrics.com",
+      "resource": "vmrules/finalizers",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "ClusterWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "victoria-metrics-k8s-stack-victoria-metrics-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "victoria-metrics-k8s-stack-victoria-metrics-operator",
+      "apiGroup": "operator.victoriametrics.com",
+      "resource": "vmstaticscrapes",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "WildcardPermission",
+        "ClusterWideAccess"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "victoria-metrics-k8s-stack-victoria-metrics-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "victoria-metrics-k8s-stack-victoria-metrics-operator",
+      "apiGroup": "operator.victoriametrics.com",
+      "resource": "vmagents/status",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "WildcardPermission",
+        "ClusterWideAccess"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "victoria-metrics-k8s-stack-victoria-metrics-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "victoria-metrics-k8s-stack-victoria-metrics-operator",
+      "apiGroup": "operator.victoriametrics.com",
+      "resource": "vmalertmanagerconfigs/status",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "ClusterWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "victoria-metrics-k8s-stack-victoria-metrics-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "victoria-metrics-k8s-stack-victoria-metrics-operator",
+      "apiGroup": "operator.victoriametrics.com",
+      "resource": "vmauths/status",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "ClusterWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "victoria-metrics-k8s-stack-victoria-metrics-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "victoria-metrics-k8s-stack-victoria-metrics-operator",
+      "apiGroup": "operator.victoriametrics.com",
+      "resource": "vmnodescrapes/finalizers",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "ClusterWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "victoria-metrics-k8s-stack-victoria-metrics-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "victoria-metrics-k8s-stack-victoria-metrics-operator",
+      "apiGroup": "operator.victoriametrics.com",
+      "resource": "vmprobes/status",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "ClusterWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "victoria-metrics-k8s-stack-victoria-metrics-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "victoria-metrics-k8s-stack-victoria-metrics-operator",
+      "apiGroup": "operator.victoriametrics.com",
+      "resource": "vmscrapeconfigs/status",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "ClusterWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "victoria-metrics-k8s-stack-victoria-metrics-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "victoria-metrics-k8s-stack-victoria-metrics-operator",
+      "apiGroup": "operator.victoriametrics.com",
+      "resource": "vmstaticscrapes/finalizers",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "ClusterWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "victoria-metrics-k8s-stack-victoria-metrics-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "victoria-metrics-k8s-stack-victoria-metrics-operator",
+      "apiGroup": "operator.victoriametrics.com",
+      "resource": "vmauths",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "ClusterWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "victoria-metrics-k8s-stack-victoria-metrics-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "victoria-metrics-k8s-stack-victoria-metrics-operator",
+      "apiGroup": "operator.victoriametrics.com",
+      "resource": "vmprobes",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "ClusterWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "victoria-metrics-k8s-stack-victoria-metrics-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "victoria-metrics-k8s-stack-victoria-metrics-operator",
+      "apiGroup": "operator.victoriametrics.com",
+      "resource": "vmalerts",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "ClusterWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "victoria-metrics-k8s-stack-victoria-metrics-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "victoria-metrics-k8s-stack-victoria-metrics-operator",
+      "apiGroup": "operator.victoriametrics.com",
+      "resource": "vmagents",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "WildcardPermission",
+        "ClusterWideAccess"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "victoria-metrics-k8s-stack-victoria-metrics-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "victoria-metrics-k8s-stack-victoria-metrics-operator",
+      "apiGroup": "operator.victoriametrics.com",
+      "resource": "vmagents/finalizers",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "WildcardPermission",
+        "ClusterWideAccess"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "victoria-metrics-k8s-stack-victoria-metrics-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "victoria-metrics-k8s-stack-victoria-metrics-operator",
+      "apiGroup": "operator.victoriametrics.com",
+      "resource": "vmalertmanagers",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "ClusterWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "victoria-metrics-k8s-stack-victoria-metrics-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "victoria-metrics-k8s-stack-victoria-metrics-operator",
+      "apiGroup": "operator.victoriametrics.com",
+      "resource": "vmprobes/finalizers",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "WildcardPermission",
+        "ClusterWideAccess"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "victoria-metrics-k8s-stack-victoria-metrics-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "victoria-metrics-k8s-stack-victoria-metrics-operator",
+      "apiGroup": "operator.victoriametrics.com",
+      "resource": "vmrules/status",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "ClusterWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "victoria-metrics-k8s-stack-victoria-metrics-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "victoria-metrics-k8s-stack-victoria-metrics-operator",
+      "apiGroup": "operator.victoriametrics.com",
+      "resource": "vlogs/finalizers",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "ClusterWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "victoria-metrics-k8s-stack-victoria-metrics-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "victoria-metrics-k8s-stack-victoria-metrics-operator",
+      "apiGroup": "operator.victoriametrics.com",
+      "resource": "vmalertmanagerconfigs/finalizers",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "WildcardPermission",
+        "ClusterWideAccess"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "victoria-metrics-k8s-stack-victoria-metrics-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "victoria-metrics-k8s-stack-victoria-metrics-operator",
+      "apiGroup": "operator.victoriametrics.com",
+      "resource": "vmrules",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "WildcardPermission",
+        "ClusterWideAccess"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "victoria-metrics-k8s-stack-victoria-metrics-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "victoria-metrics-k8s-stack-victoria-metrics-operator",
+      "apiGroup": "operator.victoriametrics.com",
+      "resource": "vmscrapeconfigs/finalizers",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "ClusterWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "victoria-metrics-k8s-stack-victoria-metrics-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "victoria-metrics-k8s-stack-victoria-metrics-operator",
+      "apiGroup": "operator.victoriametrics.com",
+      "resource": "vmsingles",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "ClusterWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "victoria-metrics-k8s-stack-victoria-metrics-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "victoria-metrics-k8s-stack-victoria-metrics-operator",
+      "apiGroup": "operator.victoriametrics.com",
+      "resource": "vmstaticscrapes/status",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "ClusterWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "victoria-metrics-k8s-stack-victoria-metrics-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "victoria-metrics-k8s-stack-victoria-metrics-operator",
+      "apiGroup": "operator.victoriametrics.com",
+      "resource": "vlogs/status",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "WildcardPermission",
+        "ClusterWideAccess"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "victoria-metrics-k8s-stack-victoria-metrics-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "victoria-metrics-k8s-stack-victoria-metrics-operator",
+      "apiGroup": "operator.victoriametrics.com",
+      "resource": "vmauths/finalizers",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "ClusterWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "victoria-metrics-k8s-stack-victoria-metrics-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "victoria-metrics-k8s-stack-victoria-metrics-operator",
+      "apiGroup": "operator.victoriametrics.com",
+      "resource": "vmnodescrapes/status",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "ClusterWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "victoria-metrics-k8s-stack-victoria-metrics-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "victoria-metrics-k8s-stack-victoria-metrics-operator",
+      "apiGroup": "operator.victoriametrics.com",
+      "resource": "vmclusters/status",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "ClusterWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "victoria-metrics-k8s-stack-victoria-metrics-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "victoria-metrics-k8s-stack-victoria-metrics-operator",
+      "apiGroup": "operator.victoriametrics.com",
+      "resource": "vmpodscrapes/finalizers",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "ClusterWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "victoria-metrics-k8s-stack-victoria-metrics-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "victoria-metrics-k8s-stack-victoria-metrics-operator",
+      "apiGroup": "operator.victoriametrics.com",
+      "resource": "vmscrapeconfigs",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "ClusterWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "victoria-metrics-k8s-stack-victoria-metrics-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "victoria-metrics-k8s-stack-victoria-metrics-operator",
+      "apiGroup": "operator.victoriametrics.com",
+      "resource": "vmservicescrapes/finalizers",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "ClusterWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "victoria-metrics-k8s-stack-victoria-metrics-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "victoria-metrics-k8s-stack-victoria-metrics-operator",
+      "apiGroup": "operator.victoriametrics.com",
+      "resource": "vmservicescrapes/status",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "ClusterWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "victoria-metrics-k8s-stack-victoria-metrics-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "victoria-metrics-k8s-stack-victoria-metrics-operator",
+      "apiGroup": "operator.victoriametrics.com",
+      "resource": "vmusers/finalizers",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "ClusterWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "victoria-metrics-k8s-stack-victoria-metrics-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "victoria-metrics-k8s-stack-victoria-metrics-operator",
+      "apiGroup": "operator.victoriametrics.com",
+      "resource": "vmclusters",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "ClusterWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "victoria-metrics-k8s-stack-victoria-metrics-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "victoria-metrics-k8s-stack-victoria-metrics-operator",
+      "apiGroup": "operator.victoriametrics.com",
+      "resource": "vmclusters/finalizers",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "ClusterWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "victoria-metrics-k8s-stack-victoria-metrics-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "victoria-metrics-k8s-stack-victoria-metrics-operator",
+      "apiGroup": "operator.victoriametrics.com",
+      "resource": "vmpodscrapes/status",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "WildcardPermission",
+        "ClusterWideAccess"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "victoria-metrics-k8s-stack-victoria-metrics-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "victoria-metrics-k8s-stack-victoria-metrics-operator",
+      "apiGroup": "",
+      "resource": "serviceaccounts/finalizers",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "ClusterWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "victoria-metrics-k8s-stack-victoria-metrics-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "victoria-metrics-k8s-stack-victoria-metrics-operator",
+      "apiGroup": "",
+      "resource": "nodes/metrics",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "victoria-metrics-k8s-stack-victoria-metrics-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "victoria-metrics-k8s-stack-victoria-metrics-operator",
+      "apiGroup": "",
+      "resource": "pods",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "ClusterWideAccess",
+        "WildcardPermission",
+        "WorkloadExecution",
+        "PrivilegeEscalation",
+        "LateralMovement",
+        "Persistence",
+        "Tampering",
+        "PotentialPrivilegeEscalation"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1006,
+          "name": "Create pods cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1006/"
+        },
+        {
+          "id": 1008,
+          "name": "Update/Patch pods cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1008/"
+        },
+        {
+          "id": 1007,
+          "name": "Create pods in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1007/"
+        },
+        {
+          "id": 1009,
+          "name": "Update/Patch pods in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1009/"
+        },
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "victoria-metrics-k8s-stack-victoria-metrics-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "victoria-metrics-k8s-stack-victoria-metrics-operator",
+      "apiGroup": "",
+      "resource": "serviceaccounts",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "Impersonation",
+        "Spoofing",
+        "IdentityManagement",
+        "Tampering",
+        "ClusterWideAccess",
+        "PrivilegeEscalation",
+        "ClusterAdminAccess",
+        "PotentialPrivilegeEscalation",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1066,
+          "name": "Impersonate users, groups, or service accounts (cluster-wide)",
+          "link": "https://rbac-atlas.github.io/rules/1066/"
+        },
+        {
+          "id": 1067,
+          "name": "Manage ServiceAccounts cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1067/"
+        },
+        {
+          "id": 1068,
+          "name": "Manage ServiceAccounts in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1068/"
+        },
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "victoria-metrics-k8s-stack-victoria-metrics-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "victoria-metrics-k8s-stack-victoria-metrics-operator",
+      "apiGroup": "",
+      "resource": "configmaps/status",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "victoria-metrics-k8s-stack-victoria-metrics-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "victoria-metrics-k8s-stack-victoria-metrics-operator",
+      "apiGroup": "",
+      "resource": "nodes/proxy",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "ElevationOfPrivilege",
+        "AuthorizationBypass",
+        "NodeAccess",
+        "ClusterAdminAccess",
+        "CodeExecution",
+        "LateralMovement"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1104,
+          "name": "Node proxy GET RCE via WebSocket",
+          "link": "https://rbac-atlas.github.io/rules/1104/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "victoria-metrics-k8s-stack-victoria-metrics-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "victoria-metrics-k8s-stack-victoria-metrics-operator",
+      "apiGroup": "",
+      "resource": "endpoints",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "TrafficRedirection",
+        "ManInTheMiddle",
+        "DenialOfService",
+        "Tampering",
+        "ClusterWideAccess",
+        "WildcardPermission",
+        "NetworkManipulation"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1073,
+          "name": "Manage Endpoints or EndpointSlices cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1073/"
+        },
+        {
+          "id": 1074,
+          "name": "Manage Endpoints or EndpointSlices in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1074/"
+        },
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "victoria-metrics-k8s-stack-victoria-metrics-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "victoria-metrics-k8s-stack-victoria-metrics-operator",
+      "apiGroup": "",
+      "resource": "persistentvolumeclaims/finalizers",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "ClusterWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "victoria-metrics-k8s-stack-victoria-metrics-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "victoria-metrics-k8s-stack-victoria-metrics-operator",
+      "apiGroup": "",
+      "resource": "services/finalizers",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "ClusterWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "victoria-metrics-k8s-stack-victoria-metrics-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "victoria-metrics-k8s-stack-victoria-metrics-operator",
+      "apiGroup": "",
+      "resource": "nodes",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "victoria-metrics-k8s-stack-victoria-metrics-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "victoria-metrics-k8s-stack-victoria-metrics-operator",
+      "apiGroup": "",
+      "resource": "configmaps/finalizers",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "ClusterWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "victoria-metrics-k8s-stack-victoria-metrics-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "victoria-metrics-k8s-stack-victoria-metrics-operator",
+      "apiGroup": "",
+      "resource": "events",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "Medium",
+      "tags": [
+        "OperationalData",
+        "ClusterWideAccess",
+        "WildcardPermission",
+        "InformationDisclosure",
+        "Reconnaissance"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1070,
+          "name": "Read events cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1070/"
+        },
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "victoria-metrics-k8s-stack-victoria-metrics-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "victoria-metrics-k8s-stack-victoria-metrics-operator",
+      "apiGroup": "",
+      "resource": "persistentvolumeclaims",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "ClusterWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "victoria-metrics-k8s-stack-victoria-metrics-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "victoria-metrics-k8s-stack-victoria-metrics-operator",
+      "apiGroup": "",
+      "resource": "secrets",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "ClusterWideAccess",
+        "ClusterWideSecretAccess",
+        "SecretAccess",
+        "Persistence",
+        "PotentialPrivilegeEscalation",
+        "WildcardPermission",
+        "CredentialAccess",
+        "DataExposure",
+        "InformationDisclosure",
+        "Tampering",
+        "PrivilegeEscalation"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1010,
+          "name": "Read secrets cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1010/"
+        },
+        {
+          "id": 1011,
+          "name": "Read secrets in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1011/"
+        },
+        {
+          "id": 1012,
+          "name": "Modify secrets cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1012/"
+        },
+        {
+          "id": 1013,
+          "name": "Modify secrets in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1013/"
+        },
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "victoria-metrics-k8s-stack-victoria-metrics-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "victoria-metrics-k8s-stack-victoria-metrics-operator",
+      "apiGroup": "",
+      "resource": "services",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "NetworkManipulation",
+        "ServiceExposure",
+        "DenialOfService",
+        "Tampering",
+        "ClusterWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1075,
+          "name": "Manage Services cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1075/"
+        },
+        {
+          "id": 1076,
+          "name": "Manage Services in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1076/"
+        },
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "victoria-metrics-k8s-stack-victoria-metrics-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "victoria-metrics-k8s-stack-victoria-metrics-operator",
+      "apiGroup": "",
+      "resource": "namespaces",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [
+        "ClusterStructure",
+        "InformationDisclosure",
+        "Reconnaissance"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1082,
+          "name": "List Namespaces (Cluster Reconnaissance)",
+          "link": "https://rbac-atlas.github.io/rules/1082/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "victoria-metrics-k8s-stack-victoria-metrics-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "victoria-metrics-k8s-stack-victoria-metrics-operator",
+      "apiGroup": "",
+      "resource": "configmaps",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "InformationDisclosure",
+        "DataExposure",
+        "ClusterWideAccess",
+        "WildcardPermission",
+        "Tampering",
+        "ConfigMapAccess",
+        "PotentialPrivilegeEscalation"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1024,
+          "name": "Modify ConfigMaps cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1024/"
+        },
+        {
+          "id": 1022,
+          "name": "Read ConfigMaps cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1022/"
+        },
+        {
+          "id": 1025,
+          "name": "Modify ConfigMaps in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1025/"
+        },
+        {
+          "id": 1023,
+          "name": "Read ConfigMaps in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1023/"
+        },
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "victoria-metrics-k8s-stack-victoria-metrics-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "victoria-metrics-k8s-stack-victoria-metrics-operator",
+      "apiGroup": "",
+      "resource": "secrets/finalizers",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "ClusterWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "victoria-metrics-k8s-stack-victoria-metrics-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "victoria-metrics-k8s-stack-victoria-metrics-operator",
+      "apiGroup": "apps",
+      "resource": "deployments",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "Persistence",
+        "Tampering",
+        "PotentialPrivilegeEscalation",
+        "ClusterWideAccess",
+        "WildcardPermission",
+        "WorkloadLifecycle",
+        "PrivilegeEscalation"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1033,
+          "name": "Manage Deployments cluster-wide (potential for privileged pod execution)",
+          "link": "https://rbac-atlas.github.io/rules/1033/"
+        },
+        {
+          "id": 1034,
+          "name": "Manage Deployments in a namespace (potential for privileged pod execution)",
+          "link": "https://rbac-atlas.github.io/rules/1034/"
+        },
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "victoria-metrics-k8s-stack-victoria-metrics-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "victoria-metrics-k8s-stack-victoria-metrics-operator",
+      "apiGroup": "apps",
+      "resource": "deployments/finalizers",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "ClusterWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "victoria-metrics-k8s-stack-victoria-metrics-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "victoria-metrics-k8s-stack-victoria-metrics-operator",
+      "apiGroup": "apps",
+      "resource": "replicasets",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "WildcardPermission",
+        "ClusterWideAccess"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "victoria-metrics-k8s-stack-victoria-metrics-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "victoria-metrics-k8s-stack-victoria-metrics-operator",
+      "apiGroup": "apps",
+      "resource": "statefulsets",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "PotentialPrivilegeEscalation",
+        "ClusterWideAccess",
+        "WildcardPermission",
+        "WorkloadLifecycle",
+        "PrivilegeEscalation",
+        "Persistence",
+        "Tampering"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1037,
+          "name": "Manage StatefulSets cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1037/"
+        },
+        {
+          "id": 1038,
+          "name": "Manage StatefulSets in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1038/"
+        },
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "victoria-metrics-k8s-stack-victoria-metrics-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "victoria-metrics-k8s-stack-victoria-metrics-operator",
+      "apiGroup": "apps",
+      "resource": "statefulsets/finalizers",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "ClusterWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "victoria-metrics-k8s-stack-victoria-metrics-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "victoria-metrics-k8s-stack-victoria-metrics-operator",
+      "apiGroup": "apps",
+      "resource": "statefulsets/status",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "ClusterWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "victoria-metrics-k8s-stack-victoria-metrics-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "victoria-metrics-k8s-stack-victoria-metrics-operator",
+      "apiGroup": "rbac.authorization.k8s.io",
+      "resource": "clusterrolebindings",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "RBACManipulation",
+        "ClusterAdminAccess",
+        "PrivilegeEscalation",
+        "BindingToPrivilegedRole",
+        "InformationDisclosure",
+        "RBACQuery",
+        "Reconnaissance",
+        "WildcardPermission",
+        "ClusterWideAccess"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1028,
+          "name": "Manage ClusterRoleBindings (create, update, patch, delete)",
+          "link": "https://rbac-atlas.github.io/rules/1028/"
+        },
+        {
+          "id": 1077,
+          "name": "Read RBAC configuration cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1077/"
+        },
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "victoria-metrics-k8s-stack-victoria-metrics-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "victoria-metrics-k8s-stack-victoria-metrics-operator",
+      "apiGroup": "rbac.authorization.k8s.io",
+      "resource": "clusterrolebindings/finalizers",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "ClusterWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "victoria-metrics-k8s-stack-victoria-metrics-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "victoria-metrics-k8s-stack-victoria-metrics-operator",
+      "apiGroup": "rbac.authorization.k8s.io",
+      "resource": "clusterroles",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "ClusterWideAccess",
+        "WildcardPermission",
+        "ClusterAdminAccess",
+        "PrivilegeEscalation",
+        "RBACManipulation",
+        "BindingToPrivilegedRole",
+        "InformationDisclosure",
+        "RBACQuery",
+        "Reconnaissance"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1027,
+          "name": "Manage ClusterRoles (create, update, patch, delete)",
+          "link": "https://rbac-atlas.github.io/rules/1027/"
+        },
+        {
+          "id": 1031,
+          "name": "Escalate privileges via ClusterRoles (escalate verb)",
+          "link": "https://rbac-atlas.github.io/rules/1031/"
+        },
+        {
+          "id": 1032,
+          "name": "Bind ClusterRoles to identities (bind verb)",
+          "link": "https://rbac-atlas.github.io/rules/1032/"
+        },
+        {
+          "id": 1077,
+          "name": "Read RBAC configuration cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1077/"
+        },
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "victoria-metrics-k8s-stack-victoria-metrics-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "victoria-metrics-k8s-stack-victoria-metrics-operator",
+      "apiGroup": "rbac.authorization.k8s.io",
+      "resource": "clusterroles/finalizers",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "ClusterWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "victoria-metrics-k8s-stack-victoria-metrics-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "victoria-metrics-k8s-stack-victoria-metrics-operator",
+      "apiGroup": "rbac.authorization.k8s.io",
+      "resource": "roles",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "RBACManipulation",
+        "PrivilegeEscalation",
+        "InformationDisclosure",
+        "RBACQuery",
+        "Reconnaissance",
+        "ClusterWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1029,
+          "name": "Manage Roles in a namespace (create, update, patch, delete)",
+          "link": "https://rbac-atlas.github.io/rules/1029/"
+        },
+        {
+          "id": 1077,
+          "name": "Read RBAC configuration cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1077/"
+        },
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "victoria-metrics-k8s-stack-victoria-metrics-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "victoria-metrics-k8s-stack-victoria-metrics-operator",
+      "apiGroup": "rbac.authorization.k8s.io",
+      "resource": "rolebindings",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "PrivilegeEscalation",
+        "BindingToPrivilegedRole",
+        "InformationDisclosure",
+        "RBACQuery",
+        "Reconnaissance",
+        "ClusterWideAccess",
+        "WildcardPermission",
+        "RBACManipulation"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1030,
+          "name": "Manage RoleBindings in a namespace (create, update, patch, delete)",
+          "link": "https://rbac-atlas.github.io/rules/1030/"
+        },
+        {
+          "id": 1077,
+          "name": "Read RBAC configuration cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1077/"
+        },
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "victoria-metrics-k8s-stack-victoria-metrics-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "victoria-metrics-k8s-stack-victoria-metrics-operator",
+      "apiGroup": "storage.k8s.io",
+      "resource": "storageclasses",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "victoria-metrics-k8s-stack-victoria-metrics-operator-cleanup-hook",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "victoria-metrics-k8s-stack-victoria-metrics-operator-cleanup-hook",
+      "apiGroup": "operator.victoriametrics.com",
+      "resource": "vmagents/finalizers",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "ClusterWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "victoria-metrics-k8s-stack-victoria-metrics-operator-cleanup-hook",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "victoria-metrics-k8s-stack-victoria-metrics-operator-cleanup-hook",
+      "apiGroup": "operator.victoriametrics.com",
+      "resource": "vmalertmanagerconfigs/finalizers",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "ClusterWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "victoria-metrics-k8s-stack-victoria-metrics-operator-cleanup-hook",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "victoria-metrics-k8s-stack-victoria-metrics-operator-cleanup-hook",
+      "apiGroup": "operator.victoriametrics.com",
+      "resource": "vmclusters/finalizers",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "WildcardPermission",
+        "ClusterWideAccess"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "victoria-metrics-k8s-stack-victoria-metrics-operator-cleanup-hook",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "victoria-metrics-k8s-stack-victoria-metrics-operator-cleanup-hook",
+      "apiGroup": "operator.victoriametrics.com",
+      "resource": "vmpodscrapes",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "WildcardPermission",
+        "ClusterWideAccess"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "victoria-metrics-k8s-stack-victoria-metrics-operator-cleanup-hook",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "victoria-metrics-k8s-stack-victoria-metrics-operator-cleanup-hook",
+      "apiGroup": "operator.victoriametrics.com",
+      "resource": "vmscrapeconfigs",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "WildcardPermission",
+        "ClusterWideAccess"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "victoria-metrics-k8s-stack-victoria-metrics-operator-cleanup-hook",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "victoria-metrics-k8s-stack-victoria-metrics-operator-cleanup-hook",
+      "apiGroup": "operator.victoriametrics.com",
+      "resource": "vmscrapeconfigs/finalizers",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "ClusterWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "victoria-metrics-k8s-stack-victoria-metrics-operator-cleanup-hook",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "victoria-metrics-k8s-stack-victoria-metrics-operator-cleanup-hook",
+      "apiGroup": "operator.victoriametrics.com",
+      "resource": "vlogs/finalizers",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "ClusterWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "victoria-metrics-k8s-stack-victoria-metrics-operator-cleanup-hook",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "victoria-metrics-k8s-stack-victoria-metrics-operator-cleanup-hook",
+      "apiGroup": "operator.victoriametrics.com",
+      "resource": "vmalertmanagerconfigs",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "ClusterWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "victoria-metrics-k8s-stack-victoria-metrics-operator-cleanup-hook",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "victoria-metrics-k8s-stack-victoria-metrics-operator-cleanup-hook",
+      "apiGroup": "operator.victoriametrics.com",
+      "resource": "vmalertmanagers",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "ClusterWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "victoria-metrics-k8s-stack-victoria-metrics-operator-cleanup-hook",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "victoria-metrics-k8s-stack-victoria-metrics-operator-cleanup-hook",
+      "apiGroup": "operator.victoriametrics.com",
+      "resource": "vmalerts",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "ClusterWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "victoria-metrics-k8s-stack-victoria-metrics-operator-cleanup-hook",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "victoria-metrics-k8s-stack-victoria-metrics-operator-cleanup-hook",
+      "apiGroup": "operator.victoriametrics.com",
+      "resource": "vmalerts/finalizers",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "ClusterWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "victoria-metrics-k8s-stack-victoria-metrics-operator-cleanup-hook",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "victoria-metrics-k8s-stack-victoria-metrics-operator-cleanup-hook",
+      "apiGroup": "operator.victoriametrics.com",
+      "resource": "vmnodescrapes",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "ClusterWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "victoria-metrics-k8s-stack-victoria-metrics-operator-cleanup-hook",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "victoria-metrics-k8s-stack-victoria-metrics-operator-cleanup-hook",
+      "apiGroup": "operator.victoriametrics.com",
+      "resource": "vmnodescrapes/finalizers",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "ClusterWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "victoria-metrics-k8s-stack-victoria-metrics-operator-cleanup-hook",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "victoria-metrics-k8s-stack-victoria-metrics-operator-cleanup-hook",
+      "apiGroup": "operator.victoriametrics.com",
+      "resource": "vmscrapeconfigs/status",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "ClusterWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "victoria-metrics-k8s-stack-victoria-metrics-operator-cleanup-hook",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "victoria-metrics-k8s-stack-victoria-metrics-operator-cleanup-hook",
+      "apiGroup": "operator.victoriametrics.com",
+      "resource": "vmauths",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "ClusterWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "victoria-metrics-k8s-stack-victoria-metrics-operator-cleanup-hook",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "victoria-metrics-k8s-stack-victoria-metrics-operator-cleanup-hook",
+      "apiGroup": "operator.victoriametrics.com",
+      "resource": "vmauths/status",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "ClusterWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "victoria-metrics-k8s-stack-victoria-metrics-operator-cleanup-hook",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "victoria-metrics-k8s-stack-victoria-metrics-operator-cleanup-hook",
+      "apiGroup": "operator.victoriametrics.com",
+      "resource": "vmservicescrapes",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "ClusterWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "victoria-metrics-k8s-stack-victoria-metrics-operator-cleanup-hook",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "victoria-metrics-k8s-stack-victoria-metrics-operator-cleanup-hook",
+      "apiGroup": "operator.victoriametrics.com",
+      "resource": "vmsingles",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "ClusterWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "victoria-metrics-k8s-stack-victoria-metrics-operator-cleanup-hook",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "victoria-metrics-k8s-stack-victoria-metrics-operator-cleanup-hook",
+      "apiGroup": "operator.victoriametrics.com",
+      "resource": "vmusers/finalizers",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "ClusterWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "victoria-metrics-k8s-stack-victoria-metrics-operator-cleanup-hook",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "victoria-metrics-k8s-stack-victoria-metrics-operator-cleanup-hook",
+      "apiGroup": "operator.victoriametrics.com",
+      "resource": "vmusers/status",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "ClusterWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "victoria-metrics-k8s-stack-victoria-metrics-operator-cleanup-hook",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "victoria-metrics-k8s-stack-victoria-metrics-operator-cleanup-hook",
+      "apiGroup": "operator.victoriametrics.com",
+      "resource": "vmalertmanagers/status",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "ClusterWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "victoria-metrics-k8s-stack-victoria-metrics-operator-cleanup-hook",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "victoria-metrics-k8s-stack-victoria-metrics-operator-cleanup-hook",
+      "apiGroup": "operator.victoriametrics.com",
+      "resource": "vmprobes/status",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "ClusterWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "victoria-metrics-k8s-stack-victoria-metrics-operator-cleanup-hook",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "victoria-metrics-k8s-stack-victoria-metrics-operator-cleanup-hook",
+      "apiGroup": "operator.victoriametrics.com",
+      "resource": "vmpodscrapes/finalizers",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "ClusterWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "victoria-metrics-k8s-stack-victoria-metrics-operator-cleanup-hook",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "victoria-metrics-k8s-stack-victoria-metrics-operator-cleanup-hook",
+      "apiGroup": "operator.victoriametrics.com",
+      "resource": "vlogs/status",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "ClusterWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "victoria-metrics-k8s-stack-victoria-metrics-operator-cleanup-hook",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "victoria-metrics-k8s-stack-victoria-metrics-operator-cleanup-hook",
+      "apiGroup": "operator.victoriametrics.com",
+      "resource": "vmagents/status",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "ClusterWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "victoria-metrics-k8s-stack-victoria-metrics-operator-cleanup-hook",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "victoria-metrics-k8s-stack-victoria-metrics-operator-cleanup-hook",
+      "apiGroup": "operator.victoriametrics.com",
+      "resource": "vmalertmanagerconfigs/status",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "WildcardPermission",
+        "ClusterWideAccess"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "victoria-metrics-k8s-stack-victoria-metrics-operator-cleanup-hook",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "victoria-metrics-k8s-stack-victoria-metrics-operator-cleanup-hook",
+      "apiGroup": "operator.victoriametrics.com",
+      "resource": "vmstaticscrapes/finalizers",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "ClusterWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "victoria-metrics-k8s-stack-victoria-metrics-operator-cleanup-hook",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "victoria-metrics-k8s-stack-victoria-metrics-operator-cleanup-hook",
+      "apiGroup": "operator.victoriametrics.com",
+      "resource": "vmstaticscrapes/status",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "ClusterWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "victoria-metrics-k8s-stack-victoria-metrics-operator-cleanup-hook",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "victoria-metrics-k8s-stack-victoria-metrics-operator-cleanup-hook",
+      "apiGroup": "operator.victoriametrics.com",
+      "resource": "vmauths/finalizers",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "ClusterWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "victoria-metrics-k8s-stack-victoria-metrics-operator-cleanup-hook",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "victoria-metrics-k8s-stack-victoria-metrics-operator-cleanup-hook",
+      "apiGroup": "operator.victoriametrics.com",
+      "resource": "vmclusters/status",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "ClusterWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "victoria-metrics-k8s-stack-victoria-metrics-operator-cleanup-hook",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "victoria-metrics-k8s-stack-victoria-metrics-operator-cleanup-hook",
+      "apiGroup": "operator.victoriametrics.com",
+      "resource": "vmservicescrapes/finalizers",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "ClusterWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "victoria-metrics-k8s-stack-victoria-metrics-operator-cleanup-hook",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "victoria-metrics-k8s-stack-victoria-metrics-operator-cleanup-hook",
+      "apiGroup": "operator.victoriametrics.com",
+      "resource": "vmalertmanagers/finalizers",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "ClusterWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "victoria-metrics-k8s-stack-victoria-metrics-operator-cleanup-hook",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "victoria-metrics-k8s-stack-victoria-metrics-operator-cleanup-hook",
+      "apiGroup": "operator.victoriametrics.com",
+      "resource": "vmalerts/status",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "ClusterWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "victoria-metrics-k8s-stack-victoria-metrics-operator-cleanup-hook",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "victoria-metrics-k8s-stack-victoria-metrics-operator-cleanup-hook",
+      "apiGroup": "operator.victoriametrics.com",
+      "resource": "vmclusters",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "WildcardPermission",
+        "ClusterWideAccess"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "victoria-metrics-k8s-stack-victoria-metrics-operator-cleanup-hook",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "victoria-metrics-k8s-stack-victoria-metrics-operator-cleanup-hook",
+      "apiGroup": "operator.victoriametrics.com",
+      "resource": "vmpodscrapes/status",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "ClusterWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "victoria-metrics-k8s-stack-victoria-metrics-operator-cleanup-hook",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "victoria-metrics-k8s-stack-victoria-metrics-operator-cleanup-hook",
+      "apiGroup": "operator.victoriametrics.com",
+      "resource": "vmprobes",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "ClusterWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "victoria-metrics-k8s-stack-victoria-metrics-operator-cleanup-hook",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "victoria-metrics-k8s-stack-victoria-metrics-operator-cleanup-hook",
+      "apiGroup": "operator.victoriametrics.com",
+      "resource": "vmprobes/finalizers",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "ClusterWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "victoria-metrics-k8s-stack-victoria-metrics-operator-cleanup-hook",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "victoria-metrics-k8s-stack-victoria-metrics-operator-cleanup-hook",
+      "apiGroup": "operator.victoriametrics.com",
+      "resource": "vmrules/status",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "ClusterWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "victoria-metrics-k8s-stack-victoria-metrics-operator-cleanup-hook",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "victoria-metrics-k8s-stack-victoria-metrics-operator-cleanup-hook",
+      "apiGroup": "operator.victoriametrics.com",
+      "resource": "vmservicescrapes/status",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "ClusterWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "victoria-metrics-k8s-stack-victoria-metrics-operator-cleanup-hook",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "victoria-metrics-k8s-stack-victoria-metrics-operator-cleanup-hook",
+      "apiGroup": "operator.victoriametrics.com",
+      "resource": "vmagents",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "ClusterWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "victoria-metrics-k8s-stack-victoria-metrics-operator-cleanup-hook",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "victoria-metrics-k8s-stack-victoria-metrics-operator-cleanup-hook",
+      "apiGroup": "operator.victoriametrics.com",
+      "resource": "vmnodescrapes/status",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "WildcardPermission",
+        "ClusterWideAccess"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "victoria-metrics-k8s-stack-victoria-metrics-operator-cleanup-hook",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "victoria-metrics-k8s-stack-victoria-metrics-operator-cleanup-hook",
+      "apiGroup": "operator.victoriametrics.com",
+      "resource": "vmrules",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "ClusterWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "victoria-metrics-k8s-stack-victoria-metrics-operator-cleanup-hook",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "victoria-metrics-k8s-stack-victoria-metrics-operator-cleanup-hook",
+      "apiGroup": "operator.victoriametrics.com",
+      "resource": "vmrules/finalizers",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "ClusterWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "victoria-metrics-k8s-stack-victoria-metrics-operator-cleanup-hook",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "victoria-metrics-k8s-stack-victoria-metrics-operator-cleanup-hook",
+      "apiGroup": "operator.victoriametrics.com",
+      "resource": "vmsingles/finalizers",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "ClusterWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "victoria-metrics-k8s-stack-victoria-metrics-operator-cleanup-hook",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "victoria-metrics-k8s-stack-victoria-metrics-operator-cleanup-hook",
+      "apiGroup": "operator.victoriametrics.com",
+      "resource": "vmsingles/status",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "ClusterWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "victoria-metrics-k8s-stack-victoria-metrics-operator-cleanup-hook",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "victoria-metrics-k8s-stack-victoria-metrics-operator-cleanup-hook",
+      "apiGroup": "operator.victoriametrics.com",
+      "resource": "vmstaticscrapes",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "ClusterWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "victoria-metrics-k8s-stack-victoria-metrics-operator-cleanup-hook",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "victoria-metrics-k8s-stack-victoria-metrics-operator-cleanup-hook",
+      "apiGroup": "operator.victoriametrics.com",
+      "resource": "vmusers",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "ClusterWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "victoria-metrics-k8s-stack-victoria-metrics-operator-cleanup-hook",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "victoria-metrics-k8s-stack-victoria-metrics-operator-cleanup-hook",
+      "apiGroup": "operator.victoriametrics.com",
+      "resource": "vlogs",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "WildcardPermission",
+        "ClusterWideAccess"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    }
+  ],
+  "serviceAccountWorkloads": [
+    {
+      "serviceAccountName": "victoria-metrics-k8s-stack-grafana",
+      "namespace": "default",
+      "workloadType": "Deployment",
+      "workloadName": "victoria-metrics-k8s-stack-grafana",
+      "containerName": "grafana-sc-dashboard",
+      "image": "quay.io/kiwigrid/k8s-sidecar:1.28.0"
+    },
+    {
+      "serviceAccountName": "victoria-metrics-k8s-stack-grafana",
+      "namespace": "default",
+      "workloadType": "Deployment",
+      "workloadName": "victoria-metrics-k8s-stack-grafana",
+      "containerName": "grafana",
+      "image": "docker.io/grafana/grafana:11.5.1"
+    },
+    {
+      "serviceAccountName": "victoria-metrics-k8s-stack-victoria-metrics-operator-cleanup-hook",
+      "namespace": "default",
+      "workloadType": "Job",
+      "workloadName": "victoria-metrics-k8s-stack-victoria-metrics-operator-cleanup-hook",
+      "containerName": "kubectl",
+      "image": "bitnami/kubectl:1.20"
+    },
+    {
+      "serviceAccountName": "victoria-metrics-k8s-stack-kube-state-metrics",
+      "namespace": "default",
+      "workloadType": "Deployment",
+      "workloadName": "victoria-metrics-k8s-stack-kube-state-metrics",
+      "containerName": "kube-state-metrics",
+      "image": "registry.k8s.io/kube-state-metrics/kube-state-metrics:v2.14.0"
+    },
+    {
+      "serviceAccountName": "victoria-metrics-k8s-stack-prometheus-node-exporter",
+      "namespace": "default",
+      "workloadType": "DaemonSet",
+      "workloadName": "victoria-metrics-k8s-stack-prometheus-node-exporter",
+      "containerName": "node-exporter",
+      "image": "quay.io/prometheus/node-exporter:v1.8.2"
+    },
+    {
+      "serviceAccountName": "victoria-metrics-k8s-stack-grafana-test",
+      "namespace": "default",
+      "workloadType": "Pod",
+      "workloadName": "victoria-metrics-k8s-stack-grafana-test",
+      "containerName": "victoria-metrics-k8s-stack-test",
+      "image": "docker.io/bats/bats:v1.4.1"
+    },
+    {
+      "serviceAccountName": "victoria-metrics-k8s-stack-victoria-metrics-operator",
+      "namespace": "default",
+      "workloadType": "Deployment",
+      "workloadName": "victoria-metrics-k8s-stack-victoria-metrics-operator",
+      "containerName": "operator",
+      "image": "victoriametrics/operator:v0.52.0"
+    }
+  ]
+}

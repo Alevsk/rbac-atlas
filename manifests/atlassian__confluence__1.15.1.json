@@ -1,0 +1,64 @@
+{
+  "metadata": {
+    "version": "1.15.1",
+    "name": "confluence",
+    "source": "charts/atlassian__confluence__1.15.1/",
+    "timestamp": 1769793034,
+    "extra": {
+      "helm": {
+        "description": "A chart for installing Confluence Data Center on Kubernetes",
+        "home": "https://atlassian.github.io/data-center-helm-charts/",
+        "icon": "https://atlassian.github.io/data-center-helm-charts/icons/confluence.svg",
+        "keywords": [
+          "Confluence",
+          "Confluence Server",
+          "Confluence Data Center",
+          "Confluence DC",
+          "Atlassian"
+        ],
+        "kubeVersion": "\u003e=1.21.x-0",
+        "maintainers": null,
+        "sources": [
+          "https://github.com/atlassian/data-center-helm-charts",
+          "https://bitbucket.org/atlassian-docker/docker-atlassian-confluence-server/"
+        ]
+      }
+    }
+  },
+  "serviceAccountData": [
+    {
+      "serviceAccountName": "confluence",
+      "namespace": "default",
+      "automountToken": false,
+      "secrets": null,
+      "imagePullSecrets": null
+    }
+  ],
+  "serviceAccountPermissions": [],
+  "serviceAccountWorkloads": [
+    {
+      "serviceAccountName": "confluence",
+      "namespace": "default",
+      "workloadType": "StatefulSet",
+      "workloadName": "confluence",
+      "containerName": "confluence",
+      "image": "atlassian/confluence:7.19.12"
+    },
+    {
+      "serviceAccountName": "",
+      "namespace": "default",
+      "workloadType": "Pod",
+      "workloadName": "confluence-application-status-test",
+      "containerName": "test",
+      "image": "alpine"
+    },
+    {
+      "serviceAccountName": "",
+      "namespace": "default",
+      "workloadType": "Pod",
+      "workloadName": "confluence-shared-home-permissions-test",
+      "containerName": "test",
+      "image": "debian:stable-slim"
+    }
+  ]
+}

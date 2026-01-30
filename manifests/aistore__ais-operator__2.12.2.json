@@ -3,7 +3,7 @@
     "version": "2.12.2",
     "name": "ais-operator",
     "source": "charts/aistore__ais-operator__2.12.2/",
-    "timestamp": 1769133301,
+    "timestamp": 1769792964,
     "extra": {
       "helm": {
         "description": "A Helm chart for Kubernetes",
@@ -24,28 +24,6 @@
       "roleType": "Role",
       "roleName": "ais-operator-leader-election-role",
       "apiGroup": "",
-      "resource": "events",
-      "resourceName": "",
-      "verbs": [
-        "create",
-        "patch"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "default",
-      "namespace": "default",
-      "roleType": "Role",
-      "roleName": "ais-operator-leader-election-role",
-      "apiGroup": "",
       "resource": "configmaps",
       "resourceName": "",
       "verbs": [
@@ -59,11 +37,11 @@
       ],
       "riskLevel": "High",
       "tags": [
-        "InformationDisclosure",
-        "DataExposure",
         "Tampering",
         "ConfigMapAccess",
-        "PotentialPrivilegeEscalation"
+        "PotentialPrivilegeEscalation",
+        "InformationDisclosure",
+        "DataExposure"
       ],
       "matchedRiskRules": [
         {
@@ -99,6 +77,28 @@
         "patch",
         "update",
         "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "default",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "ais-operator-leader-election-role",
+      "apiGroup": "",
+      "resource": "events",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "patch"
       ],
       "riskLevel": "Low",
       "tags": [],
@@ -179,6 +179,468 @@
       "namespace": "default",
       "roleType": "ClusterRole",
       "roleName": "ais-operator-manager-role",
+      "apiGroup": "rbac.authorization.k8s.io",
+      "resource": "clusterroles",
+      "resourceName": "",
+      "verbs": [
+        "delete"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "default",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "ais-operator-manager-role",
+      "apiGroup": "rbac.authorization.k8s.io",
+      "resource": "rolebindings",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Medium",
+      "tags": [
+        "InformationDisclosure",
+        "RBACQuery",
+        "Reconnaissance"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1077,
+          "name": "Read RBAC configuration cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1077/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "default",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "ais-operator-manager-role",
+      "apiGroup": "rbac.authorization.k8s.io",
+      "resource": "roles",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Medium",
+      "tags": [
+        "InformationDisclosure",
+        "RBACQuery",
+        "Reconnaissance"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1077,
+          "name": "Read RBAC configuration cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1077/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "default",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "ais-operator-manager-role",
+      "apiGroup": "rbac.authorization.k8s.io",
+      "resource": "clusterrolebindings",
+      "resourceName": "",
+      "verbs": [
+        "delete"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "default",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "ais-operator-manager-role",
+      "apiGroup": "storage.k8s.io",
+      "resource": "storageclasses",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "default",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "ais-operator-manager-role",
+      "apiGroup": "",
+      "resource": "configmaps",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "InformationDisclosure",
+        "DataExposure",
+        "Tampering",
+        "ConfigMapAccess",
+        "PotentialPrivilegeEscalation"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1024,
+          "name": "Modify ConfigMaps cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1024/"
+        },
+        {
+          "id": 1022,
+          "name": "Read ConfigMaps cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1022/"
+        },
+        {
+          "id": 1025,
+          "name": "Modify ConfigMaps in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1025/"
+        },
+        {
+          "id": 1023,
+          "name": "Read ConfigMaps in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1023/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "default",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "ais-operator-manager-role",
+      "apiGroup": "",
+      "resource": "services",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "NetworkManipulation",
+        "ServiceExposure",
+        "DenialOfService",
+        "Tampering"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1075,
+          "name": "Manage Services cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1075/"
+        },
+        {
+          "id": 1076,
+          "name": "Manage Services in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1076/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "default",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "ais-operator-manager-role",
+      "apiGroup": "",
+      "resource": "secrets",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "InformationDisclosure",
+        "SecretAccess",
+        "ClusterWideSecretAccess",
+        "CredentialAccess",
+        "DataExposure"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1010,
+          "name": "Read secrets cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1010/"
+        },
+        {
+          "id": 1011,
+          "name": "Read secrets in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1011/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "default",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "ais-operator-manager-role",
+      "apiGroup": "",
+      "resource": "persistentvolumeclaims",
+      "resourceName": "",
+      "verbs": [
+        "delete",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "default",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "ais-operator-manager-role",
+      "apiGroup": "",
+      "resource": "pods",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "LateralMovement",
+        "Persistence",
+        "PotentialPrivilegeEscalation",
+        "WorkloadExecution",
+        "PrivilegeEscalation"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1006,
+          "name": "Create pods cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1006/"
+        },
+        {
+          "id": 1007,
+          "name": "Create pods in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1007/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "default",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "ais-operator-manager-role",
+      "apiGroup": "",
+      "resource": "events",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "patch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "default",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "ais-operator-manager-role",
+      "apiGroup": "",
+      "resource": "nodes",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "default",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "ais-operator-manager-role",
+      "apiGroup": "",
+      "resource": "serviceaccounts",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "default",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "ais-operator-manager-role",
+      "apiGroup": "",
+      "resource": "pods/log",
+      "resourceName": "",
+      "verbs": [
+        "get"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "DataExposure",
+        "LogAccess",
+        "ClusterWideLogAccess",
+        "InformationDisclosure"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1018,
+          "name": "Read pod logs cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1018/"
+        },
+        {
+          "id": 1019,
+          "name": "Read pod logs in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1019/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "default",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "ais-operator-manager-role",
+      "apiGroup": "ais.nvidia.com",
+      "resource": "aistores/finalizers",
+      "resourceName": "",
+      "verbs": [
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "default",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "ais-operator-manager-role",
       "apiGroup": "ais.nvidia.com",
       "resource": "aistores/status",
       "resourceName": "",
@@ -229,27 +691,6 @@
       "namespace": "default",
       "roleType": "ClusterRole",
       "roleName": "ais-operator-manager-role",
-      "apiGroup": "ais.nvidia.com",
-      "resource": "aistores/finalizers",
-      "resourceName": "",
-      "verbs": [
-        "update"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "default",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "ais-operator-manager-role",
       "apiGroup": "apps",
       "resource": "deployments",
       "resourceName": "",
@@ -264,11 +705,11 @@
       ],
       "riskLevel": "Critical",
       "tags": [
+        "Tampering",
+        "PotentialPrivilegeEscalation",
         "WorkloadLifecycle",
         "PrivilegeEscalation",
-        "Persistence",
-        "Tampering",
-        "PotentialPrivilegeEscalation"
+        "Persistence"
       ],
       "matchedRiskRules": [
         {
@@ -307,11 +748,11 @@
       ],
       "riskLevel": "Critical",
       "tags": [
-        "PrivilegeEscalation",
-        "Persistence",
         "Tampering",
         "PotentialPrivilegeEscalation",
-        "WorkloadLifecycle"
+        "WorkloadLifecycle",
+        "PrivilegeEscalation",
+        "Persistence"
       ],
       "matchedRiskRules": [
         {
@@ -417,436 +858,25 @@
       "serviceAccountName": "default",
       "namespace": "default",
       "roleType": "ClusterRole",
-      "roleName": "ais-operator-manager-role",
-      "apiGroup": "rbac.authorization.k8s.io",
-      "resource": "clusterrolebindings",
+      "roleName": "ais-operator-proxy-role",
+      "apiGroup": "authentication.k8s.io",
+      "resource": "tokenreviews",
       "resourceName": "",
       "verbs": [
-        "delete"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "default",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "ais-operator-manager-role",
-      "apiGroup": "rbac.authorization.k8s.io",
-      "resource": "clusterroles",
-      "resourceName": "",
-      "verbs": [
-        "delete"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "default",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "ais-operator-manager-role",
-      "apiGroup": "rbac.authorization.k8s.io",
-      "resource": "rolebindings",
-      "resourceName": "",
-      "verbs": [
-        "create",
-        "delete",
-        "get",
-        "list",
-        "update",
-        "watch"
+        "create"
       ],
       "riskLevel": "Medium",
       "tags": [
         "InformationDisclosure",
-        "RBACQuery",
-        "Reconnaissance"
-      ],
-      "matchedRiskRules": [
-        {
-          "id": 1077,
-          "name": "Read RBAC configuration cluster-wide",
-          "link": "https://rbac-atlas.github.io/rules/1077/"
-        },
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "default",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "ais-operator-manager-role",
-      "apiGroup": "rbac.authorization.k8s.io",
-      "resource": "roles",
-      "resourceName": "",
-      "verbs": [
-        "create",
-        "delete",
-        "get",
-        "list",
-        "update",
-        "watch"
-      ],
-      "riskLevel": "Medium",
-      "tags": [
-        "InformationDisclosure",
-        "RBACQuery",
-        "Reconnaissance"
-      ],
-      "matchedRiskRules": [
-        {
-          "id": 1077,
-          "name": "Read RBAC configuration cluster-wide",
-          "link": "https://rbac-atlas.github.io/rules/1077/"
-        },
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "default",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "ais-operator-manager-role",
-      "apiGroup": "storage.k8s.io",
-      "resource": "storageclasses",
-      "resourceName": "",
-      "verbs": [
-        "get",
-        "list",
-        "watch"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "default",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "ais-operator-manager-role",
-      "apiGroup": "",
-      "resource": "pods",
-      "resourceName": "",
-      "verbs": [
-        "create",
-        "delete",
-        "get",
-        "list",
-        "update",
-        "watch"
-      ],
-      "riskLevel": "Critical",
-      "tags": [
-        "WorkloadExecution",
-        "PrivilegeEscalation",
-        "LateralMovement",
-        "Persistence",
-        "PotentialPrivilegeEscalation"
-      ],
-      "matchedRiskRules": [
-        {
-          "id": 1006,
-          "name": "Create pods cluster-wide",
-          "link": "https://rbac-atlas.github.io/rules/1006/"
-        },
-        {
-          "id": 1007,
-          "name": "Create pods in a namespace",
-          "link": "https://rbac-atlas.github.io/rules/1007/"
-        },
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "default",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "ais-operator-manager-role",
-      "apiGroup": "",
-      "resource": "configmaps",
-      "resourceName": "",
-      "verbs": [
-        "create",
-        "delete",
-        "get",
-        "list",
-        "patch",
-        "update",
-        "watch"
-      ],
-      "riskLevel": "Critical",
-      "tags": [
-        "Tampering",
-        "ConfigMapAccess",
-        "PotentialPrivilegeEscalation",
-        "InformationDisclosure",
-        "DataExposure"
-      ],
-      "matchedRiskRules": [
-        {
-          "id": 1024,
-          "name": "Modify ConfigMaps cluster-wide",
-          "link": "https://rbac-atlas.github.io/rules/1024/"
-        },
-        {
-          "id": 1022,
-          "name": "Read ConfigMaps cluster-wide",
-          "link": "https://rbac-atlas.github.io/rules/1022/"
-        },
-        {
-          "id": 1025,
-          "name": "Modify ConfigMaps in a namespace",
-          "link": "https://rbac-atlas.github.io/rules/1025/"
-        },
-        {
-          "id": 1023,
-          "name": "Read ConfigMaps in a namespace",
-          "link": "https://rbac-atlas.github.io/rules/1023/"
-        },
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "default",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "ais-operator-manager-role",
-      "apiGroup": "",
-      "resource": "nodes",
-      "resourceName": "",
-      "verbs": [
-        "get",
-        "list",
-        "watch"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "default",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "ais-operator-manager-role",
-      "apiGroup": "",
-      "resource": "serviceaccounts",
-      "resourceName": "",
-      "verbs": [
-        "create",
-        "delete",
-        "get",
-        "list",
-        "update",
-        "watch"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "default",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "ais-operator-manager-role",
-      "apiGroup": "",
-      "resource": "pods/log",
-      "resourceName": "",
-      "verbs": [
-        "get"
-      ],
-      "riskLevel": "High",
-      "tags": [
-        "ClusterWideLogAccess",
-        "InformationDisclosure",
-        "DataExposure",
-        "LogAccess"
-      ],
-      "matchedRiskRules": [
-        {
-          "id": 1018,
-          "name": "Read pod logs cluster-wide",
-          "link": "https://rbac-atlas.github.io/rules/1018/"
-        },
-        {
-          "id": 1019,
-          "name": "Read pod logs in a namespace",
-          "link": "https://rbac-atlas.github.io/rules/1019/"
-        },
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "default",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "ais-operator-manager-role",
-      "apiGroup": "",
-      "resource": "services",
-      "resourceName": "",
-      "verbs": [
-        "create",
-        "delete",
-        "get",
-        "list",
-        "patch",
-        "update",
-        "watch"
-      ],
-      "riskLevel": "Critical",
-      "tags": [
-        "NetworkManipulation",
-        "ServiceExposure",
-        "DenialOfService",
-        "Tampering"
-      ],
-      "matchedRiskRules": [
-        {
-          "id": 1075,
-          "name": "Manage Services cluster-wide",
-          "link": "https://rbac-atlas.github.io/rules/1075/"
-        },
-        {
-          "id": 1076,
-          "name": "Manage Services in a namespace",
-          "link": "https://rbac-atlas.github.io/rules/1076/"
-        },
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "default",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "ais-operator-manager-role",
-      "apiGroup": "",
-      "resource": "events",
-      "resourceName": "",
-      "verbs": [
-        "create",
-        "patch"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "default",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "ais-operator-manager-role",
-      "apiGroup": "",
-      "resource": "secrets",
-      "resourceName": "",
-      "verbs": [
-        "get",
-        "list",
-        "watch"
-      ],
-      "riskLevel": "Critical",
-      "tags": [
-        "ClusterWideSecretAccess",
         "CredentialAccess",
-        "DataExposure",
-        "InformationDisclosure",
-        "SecretAccess"
+        "RBACQuery"
       ],
       "matchedRiskRules": [
         {
-          "id": 1010,
-          "name": "Read secrets cluster-wide",
-          "link": "https://rbac-atlas.github.io/rules/1010/"
+          "id": 1049,
+          "name": "Create TokenReviews (validate arbitrary tokens)",
+          "link": "https://rbac-atlas.github.io/rules/1049/"
         },
-        {
-          "id": 1011,
-          "name": "Read secrets in a namespace",
-          "link": "https://rbac-atlas.github.io/rules/1011/"
-        },
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "default",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "ais-operator-manager-role",
-      "apiGroup": "",
-      "resource": "persistentvolumeclaims",
-      "resourceName": "",
-      "verbs": [
-        "delete",
-        "list",
-        "watch"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
         {
           "id": 9996,
           "name": "Base Risk Level - Low",
@@ -875,36 +905,6 @@
           "id": 1050,
           "name": "Create SubjectAccessReviews (check arbitrary permissions)",
           "link": "https://rbac-atlas.github.io/rules/1050/"
-        },
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "default",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "ais-operator-proxy-role",
-      "apiGroup": "authentication.k8s.io",
-      "resource": "tokenreviews",
-      "resourceName": "",
-      "verbs": [
-        "create"
-      ],
-      "riskLevel": "Medium",
-      "tags": [
-        "InformationDisclosure",
-        "CredentialAccess",
-        "RBACQuery"
-      ],
-      "matchedRiskRules": [
-        {
-          "id": 1049,
-          "name": "Create TokenReviews (validate arbitrary tokens)",
-          "link": "https://rbac-atlas.github.io/rules/1049/"
         },
         {
           "id": 9996,

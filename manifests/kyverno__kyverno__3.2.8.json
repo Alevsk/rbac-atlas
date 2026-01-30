@@ -1,0 +1,1114 @@
+{
+  "metadata": {
+    "version": "3.2.8",
+    "name": "kyverno",
+    "source": "charts/kyverno__kyverno__3.2.8/",
+    "timestamp": 1769793978,
+    "extra": {
+      "helm": {
+        "description": "Kubernetes Native Policy Management",
+        "home": "https://kyverno.io/",
+        "icon": "https://github.com/kyverno/kyverno/raw/main/img/logo.png",
+        "keywords": [
+          "kubernetes",
+          "nirmata",
+          "policy agent",
+          "policy",
+          "validating webhook",
+          "admission controller",
+          "mutation",
+          "mutate",
+          "validate",
+          "generate",
+          "supply chain",
+          "security"
+        ],
+        "kubeVersion": "\u003e=1.25.0-0",
+        "maintainers": [
+          {
+            "name": "Nirmata",
+            "url": "https://kyverno.io/"
+          }
+        ],
+        "sources": [
+          "https://github.com/kyverno/kyverno"
+        ]
+      }
+    }
+  },
+  "serviceAccountData": [
+    {
+      "serviceAccountName": "kyverno-admission-controller",
+      "namespace": "default",
+      "automountToken": false,
+      "secrets": null,
+      "imagePullSecrets": null
+    },
+    {
+      "serviceAccountName": "kyverno-reports-controller",
+      "namespace": "default",
+      "automountToken": false,
+      "secrets": null,
+      "imagePullSecrets": null
+    },
+    {
+      "serviceAccountName": "kyverno-cleanup-jobs",
+      "namespace": "default",
+      "automountToken": false,
+      "secrets": null,
+      "imagePullSecrets": null
+    },
+    {
+      "serviceAccountName": "kyverno-remove-configmap",
+      "namespace": "default",
+      "automountToken": false,
+      "secrets": null,
+      "imagePullSecrets": null
+    },
+    {
+      "serviceAccountName": "kyverno-migrate-resources",
+      "namespace": "default",
+      "automountToken": false,
+      "secrets": null,
+      "imagePullSecrets": null
+    },
+    {
+      "serviceAccountName": "kyverno-cleanup-controller",
+      "namespace": "default",
+      "automountToken": false,
+      "secrets": null,
+      "imagePullSecrets": null
+    },
+    {
+      "serviceAccountName": "kyverno-background-controller",
+      "namespace": "default",
+      "automountToken": false,
+      "secrets": null,
+      "imagePullSecrets": null
+    }
+  ],
+  "serviceAccountPermissions": [
+    {
+      "serviceAccountName": "kyverno-migrate-resources",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kyverno:migrate-resources",
+      "apiGroup": "apiextensions.k8s.io",
+      "resource": "customresourcedefinitions",
+      "resourceName": "",
+      "verbs": [
+        "get"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kyverno-migrate-resources",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kyverno:migrate-resources",
+      "apiGroup": "apiextensions.k8s.io",
+      "resource": "customresourcedefinitions/status",
+      "resourceName": "",
+      "verbs": [
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kyverno-migrate-resources",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kyverno:migrate-resources",
+      "apiGroup": "kyverno.io",
+      "resource": "*",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "update"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "ClusterWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kyverno-background-controller",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "kyverno:background-controller",
+      "apiGroup": "coordination.k8s.io",
+      "resource": "leases",
+      "resourceName": "",
+      "verbs": [
+        "create"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kyverno-background-controller",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "kyverno:background-controller",
+      "apiGroup": "coordination.k8s.io",
+      "resource": "leases",
+      "resourceName": "kyverno-background-controller",
+      "verbs": [
+        "delete",
+        "get",
+        "patch",
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [
+        "ResourceNameRestricted"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kyverno-background-controller",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "kyverno:background-controller",
+      "apiGroup": "",
+      "resource": "configmaps",
+      "resourceName": "kyverno",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [
+        "InformationDisclosure",
+        "ConfigMapAccess",
+        "DataExposure",
+        "ResourceNameRestricted"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1023,
+          "name": "Read ConfigMaps in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1023/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kyverno-background-controller",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "kyverno:background-controller",
+      "apiGroup": "",
+      "resource": "configmaps",
+      "resourceName": "kyverno-metrics",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [
+        "ResourceNameRestricted",
+        "InformationDisclosure",
+        "ConfigMapAccess",
+        "DataExposure"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1023,
+          "name": "Read ConfigMaps in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1023/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kyverno-background-controller",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "kyverno:background-controller",
+      "apiGroup": "",
+      "resource": "secrets",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "CredentialAccess",
+        "DataExposure",
+        "InformationDisclosure",
+        "SecretAccess"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1011,
+          "name": "Read secrets in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1011/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kyverno-admission-controller",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "kyverno:admission-controller",
+      "apiGroup": "coordination.k8s.io",
+      "resource": "leases",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "patch",
+        "update"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "CriticalNamespace",
+        "Tampering",
+        "DenialOfService",
+        "ControlPlaneDisruption"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1081,
+          "name": "Manage Leases in kube-system or kube-node-lease namespace",
+          "link": "https://rbac-atlas.github.io/rules/1081/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kyverno-admission-controller",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "kyverno:admission-controller",
+      "apiGroup": "apps",
+      "resource": "deployments",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kyverno-admission-controller",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "kyverno:admission-controller",
+      "apiGroup": "apps",
+      "resource": "deployments/scale",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "DenialOfService",
+        "Tampering",
+        "WorkloadLifecycle",
+        "ResourceModification"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1096,
+          "name": "Update Deployment Scale (Resource Abuse/DoS)",
+          "link": "https://rbac-atlas.github.io/rules/1096/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kyverno-admission-controller",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "kyverno:admission-controller",
+      "apiGroup": "",
+      "resource": "secrets",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "SecretAccess",
+        "CredentialAccess",
+        "DataExposure",
+        "InformationDisclosure"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1011,
+          "name": "Read secrets in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1011/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kyverno-admission-controller",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "kyverno:admission-controller",
+      "apiGroup": "",
+      "resource": "configmaps",
+      "resourceName": "kyverno",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [
+        "InformationDisclosure",
+        "ConfigMapAccess",
+        "DataExposure",
+        "ResourceNameRestricted"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1023,
+          "name": "Read ConfigMaps in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1023/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kyverno-admission-controller",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "kyverno:admission-controller",
+      "apiGroup": "",
+      "resource": "configmaps",
+      "resourceName": "kyverno-metrics",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [
+        "InformationDisclosure",
+        "ConfigMapAccess",
+        "DataExposure",
+        "ResourceNameRestricted"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1023,
+          "name": "Read ConfigMaps in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1023/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kyverno-cleanup-controller",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "kyverno:cleanup-controller",
+      "apiGroup": "",
+      "resource": "secrets",
+      "resourceName": "",
+      "verbs": [
+        "create"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kyverno-cleanup-controller",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "kyverno:cleanup-controller",
+      "apiGroup": "",
+      "resource": "secrets",
+      "resourceName": "kyverno-cleanup-controller.default.svc.kyverno-tls-ca",
+      "verbs": [
+        "delete",
+        "get",
+        "list",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [
+        "InformationDisclosure",
+        "ResourceNameRestricted",
+        "SecretAccess",
+        "CredentialAccess",
+        "DataExposure"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1011,
+          "name": "Read secrets in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1011/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kyverno-cleanup-controller",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "kyverno:cleanup-controller",
+      "apiGroup": "",
+      "resource": "secrets",
+      "resourceName": "kyverno-cleanup-controller.default.svc.kyverno-tls-pair",
+      "verbs": [
+        "delete",
+        "get",
+        "list",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [
+        "SecretAccess",
+        "CredentialAccess",
+        "DataExposure",
+        "InformationDisclosure",
+        "ResourceNameRestricted"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1011,
+          "name": "Read secrets in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1011/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kyverno-cleanup-controller",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "kyverno:cleanup-controller",
+      "apiGroup": "",
+      "resource": "configmaps",
+      "resourceName": "kyverno",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [
+        "InformationDisclosure",
+        "ConfigMapAccess",
+        "DataExposure",
+        "ResourceNameRestricted"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1023,
+          "name": "Read ConfigMaps in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1023/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kyverno-cleanup-controller",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "kyverno:cleanup-controller",
+      "apiGroup": "",
+      "resource": "configmaps",
+      "resourceName": "kyverno-metrics",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [
+        "InformationDisclosure",
+        "ConfigMapAccess",
+        "DataExposure",
+        "ResourceNameRestricted"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1023,
+          "name": "Read ConfigMaps in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1023/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kyverno-cleanup-controller",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "kyverno:cleanup-controller",
+      "apiGroup": "coordination.k8s.io",
+      "resource": "leases",
+      "resourceName": "",
+      "verbs": [
+        "create"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kyverno-cleanup-controller",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "kyverno:cleanup-controller",
+      "apiGroup": "coordination.k8s.io",
+      "resource": "leases",
+      "resourceName": "kyverno-cleanup-controller",
+      "verbs": [
+        "delete",
+        "get",
+        "patch",
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [
+        "ResourceNameRestricted"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kyverno-cleanup-jobs",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kyverno:cleanup-jobs",
+      "apiGroup": "reports.kyverno.io",
+      "resource": "ephemeralreports",
+      "resourceName": "",
+      "verbs": [
+        "delete",
+        "deletecollection",
+        "list"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kyverno-cleanup-jobs",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kyverno:cleanup-jobs",
+      "apiGroup": "reports.kyverno.io",
+      "resource": "clusterephemeralreports",
+      "resourceName": "",
+      "verbs": [
+        "delete",
+        "deletecollection",
+        "list"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kyverno-cleanup-jobs",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kyverno:cleanup-jobs",
+      "apiGroup": "kyverno.io",
+      "resource": "admissionreports",
+      "resourceName": "",
+      "verbs": [
+        "delete",
+        "deletecollection",
+        "list"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kyverno-cleanup-jobs",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kyverno:cleanup-jobs",
+      "apiGroup": "kyverno.io",
+      "resource": "clusteradmissionreports",
+      "resourceName": "",
+      "verbs": [
+        "delete",
+        "deletecollection",
+        "list"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kyverno-cleanup-jobs",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kyverno:cleanup-jobs",
+      "apiGroup": "kyverno.io",
+      "resource": "updaterequests",
+      "resourceName": "",
+      "verbs": [
+        "delete",
+        "deletecollection",
+        "list"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kyverno-reports-controller",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "kyverno:reports-controller",
+      "apiGroup": "",
+      "resource": "configmaps",
+      "resourceName": "kyverno",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [
+        "ConfigMapAccess",
+        "DataExposure",
+        "ResourceNameRestricted",
+        "InformationDisclosure"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1023,
+          "name": "Read ConfigMaps in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1023/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kyverno-reports-controller",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "kyverno:reports-controller",
+      "apiGroup": "",
+      "resource": "configmaps",
+      "resourceName": "kyverno-metrics",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [
+        "DataExposure",
+        "ResourceNameRestricted",
+        "InformationDisclosure",
+        "ConfigMapAccess"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1023,
+          "name": "Read ConfigMaps in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1023/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kyverno-reports-controller",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "kyverno:reports-controller",
+      "apiGroup": "coordination.k8s.io",
+      "resource": "leases",
+      "resourceName": "",
+      "verbs": [
+        "create"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kyverno-reports-controller",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "kyverno:reports-controller",
+      "apiGroup": "coordination.k8s.io",
+      "resource": "leases",
+      "resourceName": "kyverno-reports-controller",
+      "verbs": [
+        "delete",
+        "get",
+        "patch",
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [
+        "ResourceNameRestricted"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kyverno-remove-configmap",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "kyverno:remove-configmap",
+      "apiGroup": "",
+      "resource": "configmaps",
+      "resourceName": "",
+      "verbs": [
+        "delete",
+        "get",
+        "list"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    }
+  ],
+  "serviceAccountWorkloads": [
+    {
+      "serviceAccountName": "kyverno-admission-controller",
+      "namespace": "default",
+      "workloadType": "Deployment",
+      "workloadName": "kyverno-admission-controller",
+      "containerName": "kyverno",
+      "image": "ghcr.io/kyverno/kyverno:v1.12.6"
+    },
+    {
+      "serviceAccountName": "kyverno-cleanup-controller",
+      "namespace": "default",
+      "workloadType": "Deployment",
+      "workloadName": "kyverno-cleanup-controller",
+      "containerName": "controller",
+      "image": "ghcr.io/kyverno/cleanup-controller:v1.12.6"
+    },
+    {
+      "serviceAccountName": "kyverno-background-controller",
+      "namespace": "default",
+      "workloadType": "Deployment",
+      "workloadName": "kyverno-background-controller",
+      "containerName": "controller",
+      "image": "ghcr.io/kyverno/background-controller:v1.12.6"
+    },
+    {
+      "serviceAccountName": "",
+      "namespace": "default",
+      "workloadType": "Pod",
+      "workloadName": "kyverno-cleanup-controller-readiness",
+      "containerName": "test",
+      "image": "busybox:1.35"
+    },
+    {
+      "serviceAccountName": "",
+      "namespace": "default",
+      "workloadType": "Pod",
+      "workloadName": "kyverno-cleanup-controller-liveness",
+      "containerName": "test",
+      "image": "busybox:1.35"
+    },
+    {
+      "serviceAccountName": "",
+      "namespace": "default",
+      "workloadType": "Pod",
+      "workloadName": "kyverno-reports-controller-metrics",
+      "containerName": "test",
+      "image": "busybox:1.35"
+    },
+    {
+      "serviceAccountName": "",
+      "namespace": "default",
+      "workloadType": "Pod",
+      "workloadName": "kyverno-cleanup-controller-metrics",
+      "containerName": "test",
+      "image": "busybox:1.35"
+    },
+    {
+      "serviceAccountName": "",
+      "namespace": "default",
+      "workloadType": "Pod",
+      "workloadName": "kyverno-admission-controller-readiness",
+      "containerName": "test",
+      "image": "busybox:1.35"
+    },
+    {
+      "serviceAccountName": "",
+      "namespace": "default",
+      "workloadType": "Job",
+      "workloadName": "kyverno-remove-configmap",
+      "containerName": "kubectl",
+      "image": "bitnami/kubectl:1.28.5"
+    },
+    {
+      "serviceAccountName": "",
+      "namespace": "default",
+      "workloadType": "Job",
+      "workloadName": "kyverno-migrate-resources",
+      "containerName": "kubectl",
+      "image": "ghcr.io/kyverno/kyverno-cli:v1.12.6"
+    },
+    {
+      "serviceAccountName": "",
+      "namespace": "default",
+      "workloadType": "Pod",
+      "workloadName": "kyverno-admission-controller-metrics",
+      "containerName": "test",
+      "image": "busybox:1.35"
+    },
+    {
+      "serviceAccountName": "",
+      "namespace": "default",
+      "workloadType": "Job",
+      "workloadName": "kyverno-clean-reports",
+      "containerName": "kubectl",
+      "image": "bitnami/kubectl:1.28.5"
+    },
+    {
+      "serviceAccountName": "",
+      "namespace": "default",
+      "workloadType": "Job",
+      "workloadName": "kyverno-scale-to-zero",
+      "containerName": "kubectl",
+      "image": "bitnami/kubectl:1.28.5"
+    },
+    {
+      "serviceAccountName": "",
+      "namespace": "default",
+      "workloadType": "Pod",
+      "workloadName": "kyverno-admission-controller-liveness",
+      "containerName": "test",
+      "image": "busybox:1.35"
+    },
+    {
+      "serviceAccountName": "kyverno-reports-controller",
+      "namespace": "default",
+      "workloadType": "Deployment",
+      "workloadName": "kyverno-reports-controller",
+      "containerName": "controller",
+      "image": "ghcr.io/kyverno/reports-controller:v1.12.6"
+    },
+    {
+      "serviceAccountName": "kyverno-cleanup-jobs",
+      "namespace": "default",
+      "workloadType": "CronJob",
+      "workloadName": "kyverno-cleanup-ephemeral-reports",
+      "containerName": "cleanup",
+      "image": "bitnami/kubectl:1.28.5"
+    },
+    {
+      "serviceAccountName": "kyverno-cleanup-jobs",
+      "namespace": "default",
+      "workloadType": "CronJob",
+      "workloadName": "kyverno-cleanup-cluster-admission-reports",
+      "containerName": "cleanup",
+      "image": "bitnami/kubectl:1.28.5"
+    },
+    {
+      "serviceAccountName": "kyverno-cleanup-jobs",
+      "namespace": "default",
+      "workloadType": "CronJob",
+      "workloadName": "kyverno-cleanup-cluster-ephemeral-reports",
+      "containerName": "cleanup",
+      "image": "bitnami/kubectl:1.28.5"
+    },
+    {
+      "serviceAccountName": "kyverno-cleanup-jobs",
+      "namespace": "default",
+      "workloadType": "CronJob",
+      "workloadName": "kyverno-cleanup-admission-reports",
+      "containerName": "cleanup",
+      "image": "bitnami/kubectl:1.28.5"
+    }
+  ]
+}

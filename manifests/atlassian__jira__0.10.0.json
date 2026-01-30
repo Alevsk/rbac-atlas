@@ -1,0 +1,65 @@
+{
+  "metadata": {
+    "version": "0.10.0",
+    "name": "jira",
+    "source": "charts/atlassian__jira__0.10.0/",
+    "timestamp": 1769793035,
+    "extra": {
+      "helm": {
+        "description": "A chart for installing Jira Data Center on Kubernetes",
+        "home": "https://www.atlassian.com/software/jira",
+        "icon": "https://wac-cdn.atlassian.com/dam/jcr:826c97dc-1f5c-4955-bfcc-ea17d6b0c095/jira%20software-icon-gradient-blue.svg?cdnVersion=492",
+        "keywords": [
+          "Jira",
+          "Jira Software",
+          "Jira Server",
+          "Jira Data Center",
+          "Jira DC",
+          "Atlassian"
+        ],
+        "kubeVersion": "\u003e=1.19.x-0",
+        "maintainers": null,
+        "sources": [
+          "https://github.com/atlassian-labs/data-center-helm-charts",
+          "https://bitbucket.org/atlassian-docker/docker-atlassian-jira/"
+        ]
+      }
+    }
+  },
+  "serviceAccountData": [
+    {
+      "serviceAccountName": "jira",
+      "namespace": "default",
+      "automountToken": false,
+      "secrets": null,
+      "imagePullSecrets": null
+    }
+  ],
+  "serviceAccountPermissions": [],
+  "serviceAccountWorkloads": [
+    {
+      "serviceAccountName": "",
+      "namespace": "default",
+      "workloadType": "Pod",
+      "workloadName": "jira-shared-home-permissions-test",
+      "containerName": "test",
+      "image": "debian:stable-slim"
+    },
+    {
+      "serviceAccountName": "",
+      "namespace": "default",
+      "workloadType": "Pod",
+      "workloadName": "jira-application-status-test",
+      "containerName": "test",
+      "image": "alpine"
+    },
+    {
+      "serviceAccountName": "jira",
+      "namespace": "default",
+      "workloadType": "StatefulSet",
+      "workloadName": "jira",
+      "containerName": "jira",
+      "image": "atlassian/jira-software:8.13.6-jdk11"
+    }
+  ]
+}

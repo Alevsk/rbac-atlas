@@ -1,0 +1,63 @@
+{
+  "metadata": {
+    "version": "0.3.2",
+    "name": "loki-simple-scalable",
+    "source": "charts/grafana__loki-simple-scalable__0.3.2/",
+    "timestamp": 1769793768,
+    "extra": {
+      "helm": {
+        "description": "Helm chart for Grafana Loki in simple, scalable mode",
+        "home": "https://grafana.github.io/helm-charts",
+        "icon": "https://grafana.com/docs/loki/latest/logo_and_name.png",
+        "keywords": null,
+        "kubeVersion": "",
+        "maintainers": [
+          {
+            "name": "trevorwhitney"
+          }
+        ],
+        "sources": [
+          "https://github.com/grafana/loki",
+          "https://grafana.com/oss/loki/",
+          "https://grafana.com/docs/loki/latest/"
+        ]
+      }
+    }
+  },
+  "serviceAccountData": [
+    {
+      "serviceAccountName": "loki-simple-scalable",
+      "namespace": "default",
+      "automountToken": true,
+      "secrets": null,
+      "imagePullSecrets": null
+    }
+  ],
+  "serviceAccountPermissions": [],
+  "serviceAccountWorkloads": [
+    {
+      "serviceAccountName": "loki-simple-scalable",
+      "namespace": "default",
+      "workloadType": "StatefulSet",
+      "workloadName": "loki-simple-scalable-write",
+      "containerName": "loki",
+      "image": "docker.io/grafana/loki:2.4.2"
+    },
+    {
+      "serviceAccountName": "loki-simple-scalable",
+      "namespace": "default",
+      "workloadType": "Deployment",
+      "workloadName": "loki-simple-scalable-gateway",
+      "containerName": "nginx",
+      "image": "docker.io/nginxinc/nginx-unprivileged:1.19-alpine"
+    },
+    {
+      "serviceAccountName": "loki-simple-scalable",
+      "namespace": "default",
+      "workloadType": "StatefulSet",
+      "workloadName": "loki-simple-scalable-read",
+      "containerName": "loki",
+      "image": "docker.io/grafana/loki:2.4.2"
+    }
+  ]
+}

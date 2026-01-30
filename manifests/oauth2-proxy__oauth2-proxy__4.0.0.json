@@ -1,0 +1,86 @@
+{
+  "metadata": {
+    "version": "4.0.0",
+    "name": "oauth2-proxy",
+    "source": "charts/oauth2-proxy__oauth2-proxy__4.0.0/",
+    "timestamp": 1769794138,
+    "extra": {
+      "helm": {
+        "description": "A reverse proxy that provides authentication with Google, Github or other providers",
+        "home": "https://oauth2-proxy.github.io/oauth2-proxy/",
+        "icon": "",
+        "keywords": [
+          "kubernetes",
+          "oauth",
+          "oauth2",
+          "authentication",
+          "google",
+          "github",
+          "redis"
+        ],
+        "kubeVersion": "\u003e=1.9.0-0",
+        "maintainers": [
+          {
+            "name": "desaintmartin",
+            "email": "cedric@desaintmartin.fr"
+          },
+          {
+            "name": "tlawrie"
+          },
+          {
+            "name": "NickMeves",
+            "email": "nicholas.meves@gmail.com"
+          },
+          {
+            "name": "JoelSpeed",
+            "email": "joel.speed@hotmail.co.uk"
+          },
+          {
+            "name": "pierluigilenoci",
+            "email": "pierluigi.lenoci@gmail.com"
+          }
+        ],
+        "sources": [
+          "https://github.com/oauth2-proxy/oauth2-proxy",
+          "https://github.com/oauth2-proxy/manifests"
+        ]
+      }
+    }
+  },
+  "serviceAccountData": [
+    {
+      "serviceAccountName": "oauth2-proxy",
+      "namespace": "default",
+      "automountToken": false,
+      "secrets": null,
+      "imagePullSecrets": null
+    }
+  ],
+  "serviceAccountPermissions": [],
+  "serviceAccountWorkloads": [
+    {
+      "serviceAccountName": "oauth2-proxy",
+      "namespace": "default",
+      "workloadType": "Deployment",
+      "workloadName": "oauth2-proxy",
+      "containerName": "oauth2-proxy",
+      "image": "quay.io/oauth2-proxy/oauth2-proxy:v7.1.3"
+    },
+    {
+      "serviceAccountName": "default",
+      "namespace": "default",
+      "workloadType": "StatefulSet",
+      "workloadName": "oauth2-proxy-redis-master",
+      "containerName": "redis",
+      "image": "docker.io/bitnami/redis:6.0.5-debian-10-r0"
+    },
+    {
+      "serviceAccountName": "default",
+      "namespace": "default",
+      "workloadType": "StatefulSet",
+      "workloadName": "oauth2-proxy-redis-slave",
+      "containerName": "redis",
+      "image": "docker.io/bitnami/redis:6.0.5-debian-10-r0"
+    }
+  ]
+}

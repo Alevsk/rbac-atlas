@@ -3,7 +3,7 @@
     "version": "39.0.0",
     "name": "traefik",
     "source": "charts/traefik__traefik__39.0.0/",
-    "timestamp": 1769219534,
+    "timestamp": 1769794421,
     "extra": {
       "helm": {
         "description": "A Traefik based Kubernetes ingress controller",
@@ -50,11 +50,13 @@
       "namespace": "default",
       "roleType": "ClusterRole",
       "roleName": "traefik-default",
-      "apiGroup": "",
-      "resource": "pods",
+      "apiGroup": "networking.k8s.io",
+      "resource": "ingressclasses",
       "resourceName": "",
       "verbs": [
-        "get"
+        "get",
+        "list",
+        "watch"
       ],
       "riskLevel": "Low",
       "tags": [],
@@ -71,33 +73,17 @@
       "namespace": "default",
       "roleType": "ClusterRole",
       "roleName": "traefik-default",
-      "apiGroup": "",
-      "resource": "secrets",
+      "apiGroup": "networking.k8s.io",
+      "resource": "ingresses",
       "resourceName": "",
       "verbs": [
         "get",
         "list",
         "watch"
       ],
-      "riskLevel": "Critical",
-      "tags": [
-        "ClusterWideSecretAccess",
-        "CredentialAccess",
-        "DataExposure",
-        "InformationDisclosure",
-        "SecretAccess"
-      ],
+      "riskLevel": "Low",
+      "tags": [],
       "matchedRiskRules": [
-        {
-          "id": 1010,
-          "name": "Read secrets cluster-wide",
-          "link": "https://rbac-atlas.github.io/rules/1010/"
-        },
-        {
-          "id": 1011,
-          "name": "Read secrets in a namespace",
-          "link": "https://rbac-atlas.github.io/rules/1011/"
-        },
         {
           "id": 9996,
           "name": "Base Risk Level - Low",
@@ -110,25 +96,245 @@
       "namespace": "default",
       "roleType": "ClusterRole",
       "roleName": "traefik-default",
-      "apiGroup": "",
-      "resource": "namespaces",
+      "apiGroup": "networking.k8s.io",
+      "resource": "ingresses/status",
       "resourceName": "",
       "verbs": [
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "traefik",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "traefik-default",
+      "apiGroup": "traefik.io",
+      "resource": "serverstransporttcps",
+      "resourceName": "",
+      "verbs": [
+        "get",
         "list",
         "watch"
       ],
       "riskLevel": "Low",
-      "tags": [
-        "InformationDisclosure",
-        "Reconnaissance",
-        "ClusterStructure"
-      ],
+      "tags": [],
       "matchedRiskRules": [
         {
-          "id": 1082,
-          "name": "List Namespaces (Cluster Reconnaissance)",
-          "link": "https://rbac-atlas.github.io/rules/1082/"
-        },
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "traefik",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "traefik-default",
+      "apiGroup": "traefik.io",
+      "resource": "tlsoptions",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "traefik",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "traefik-default",
+      "apiGroup": "traefik.io",
+      "resource": "tlsstores",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "traefik",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "traefik-default",
+      "apiGroup": "traefik.io",
+      "resource": "traefikservices",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "traefik",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "traefik-default",
+      "apiGroup": "traefik.io",
+      "resource": "middlewares",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "traefik",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "traefik-default",
+      "apiGroup": "traefik.io",
+      "resource": "serverstransports",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "traefik",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "traefik-default",
+      "apiGroup": "traefik.io",
+      "resource": "ingressroutes",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "traefik",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "traefik-default",
+      "apiGroup": "traefik.io",
+      "resource": "ingressroutetcps",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "traefik",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "traefik-default",
+      "apiGroup": "traefik.io",
+      "resource": "ingressrouteudps",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "traefik",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "traefik-default",
+      "apiGroup": "traefik.io",
+      "resource": "middlewaretcps",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
         {
           "id": 9996,
           "name": "Base Risk Level - Low",
@@ -151,9 +357,9 @@
       ],
       "riskLevel": "High",
       "tags": [
+        "DataExposure",
         "InformationDisclosure",
-        "ConfigMapAccess",
-        "DataExposure"
+        "ConfigMapAccess"
       ],
       "matchedRiskRules": [
         {
@@ -224,6 +430,97 @@
       "namespace": "default",
       "roleType": "ClusterRole",
       "roleName": "traefik-default",
+      "apiGroup": "",
+      "resource": "pods",
+      "resourceName": "",
+      "verbs": [
+        "get"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "traefik",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "traefik-default",
+      "apiGroup": "",
+      "resource": "secrets",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "CredentialAccess",
+        "DataExposure",
+        "InformationDisclosure",
+        "SecretAccess",
+        "ClusterWideSecretAccess"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1010,
+          "name": "Read secrets cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1010/"
+        },
+        {
+          "id": 1011,
+          "name": "Read secrets in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1011/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "traefik",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "traefik-default",
+      "apiGroup": "",
+      "resource": "namespaces",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [
+        "InformationDisclosure",
+        "Reconnaissance",
+        "ClusterStructure"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1082,
+          "name": "List Namespaces (Cluster Reconnaissance)",
+          "link": "https://rbac-atlas.github.io/rules/1082/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "traefik",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "traefik-default",
       "apiGroup": "discovery.k8s.io",
       "resource": "endpointslices",
       "resourceName": "",
@@ -247,6 +544,29 @@
       "roleType": "ClusterRole",
       "roleName": "traefik-default",
       "apiGroup": "extensions",
+      "resource": "ingressclasses",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "traefik",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "traefik-default",
+      "apiGroup": "extensions",
       "resource": "ingresses",
       "resourceName": "",
       "verbs": [
@@ -274,326 +594,6 @@
       "resourceName": "",
       "verbs": [
         "update"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "traefik",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "traefik-default",
-      "apiGroup": "extensions",
-      "resource": "ingressclasses",
-      "resourceName": "",
-      "verbs": [
-        "get",
-        "list",
-        "watch"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "traefik",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "traefik-default",
-      "apiGroup": "networking.k8s.io",
-      "resource": "ingressclasses",
-      "resourceName": "",
-      "verbs": [
-        "get",
-        "list",
-        "watch"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "traefik",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "traefik-default",
-      "apiGroup": "networking.k8s.io",
-      "resource": "ingresses",
-      "resourceName": "",
-      "verbs": [
-        "get",
-        "list",
-        "watch"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "traefik",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "traefik-default",
-      "apiGroup": "networking.k8s.io",
-      "resource": "ingresses/status",
-      "resourceName": "",
-      "verbs": [
-        "update"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "traefik",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "traefik-default",
-      "apiGroup": "traefik.io",
-      "resource": "ingressrouteudps",
-      "resourceName": "",
-      "verbs": [
-        "get",
-        "list",
-        "watch"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "traefik",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "traefik-default",
-      "apiGroup": "traefik.io",
-      "resource": "middlewaretcps",
-      "resourceName": "",
-      "verbs": [
-        "get",
-        "list",
-        "watch"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "traefik",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "traefik-default",
-      "apiGroup": "traefik.io",
-      "resource": "serverstransports",
-      "resourceName": "",
-      "verbs": [
-        "get",
-        "list",
-        "watch"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "traefik",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "traefik-default",
-      "apiGroup": "traefik.io",
-      "resource": "tlsstores",
-      "resourceName": "",
-      "verbs": [
-        "get",
-        "list",
-        "watch"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "traefik",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "traefik-default",
-      "apiGroup": "traefik.io",
-      "resource": "traefikservices",
-      "resourceName": "",
-      "verbs": [
-        "get",
-        "list",
-        "watch"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "traefik",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "traefik-default",
-      "apiGroup": "traefik.io",
-      "resource": "ingressroutes",
-      "resourceName": "",
-      "verbs": [
-        "get",
-        "list",
-        "watch"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "traefik",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "traefik-default",
-      "apiGroup": "traefik.io",
-      "resource": "middlewares",
-      "resourceName": "",
-      "verbs": [
-        "get",
-        "list",
-        "watch"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "traefik",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "traefik-default",
-      "apiGroup": "traefik.io",
-      "resource": "serverstransporttcps",
-      "resourceName": "",
-      "verbs": [
-        "get",
-        "list",
-        "watch"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "traefik",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "traefik-default",
-      "apiGroup": "traefik.io",
-      "resource": "tlsoptions",
-      "resourceName": "",
-      "verbs": [
-        "get",
-        "list",
-        "watch"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "traefik",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "traefik-default",
-      "apiGroup": "traefik.io",
-      "resource": "ingressroutetcps",
-      "resourceName": "",
-      "verbs": [
-        "get",
-        "list",
-        "watch"
       ],
       "riskLevel": "Low",
       "tags": [],

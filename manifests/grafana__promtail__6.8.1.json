@@ -1,0 +1,179 @@
+{
+  "metadata": {
+    "version": "6.8.1",
+    "name": "promtail",
+    "source": "charts/grafana__promtail__6.8.1/",
+    "timestamp": 1769793806,
+    "extra": {
+      "helm": {
+        "description": "Promtail is an agent which ships the contents of local logs to a Loki instance",
+        "home": "https://grafana.com/loki",
+        "icon": "https://raw.githubusercontent.com/grafana/loki/master/docs/sources/logo.png",
+        "keywords": null,
+        "kubeVersion": "",
+        "maintainers": [
+          {
+            "name": "Loki Maintainers",
+            "email": "lokiproject@googlegroups.com"
+          },
+          {
+            "name": "unguiculus"
+          }
+        ],
+        "sources": [
+          "https://github.com/grafana/loki",
+          "https://grafana.com/oss/loki/",
+          "https://grafana.com/docs/loki/latest/"
+        ]
+      }
+    }
+  },
+  "serviceAccountData": [
+    {
+      "serviceAccountName": "promtail",
+      "namespace": "default",
+      "automountToken": false,
+      "secrets": null,
+      "imagePullSecrets": null
+    }
+  ],
+  "serviceAccountPermissions": [
+    {
+      "serviceAccountName": "promtail",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "promtail",
+      "apiGroup": "",
+      "resource": "nodes",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "promtail",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "promtail",
+      "apiGroup": "",
+      "resource": "nodes/proxy",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "NodeAccess",
+        "ClusterAdminAccess",
+        "CodeExecution",
+        "LateralMovement",
+        "ElevationOfPrivilege",
+        "AuthorizationBypass"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1104,
+          "name": "Node proxy GET RCE via WebSocket",
+          "link": "https://rbac-atlas.github.io/rules/1104/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "promtail",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "promtail",
+      "apiGroup": "",
+      "resource": "services",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "promtail",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "promtail",
+      "apiGroup": "",
+      "resource": "endpoints",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "promtail",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "promtail",
+      "apiGroup": "",
+      "resource": "pods",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    }
+  ],
+  "serviceAccountWorkloads": [
+    {
+      "serviceAccountName": "promtail",
+      "namespace": "default",
+      "workloadType": "DaemonSet",
+      "workloadName": "promtail",
+      "containerName": "promtail",
+      "image": "docker.io/grafana/promtail:2.7.1"
+    }
+  ]
+}

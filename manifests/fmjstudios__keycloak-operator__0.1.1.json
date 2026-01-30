@@ -1,0 +1,82 @@
+{
+  "metadata": {
+    "version": "0.1.1",
+    "name": "keycloak-operator",
+    "source": "charts/fmjstudios__keycloak-operator__0.1.1/",
+    "timestamp": 1769793489,
+    "extra": {
+      "helm": {
+        "description": "Keycloak is an open source software product to allow single sign-on with identity and access management",
+        "home": "https://github.com/keycloak/keycloak",
+        "icon": "https://raw.githubusercontent.com/keycloak/keycloak-misc/main/logo/logo.png",
+        "keywords": [
+          "identity",
+          "identity-provider",
+          "single-sign-on",
+          "sso",
+          "ldap",
+          "oauth",
+          "saml",
+          "federation",
+          "keycloak"
+        ],
+        "kubeVersion": "\u003e=1.26.0-0",
+        "maintainers": [
+          {
+            "name": "fmjstudios",
+            "email": "info@fmj.studio"
+          },
+          {
+            "name": "FMJdev",
+            "email": "info@fmj.dev"
+          }
+        ],
+        "sources": [
+          "https://github.com/fmjstudios/helm"
+        ]
+      }
+    }
+  },
+  "serviceAccountData": [
+    {
+      "serviceAccountName": "keycloak-operator",
+      "namespace": "default",
+      "automountToken": false,
+      "secrets": null,
+      "imagePullSecrets": null
+    }
+  ],
+  "serviceAccountPermissions": [
+    {
+      "serviceAccountName": "keycloak-operator",
+      "namespace": "keycloak",
+      "roleType": "ClusterRole",
+      "roleName": "keycloak-operator-cluster-role",
+      "apiGroup": "config.openshift.io",
+      "resource": "ingresses",
+      "resourceName": "",
+      "verbs": [
+        "get"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    }
+  ],
+  "serviceAccountWorkloads": [
+    {
+      "serviceAccountName": "keycloak-operator",
+      "namespace": "default",
+      "workloadType": "Deployment",
+      "workloadName": "keycloak-operator",
+      "containerName": "keycloak-operator",
+      "image": "quay.io/keycloak/keycloak-operator:25.0.2"
+    }
+  ]
+}

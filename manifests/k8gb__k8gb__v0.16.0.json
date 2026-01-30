@@ -1,0 +1,649 @@
+{
+  "metadata": {
+    "version": "v0.16.0",
+    "name": "k8gb",
+    "source": "charts/k8gb__k8gb__v0.16.0/",
+    "timestamp": 1769798202,
+    "extra": {
+      "helm": {
+        "description": "A Helm chart for Kubernetes Global Balancer",
+        "home": "https://www.k8gb.io/",
+        "icon": "https://www.k8gb.io/images/k8gb-icon-color.svg",
+        "keywords": [
+          "gslb",
+          "dns-lb",
+          "kuberneters-global-balancer",
+          "kubernetes-operator",
+          "balancer",
+          "multi-cluster"
+        ],
+        "kubeVersion": "\u003e= 1.21.0-0",
+        "maintainers": [
+          {
+            "name": "Andre Baptista Aguas",
+            "email": "andre.aguas@protonmail.com"
+          },
+          {
+            "name": "Dinar Valeev",
+            "email": "dinar.valeev@absa.africa"
+          },
+          {
+            "name": "Jiri Kremser",
+            "email": "jiri.kremser@gmail.com"
+          },
+          {
+            "name": "Michal Kuritka",
+            "email": "kuritka@gmail.com"
+          },
+          {
+            "name": "Yury Tsarev",
+            "email": "yury@upbound.io"
+          }
+        ],
+        "sources": [
+          "https://github.com/k8gb-io/k8gb"
+        ]
+      }
+    }
+  },
+  "serviceAccountData": [
+    {
+      "serviceAccountName": "k8gb",
+      "namespace": "default",
+      "automountToken": false,
+      "secrets": null,
+      "imagePullSecrets": null
+    },
+    {
+      "serviceAccountName": "k8gb-external-dns",
+      "namespace": "default",
+      "automountToken": true,
+      "secrets": null,
+      "imagePullSecrets": null
+    },
+    {
+      "serviceAccountName": "coredns",
+      "namespace": "default",
+      "automountToken": false,
+      "secrets": null,
+      "imagePullSecrets": null
+    }
+  ],
+  "serviceAccountPermissions": [
+    {
+      "serviceAccountName": "coredns",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "k8gb-coredns",
+      "apiGroup": "",
+      "resource": "endpoints",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "coredns",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "k8gb-coredns",
+      "apiGroup": "",
+      "resource": "services",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "coredns",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "k8gb-coredns",
+      "apiGroup": "",
+      "resource": "pods",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "coredns",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "k8gb-coredns",
+      "apiGroup": "",
+      "resource": "namespaces",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [
+        "InformationDisclosure",
+        "Reconnaissance",
+        "ClusterStructure"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1082,
+          "name": "List Namespaces (Cluster Reconnaissance)",
+          "link": "https://rbac-atlas.github.io/rules/1082/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "coredns",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "k8gb-coredns",
+      "apiGroup": "discovery.k8s.io",
+      "resource": "endpointslices",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "coredns",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "coredns-cluster-role",
+      "apiGroup": "",
+      "resource": "namespaces",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [
+        "ClusterStructure",
+        "InformationDisclosure",
+        "Reconnaissance"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1082,
+          "name": "List Namespaces (Cluster Reconnaissance)",
+          "link": "https://rbac-atlas.github.io/rules/1082/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "coredns",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "coredns-cluster-role",
+      "apiGroup": "externaldns.k8s.io",
+      "resource": "dnsendpoints",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "k8gb",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "k8gb",
+      "apiGroup": "",
+      "resource": "events",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "patch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "k8gb",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "k8gb",
+      "apiGroup": "",
+      "resource": "services",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "k8gb",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "k8gb",
+      "apiGroup": "",
+      "resource": "namespaces",
+      "resourceName": "",
+      "verbs": [
+        "list"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "k8gb",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "k8gb",
+      "apiGroup": "discovery.k8s.io",
+      "resource": "endpointslices",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "k8gb",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "k8gb",
+      "apiGroup": "k8gb.absa.oss",
+      "resource": "*",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "WildcardPermission",
+        "ClusterWideAccess"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "k8gb",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "k8gb",
+      "apiGroup": "k8gb.absa.oss",
+      "resource": "gslbs",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "ClusterWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "k8gb",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "k8gb",
+      "apiGroup": "networking.k8s.io",
+      "resource": "ingresses",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "DenialOfService",
+        "ClusterWideAccess",
+        "WildcardPermission",
+        "NetworkManipulation",
+        "ServiceExposure",
+        "Tampering"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1091,
+          "name": "Manage Ingresses (Namespace Service Exposure/Traffic Redirection)",
+          "link": "https://rbac-atlas.github.io/rules/1091/"
+        },
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "k8gb",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "k8gb",
+      "apiGroup": "externaldns.k8s.io",
+      "resource": "dnsendpoints",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "ClusterWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9998,
+          "name": "Base Risk Level - High",
+          "link": "https://rbac-atlas.github.io/rules/9998/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "k8gb",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "k8gb",
+      "apiGroup": "networking.istio.io",
+      "resource": "virtualservices",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "k8gb",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "k8gb",
+      "apiGroup": "networking.istio.io",
+      "resource": "gateways",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "k8gb-external-dns",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "k8gb-external-dns",
+      "apiGroup": "",
+      "resource": "pods",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "k8gb-external-dns",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "k8gb-external-dns",
+      "apiGroup": "",
+      "resource": "services",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "k8gb-external-dns",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "k8gb-external-dns",
+      "apiGroup": "",
+      "resource": "nodes",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "k8gb-external-dns",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "k8gb-external-dns",
+      "apiGroup": "discovery.k8s.io",
+      "resource": "endpointslices",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "k8gb-external-dns",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "k8gb-external-dns",
+      "apiGroup": "extensions",
+      "resource": "ingresses",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "k8gb-external-dns",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "k8gb-external-dns",
+      "apiGroup": "networking.k8s.io",
+      "resource": "ingresses",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    }
+  ],
+  "serviceAccountWorkloads": [
+    {
+      "serviceAccountName": "k8gb",
+      "namespace": "default",
+      "workloadType": "Deployment",
+      "workloadName": "k8gb",
+      "containerName": "k8gb",
+      "image": "docker.io/absaoss/k8gb:v0.16.0"
+    },
+    {
+      "serviceAccountName": "k8gb-external-dns",
+      "namespace": "default",
+      "workloadType": "Deployment",
+      "workloadName": "k8gb-external-dns",
+      "containerName": "external-dns",
+      "image": "registry.k8s.io/external-dns/external-dns:v0.19.0"
+    },
+    {
+      "serviceAccountName": "coredns",
+      "namespace": "default",
+      "workloadType": "Deployment",
+      "workloadName": "k8gb-coredns",
+      "containerName": "coredns",
+      "image": "absaoss/k8s_crd:v0.1.2"
+    }
+  ]
+}

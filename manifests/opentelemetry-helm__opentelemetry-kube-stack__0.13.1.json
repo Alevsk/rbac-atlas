@@ -3,7 +3,7 @@
     "version": "0.13.1",
     "name": "opentelemetry-kube-stack",
     "source": "charts/opentelemetry-helm__opentelemetry-kube-stack__0.13.1/",
-    "timestamp": 1769479922,
+    "timestamp": 1769794171,
     "extra": {
       "helm": {
         "description": "OpenTelemetry Quickstart chart for Kubernetes. Installs an operator and collector for an easy way to get started with Kubernetes observability. ",
@@ -33,7 +33,7 @@
   },
   "serviceAccountData": [
     {
-      "serviceAccountName": "delete-resources-sa",
+      "serviceAccountName": "opentelemetry-kube-stack-prometheus-node-exporter",
       "namespace": "default",
       "automountToken": false,
       "secrets": null,
@@ -43,13 +43,6 @@
       "serviceAccountName": "opentelemetry-operator",
       "namespace": "default",
       "automountToken": true,
-      "secrets": null,
-      "imagePullSecrets": null
-    },
-    {
-      "serviceAccountName": "opentelemetry-kube-stack-prometheus-node-exporter",
-      "namespace": "default",
-      "automountToken": false,
       "secrets": null,
       "imagePullSecrets": null
     },
@@ -59,923 +52,21 @@
       "automountToken": true,
       "secrets": null,
       "imagePullSecrets": null
+    },
+    {
+      "serviceAccountName": "delete-resources-sa",
+      "namespace": "default",
+      "automountToken": false,
+      "secrets": null,
+      "imagePullSecrets": null
     }
   ],
   "serviceAccountPermissions": [
     {
-      "serviceAccountName": "opentelemetry-kube-stack-daemon-collector",
+      "serviceAccountName": "opentelemetry-operator",
       "namespace": "default",
       "roleType": "ClusterRole",
-      "roleName": "opentelemetry-kube-stack-collector",
-      "apiGroup": "",
-      "resource": "nodes/metrics",
-      "resourceName": "",
-      "verbs": [
-        "get",
-        "list",
-        "watch"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "opentelemetry-kube-stack-daemon-collector",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "opentelemetry-kube-stack-collector",
-      "apiGroup": "",
-      "resource": "nodes/spec",
-      "resourceName": "",
-      "verbs": [
-        "get",
-        "list",
-        "watch"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "opentelemetry-kube-stack-daemon-collector",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "opentelemetry-kube-stack-collector",
-      "apiGroup": "",
-      "resource": "replicationcontrollers/status",
-      "resourceName": "",
-      "verbs": [
-        "get",
-        "list",
-        "watch"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "opentelemetry-kube-stack-daemon-collector",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "opentelemetry-kube-stack-collector",
-      "apiGroup": "",
-      "resource": "nodes/proxy",
-      "resourceName": "",
-      "verbs": [
-        "get",
-        "list",
-        "watch"
-      ],
-      "riskLevel": "Critical",
-      "tags": [
-        "LateralMovement",
-        "ElevationOfPrivilege",
-        "AuthorizationBypass",
-        "NodeAccess",
-        "ClusterAdminAccess",
-        "CodeExecution"
-      ],
-      "matchedRiskRules": [
-        {
-          "id": 1104,
-          "name": "Node proxy GET RCE via WebSocket",
-          "link": "https://rbac-atlas.github.io/rules/1104/"
-        },
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "opentelemetry-kube-stack-daemon-collector",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "opentelemetry-kube-stack-collector",
-      "apiGroup": "",
-      "resource": "nodes/stats",
-      "resourceName": "",
-      "verbs": [
-        "get",
-        "list",
-        "watch"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "opentelemetry-kube-stack-daemon-collector",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "opentelemetry-kube-stack-collector",
-      "apiGroup": "",
-      "resource": "services",
-      "resourceName": "",
-      "verbs": [
-        "get",
-        "list",
-        "watch"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "opentelemetry-kube-stack-daemon-collector",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "opentelemetry-kube-stack-collector",
-      "apiGroup": "",
-      "resource": "endpoints",
-      "resourceName": "",
-      "verbs": [
-        "get",
-        "list",
-        "watch"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "opentelemetry-kube-stack-daemon-collector",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "opentelemetry-kube-stack-collector",
-      "apiGroup": "",
-      "resource": "pods/status",
-      "resourceName": "",
-      "verbs": [
-        "get",
-        "list",
-        "watch"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "opentelemetry-kube-stack-daemon-collector",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "opentelemetry-kube-stack-collector",
-      "apiGroup": "",
-      "resource": "namespaces",
-      "resourceName": "",
-      "verbs": [
-        "get",
-        "list",
-        "watch"
-      ],
-      "riskLevel": "Low",
-      "tags": [
-        "InformationDisclosure",
-        "Reconnaissance",
-        "ClusterStructure"
-      ],
-      "matchedRiskRules": [
-        {
-          "id": 1082,
-          "name": "List Namespaces (Cluster Reconnaissance)",
-          "link": "https://rbac-atlas.github.io/rules/1082/"
-        },
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "opentelemetry-kube-stack-daemon-collector",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "opentelemetry-kube-stack-collector",
-      "apiGroup": "",
-      "resource": "nodes",
-      "resourceName": "",
-      "verbs": [
-        "get",
-        "list",
-        "watch"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "opentelemetry-kube-stack-daemon-collector",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "opentelemetry-kube-stack-collector",
-      "apiGroup": "",
-      "resource": "events",
-      "resourceName": "",
-      "verbs": [
-        "get",
-        "list",
-        "watch"
-      ],
-      "riskLevel": "Medium",
-      "tags": [
-        "OperationalData",
-        "InformationDisclosure",
-        "Reconnaissance"
-      ],
-      "matchedRiskRules": [
-        {
-          "id": 1070,
-          "name": "Read events cluster-wide",
-          "link": "https://rbac-atlas.github.io/rules/1070/"
-        },
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "opentelemetry-kube-stack-daemon-collector",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "opentelemetry-kube-stack-collector",
-      "apiGroup": "",
-      "resource": "secrets",
-      "resourceName": "",
-      "verbs": [
-        "get",
-        "list",
-        "watch"
-      ],
-      "riskLevel": "Critical",
-      "tags": [
-        "ClusterWideSecretAccess",
-        "CredentialAccess",
-        "DataExposure",
-        "InformationDisclosure",
-        "SecretAccess"
-      ],
-      "matchedRiskRules": [
-        {
-          "id": 1010,
-          "name": "Read secrets cluster-wide",
-          "link": "https://rbac-atlas.github.io/rules/1010/"
-        },
-        {
-          "id": 1011,
-          "name": "Read secrets in a namespace",
-          "link": "https://rbac-atlas.github.io/rules/1011/"
-        },
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "opentelemetry-kube-stack-daemon-collector",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "opentelemetry-kube-stack-collector",
-      "apiGroup": "",
-      "resource": "replicationcontrollers",
-      "resourceName": "",
-      "verbs": [
-        "get",
-        "list",
-        "watch"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "opentelemetry-kube-stack-daemon-collector",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "opentelemetry-kube-stack-collector",
-      "apiGroup": "",
-      "resource": "pods",
-      "resourceName": "",
-      "verbs": [
-        "get",
-        "list",
-        "watch"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "opentelemetry-kube-stack-daemon-collector",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "opentelemetry-kube-stack-collector",
-      "apiGroup": "",
-      "resource": "persistentvolumeclaims",
-      "resourceName": "",
-      "verbs": [
-        "get",
-        "list",
-        "watch"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "opentelemetry-kube-stack-daemon-collector",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "opentelemetry-kube-stack-collector",
-      "apiGroup": "",
-      "resource": "persistentvolumes",
-      "resourceName": "",
-      "verbs": [
-        "get",
-        "list",
-        "watch"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "opentelemetry-kube-stack-daemon-collector",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "opentelemetry-kube-stack-collector",
-      "apiGroup": "",
-      "resource": "namespaces/status",
-      "resourceName": "",
-      "verbs": [
-        "get",
-        "list",
-        "watch"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "opentelemetry-kube-stack-daemon-collector",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "opentelemetry-kube-stack-collector",
-      "apiGroup": "",
-      "resource": "resourcequotas",
-      "resourceName": "",
-      "verbs": [
-        "get",
-        "list",
-        "watch"
-      ],
-      "riskLevel": "Medium",
-      "tags": [
-        "InformationDisclosure",
-        "Reconnaissance",
-        "ResourceConfiguration",
-        "QuotaTampering"
-      ],
-      "matchedRiskRules": [
-        {
-          "id": 1089,
-          "name": "Read All ResourceQuotas (Cluster-wide Information Disclosure)",
-          "link": "https://rbac-atlas.github.io/rules/1089/"
-        },
-        {
-          "id": 1088,
-          "name": "Read ResourceQuotas (Namespace Information Disclosure)",
-          "link": "https://rbac-atlas.github.io/rules/1088/"
-        },
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "opentelemetry-kube-stack-daemon-collector",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "opentelemetry-kube-stack-collector",
-      "apiGroup": "monitoring.coreos.com",
-      "resource": "servicemonitors",
-      "resourceName": "",
-      "verbs": [
-        "get",
-        "list",
-        "watch"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "opentelemetry-kube-stack-daemon-collector",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "opentelemetry-kube-stack-collector",
-      "apiGroup": "monitoring.coreos.com",
-      "resource": "podmonitors",
-      "resourceName": "",
-      "verbs": [
-        "get",
-        "list",
-        "watch"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "opentelemetry-kube-stack-daemon-collector",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "opentelemetry-kube-stack-collector",
-      "apiGroup": "monitoring.coreos.com",
-      "resource": "scrapeconfigs",
-      "resourceName": "",
-      "verbs": [
-        "get",
-        "list",
-        "watch"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "opentelemetry-kube-stack-daemon-collector",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "opentelemetry-kube-stack-collector",
-      "apiGroup": "monitoring.coreos.com",
-      "resource": "probes",
-      "resourceName": "",
-      "verbs": [
-        "get",
-        "list",
-        "watch"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "opentelemetry-kube-stack-daemon-collector",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "opentelemetry-kube-stack-collector",
-      "apiGroup": "networking.k8s.io",
-      "resource": "ingresses",
-      "resourceName": "",
-      "verbs": [
-        "get",
-        "list",
-        "watch"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "opentelemetry-kube-stack-daemon-collector",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "opentelemetry-kube-stack-collector",
-      "apiGroup": "coordination.k8s.io",
-      "resource": "leases",
-      "resourceName": "",
-      "verbs": [
-        "create",
-        "delete",
-        "get",
-        "list",
-        "patch",
-        "update",
-        "watch"
-      ],
-      "riskLevel": "Critical",
-      "tags": [
-        "Tampering",
-        "DenialOfService",
-        "ControlPlaneDisruption",
-        "LeaderElectionAbuse",
-        "CriticalNamespace"
-      ],
-      "matchedRiskRules": [
-        {
-          "id": 1080,
-          "name": "Manage Leases cluster-wide",
-          "link": "https://rbac-atlas.github.io/rules/1080/"
-        },
-        {
-          "id": 1081,
-          "name": "Manage Leases in kube-system or kube-node-lease namespace",
-          "link": "https://rbac-atlas.github.io/rules/1081/"
-        },
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "opentelemetry-kube-stack-daemon-collector",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "opentelemetry-kube-stack-collector",
-      "apiGroup": "extensions",
-      "resource": "daemonsets",
-      "resourceName": "",
-      "verbs": [
-        "get",
-        "list",
-        "watch"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "opentelemetry-kube-stack-daemon-collector",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "opentelemetry-kube-stack-collector",
-      "apiGroup": "extensions",
-      "resource": "deployments",
-      "resourceName": "",
-      "verbs": [
-        "get",
-        "list",
-        "watch"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "opentelemetry-kube-stack-daemon-collector",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "opentelemetry-kube-stack-collector",
-      "apiGroup": "extensions",
-      "resource": "replicasets",
-      "resourceName": "",
-      "verbs": [
-        "get",
-        "list",
-        "watch"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "opentelemetry-kube-stack-daemon-collector",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "opentelemetry-kube-stack-collector",
-      "apiGroup": "extensions",
-      "resource": "ingresses",
-      "resourceName": "",
-      "verbs": [
-        "get",
-        "list",
-        "watch"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "opentelemetry-kube-stack-daemon-collector",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "opentelemetry-kube-stack-collector",
-      "apiGroup": "apps",
-      "resource": "daemonsets",
-      "resourceName": "",
-      "verbs": [
-        "get",
-        "list",
-        "watch"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "opentelemetry-kube-stack-daemon-collector",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "opentelemetry-kube-stack-collector",
-      "apiGroup": "apps",
-      "resource": "deployments",
-      "resourceName": "",
-      "verbs": [
-        "get",
-        "list",
-        "watch"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "opentelemetry-kube-stack-daemon-collector",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "opentelemetry-kube-stack-collector",
-      "apiGroup": "apps",
-      "resource": "replicasets",
-      "resourceName": "",
-      "verbs": [
-        "get",
-        "list",
-        "watch"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "opentelemetry-kube-stack-daemon-collector",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "opentelemetry-kube-stack-collector",
-      "apiGroup": "apps",
-      "resource": "statefulsets",
-      "resourceName": "",
-      "verbs": [
-        "get",
-        "list",
-        "watch"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "opentelemetry-kube-stack-daemon-collector",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "opentelemetry-kube-stack-collector",
-      "apiGroup": "discovery.k8s.io",
-      "resource": "endpointslices",
-      "resourceName": "",
-      "verbs": [
-        "get",
-        "list",
-        "watch"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "opentelemetry-kube-stack-daemon-collector",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "opentelemetry-kube-stack-collector",
-      "apiGroup": "batch",
-      "resource": "jobs",
-      "resourceName": "",
-      "verbs": [
-        "get",
-        "list",
-        "watch"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "opentelemetry-kube-stack-daemon-collector",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "opentelemetry-kube-stack-collector",
-      "apiGroup": "batch",
-      "resource": "cronjobs",
-      "resourceName": "",
-      "verbs": [
-        "get",
-        "list",
-        "watch"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "opentelemetry-kube-stack-daemon-collector",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "opentelemetry-kube-stack-collector",
-      "apiGroup": "autoscaling",
-      "resource": "horizontalpodautoscalers",
-      "resourceName": "",
-      "verbs": [
-        "get",
-        "list",
-        "watch"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "opentelemetry-kube-stack-daemon-collector",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "opentelemetry-kube-stack-collector",
+      "roleName": "opentelemetry-kube-stack-opentelemetry-operator-manager",
       "apiGroup": "events.k8s.io",
       "resource": "events",
       "resourceName": "",
@@ -985,9 +76,9 @@
       ],
       "riskLevel": "Medium",
       "tags": [
+        "InformationDisclosure",
         "Reconnaissance",
-        "OperationalData",
-        "InformationDisclosure"
+        "OperationalData"
       ],
       "matchedRiskRules": [
         {
@@ -1005,858 +96,8 @@
     {
       "serviceAccountName": "opentelemetry-operator",
       "namespace": "default",
-      "roleType": "Role",
-      "roleName": "opentelemetry-kube-stack-opentelemetry-operator-leader-election",
-      "apiGroup": "apps",
-      "resource": "deployments",
-      "resourceName": "",
-      "verbs": [
-        "create",
-        "delete",
-        "get",
-        "list",
-        "patch",
-        "update",
-        "watch"
-      ],
-      "riskLevel": "High",
-      "tags": [
-        "PotentialPrivilegeEscalation",
-        "Persistence",
-        "Tampering",
-        "WorkloadLifecycle"
-      ],
-      "matchedRiskRules": [
-        {
-          "id": 1034,
-          "name": "Manage Deployments in a namespace (potential for privileged pod execution)",
-          "link": "https://rbac-atlas.github.io/rules/1034/"
-        },
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "opentelemetry-operator",
-      "namespace": "default",
-      "roleType": "Role",
-      "roleName": "opentelemetry-kube-stack-opentelemetry-operator-leader-election",
-      "apiGroup": "apps",
-      "resource": "statefulsets",
-      "resourceName": "",
-      "verbs": [
-        "create",
-        "delete",
-        "get",
-        "list",
-        "patch",
-        "update",
-        "watch"
-      ],
-      "riskLevel": "High",
-      "tags": [
-        "PotentialPrivilegeEscalation",
-        "Persistence",
-        "Tampering",
-        "WorkloadLifecycle"
-      ],
-      "matchedRiskRules": [
-        {
-          "id": 1038,
-          "name": "Manage StatefulSets in a namespace",
-          "link": "https://rbac-atlas.github.io/rules/1038/"
-        },
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "opentelemetry-operator",
-      "namespace": "default",
-      "roleType": "Role",
-      "roleName": "opentelemetry-kube-stack-opentelemetry-operator-leader-election",
-      "apiGroup": "apps",
-      "resource": "replicasets",
-      "resourceName": "",
-      "verbs": [
-        "get",
-        "list",
-        "watch"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "opentelemetry-operator",
-      "namespace": "default",
-      "roleType": "Role",
-      "roleName": "opentelemetry-kube-stack-opentelemetry-operator-leader-election",
-      "apiGroup": "apps",
-      "resource": "daemonsets",
-      "resourceName": "",
-      "verbs": [
-        "create",
-        "delete",
-        "get",
-        "list",
-        "patch",
-        "update",
-        "watch"
-      ],
-      "riskLevel": "Critical",
-      "tags": [
-        "Tampering",
-        "WorkloadLifecycle",
-        "PrivilegeEscalation",
-        "Persistence",
-        "NodeAccess"
-      ],
-      "matchedRiskRules": [
-        {
-          "id": 1036,
-          "name": "Manage DaemonSets in a namespace (runs on nodes, high impact)",
-          "link": "https://rbac-atlas.github.io/rules/1036/"
-        },
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "opentelemetry-operator",
-      "namespace": "default",
-      "roleType": "Role",
-      "roleName": "opentelemetry-kube-stack-opentelemetry-operator-leader-election",
-      "apiGroup": "autoscaling",
-      "resource": "horizontalpodautoscalers",
-      "resourceName": "",
-      "verbs": [
-        "create",
-        "delete",
-        "get",
-        "list",
-        "patch",
-        "update",
-        "watch"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "opentelemetry-operator",
-      "namespace": "default",
-      "roleType": "Role",
-      "roleName": "opentelemetry-kube-stack-opentelemetry-operator-leader-election",
-      "apiGroup": "batch",
-      "resource": "jobs",
-      "resourceName": "",
-      "verbs": [
-        "get",
-        "list",
-        "watch"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "opentelemetry-operator",
-      "namespace": "default",
-      "roleType": "Role",
-      "roleName": "opentelemetry-kube-stack-opentelemetry-operator-leader-election",
-      "apiGroup": "opentelemetry.io",
-      "resource": "opampbridges",
-      "resourceName": "",
-      "verbs": [
-        "create",
-        "delete",
-        "get",
-        "list",
-        "patch",
-        "update",
-        "watch"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "opentelemetry-operator",
-      "namespace": "default",
-      "roleType": "Role",
-      "roleName": "opentelemetry-kube-stack-opentelemetry-operator-leader-election",
-      "apiGroup": "opentelemetry.io",
-      "resource": "opampbridges/status",
-      "resourceName": "",
-      "verbs": [
-        "get",
-        "patch",
-        "update"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "opentelemetry-operator",
-      "namespace": "default",
-      "roleType": "Role",
-      "roleName": "opentelemetry-kube-stack-opentelemetry-operator-leader-election",
-      "apiGroup": "opentelemetry.io",
-      "resource": "opentelemetrycollectors/finalizers",
-      "resourceName": "",
-      "verbs": [
-        "get",
-        "patch",
-        "update"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "opentelemetry-operator",
-      "namespace": "default",
-      "roleType": "Role",
-      "roleName": "opentelemetry-kube-stack-opentelemetry-operator-leader-election",
-      "apiGroup": "opentelemetry.io",
-      "resource": "opentelemetrycollectors/status",
-      "resourceName": "",
-      "verbs": [
-        "get",
-        "patch",
-        "update"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "opentelemetry-operator",
-      "namespace": "default",
-      "roleType": "Role",
-      "roleName": "opentelemetry-kube-stack-opentelemetry-operator-leader-election",
-      "apiGroup": "opentelemetry.io",
-      "resource": "instrumentations",
-      "resourceName": "",
-      "verbs": [
-        "get",
-        "list",
-        "patch",
-        "update",
-        "watch"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "opentelemetry-operator",
-      "namespace": "default",
-      "roleType": "Role",
-      "roleName": "opentelemetry-kube-stack-opentelemetry-operator-leader-election",
-      "apiGroup": "opentelemetry.io",
-      "resource": "targetallocators",
-      "resourceName": "",
-      "verbs": [
-        "create",
-        "delete",
-        "get",
-        "list",
-        "patch",
-        "update",
-        "watch"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "opentelemetry-operator",
-      "namespace": "default",
-      "roleType": "Role",
-      "roleName": "opentelemetry-kube-stack-opentelemetry-operator-leader-election",
-      "apiGroup": "opentelemetry.io",
-      "resource": "opampbridges/finalizers",
-      "resourceName": "",
-      "verbs": [
-        "update"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "opentelemetry-operator",
-      "namespace": "default",
-      "roleType": "Role",
-      "roleName": "opentelemetry-kube-stack-opentelemetry-operator-leader-election",
-      "apiGroup": "opentelemetry.io",
-      "resource": "targetallocators/status",
-      "resourceName": "",
-      "verbs": [
-        "get",
-        "patch",
-        "update"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "opentelemetry-operator",
-      "namespace": "default",
-      "roleType": "Role",
-      "roleName": "opentelemetry-kube-stack-opentelemetry-operator-leader-election",
-      "apiGroup": "opentelemetry.io",
-      "resource": "targetallocators/finalizers",
-      "resourceName": "",
-      "verbs": [
-        "get",
-        "patch",
-        "update"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "opentelemetry-operator",
-      "namespace": "default",
-      "roleType": "Role",
-      "roleName": "opentelemetry-kube-stack-opentelemetry-operator-leader-election",
-      "apiGroup": "opentelemetry.io",
-      "resource": "opentelemetrycollectors",
-      "resourceName": "",
-      "verbs": [
-        "get",
-        "list",
-        "patch",
-        "update",
-        "watch"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "opentelemetry-operator",
-      "namespace": "default",
-      "roleType": "Role",
-      "roleName": "opentelemetry-kube-stack-opentelemetry-operator-leader-election",
-      "apiGroup": "policy",
-      "resource": "poddisruptionbudgets",
-      "resourceName": "",
-      "verbs": [
-        "create",
-        "delete",
-        "get",
-        "list",
-        "patch",
-        "update",
-        "watch"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "opentelemetry-operator",
-      "namespace": "default",
-      "roleType": "Role",
-      "roleName": "opentelemetry-kube-stack-opentelemetry-operator-leader-election",
-      "apiGroup": "",
-      "resource": "configmaps",
-      "resourceName": "",
-      "verbs": [
-        "create",
-        "delete",
-        "get",
-        "list",
-        "patch",
-        "update",
-        "watch"
-      ],
-      "riskLevel": "High",
-      "tags": [
-        "Tampering",
-        "ConfigMapAccess",
-        "PotentialPrivilegeEscalation",
-        "InformationDisclosure",
-        "DataExposure"
-      ],
-      "matchedRiskRules": [
-        {
-          "id": 1025,
-          "name": "Modify ConfigMaps in a namespace",
-          "link": "https://rbac-atlas.github.io/rules/1025/"
-        },
-        {
-          "id": 1023,
-          "name": "Read ConfigMaps in a namespace",
-          "link": "https://rbac-atlas.github.io/rules/1023/"
-        },
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "opentelemetry-operator",
-      "namespace": "default",
-      "roleType": "Role",
-      "roleName": "opentelemetry-kube-stack-opentelemetry-operator-leader-election",
-      "apiGroup": "",
-      "resource": "pods",
-      "resourceName": "",
-      "verbs": [
-        "create",
-        "delete",
-        "get",
-        "list",
-        "patch",
-        "update",
-        "watch"
-      ],
-      "riskLevel": "High",
-      "tags": [
-        "LateralMovement",
-        "Persistence",
-        "Tampering",
-        "WorkloadExecution",
-        "PotentialPrivilegeEscalation"
-      ],
-      "matchedRiskRules": [
-        {
-          "id": 1007,
-          "name": "Create pods in a namespace",
-          "link": "https://rbac-atlas.github.io/rules/1007/"
-        },
-        {
-          "id": 1009,
-          "name": "Update/Patch pods in a namespace",
-          "link": "https://rbac-atlas.github.io/rules/1009/"
-        },
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "opentelemetry-operator",
-      "namespace": "default",
-      "roleType": "Role",
-      "roleName": "opentelemetry-kube-stack-opentelemetry-operator-leader-election",
-      "apiGroup": "",
-      "resource": "serviceaccounts",
-      "resourceName": "",
-      "verbs": [
-        "create",
-        "delete",
-        "get",
-        "list",
-        "patch",
-        "update",
-        "watch"
-      ],
-      "riskLevel": "Medium",
-      "tags": [
-        "IdentityManagement",
-        "PotentialPrivilegeEscalation",
-        "Tampering"
-      ],
-      "matchedRiskRules": [
-        {
-          "id": 1068,
-          "name": "Manage ServiceAccounts in a namespace",
-          "link": "https://rbac-atlas.github.io/rules/1068/"
-        },
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "opentelemetry-operator",
-      "namespace": "default",
-      "roleType": "Role",
-      "roleName": "opentelemetry-kube-stack-opentelemetry-operator-leader-election",
-      "apiGroup": "",
-      "resource": "services",
-      "resourceName": "",
-      "verbs": [
-        "create",
-        "delete",
-        "get",
-        "list",
-        "patch",
-        "update",
-        "watch"
-      ],
-      "riskLevel": "High",
-      "tags": [
-        "NetworkManipulation",
-        "ServiceExposure",
-        "DenialOfService",
-        "Tampering"
-      ],
-      "matchedRiskRules": [
-        {
-          "id": 1076,
-          "name": "Manage Services in a namespace",
-          "link": "https://rbac-atlas.github.io/rules/1076/"
-        },
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "opentelemetry-operator",
-      "namespace": "default",
-      "roleType": "Role",
-      "roleName": "opentelemetry-kube-stack-opentelemetry-operator-leader-election",
-      "apiGroup": "",
-      "resource": "events",
-      "resourceName": "",
-      "verbs": [
-        "create",
-        "patch"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "opentelemetry-operator",
-      "namespace": "default",
-      "roleType": "Role",
-      "roleName": "opentelemetry-kube-stack-opentelemetry-operator-leader-election",
-      "apiGroup": "",
-      "resource": "namespaces",
-      "resourceName": "",
-      "verbs": [
-        "get",
-        "list",
-        "watch"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "opentelemetry-operator",
-      "namespace": "default",
-      "roleType": "Role",
-      "roleName": "opentelemetry-kube-stack-opentelemetry-operator-leader-election",
-      "apiGroup": "",
-      "resource": "secrets",
-      "resourceName": "",
-      "verbs": [
-        "get",
-        "list",
-        "watch"
-      ],
-      "riskLevel": "Critical",
-      "tags": [
-        "SecretAccess",
-        "CredentialAccess",
-        "DataExposure",
-        "InformationDisclosure"
-      ],
-      "matchedRiskRules": [
-        {
-          "id": 1011,
-          "name": "Read secrets in a namespace",
-          "link": "https://rbac-atlas.github.io/rules/1011/"
-        },
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "opentelemetry-operator",
-      "namespace": "default",
-      "roleType": "Role",
-      "roleName": "opentelemetry-kube-stack-opentelemetry-operator-leader-election",
-      "apiGroup": "config.openshift.io",
-      "resource": "infrastructures",
-      "resourceName": "",
-      "verbs": [
-        "get",
-        "list",
-        "watch"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "opentelemetry-operator",
-      "namespace": "default",
-      "roleType": "Role",
-      "roleName": "opentelemetry-kube-stack-opentelemetry-operator-leader-election",
-      "apiGroup": "config.openshift.io",
-      "resource": "infrastructures/status",
-      "resourceName": "",
-      "verbs": [
-        "get",
-        "list",
-        "watch"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "opentelemetry-operator",
-      "namespace": "default",
-      "roleType": "Role",
-      "roleName": "opentelemetry-kube-stack-opentelemetry-operator-leader-election",
-      "apiGroup": "coordination.k8s.io",
-      "resource": "leases",
-      "resourceName": "",
-      "verbs": [
-        "create",
-        "get",
-        "list",
-        "update"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "opentelemetry-operator",
-      "namespace": "default",
-      "roleType": "Role",
-      "roleName": "opentelemetry-kube-stack-opentelemetry-operator-leader-election",
-      "apiGroup": "monitoring.coreos.com",
-      "resource": "podmonitors",
-      "resourceName": "",
-      "verbs": [
-        "create",
-        "delete",
-        "get",
-        "list",
-        "patch",
-        "update",
-        "watch"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "opentelemetry-operator",
-      "namespace": "default",
-      "roleType": "Role",
-      "roleName": "opentelemetry-kube-stack-opentelemetry-operator-leader-election",
-      "apiGroup": "monitoring.coreos.com",
-      "resource": "servicemonitors",
-      "resourceName": "",
-      "verbs": [
-        "create",
-        "delete",
-        "get",
-        "list",
-        "patch",
-        "update",
-        "watch"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "opentelemetry-operator",
-      "namespace": "default",
-      "roleType": "Role",
-      "roleName": "opentelemetry-kube-stack-opentelemetry-operator-leader-election",
-      "apiGroup": "networking.k8s.io",
-      "resource": "ingresses",
-      "resourceName": "",
-      "verbs": [
-        "create",
-        "delete",
-        "get",
-        "list",
-        "patch",
-        "update",
-        "watch"
-      ],
-      "riskLevel": "High",
-      "tags": [
-        "Tampering",
-        "DenialOfService",
-        "NetworkManipulation",
-        "ServiceExposure"
-      ],
-      "matchedRiskRules": [
-        {
-          "id": 1091,
-          "name": "Manage Ingresses (Namespace Service Exposure/Traffic Redirection)",
-          "link": "https://rbac-atlas.github.io/rules/1091/"
-        },
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "opentelemetry-operator",
-      "namespace": "default",
-      "roleType": "Role",
-      "roleName": "opentelemetry-kube-stack-opentelemetry-operator-leader-election",
+      "roleType": "ClusterRole",
+      "roleName": "opentelemetry-kube-stack-opentelemetry-operator-manager",
       "apiGroup": "route.openshift.io",
       "resource": "routes",
       "resourceName": "",
@@ -1882,8 +123,8 @@
     {
       "serviceAccountName": "opentelemetry-operator",
       "namespace": "default",
-      "roleType": "Role",
-      "roleName": "opentelemetry-kube-stack-opentelemetry-operator-leader-election",
+      "roleType": "ClusterRole",
+      "roleName": "opentelemetry-kube-stack-opentelemetry-operator-manager",
       "apiGroup": "route.openshift.io",
       "resource": "routes/custom-host",
       "resourceName": "",
@@ -1911,23 +152,111 @@
       "namespace": "default",
       "roleType": "ClusterRole",
       "roleName": "opentelemetry-kube-stack-opentelemetry-operator-manager",
-      "apiGroup": "authorization.k8s.io",
-      "resource": "subjectaccessreviews",
+      "apiGroup": "policy",
+      "resource": "poddisruptionbudgets",
       "resourceName": "",
       "verbs": [
-        "create"
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
       ],
       "riskLevel": "Medium",
       "tags": [
-        "InformationDisclosure",
-        "RBACQuery"
+        "DenialOfService",
+        "AvailabilityImpact",
+        "Tampering"
       ],
       "matchedRiskRules": [
         {
-          "id": 1050,
-          "name": "Create SubjectAccessReviews (check arbitrary permissions)",
-          "link": "https://rbac-atlas.github.io/rules/1050/"
+          "id": 1079,
+          "name": "Manage PodDisruptionBudgets cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1079/"
         },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "opentelemetry-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "opentelemetry-kube-stack-opentelemetry-operator-manager",
+      "apiGroup": "cert-manager.io",
+      "resource": "certificaterequests",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "opentelemetry-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "opentelemetry-kube-stack-opentelemetry-operator-manager",
+      "apiGroup": "cert-manager.io",
+      "resource": "certificates",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "opentelemetry-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "opentelemetry-kube-stack-opentelemetry-operator-manager",
+      "apiGroup": "cert-manager.io",
+      "resource": "issuers",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
         {
           "id": 9996,
           "name": "Base Risk Level - Low",
@@ -2040,11 +369,11 @@
       ],
       "riskLevel": "Critical",
       "tags": [
+        "WorkloadLifecycle",
+        "PrivilegeEscalation",
         "Persistence",
         "Tampering",
-        "PotentialPrivilegeEscalation",
-        "WorkloadLifecycle",
-        "PrivilegeEscalation"
+        "PotentialPrivilegeEscalation"
       ],
       "matchedRiskRules": [
         {
@@ -2075,1104 +404,6 @@
       "verbs": [
         "get",
         "list",
-        "watch"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "opentelemetry-operator",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "opentelemetry-kube-stack-opentelemetry-operator-manager",
-      "apiGroup": "autoscaling",
-      "resource": "horizontalpodautoscalers",
-      "resourceName": "",
-      "verbs": [
-        "create",
-        "delete",
-        "get",
-        "list",
-        "patch",
-        "update",
-        "watch"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "opentelemetry-operator",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "opentelemetry-kube-stack-opentelemetry-operator-manager",
-      "apiGroup": "monitoring.coreos.com",
-      "resource": "podmonitors",
-      "resourceName": "",
-      "verbs": [
-        "create",
-        "delete",
-        "get",
-        "list",
-        "patch",
-        "update",
-        "watch"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "opentelemetry-operator",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "opentelemetry-kube-stack-opentelemetry-operator-manager",
-      "apiGroup": "monitoring.coreos.com",
-      "resource": "servicemonitors",
-      "resourceName": "",
-      "verbs": [
-        "create",
-        "delete",
-        "get",
-        "list",
-        "patch",
-        "update",
-        "watch"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "opentelemetry-operator",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "opentelemetry-kube-stack-opentelemetry-operator-manager",
-      "apiGroup": "networking.k8s.io",
-      "resource": "ingresses",
-      "resourceName": "",
-      "verbs": [
-        "create",
-        "delete",
-        "get",
-        "list",
-        "patch",
-        "update",
-        "watch"
-      ],
-      "riskLevel": "High",
-      "tags": [
-        "NetworkManipulation",
-        "ServiceExposure",
-        "Tampering",
-        "DenialOfService"
-      ],
-      "matchedRiskRules": [
-        {
-          "id": 1091,
-          "name": "Manage Ingresses (Namespace Service Exposure/Traffic Redirection)",
-          "link": "https://rbac-atlas.github.io/rules/1091/"
-        },
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "opentelemetry-operator",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "opentelemetry-kube-stack-opentelemetry-operator-manager",
-      "apiGroup": "networking.k8s.io",
-      "resource": "networkpolicies",
-      "resourceName": "",
-      "verbs": [
-        "create",
-        "delete",
-        "get",
-        "list",
-        "patch",
-        "update",
-        "watch"
-      ],
-      "riskLevel": "Critical",
-      "tags": [
-        "NetworkPolicyManagement",
-        "NetworkManipulation",
-        "Tampering",
-        "DenialOfService",
-        "LateralMovement"
-      ],
-      "matchedRiskRules": [
-        {
-          "id": 1071,
-          "name": "Manage NetworkPolicies cluster-wide",
-          "link": "https://rbac-atlas.github.io/rules/1071/"
-        },
-        {
-          "id": 1072,
-          "name": "Manage NetworkPolicies in a namespace",
-          "link": "https://rbac-atlas.github.io/rules/1072/"
-        },
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "opentelemetry-operator",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "opentelemetry-kube-stack-opentelemetry-operator-manager",
-      "apiGroup": "opentelemetry.io",
-      "resource": "opampbridges/finalizers",
-      "resourceName": "",
-      "verbs": [
-        "update"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "opentelemetry-operator",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "opentelemetry-kube-stack-opentelemetry-operator-manager",
-      "apiGroup": "opentelemetry.io",
-      "resource": "targetallocators",
-      "resourceName": "",
-      "verbs": [
-        "create",
-        "delete",
-        "get",
-        "list",
-        "patch",
-        "update",
-        "watch"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "opentelemetry-operator",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "opentelemetry-kube-stack-opentelemetry-operator-manager",
-      "apiGroup": "opentelemetry.io",
-      "resource": "targetallocators/status",
-      "resourceName": "",
-      "verbs": [
-        "get",
-        "patch",
-        "update"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "opentelemetry-operator",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "opentelemetry-kube-stack-opentelemetry-operator-manager",
-      "apiGroup": "opentelemetry.io",
-      "resource": "targetallocators/finalizers",
-      "resourceName": "",
-      "verbs": [
-        "get",
-        "patch",
-        "update"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "opentelemetry-operator",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "opentelemetry-kube-stack-opentelemetry-operator-manager",
-      "apiGroup": "opentelemetry.io",
-      "resource": "opampbridges/status",
-      "resourceName": "",
-      "verbs": [
-        "get",
-        "patch",
-        "update"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "opentelemetry-operator",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "opentelemetry-kube-stack-opentelemetry-operator-manager",
-      "apiGroup": "opentelemetry.io",
-      "resource": "opentelemetrycollectors",
-      "resourceName": "",
-      "verbs": [
-        "get",
-        "list",
-        "patch",
-        "update",
-        "watch"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "opentelemetry-operator",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "opentelemetry-kube-stack-opentelemetry-operator-manager",
-      "apiGroup": "opentelemetry.io",
-      "resource": "opentelemetrycollectors/finalizers",
-      "resourceName": "",
-      "verbs": [
-        "get",
-        "patch",
-        "update"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "opentelemetry-operator",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "opentelemetry-kube-stack-opentelemetry-operator-manager",
-      "apiGroup": "opentelemetry.io",
-      "resource": "opentelemetrycollectors/status",
-      "resourceName": "",
-      "verbs": [
-        "get",
-        "patch",
-        "update"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "opentelemetry-operator",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "opentelemetry-kube-stack-opentelemetry-operator-manager",
-      "apiGroup": "opentelemetry.io",
-      "resource": "instrumentations",
-      "resourceName": "",
-      "verbs": [
-        "get",
-        "list",
-        "patch",
-        "update",
-        "watch"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "opentelemetry-operator",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "opentelemetry-kube-stack-opentelemetry-operator-manager",
-      "apiGroup": "opentelemetry.io",
-      "resource": "opampbridges",
-      "resourceName": "",
-      "verbs": [
-        "create",
-        "delete",
-        "get",
-        "list",
-        "patch",
-        "update",
-        "watch"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "opentelemetry-operator",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "opentelemetry-kube-stack-opentelemetry-operator-manager",
-      "apiGroup": "route.openshift.io",
-      "resource": "routes",
-      "resourceName": "",
-      "verbs": [
-        "create",
-        "delete",
-        "get",
-        "list",
-        "patch",
-        "update",
-        "watch"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "opentelemetry-operator",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "opentelemetry-kube-stack-opentelemetry-operator-manager",
-      "apiGroup": "route.openshift.io",
-      "resource": "routes/custom-host",
-      "resourceName": "",
-      "verbs": [
-        "create",
-        "delete",
-        "get",
-        "list",
-        "patch",
-        "update",
-        "watch"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "opentelemetry-operator",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "opentelemetry-kube-stack-opentelemetry-operator-manager",
-      "apiGroup": "",
-      "resource": "serviceaccounts",
-      "resourceName": "",
-      "verbs": [
-        "create",
-        "delete",
-        "get",
-        "list",
-        "patch",
-        "update",
-        "watch"
-      ],
-      "riskLevel": "High",
-      "tags": [
-        "PotentialPrivilegeEscalation",
-        "Tampering",
-        "IdentityManagement"
-      ],
-      "matchedRiskRules": [
-        {
-          "id": 1067,
-          "name": "Manage ServiceAccounts cluster-wide",
-          "link": "https://rbac-atlas.github.io/rules/1067/"
-        },
-        {
-          "id": 1068,
-          "name": "Manage ServiceAccounts in a namespace",
-          "link": "https://rbac-atlas.github.io/rules/1068/"
-        },
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "opentelemetry-operator",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "opentelemetry-kube-stack-opentelemetry-operator-manager",
-      "apiGroup": "",
-      "resource": "nodes/stats",
-      "resourceName": "",
-      "verbs": [
-        "get"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "opentelemetry-operator",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "opentelemetry-kube-stack-opentelemetry-operator-manager",
-      "apiGroup": "",
-      "resource": "services",
-      "resourceName": "",
-      "verbs": [
-        "create",
-        "delete",
-        "get",
-        "list",
-        "patch",
-        "update",
-        "watch"
-      ],
-      "riskLevel": "Critical",
-      "tags": [
-        "ServiceExposure",
-        "DenialOfService",
-        "Tampering",
-        "NetworkManipulation"
-      ],
-      "matchedRiskRules": [
-        {
-          "id": 1075,
-          "name": "Manage Services cluster-wide",
-          "link": "https://rbac-atlas.github.io/rules/1075/"
-        },
-        {
-          "id": 1076,
-          "name": "Manage Services in a namespace",
-          "link": "https://rbac-atlas.github.io/rules/1076/"
-        },
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "opentelemetry-operator",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "opentelemetry-kube-stack-opentelemetry-operator-manager",
-      "apiGroup": "",
-      "resource": "events",
-      "resourceName": "",
-      "verbs": [
-        "create",
-        "get",
-        "list",
-        "patch",
-        "watch"
-      ],
-      "riskLevel": "Medium",
-      "tags": [
-        "InformationDisclosure",
-        "Reconnaissance",
-        "OperationalData"
-      ],
-      "matchedRiskRules": [
-        {
-          "id": 1070,
-          "name": "Read events cluster-wide",
-          "link": "https://rbac-atlas.github.io/rules/1070/"
-        },
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "opentelemetry-operator",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "opentelemetry-kube-stack-opentelemetry-operator-manager",
-      "apiGroup": "",
-      "resource": "namespaces/status",
-      "resourceName": "",
-      "verbs": [
-        "get",
-        "list",
-        "watch"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "opentelemetry-operator",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "opentelemetry-kube-stack-opentelemetry-operator-manager",
-      "apiGroup": "",
-      "resource": "resourcequotas",
-      "resourceName": "",
-      "verbs": [
-        "get",
-        "list",
-        "watch"
-      ],
-      "riskLevel": "Medium",
-      "tags": [
-        "QuotaTampering",
-        "InformationDisclosure",
-        "Reconnaissance",
-        "ResourceConfiguration"
-      ],
-      "matchedRiskRules": [
-        {
-          "id": 1089,
-          "name": "Read All ResourceQuotas (Cluster-wide Information Disclosure)",
-          "link": "https://rbac-atlas.github.io/rules/1089/"
-        },
-        {
-          "id": 1088,
-          "name": "Read ResourceQuotas (Namespace Information Disclosure)",
-          "link": "https://rbac-atlas.github.io/rules/1088/"
-        },
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "opentelemetry-operator",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "opentelemetry-kube-stack-opentelemetry-operator-manager",
-      "apiGroup": "",
-      "resource": "configmaps",
-      "resourceName": "",
-      "verbs": [
-        "create",
-        "delete",
-        "get",
-        "list",
-        "patch",
-        "update",
-        "watch"
-      ],
-      "riskLevel": "Critical",
-      "tags": [
-        "Tampering",
-        "ConfigMapAccess",
-        "PotentialPrivilegeEscalation",
-        "InformationDisclosure",
-        "DataExposure"
-      ],
-      "matchedRiskRules": [
-        {
-          "id": 1024,
-          "name": "Modify ConfigMaps cluster-wide",
-          "link": "https://rbac-atlas.github.io/rules/1024/"
-        },
-        {
-          "id": 1022,
-          "name": "Read ConfigMaps cluster-wide",
-          "link": "https://rbac-atlas.github.io/rules/1022/"
-        },
-        {
-          "id": 1025,
-          "name": "Modify ConfigMaps in a namespace",
-          "link": "https://rbac-atlas.github.io/rules/1025/"
-        },
-        {
-          "id": 1023,
-          "name": "Read ConfigMaps in a namespace",
-          "link": "https://rbac-atlas.github.io/rules/1023/"
-        },
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "opentelemetry-operator",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "opentelemetry-kube-stack-opentelemetry-operator-manager",
-      "apiGroup": "",
-      "resource": "pods",
-      "resourceName": "",
-      "verbs": [
-        "create",
-        "delete",
-        "get",
-        "list",
-        "patch",
-        "update",
-        "watch"
-      ],
-      "riskLevel": "Critical",
-      "tags": [
-        "PrivilegeEscalation",
-        "LateralMovement",
-        "Persistence",
-        "Tampering",
-        "PotentialPrivilegeEscalation",
-        "WorkloadExecution"
-      ],
-      "matchedRiskRules": [
-        {
-          "id": 1006,
-          "name": "Create pods cluster-wide",
-          "link": "https://rbac-atlas.github.io/rules/1006/"
-        },
-        {
-          "id": 1008,
-          "name": "Update/Patch pods cluster-wide",
-          "link": "https://rbac-atlas.github.io/rules/1008/"
-        },
-        {
-          "id": 1007,
-          "name": "Create pods in a namespace",
-          "link": "https://rbac-atlas.github.io/rules/1007/"
-        },
-        {
-          "id": 1009,
-          "name": "Update/Patch pods in a namespace",
-          "link": "https://rbac-atlas.github.io/rules/1009/"
-        },
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "opentelemetry-operator",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "opentelemetry-kube-stack-opentelemetry-operator-manager",
-      "apiGroup": "",
-      "resource": "nodes/spec",
-      "resourceName": "",
-      "verbs": [
-        "get",
-        "list",
-        "watch"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "opentelemetry-operator",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "opentelemetry-kube-stack-opentelemetry-operator-manager",
-      "apiGroup": "",
-      "resource": "pods/status",
-      "resourceName": "",
-      "verbs": [
-        "get",
-        "list",
-        "watch"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "opentelemetry-operator",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "opentelemetry-kube-stack-opentelemetry-operator-manager",
-      "apiGroup": "",
-      "resource": "replicationcontrollers",
-      "resourceName": "",
-      "verbs": [
-        "get",
-        "list",
-        "watch"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "opentelemetry-operator",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "opentelemetry-kube-stack-opentelemetry-operator-manager",
-      "apiGroup": "",
-      "resource": "persistentvolumeclaims",
-      "resourceName": "",
-      "verbs": [
-        "create",
-        "delete",
-        "get",
-        "list",
-        "patch",
-        "update",
-        "watch"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "opentelemetry-operator",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "opentelemetry-kube-stack-opentelemetry-operator-manager",
-      "apiGroup": "",
-      "resource": "persistentvolumes",
-      "resourceName": "",
-      "verbs": [
-        "create",
-        "delete",
-        "get",
-        "list",
-        "patch",
-        "update",
-        "watch"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "opentelemetry-operator",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "opentelemetry-kube-stack-opentelemetry-operator-manager",
-      "apiGroup": "",
-      "resource": "namespaces",
-      "resourceName": "",
-      "verbs": [
-        "list",
-        "watch"
-      ],
-      "riskLevel": "Low",
-      "tags": [
-        "InformationDisclosure",
-        "Reconnaissance",
-        "ClusterStructure"
-      ],
-      "matchedRiskRules": [
-        {
-          "id": 1082,
-          "name": "List Namespaces (Cluster Reconnaissance)",
-          "link": "https://rbac-atlas.github.io/rules/1082/"
-        },
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "opentelemetry-operator",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "opentelemetry-kube-stack-opentelemetry-operator-manager",
-      "apiGroup": "",
-      "resource": "replicationcontrollers/status",
-      "resourceName": "",
-      "verbs": [
-        "get",
-        "list",
-        "watch"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "opentelemetry-operator",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "opentelemetry-kube-stack-opentelemetry-operator-manager",
-      "apiGroup": "",
-      "resource": "nodes/proxy",
-      "resourceName": "",
-      "verbs": [
-        "get"
-      ],
-      "riskLevel": "Critical",
-      "tags": [
-        "NodeAccess",
-        "ClusterAdminAccess",
-        "CodeExecution",
-        "LateralMovement",
-        "ElevationOfPrivilege",
-        "AuthorizationBypass"
-      ],
-      "matchedRiskRules": [
-        {
-          "id": 1104,
-          "name": "Node proxy GET RCE via WebSocket",
-          "link": "https://rbac-atlas.github.io/rules/1104/"
-        },
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "opentelemetry-operator",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "opentelemetry-kube-stack-opentelemetry-operator-manager",
-      "apiGroup": "batch",
-      "resource": "jobs",
-      "resourceName": "",
-      "verbs": [
-        "get",
-        "list",
-        "watch"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "opentelemetry-operator",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "opentelemetry-kube-stack-opentelemetry-operator-manager",
-      "apiGroup": "batch",
-      "resource": "cronjobs",
-      "resourceName": "",
-      "verbs": [
-        "get",
-        "list",
-        "watch"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "opentelemetry-operator",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "opentelemetry-kube-stack-opentelemetry-operator-manager",
-      "apiGroup": "cert-manager.io",
-      "resource": "issuers",
-      "resourceName": "",
-      "verbs": [
-        "create",
-        "delete",
-        "get",
-        "list",
-        "patch",
-        "update",
-        "watch"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "opentelemetry-operator",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "opentelemetry-kube-stack-opentelemetry-operator-manager",
-      "apiGroup": "cert-manager.io",
-      "resource": "certificaterequests",
-      "resourceName": "",
-      "verbs": [
-        "create",
-        "delete",
-        "get",
-        "list",
-        "patch",
-        "update",
-        "watch"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "opentelemetry-operator",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "opentelemetry-kube-stack-opentelemetry-operator-manager",
-      "apiGroup": "cert-manager.io",
-      "resource": "certificates",
-      "resourceName": "",
-      "verbs": [
-        "create",
-        "delete",
-        "get",
-        "list",
-        "patch",
-        "update",
         "watch"
       ],
       "riskLevel": "Low",
@@ -3305,13 +536,142 @@
       "namespace": "default",
       "roleType": "ClusterRole",
       "roleName": "opentelemetry-kube-stack-opentelemetry-operator-manager",
-      "apiGroup": "coordination.k8s.io",
-      "resource": "leases",
+      "apiGroup": "networking.k8s.io",
+      "resource": "networkpolicies",
       "resourceName": "",
       "verbs": [
         "create",
+        "delete",
         "get",
         "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "DenialOfService",
+        "LateralMovement",
+        "NetworkPolicyManagement",
+        "NetworkManipulation",
+        "Tampering"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1071,
+          "name": "Manage NetworkPolicies cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1071/"
+        },
+        {
+          "id": 1072,
+          "name": "Manage NetworkPolicies in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1072/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "opentelemetry-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "opentelemetry-kube-stack-opentelemetry-operator-manager",
+      "apiGroup": "networking.k8s.io",
+      "resource": "ingresses",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "DenialOfService",
+        "NetworkManipulation",
+        "ServiceExposure",
+        "Tampering"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1091,
+          "name": "Manage Ingresses (Namespace Service Exposure/Traffic Redirection)",
+          "link": "https://rbac-atlas.github.io/rules/1091/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "opentelemetry-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "opentelemetry-kube-stack-opentelemetry-operator-manager",
+      "apiGroup": "opentelemetry.io",
+      "resource": "instrumentations",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "opentelemetry-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "opentelemetry-kube-stack-opentelemetry-operator-manager",
+      "apiGroup": "opentelemetry.io",
+      "resource": "opampbridges",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "opentelemetry-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "opentelemetry-kube-stack-opentelemetry-operator-manager",
+      "apiGroup": "opentelemetry.io",
+      "resource": "opampbridges/finalizers",
+      "resourceName": "",
+      "verbs": [
         "update"
       ],
       "riskLevel": "Low",
@@ -3329,18 +689,398 @@
       "namespace": "default",
       "roleType": "ClusterRole",
       "roleName": "opentelemetry-kube-stack-opentelemetry-operator-manager",
-      "apiGroup": "events.k8s.io",
+      "apiGroup": "opentelemetry.io",
+      "resource": "opampbridges/status",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "patch",
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "opentelemetry-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "opentelemetry-kube-stack-opentelemetry-operator-manager",
+      "apiGroup": "opentelemetry.io",
+      "resource": "opentelemetrycollectors",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "opentelemetry-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "opentelemetry-kube-stack-opentelemetry-operator-manager",
+      "apiGroup": "opentelemetry.io",
+      "resource": "opentelemetrycollectors/finalizers",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "patch",
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "opentelemetry-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "opentelemetry-kube-stack-opentelemetry-operator-manager",
+      "apiGroup": "opentelemetry.io",
+      "resource": "opentelemetrycollectors/status",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "patch",
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "opentelemetry-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "opentelemetry-kube-stack-opentelemetry-operator-manager",
+      "apiGroup": "opentelemetry.io",
+      "resource": "targetallocators",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "opentelemetry-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "opentelemetry-kube-stack-opentelemetry-operator-manager",
+      "apiGroup": "opentelemetry.io",
+      "resource": "targetallocators/status",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "patch",
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "opentelemetry-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "opentelemetry-kube-stack-opentelemetry-operator-manager",
+      "apiGroup": "opentelemetry.io",
+      "resource": "targetallocators/finalizers",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "patch",
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "opentelemetry-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "opentelemetry-kube-stack-opentelemetry-operator-manager",
+      "apiGroup": "autoscaling",
+      "resource": "horizontalpodautoscalers",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "opentelemetry-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "opentelemetry-kube-stack-opentelemetry-operator-manager",
+      "apiGroup": "batch",
+      "resource": "jobs",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "opentelemetry-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "opentelemetry-kube-stack-opentelemetry-operator-manager",
+      "apiGroup": "batch",
+      "resource": "cronjobs",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "opentelemetry-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "opentelemetry-kube-stack-opentelemetry-operator-manager",
+      "apiGroup": "monitoring.coreos.com",
+      "resource": "podmonitors",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "opentelemetry-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "opentelemetry-kube-stack-opentelemetry-operator-manager",
+      "apiGroup": "monitoring.coreos.com",
+      "resource": "servicemonitors",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "opentelemetry-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "opentelemetry-kube-stack-opentelemetry-operator-manager",
+      "apiGroup": "authorization.k8s.io",
+      "resource": "subjectaccessreviews",
+      "resourceName": "",
+      "verbs": [
+        "create"
+      ],
+      "riskLevel": "Medium",
+      "tags": [
+        "InformationDisclosure",
+        "RBACQuery"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1050,
+          "name": "Create SubjectAccessReviews (check arbitrary permissions)",
+          "link": "https://rbac-atlas.github.io/rules/1050/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "opentelemetry-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "opentelemetry-kube-stack-opentelemetry-operator-manager",
+      "apiGroup": "",
+      "resource": "pods",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "LateralMovement",
+        "Persistence",
+        "Tampering",
+        "PotentialPrivilegeEscalation",
+        "WorkloadExecution",
+        "PrivilegeEscalation"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1006,
+          "name": "Create pods cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1006/"
+        },
+        {
+          "id": 1008,
+          "name": "Update/Patch pods cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1008/"
+        },
+        {
+          "id": 1007,
+          "name": "Create pods in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1007/"
+        },
+        {
+          "id": 1009,
+          "name": "Update/Patch pods in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1009/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "opentelemetry-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "opentelemetry-kube-stack-opentelemetry-operator-manager",
+      "apiGroup": "",
       "resource": "events",
       "resourceName": "",
       "verbs": [
+        "create",
+        "get",
         "list",
+        "patch",
         "watch"
       ],
       "riskLevel": "Medium",
       "tags": [
-        "OperationalData",
         "InformationDisclosure",
-        "Reconnaissance"
+        "Reconnaissance",
+        "OperationalData"
       ],
       "matchedRiskRules": [
         {
@@ -3360,8 +1100,54 @@
       "namespace": "default",
       "roleType": "ClusterRole",
       "roleName": "opentelemetry-kube-stack-opentelemetry-operator-manager",
-      "apiGroup": "policy",
-      "resource": "poddisruptionbudgets",
+      "apiGroup": "",
+      "resource": "namespaces/status",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "opentelemetry-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "opentelemetry-kube-stack-opentelemetry-operator-manager",
+      "apiGroup": "",
+      "resource": "replicationcontrollers",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "opentelemetry-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "opentelemetry-kube-stack-opentelemetry-operator-manager",
+      "apiGroup": "",
+      "resource": "persistentvolumes",
       "resourceName": "",
       "verbs": [
         "create",
@@ -3372,18 +1158,388 @@
         "update",
         "watch"
       ],
-      "riskLevel": "Medium",
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "opentelemetry-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "opentelemetry-kube-stack-opentelemetry-operator-manager",
+      "apiGroup": "",
+      "resource": "serviceaccounts",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "High",
       "tags": [
-        "DenialOfService",
-        "AvailabilityImpact",
+        "IdentityManagement",
+        "PotentialPrivilegeEscalation",
         "Tampering"
       ],
       "matchedRiskRules": [
         {
-          "id": 1079,
-          "name": "Manage PodDisruptionBudgets cluster-wide",
-          "link": "https://rbac-atlas.github.io/rules/1079/"
+          "id": 1067,
+          "name": "Manage ServiceAccounts cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1067/"
         },
+        {
+          "id": 1068,
+          "name": "Manage ServiceAccounts in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1068/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "opentelemetry-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "opentelemetry-kube-stack-opentelemetry-operator-manager",
+      "apiGroup": "",
+      "resource": "services",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "NetworkManipulation",
+        "ServiceExposure",
+        "DenialOfService",
+        "Tampering"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1075,
+          "name": "Manage Services cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1075/"
+        },
+        {
+          "id": 1076,
+          "name": "Manage Services in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1076/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "opentelemetry-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "opentelemetry-kube-stack-opentelemetry-operator-manager",
+      "apiGroup": "",
+      "resource": "namespaces",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [
+        "ClusterStructure",
+        "InformationDisclosure",
+        "Reconnaissance"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1082,
+          "name": "List Namespaces (Cluster Reconnaissance)",
+          "link": "https://rbac-atlas.github.io/rules/1082/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "opentelemetry-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "opentelemetry-kube-stack-opentelemetry-operator-manager",
+      "apiGroup": "",
+      "resource": "pods/status",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "opentelemetry-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "opentelemetry-kube-stack-opentelemetry-operator-manager",
+      "apiGroup": "",
+      "resource": "nodes/proxy",
+      "resourceName": "",
+      "verbs": [
+        "get"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "NodeAccess",
+        "ClusterAdminAccess",
+        "CodeExecution",
+        "LateralMovement",
+        "ElevationOfPrivilege",
+        "AuthorizationBypass"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1104,
+          "name": "Node proxy GET RCE via WebSocket",
+          "link": "https://rbac-atlas.github.io/rules/1104/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "opentelemetry-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "opentelemetry-kube-stack-opentelemetry-operator-manager",
+      "apiGroup": "",
+      "resource": "nodes/stats",
+      "resourceName": "",
+      "verbs": [
+        "get"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "opentelemetry-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "opentelemetry-kube-stack-opentelemetry-operator-manager",
+      "apiGroup": "",
+      "resource": "replicationcontrollers/status",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "opentelemetry-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "opentelemetry-kube-stack-opentelemetry-operator-manager",
+      "apiGroup": "",
+      "resource": "resourcequotas",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Medium",
+      "tags": [
+        "InformationDisclosure",
+        "Reconnaissance",
+        "ResourceConfiguration",
+        "QuotaTampering"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1089,
+          "name": "Read All ResourceQuotas (Cluster-wide Information Disclosure)",
+          "link": "https://rbac-atlas.github.io/rules/1089/"
+        },
+        {
+          "id": 1088,
+          "name": "Read ResourceQuotas (Namespace Information Disclosure)",
+          "link": "https://rbac-atlas.github.io/rules/1088/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "opentelemetry-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "opentelemetry-kube-stack-opentelemetry-operator-manager",
+      "apiGroup": "",
+      "resource": "configmaps",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "ConfigMapAccess",
+        "PotentialPrivilegeEscalation",
+        "InformationDisclosure",
+        "DataExposure",
+        "Tampering"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1024,
+          "name": "Modify ConfigMaps cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1024/"
+        },
+        {
+          "id": 1022,
+          "name": "Read ConfigMaps cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1022/"
+        },
+        {
+          "id": 1025,
+          "name": "Modify ConfigMaps in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1025/"
+        },
+        {
+          "id": 1023,
+          "name": "Read ConfigMaps in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1023/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "opentelemetry-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "opentelemetry-kube-stack-opentelemetry-operator-manager",
+      "apiGroup": "",
+      "resource": "persistentvolumeclaims",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "opentelemetry-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "opentelemetry-kube-stack-opentelemetry-operator-manager",
+      "apiGroup": "",
+      "resource": "nodes/spec",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "opentelemetry-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "opentelemetry-kube-stack-opentelemetry-operator-manager",
+      "apiGroup": "coordination.k8s.io",
+      "resource": "leases",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "get",
+        "list",
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
         {
           "id": 9996,
           "name": "Base Risk Level - Low",
@@ -3422,64 +1578,36 @@
       ]
     },
     {
-      "serviceAccountName": "opentelemetry-kube-stack-kube-state-metrics",
+      "serviceAccountName": "opentelemetry-operator",
       "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "opentelemetry-kube-stack-kube-state-metrics",
-      "apiGroup": "batch",
-      "resource": "cronjobs",
-      "resourceName": "",
-      "verbs": [
-        "list",
-        "watch"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "opentelemetry-kube-stack-kube-state-metrics",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "opentelemetry-kube-stack-kube-state-metrics",
-      "apiGroup": "batch",
-      "resource": "jobs",
-      "resourceName": "",
-      "verbs": [
-        "list",
-        "watch"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "opentelemetry-kube-stack-kube-state-metrics",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "opentelemetry-kube-stack-kube-state-metrics",
+      "roleType": "Role",
+      "roleName": "opentelemetry-kube-stack-opentelemetry-operator-leader-election",
       "apiGroup": "apps",
       "resource": "daemonsets",
       "resourceName": "",
       "verbs": [
+        "create",
+        "delete",
+        "get",
         "list",
+        "patch",
+        "update",
         "watch"
       ],
-      "riskLevel": "Low",
-      "tags": [],
+      "riskLevel": "Critical",
+      "tags": [
+        "WorkloadLifecycle",
+        "PrivilegeEscalation",
+        "Persistence",
+        "NodeAccess",
+        "Tampering"
+      ],
       "matchedRiskRules": [
+        {
+          "id": 1036,
+          "name": "Manage DaemonSets in a namespace (runs on nodes, high impact)",
+          "link": "https://rbac-atlas.github.io/rules/1036/"
+        },
         {
           "id": 9996,
           "name": "Base Risk Level - Low",
@@ -3488,20 +1616,35 @@
       ]
     },
     {
-      "serviceAccountName": "opentelemetry-kube-stack-kube-state-metrics",
+      "serviceAccountName": "opentelemetry-operator",
       "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "opentelemetry-kube-stack-kube-state-metrics",
+      "roleType": "Role",
+      "roleName": "opentelemetry-kube-stack-opentelemetry-operator-leader-election",
       "apiGroup": "apps",
       "resource": "deployments",
       "resourceName": "",
       "verbs": [
+        "create",
+        "delete",
+        "get",
         "list",
+        "patch",
+        "update",
         "watch"
       ],
-      "riskLevel": "Low",
-      "tags": [],
+      "riskLevel": "High",
+      "tags": [
+        "WorkloadLifecycle",
+        "PotentialPrivilegeEscalation",
+        "Persistence",
+        "Tampering"
+      ],
       "matchedRiskRules": [
+        {
+          "id": 1034,
+          "name": "Manage Deployments in a namespace (potential for privileged pod execution)",
+          "link": "https://rbac-atlas.github.io/rules/1034/"
+        },
         {
           "id": 9996,
           "name": "Base Risk Level - Low",
@@ -3510,36 +1653,52 @@
       ]
     },
     {
-      "serviceAccountName": "opentelemetry-kube-stack-kube-state-metrics",
+      "serviceAccountName": "opentelemetry-operator",
       "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "opentelemetry-kube-stack-kube-state-metrics",
-      "apiGroup": "apps",
-      "resource": "replicasets",
-      "resourceName": "",
-      "verbs": [
-        "list",
-        "watch"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "opentelemetry-kube-stack-kube-state-metrics",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "opentelemetry-kube-stack-kube-state-metrics",
+      "roleType": "Role",
+      "roleName": "opentelemetry-kube-stack-opentelemetry-operator-leader-election",
       "apiGroup": "apps",
       "resource": "statefulsets",
       "resourceName": "",
       "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "WorkloadLifecycle",
+        "PotentialPrivilegeEscalation",
+        "Persistence",
+        "Tampering"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1038,
+          "name": "Manage StatefulSets in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1038/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "opentelemetry-operator",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "opentelemetry-kube-stack-opentelemetry-operator-leader-election",
+      "apiGroup": "apps",
+      "resource": "replicasets",
+      "resourceName": "",
+      "verbs": [
+        "get",
         "list",
         "watch"
       ],
@@ -3554,14 +1713,42 @@
       ]
     },
     {
-      "serviceAccountName": "opentelemetry-kube-stack-kube-state-metrics",
+      "serviceAccountName": "opentelemetry-operator",
       "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "opentelemetry-kube-stack-kube-state-metrics",
+      "roleType": "Role",
+      "roleName": "opentelemetry-kube-stack-opentelemetry-operator-leader-election",
       "apiGroup": "autoscaling",
       "resource": "horizontalpodautoscalers",
       "resourceName": "",
       "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "opentelemetry-operator",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "opentelemetry-kube-stack-opentelemetry-operator-leader-election",
+      "apiGroup": "batch",
+      "resource": "jobs",
+      "resourceName": "",
+      "verbs": [
+        "get",
         "list",
         "watch"
       ],
@@ -3576,14 +1763,519 @@
       ]
     },
     {
-      "serviceAccountName": "opentelemetry-kube-stack-kube-state-metrics",
+      "serviceAccountName": "opentelemetry-operator",
       "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "opentelemetry-kube-stack-kube-state-metrics",
+      "roleType": "Role",
+      "roleName": "opentelemetry-kube-stack-opentelemetry-operator-leader-election",
+      "apiGroup": "config.openshift.io",
+      "resource": "infrastructures/status",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "opentelemetry-operator",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "opentelemetry-kube-stack-opentelemetry-operator-leader-election",
+      "apiGroup": "config.openshift.io",
+      "resource": "infrastructures",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "opentelemetry-operator",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "opentelemetry-kube-stack-opentelemetry-operator-leader-election",
       "apiGroup": "coordination.k8s.io",
       "resource": "leases",
       "resourceName": "",
       "verbs": [
+        "create",
+        "get",
+        "list",
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "opentelemetry-operator",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "opentelemetry-kube-stack-opentelemetry-operator-leader-election",
+      "apiGroup": "policy",
+      "resource": "poddisruptionbudgets",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "opentelemetry-operator",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "opentelemetry-kube-stack-opentelemetry-operator-leader-election",
+      "apiGroup": "monitoring.coreos.com",
+      "resource": "podmonitors",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "opentelemetry-operator",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "opentelemetry-kube-stack-opentelemetry-operator-leader-election",
+      "apiGroup": "monitoring.coreos.com",
+      "resource": "servicemonitors",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "opentelemetry-operator",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "opentelemetry-kube-stack-opentelemetry-operator-leader-election",
+      "apiGroup": "networking.k8s.io",
+      "resource": "ingresses",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "NetworkManipulation",
+        "ServiceExposure",
+        "Tampering",
+        "DenialOfService"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1091,
+          "name": "Manage Ingresses (Namespace Service Exposure/Traffic Redirection)",
+          "link": "https://rbac-atlas.github.io/rules/1091/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "opentelemetry-operator",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "opentelemetry-kube-stack-opentelemetry-operator-leader-election",
+      "apiGroup": "opentelemetry.io",
+      "resource": "instrumentations",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "opentelemetry-operator",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "opentelemetry-kube-stack-opentelemetry-operator-leader-election",
+      "apiGroup": "opentelemetry.io",
+      "resource": "targetallocators",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "opentelemetry-operator",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "opentelemetry-kube-stack-opentelemetry-operator-leader-election",
+      "apiGroup": "opentelemetry.io",
+      "resource": "opampbridges/finalizers",
+      "resourceName": "",
+      "verbs": [
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "opentelemetry-operator",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "opentelemetry-kube-stack-opentelemetry-operator-leader-election",
+      "apiGroup": "opentelemetry.io",
+      "resource": "opentelemetrycollectors/status",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "patch",
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "opentelemetry-operator",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "opentelemetry-kube-stack-opentelemetry-operator-leader-election",
+      "apiGroup": "opentelemetry.io",
+      "resource": "targetallocators/status",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "patch",
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "opentelemetry-operator",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "opentelemetry-kube-stack-opentelemetry-operator-leader-election",
+      "apiGroup": "opentelemetry.io",
+      "resource": "targetallocators/finalizers",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "patch",
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "opentelemetry-operator",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "opentelemetry-kube-stack-opentelemetry-operator-leader-election",
+      "apiGroup": "opentelemetry.io",
+      "resource": "opentelemetrycollectors",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "opentelemetry-operator",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "opentelemetry-kube-stack-opentelemetry-operator-leader-election",
+      "apiGroup": "opentelemetry.io",
+      "resource": "opampbridges",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "opentelemetry-operator",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "opentelemetry-kube-stack-opentelemetry-operator-leader-election",
+      "apiGroup": "opentelemetry.io",
+      "resource": "opampbridges/status",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "patch",
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "opentelemetry-operator",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "opentelemetry-kube-stack-opentelemetry-operator-leader-election",
+      "apiGroup": "opentelemetry.io",
+      "resource": "opentelemetrycollectors/finalizers",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "patch",
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "opentelemetry-operator",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "opentelemetry-kube-stack-opentelemetry-operator-leader-election",
+      "apiGroup": "route.openshift.io",
+      "resource": "routes",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "opentelemetry-operator",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "opentelemetry-kube-stack-opentelemetry-operator-leader-election",
+      "apiGroup": "route.openshift.io",
+      "resource": "routes/custom-host",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "opentelemetry-operator",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "opentelemetry-kube-stack-opentelemetry-operator-leader-election",
+      "apiGroup": "",
+      "resource": "events",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "patch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "opentelemetry-operator",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "opentelemetry-kube-stack-opentelemetry-operator-leader-election",
+      "apiGroup": "",
+      "resource": "namespaces",
+      "resourceName": "",
+      "verbs": [
+        "get",
         "list",
         "watch"
       ],
@@ -3598,14 +2290,207 @@
       ]
     },
     {
-      "serviceAccountName": "opentelemetry-kube-stack-kube-state-metrics",
+      "serviceAccountName": "opentelemetry-operator",
       "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "opentelemetry-kube-stack-kube-state-metrics",
-      "apiGroup": "storage.k8s.io",
-      "resource": "storageclasses",
+      "roleType": "Role",
+      "roleName": "opentelemetry-kube-stack-opentelemetry-operator-leader-election",
+      "apiGroup": "",
+      "resource": "secrets",
       "resourceName": "",
       "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "SecretAccess",
+        "CredentialAccess",
+        "DataExposure",
+        "InformationDisclosure"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1011,
+          "name": "Read secrets in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1011/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "opentelemetry-operator",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "opentelemetry-kube-stack-opentelemetry-operator-leader-election",
+      "apiGroup": "",
+      "resource": "configmaps",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "Tampering",
+        "ConfigMapAccess",
+        "PotentialPrivilegeEscalation",
+        "InformationDisclosure",
+        "DataExposure"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1025,
+          "name": "Modify ConfigMaps in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1025/"
+        },
+        {
+          "id": 1023,
+          "name": "Read ConfigMaps in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1023/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "opentelemetry-operator",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "opentelemetry-kube-stack-opentelemetry-operator-leader-election",
+      "apiGroup": "",
+      "resource": "pods",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "Persistence",
+        "Tampering",
+        "WorkloadExecution",
+        "PotentialPrivilegeEscalation",
+        "LateralMovement"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1007,
+          "name": "Create pods in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1007/"
+        },
+        {
+          "id": 1009,
+          "name": "Update/Patch pods in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1009/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "opentelemetry-operator",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "opentelemetry-kube-stack-opentelemetry-operator-leader-election",
+      "apiGroup": "",
+      "resource": "serviceaccounts",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Medium",
+      "tags": [
+        "PotentialPrivilegeEscalation",
+        "Tampering",
+        "IdentityManagement"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1068,
+          "name": "Manage ServiceAccounts in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1068/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "opentelemetry-operator",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "opentelemetry-kube-stack-opentelemetry-operator-leader-election",
+      "apiGroup": "",
+      "resource": "services",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "NetworkManipulation",
+        "ServiceExposure",
+        "DenialOfService",
+        "Tampering"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1076,
+          "name": "Manage Services in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1076/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "opentelemetry-kube-stack-daemon-collector",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "opentelemetry-kube-stack-collector",
+      "apiGroup": "batch",
+      "resource": "jobs",
+      "resourceName": "",
+      "verbs": [
+        "get",
         "list",
         "watch"
       ],
@@ -3620,14 +2505,909 @@
       ]
     },
     {
-      "serviceAccountName": "opentelemetry-kube-stack-kube-state-metrics",
+      "serviceAccountName": "opentelemetry-kube-stack-daemon-collector",
       "namespace": "default",
       "roleType": "ClusterRole",
-      "roleName": "opentelemetry-kube-stack-kube-state-metrics",
-      "apiGroup": "storage.k8s.io",
-      "resource": "volumeattachments",
+      "roleName": "opentelemetry-kube-stack-collector",
+      "apiGroup": "batch",
+      "resource": "cronjobs",
       "resourceName": "",
       "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "opentelemetry-kube-stack-daemon-collector",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "opentelemetry-kube-stack-collector",
+      "apiGroup": "",
+      "resource": "replicationcontrollers/status",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "opentelemetry-kube-stack-daemon-collector",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "opentelemetry-kube-stack-collector",
+      "apiGroup": "",
+      "resource": "resourcequotas",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Medium",
+      "tags": [
+        "ResourceConfiguration",
+        "QuotaTampering",
+        "InformationDisclosure",
+        "Reconnaissance"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1089,
+          "name": "Read All ResourceQuotas (Cluster-wide Information Disclosure)",
+          "link": "https://rbac-atlas.github.io/rules/1089/"
+        },
+        {
+          "id": 1088,
+          "name": "Read ResourceQuotas (Namespace Information Disclosure)",
+          "link": "https://rbac-atlas.github.io/rules/1088/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "opentelemetry-kube-stack-daemon-collector",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "opentelemetry-kube-stack-collector",
+      "apiGroup": "",
+      "resource": "nodes/stats",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "opentelemetry-kube-stack-daemon-collector",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "opentelemetry-kube-stack-collector",
+      "apiGroup": "",
+      "resource": "events",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Medium",
+      "tags": [
+        "InformationDisclosure",
+        "Reconnaissance",
+        "OperationalData"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1070,
+          "name": "Read events cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1070/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "opentelemetry-kube-stack-daemon-collector",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "opentelemetry-kube-stack-collector",
+      "apiGroup": "",
+      "resource": "namespaces/status",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "opentelemetry-kube-stack-daemon-collector",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "opentelemetry-kube-stack-collector",
+      "apiGroup": "",
+      "resource": "endpoints",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "opentelemetry-kube-stack-daemon-collector",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "opentelemetry-kube-stack-collector",
+      "apiGroup": "",
+      "resource": "pods",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "opentelemetry-kube-stack-daemon-collector",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "opentelemetry-kube-stack-collector",
+      "apiGroup": "",
+      "resource": "persistentvolumes",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "opentelemetry-kube-stack-daemon-collector",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "opentelemetry-kube-stack-collector",
+      "apiGroup": "",
+      "resource": "nodes/proxy",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "ElevationOfPrivilege",
+        "AuthorizationBypass",
+        "NodeAccess",
+        "ClusterAdminAccess",
+        "CodeExecution",
+        "LateralMovement"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1104,
+          "name": "Node proxy GET RCE via WebSocket",
+          "link": "https://rbac-atlas.github.io/rules/1104/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "opentelemetry-kube-stack-daemon-collector",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "opentelemetry-kube-stack-collector",
+      "apiGroup": "",
+      "resource": "services",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "opentelemetry-kube-stack-daemon-collector",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "opentelemetry-kube-stack-collector",
+      "apiGroup": "",
+      "resource": "secrets",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "SecretAccess",
+        "ClusterWideSecretAccess",
+        "CredentialAccess",
+        "DataExposure",
+        "InformationDisclosure"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1010,
+          "name": "Read secrets cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1010/"
+        },
+        {
+          "id": 1011,
+          "name": "Read secrets in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1011/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "opentelemetry-kube-stack-daemon-collector",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "opentelemetry-kube-stack-collector",
+      "apiGroup": "",
+      "resource": "pods/status",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "opentelemetry-kube-stack-daemon-collector",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "opentelemetry-kube-stack-collector",
+      "apiGroup": "",
+      "resource": "namespaces",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [
+        "Reconnaissance",
+        "ClusterStructure",
+        "InformationDisclosure"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1082,
+          "name": "List Namespaces (Cluster Reconnaissance)",
+          "link": "https://rbac-atlas.github.io/rules/1082/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "opentelemetry-kube-stack-daemon-collector",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "opentelemetry-kube-stack-collector",
+      "apiGroup": "",
+      "resource": "nodes",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "opentelemetry-kube-stack-daemon-collector",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "opentelemetry-kube-stack-collector",
+      "apiGroup": "",
+      "resource": "nodes/metrics",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "opentelemetry-kube-stack-daemon-collector",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "opentelemetry-kube-stack-collector",
+      "apiGroup": "",
+      "resource": "persistentvolumeclaims",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "opentelemetry-kube-stack-daemon-collector",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "opentelemetry-kube-stack-collector",
+      "apiGroup": "",
+      "resource": "nodes/spec",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "opentelemetry-kube-stack-daemon-collector",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "opentelemetry-kube-stack-collector",
+      "apiGroup": "",
+      "resource": "replicationcontrollers",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "opentelemetry-kube-stack-daemon-collector",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "opentelemetry-kube-stack-collector",
+      "apiGroup": "extensions",
+      "resource": "daemonsets",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "opentelemetry-kube-stack-daemon-collector",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "opentelemetry-kube-stack-collector",
+      "apiGroup": "extensions",
+      "resource": "deployments",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "opentelemetry-kube-stack-daemon-collector",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "opentelemetry-kube-stack-collector",
+      "apiGroup": "extensions",
+      "resource": "replicasets",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "opentelemetry-kube-stack-daemon-collector",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "opentelemetry-kube-stack-collector",
+      "apiGroup": "extensions",
+      "resource": "ingresses",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "opentelemetry-kube-stack-daemon-collector",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "opentelemetry-kube-stack-collector",
+      "apiGroup": "networking.k8s.io",
+      "resource": "ingresses",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "opentelemetry-kube-stack-daemon-collector",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "opentelemetry-kube-stack-collector",
+      "apiGroup": "discovery.k8s.io",
+      "resource": "endpointslices",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "opentelemetry-kube-stack-daemon-collector",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "opentelemetry-kube-stack-collector",
+      "apiGroup": "coordination.k8s.io",
+      "resource": "leases",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "DenialOfService",
+        "ControlPlaneDisruption",
+        "LeaderElectionAbuse",
+        "CriticalNamespace",
+        "Tampering"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1080,
+          "name": "Manage Leases cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1080/"
+        },
+        {
+          "id": 1081,
+          "name": "Manage Leases in kube-system or kube-node-lease namespace",
+          "link": "https://rbac-atlas.github.io/rules/1081/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "opentelemetry-kube-stack-daemon-collector",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "opentelemetry-kube-stack-collector",
+      "apiGroup": "autoscaling",
+      "resource": "horizontalpodautoscalers",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "opentelemetry-kube-stack-daemon-collector",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "opentelemetry-kube-stack-collector",
+      "apiGroup": "events.k8s.io",
+      "resource": "events",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Medium",
+      "tags": [
+        "InformationDisclosure",
+        "Reconnaissance",
+        "OperationalData"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1070,
+          "name": "Read events cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1070/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "opentelemetry-kube-stack-daemon-collector",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "opentelemetry-kube-stack-collector",
+      "apiGroup": "monitoring.coreos.com",
+      "resource": "servicemonitors",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "opentelemetry-kube-stack-daemon-collector",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "opentelemetry-kube-stack-collector",
+      "apiGroup": "monitoring.coreos.com",
+      "resource": "podmonitors",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "opentelemetry-kube-stack-daemon-collector",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "opentelemetry-kube-stack-collector",
+      "apiGroup": "monitoring.coreos.com",
+      "resource": "scrapeconfigs",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "opentelemetry-kube-stack-daemon-collector",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "opentelemetry-kube-stack-collector",
+      "apiGroup": "monitoring.coreos.com",
+      "resource": "probes",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "opentelemetry-kube-stack-daemon-collector",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "opentelemetry-kube-stack-collector",
+      "apiGroup": "apps",
+      "resource": "daemonsets",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "opentelemetry-kube-stack-daemon-collector",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "opentelemetry-kube-stack-collector",
+      "apiGroup": "apps",
+      "resource": "deployments",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "opentelemetry-kube-stack-daemon-collector",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "opentelemetry-kube-stack-collector",
+      "apiGroup": "apps",
+      "resource": "replicasets",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "opentelemetry-kube-stack-daemon-collector",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "opentelemetry-kube-stack-collector",
+      "apiGroup": "apps",
+      "resource": "statefulsets",
+      "resourceName": "",
+      "verbs": [
+        "get",
         "list",
         "watch"
       ],
@@ -3669,15 +3449,30 @@
       "roleType": "ClusterRole",
       "roleName": "opentelemetry-kube-stack-kube-state-metrics",
       "apiGroup": "",
-      "resource": "pods",
+      "resource": "resourcequotas",
       "resourceName": "",
       "verbs": [
         "list",
         "watch"
       ],
-      "riskLevel": "Low",
-      "tags": [],
+      "riskLevel": "Medium",
+      "tags": [
+        "QuotaTampering",
+        "InformationDisclosure",
+        "Reconnaissance",
+        "ResourceConfiguration"
+      ],
       "matchedRiskRules": [
+        {
+          "id": 1089,
+          "name": "Read All ResourceQuotas (Cluster-wide Information Disclosure)",
+          "link": "https://rbac-atlas.github.io/rules/1089/"
+        },
+        {
+          "id": 1088,
+          "name": "Read ResourceQuotas (Namespace Information Disclosure)",
+          "link": "https://rbac-atlas.github.io/rules/1088/"
+        },
         {
           "id": 9996,
           "name": "Base Risk Level - Low",
@@ -3699,11 +3494,11 @@
       ],
       "riskLevel": "Critical",
       "tags": [
+        "InformationDisclosure",
+        "SecretAccess",
         "ClusterWideSecretAccess",
         "CredentialAccess",
-        "DataExposure",
-        "InformationDisclosure",
-        "SecretAccess"
+        "DataExposure"
       ],
       "matchedRiskRules": [
         {
@@ -3729,7 +3524,7 @@
       "roleType": "ClusterRole",
       "roleName": "opentelemetry-kube-stack-kube-state-metrics",
       "apiGroup": "",
-      "resource": "endpoints",
+      "resource": "services",
       "resourceName": "",
       "verbs": [
         "list",
@@ -3738,6 +3533,37 @@
       "riskLevel": "Low",
       "tags": [],
       "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "opentelemetry-kube-stack-kube-state-metrics",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "opentelemetry-kube-stack-kube-state-metrics",
+      "apiGroup": "",
+      "resource": "limitranges",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [
+        "InformationDisclosure",
+        "Reconnaissance",
+        "ResourceConfiguration"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1087,
+          "name": "Read LimitRanges (Namespace Information Disclosure)",
+          "link": "https://rbac-atlas.github.io/rules/1087/"
+        },
         {
           "id": 9996,
           "name": "Base Risk Level - Low",
@@ -3782,7 +3608,7 @@
       "roleType": "ClusterRole",
       "roleName": "opentelemetry-kube-stack-kube-state-metrics",
       "apiGroup": "",
-      "resource": "persistentvolumeclaims",
+      "resource": "nodes",
       "resourceName": "",
       "verbs": [
         "list",
@@ -3804,7 +3630,7 @@
       "roleType": "ClusterRole",
       "roleName": "opentelemetry-kube-stack-kube-state-metrics",
       "apiGroup": "",
-      "resource": "replicationcontrollers",
+      "resource": "persistentvolumes",
       "resourceName": "",
       "verbs": [
         "list",
@@ -3826,44 +3652,7 @@
       "roleType": "ClusterRole",
       "roleName": "opentelemetry-kube-stack-kube-state-metrics",
       "apiGroup": "",
-      "resource": "resourcequotas",
-      "resourceName": "",
-      "verbs": [
-        "list",
-        "watch"
-      ],
-      "riskLevel": "Medium",
-      "tags": [
-        "InformationDisclosure",
-        "Reconnaissance",
-        "ResourceConfiguration",
-        "QuotaTampering"
-      ],
-      "matchedRiskRules": [
-        {
-          "id": 1089,
-          "name": "Read All ResourceQuotas (Cluster-wide Information Disclosure)",
-          "link": "https://rbac-atlas.github.io/rules/1089/"
-        },
-        {
-          "id": 1088,
-          "name": "Read ResourceQuotas (Namespace Information Disclosure)",
-          "link": "https://rbac-atlas.github.io/rules/1088/"
-        },
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "opentelemetry-kube-stack-kube-state-metrics",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "opentelemetry-kube-stack-kube-state-metrics",
-      "apiGroup": "",
-      "resource": "services",
+      "resource": "pods",
       "resourceName": "",
       "verbs": [
         "list",
@@ -3921,38 +3710,7 @@
       "roleType": "ClusterRole",
       "roleName": "opentelemetry-kube-stack-kube-state-metrics",
       "apiGroup": "",
-      "resource": "limitranges",
-      "resourceName": "",
-      "verbs": [
-        "list",
-        "watch"
-      ],
-      "riskLevel": "Low",
-      "tags": [
-        "Reconnaissance",
-        "ResourceConfiguration",
-        "InformationDisclosure"
-      ],
-      "matchedRiskRules": [
-        {
-          "id": 1087,
-          "name": "Read LimitRanges (Namespace Information Disclosure)",
-          "link": "https://rbac-atlas.github.io/rules/1087/"
-        },
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "opentelemetry-kube-stack-kube-state-metrics",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "opentelemetry-kube-stack-kube-state-metrics",
-      "apiGroup": "",
-      "resource": "nodes",
+      "resource": "endpoints",
       "resourceName": "",
       "verbs": [
         "list",
@@ -3974,7 +3732,73 @@
       "roleType": "ClusterRole",
       "roleName": "opentelemetry-kube-stack-kube-state-metrics",
       "apiGroup": "",
-      "resource": "persistentvolumes",
+      "resource": "persistentvolumeclaims",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "opentelemetry-kube-stack-kube-state-metrics",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "opentelemetry-kube-stack-kube-state-metrics",
+      "apiGroup": "",
+      "resource": "replicationcontrollers",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "opentelemetry-kube-stack-kube-state-metrics",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "opentelemetry-kube-stack-kube-state-metrics",
+      "apiGroup": "batch",
+      "resource": "cronjobs",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "opentelemetry-kube-stack-kube-state-metrics",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "opentelemetry-kube-stack-kube-state-metrics",
+      "apiGroup": "batch",
+      "resource": "jobs",
       "resourceName": "",
       "verbs": [
         "list",
@@ -4117,9 +3941,193 @@
           "link": "https://rbac-atlas.github.io/rules/9996/"
         }
       ]
+    },
+    {
+      "serviceAccountName": "opentelemetry-kube-stack-kube-state-metrics",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "opentelemetry-kube-stack-kube-state-metrics",
+      "apiGroup": "storage.k8s.io",
+      "resource": "storageclasses",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "opentelemetry-kube-stack-kube-state-metrics",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "opentelemetry-kube-stack-kube-state-metrics",
+      "apiGroup": "storage.k8s.io",
+      "resource": "volumeattachments",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "opentelemetry-kube-stack-kube-state-metrics",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "opentelemetry-kube-stack-kube-state-metrics",
+      "apiGroup": "apps",
+      "resource": "daemonsets",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "opentelemetry-kube-stack-kube-state-metrics",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "opentelemetry-kube-stack-kube-state-metrics",
+      "apiGroup": "apps",
+      "resource": "deployments",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "opentelemetry-kube-stack-kube-state-metrics",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "opentelemetry-kube-stack-kube-state-metrics",
+      "apiGroup": "apps",
+      "resource": "replicasets",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "opentelemetry-kube-stack-kube-state-metrics",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "opentelemetry-kube-stack-kube-state-metrics",
+      "apiGroup": "apps",
+      "resource": "statefulsets",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "opentelemetry-kube-stack-kube-state-metrics",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "opentelemetry-kube-stack-kube-state-metrics",
+      "apiGroup": "autoscaling",
+      "resource": "horizontalpodautoscalers",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "opentelemetry-kube-stack-kube-state-metrics",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "opentelemetry-kube-stack-kube-state-metrics",
+      "apiGroup": "coordination.k8s.io",
+      "resource": "leases",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
     }
   ],
   "serviceAccountWorkloads": [
+    {
+      "serviceAccountName": "opentelemetry-kube-stack-prometheus-node-exporter",
+      "namespace": "default",
+      "workloadType": "DaemonSet",
+      "workloadName": "opentelemetry-kube-stack-prometheus-node-exporter",
+      "containerName": "node-exporter",
+      "image": "quay.io/prometheus/node-exporter:v1.9.1"
+    },
     {
       "serviceAccountName": "opentelemetry-kube-stack-kube-state-metrics",
       "namespace": "default",
@@ -4129,20 +4137,12 @@
       "image": "registry.k8s.io/kube-state-metrics/kube-state-metrics:v2.17.0"
     },
     {
-      "serviceAccountName": "delete-resources-sa",
+      "serviceAccountName": "",
       "namespace": "default",
-      "workloadType": "Job",
-      "workloadName": "opentelemetry-kube-stack-pre-delete-job",
-      "containerName": "delete-resources",
-      "image": "rancher/kubectl:v1.34.1"
-    },
-    {
-      "serviceAccountName": "opentelemetry-kube-stack-prometheus-node-exporter",
-      "namespace": "default",
-      "workloadType": "DaemonSet",
-      "workloadName": "opentelemetry-kube-stack-prometheus-node-exporter",
-      "containerName": "node-exporter",
-      "image": "quay.io/prometheus/node-exporter:v1.9.1"
+      "workloadType": "Pod",
+      "workloadName": "opentelemetry-kube-stack-opentelemetry-operator-cert-manager",
+      "containerName": "wget",
+      "image": "busybox:latest"
     },
     {
       "serviceAccountName": "",
@@ -4161,12 +4161,12 @@
       "image": "busybox:latest"
     },
     {
-      "serviceAccountName": "",
+      "serviceAccountName": "delete-resources-sa",
       "namespace": "default",
-      "workloadType": "Pod",
-      "workloadName": "opentelemetry-kube-stack-opentelemetry-operator-cert-manager",
-      "containerName": "wget",
-      "image": "busybox:latest"
+      "workloadType": "Job",
+      "workloadName": "opentelemetry-kube-stack-pre-delete-job",
+      "containerName": "delete-resources",
+      "image": "rancher/kubectl:v1.34.1"
     },
     {
       "serviceAccountName": "opentelemetry-operator",

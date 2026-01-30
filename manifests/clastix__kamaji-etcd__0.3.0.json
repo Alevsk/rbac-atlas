@@ -1,0 +1,180 @@
+{
+  "metadata": {
+    "version": "0.3.0",
+    "name": "kamaji-etcd",
+    "source": "charts/clastix__kamaji-etcd__0.3.0/",
+    "timestamp": 1769793391,
+    "extra": {
+      "helm": {
+        "description": "Helm chart for deploying a multi-tenant `etcd` cluster.",
+        "home": "https://github.com/clastix/kamaji-etcd",
+        "icon": "",
+        "keywords": null,
+        "kubeVersion": "\u003e=1.22.0-0",
+        "maintainers": [
+          {
+            "name": "Adriano Pezzuto",
+            "email": "me@bsctl.io"
+          },
+          {
+            "name": "Dario Tranchitella",
+            "email": "dario@tranchitella.eu"
+          }
+        ],
+        "sources": [
+          "https://github.com/clastix/kamaji-etcd"
+        ]
+      }
+    }
+  },
+  "serviceAccountData": [
+    {
+      "serviceAccountName": "kamaji-etcd",
+      "namespace": "default",
+      "automountToken": false,
+      "secrets": null,
+      "imagePullSecrets": null
+    }
+  ],
+  "serviceAccountPermissions": [
+    {
+      "serviceAccountName": "kamaji-etcd",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "kamaji-etcd-gen-certs-role",
+      "apiGroup": "",
+      "resource": "secrets",
+      "resourceName": "kamaji-etcd-certs",
+      "verbs": [
+        "delete",
+        "get",
+        "patch"
+      ],
+      "riskLevel": "Low",
+      "tags": [
+        "ResourceNameRestricted"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kamaji-etcd",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "kamaji-etcd-gen-certs-role",
+      "apiGroup": "",
+      "resource": "secrets",
+      "resourceName": "kamaji-etcd-root-client-certs",
+      "verbs": [
+        "delete",
+        "get",
+        "patch"
+      ],
+      "riskLevel": "Low",
+      "tags": [
+        "ResourceNameRestricted"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kamaji-etcd",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "kamaji-etcd-gen-certs-role",
+      "apiGroup": "",
+      "resource": "secrets",
+      "resourceName": "",
+      "verbs": [
+        "create"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kamaji-etcd",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "kamaji-etcd-gen-certs-role",
+      "apiGroup": "apps",
+      "resource": "statefulsets",
+      "resourceName": "kamaji-etcd",
+      "verbs": [
+        "get",
+        "list",
+        "patch",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [
+        "ResourceNameRestricted"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    }
+  ],
+  "serviceAccountWorkloads": [
+    {
+      "serviceAccountName": "kamaji-etcd",
+      "namespace": "default",
+      "workloadType": "Job",
+      "workloadName": "kamaji-etcd-etcd-setup-2",
+      "containerName": "etcd-client",
+      "image": "quay.io/coreos/etcd:v3.5.6"
+    },
+    {
+      "serviceAccountName": "kamaji-etcd",
+      "namespace": "default",
+      "workloadType": "Job",
+      "workloadName": "kamaji-etcd-etcd-setup-1",
+      "containerName": "kubectl",
+      "image": "clastix/kubectl:v1.20"
+    },
+    {
+      "serviceAccountName": "kamaji-etcd",
+      "namespace": "default",
+      "workloadType": "CronJob",
+      "workloadName": "kamaji-etcd-defrag",
+      "containerName": "etcd-client",
+      "image": "quay.io/coreos/etcd:v3.5.6"
+    },
+    {
+      "serviceAccountName": "kamaji-etcd",
+      "namespace": "default",
+      "workloadType": "StatefulSet",
+      "workloadName": "kamaji-etcd",
+      "containerName": "etcd",
+      "image": "quay.io/coreos/etcd:v3.5.6"
+    },
+    {
+      "serviceAccountName": "kamaji-etcd",
+      "namespace": "default",
+      "workloadType": "Job",
+      "workloadName": "kamaji-etcd-etcd-teardown",
+      "containerName": "kubectl",
+      "image": "clastix/kubectl:v1.20"
+    }
+  ]
+}

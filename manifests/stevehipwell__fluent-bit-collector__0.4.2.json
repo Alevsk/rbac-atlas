@@ -1,0 +1,54 @@
+{
+  "metadata": {
+    "version": "0.4.2",
+    "name": "fluent-bit-collector",
+    "source": "charts/stevehipwell__fluent-bit-collector__0.4.2/",
+    "timestamp": 1769794414,
+    "extra": {
+      "helm": {
+        "description": "Helm chart for Fluent Bit running as a collector DaemonSet.",
+        "home": "https://fluentbit.io/",
+        "icon": "https://raw.githubusercontent.com/cncf/artwork/master/projects/fluentd/fluentbit/icon/fluentbit-icon-color.svg",
+        "keywords": [
+          "fluent",
+          "fluentd",
+          "fluent bit",
+          "logging",
+          "collector"
+        ],
+        "kubeVersion": "",
+        "maintainers": [
+          {
+            "name": "stevehipwell",
+            "email": "steve.hipwell@gmail.com",
+            "url": "https://github.com/stevehipwell"
+          }
+        ],
+        "sources": [
+          "https://github.com/fluent/fluent-bit/",
+          "https://github.com/stevehipwell/helm-charts/"
+        ]
+      }
+    }
+  },
+  "serviceAccountData": [
+    {
+      "serviceAccountName": "fluent-bit-collector",
+      "namespace": "default",
+      "automountToken": true,
+      "secrets": null,
+      "imagePullSecrets": null
+    }
+  ],
+  "serviceAccountPermissions": [],
+  "serviceAccountWorkloads": [
+    {
+      "serviceAccountName": "fluent-bit-collector",
+      "namespace": "default",
+      "workloadType": "DaemonSet",
+      "workloadName": "fluent-bit-collector",
+      "containerName": "collector",
+      "image": "cr.fluentbit.io/fluent/fluent-bit:2.1.7"
+    }
+  ]
+}

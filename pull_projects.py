@@ -1,17 +1,24 @@
 import os
+import re
 import subprocess
 import yaml
 import shutil
 import logging
 import argparse
+import threading
 import time
 from typing import List, Dict, Any, Optional
 from pathlib import Path
+from collections import defaultdict
 from concurrent.futures import ThreadPoolExecutor, as_completed
 
 # --- Configuration Constants ---
 DEFAULT_CONFIG_FILE = "projects.yaml"
 DEFAULT_OUTPUT_DIR = "charts"
+
+# Per-chart-name locks to prevent concurrent helm pulls from clobbering the
+# shared intermediate extraction directory (charts/<chart_name>).
+_chart_locks: Dict[str, threading.Lock] = defaultdict(threading.Lock)
 
 # --- Setup Logging ---
 logging.basicConfig(
@@ -119,6 +126,38 @@ def _get_latest_version_from_index(chart_name: str, repo_index: Dict[str, Any]) 
 
     return version
 
+_PRERELEASE_RE = re.compile(r'-(alpha|beta|rc|dev|snapshot|preview|nightly)', re.IGNORECASE)
+
+
+def _get_all_versions_from_index(
+    chart_name: str,
+    repo_index: Dict[str, Any],
+    include_prerelease: bool = False,
+    max_versions: Optional[int] = None,
+) -> List[str]:
+    """
+    Returns all (or up to *max_versions*) chart versions from the parsed
+    index data, newest first.  Pre-release versions are excluded by default.
+    """
+    chart_entries = repo_index.get(chart_name)
+    if not chart_entries or not isinstance(chart_entries, list):
+        raise ValueError(f"Chart '{chart_name}' not found in the repository index.")
+
+    versions: List[str] = []
+    for entry in chart_entries:
+        version = entry.get("version")
+        if not version:
+            continue
+        if not include_prerelease and _PRERELEASE_RE.search(version):
+            continue
+        versions.append(version)
+
+    if max_versions is not None and max_versions > 0:
+        versions = versions[:max_versions]
+
+    return versions
+
+
 # --- End of Optimization Functions ---
 
 
@@ -143,8 +182,7 @@ def _update_helm_repos() -> None:
     try:
         _run_helm_command(["helm", "repo", "update"])
     except subprocess.CalledProcessError:
-        logger.error("❌ Failed to update Helm repositories. This will prevent version checks.")
-        raise # Critical error, script cannot proceed reliably
+        logger.warning("⚠️ Some Helm repositories failed to update. Charts from those repos may not resolve. Continuing with available repos.")
 
 def _pull_single_chart(repo_name: str, chart_config: Dict[str, Any], output_base_dir: Path, repo_indices: Dict[str, Any]) -> str:
     """
@@ -188,37 +226,41 @@ def _pull_single_chart(repo_name: str, chart_config: Dict[str, Any], output_base
         logger.info(f"✅ Chart '{full_chart_ref}' version '{target_version}' already exists. Skipping pull.")
         return f"Skipped (already exists): {final_chart_path}"
 
-    # Clean up any leftover extracted directory from a previous failed run
-    if helm_extracted_dir.exists():
-        shutil.rmtree(helm_extracted_dir)
-
-    pull_cmd = ["helm", "pull", full_chart_ref, "--untar", "--destination", str(output_base_dir)]
-    # Always specify the version for deterministic pulls
-    pull_cmd.extend(["--version", target_version])
-
-    try:
-        _run_helm_command(pull_cmd)
-
-        if not helm_extracted_dir.exists():
-             raise ValueError(f"Helm pull completed but expected directory '{helm_extracted_dir}' was not created.")
-
-        # Rename to the final versioned folder name
-        os.rename(helm_extracted_dir, final_chart_path)
-        logger.info(f"📦 Saved chart '{full_chart_ref}' v'{target_version}' to '{final_chart_path}'.")
-
-        custom_values_path_str = chart_config.get("values")
-        if custom_values_path_str and Path(custom_values_path_str).exists():
-            shutil.copy2(custom_values_path_str, final_chart_path / "custom-values.yaml")
-            logger.info(f"Copied custom values to '{final_chart_path / 'custom-values.yaml'}'")
-
-        return f"Successfully pulled: {final_chart_path}"
-
-    except (subprocess.CalledProcessError, ValueError, OSError) as e:
-        logger.error(f"❌ Failed processing chart '{full_chart_ref}': {e}")
-        # Clean up partial pull
+    # Serialize pulls of the same chart name so concurrent threads don't
+    # clobber the shared intermediate extraction directory.
+    lock_key = f"{repo_name}/{chart_name}"
+    with _chart_locks[lock_key]:
+        # Clean up any leftover extracted directory from a previous failed run
         if helm_extracted_dir.exists():
             shutil.rmtree(helm_extracted_dir)
-        return ""
+
+        pull_cmd = ["helm", "pull", full_chart_ref, "--untar", "--destination", str(output_base_dir)]
+        # Always specify the version for deterministic pulls
+        pull_cmd.extend(["--version", target_version])
+
+        try:
+            _run_helm_command(pull_cmd)
+
+            if not helm_extracted_dir.exists():
+                 raise ValueError(f"Helm pull completed but expected directory '{helm_extracted_dir}' was not created.")
+
+            # Rename to the final versioned folder name
+            os.rename(helm_extracted_dir, final_chart_path)
+            logger.info(f"📦 Saved chart '{full_chart_ref}' v'{target_version}' to '{final_chart_path}'.")
+
+            custom_values_path_str = chart_config.get("values")
+            if custom_values_path_str and Path(custom_values_path_str).exists():
+                shutil.copy2(custom_values_path_str, final_chart_path / "custom-values.yaml")
+                logger.info(f"Copied custom values to '{final_chart_path / 'custom-values.yaml'}'")
+
+            return f"Successfully pulled: {final_chart_path}"
+
+        except (subprocess.CalledProcessError, ValueError, OSError) as e:
+            logger.error(f"❌ Failed processing chart '{full_chart_ref}': {e}")
+            # Clean up partial pull
+            if helm_extracted_dir.exists():
+                shutil.rmtree(helm_extracted_dir)
+            return ""
 
 def main():
     """Main function to orchestrate the Helm chart pulling process."""
@@ -226,6 +268,12 @@ def main():
     parser.add_argument("-c", "--config", default=DEFAULT_CONFIG_FILE, help=f"Path to YAML config (default: {DEFAULT_CONFIG_FILE}).")
     parser.add_argument("-o", "--output-dir", default=DEFAULT_OUTPUT_DIR, help=f"Directory for untarred charts (default: {DEFAULT_OUTPUT_DIR}).")
     parser.add_argument("--max-workers", type=int, default=10, help="Max concurrent helm pull operations.")
+    parser.add_argument("--all-versions", action="store_true", default=False,
+                        help="Pull all available versions from the repo index (default: latest only).")
+    parser.add_argument("--max-versions", type=int, default=None,
+                        help="When used with --all-versions, limit to the N most recent versions per chart.")
+    parser.add_argument("--include-prerelease", action="store_true", default=False,
+                        help="Include pre-release versions (alpha, beta, rc, etc.) when using --all-versions.")
     args = parser.parse_args()
 
     config_file_path = Path(args.config)
@@ -259,6 +307,8 @@ def main():
     helm_cache_dir = _get_helm_cache_dir()
     repo_indices = _load_repo_indices(helm_repos, helm_cache_dir)
 
+    if args.all_versions:
+        logger.info(f"Running in ALL-VERSIONS mode (max_versions={args.max_versions}, include_prerelease={args.include_prerelease}).")
     logger.info(f"Starting concurrent Helm chart pulling (max workers: {args.max_workers})...")
 
     # OPTIMIZATION: Use a ThreadPoolExecutor to pull charts concurrently
@@ -270,9 +320,31 @@ def main():
                 continue
 
             for chart_config in repo.get("charts", []):
-                # Submit the task to the pool
-                future = executor.submit(_pull_single_chart, repo_name, chart_config, output_base_dir, repo_indices)
-                tasks.append(future)
+                if args.all_versions and not chart_config.get("version"):
+                    # Resolve all versions from the index and submit one task per version
+                    chart_name = chart_config.get("name")
+                    repo_index = repo_indices.get(repo_name)
+                    if not chart_name or not repo_index:
+                        continue
+                    try:
+                        versions = _get_all_versions_from_index(
+                            chart_name, repo_index,
+                            include_prerelease=args.include_prerelease,
+                            max_versions=args.max_versions,
+                        )
+                    except ValueError as e:
+                        logger.error(f"❌ Could not resolve versions for {repo_name}/{chart_name}: {e}")
+                        continue
+
+                    logger.info(f"Found {len(versions)} version(s) for '{repo_name}/{chart_name}'.")
+                    for ver in versions:
+                        versioned_config = {**chart_config, "version": ver}
+                        future = executor.submit(_pull_single_chart, repo_name, versioned_config, output_base_dir, repo_indices)
+                        tasks.append(future)
+                else:
+                    # Default: pull latest (or explicit pinned version)
+                    future = executor.submit(_pull_single_chart, repo_name, chart_config, output_base_dir, repo_indices)
+                    tasks.append(future)
 
         # Process results as they complete
         for future in as_completed(tasks):

@@ -1,0 +1,2972 @@
+{
+  "metadata": {
+    "version": "7.1.1",
+    "name": "kubernetes-dashboard",
+    "source": "charts/kubernetes-dashboard__kubernetes-dashboard__7.1.1/",
+    "timestamp": 1769793967,
+    "extra": {
+      "helm": {
+        "description": "General-purpose web UI for Kubernetes clusters",
+        "home": "https://github.com/kubernetes/dashboard",
+        "icon": "https://raw.githubusercontent.com/kubernetes/kubernetes/master/logo/logo.svg",
+        "keywords": [
+          "kubernetes",
+          "dashboard"
+        ],
+        "kubeVersion": "\u003e=1.21.0-0",
+        "maintainers": [
+          {
+            "name": "desaintmartin",
+            "email": "cdesaintmartin@wiremind.fr"
+          },
+          {
+            "name": "floreks",
+            "email": "s.florek91@gmail.com"
+          }
+        ],
+        "sources": [
+          "https://github.com/kubernetes/dashboard"
+        ]
+      }
+    }
+  },
+  "serviceAccountData": [
+    {
+      "serviceAccountName": "kubernetes-dashboard-metrics-server",
+      "namespace": "default",
+      "automountToken": false,
+      "secrets": null,
+      "imagePullSecrets": null
+    },
+    {
+      "serviceAccountName": "kubernetes-dashboard-cert-manager-webhook",
+      "namespace": "default",
+      "automountToken": true,
+      "secrets": null,
+      "imagePullSecrets": null
+    },
+    {
+      "serviceAccountName": "kubernetes-dashboard-ingress-nginx-admission",
+      "namespace": "default",
+      "automountToken": false,
+      "secrets": null,
+      "imagePullSecrets": null
+    },
+    {
+      "serviceAccountName": "kubernetes-dashboard-api",
+      "namespace": "default",
+      "automountToken": false,
+      "secrets": null,
+      "imagePullSecrets": null
+    },
+    {
+      "serviceAccountName": "kubernetes-dashboard-cert-manager",
+      "namespace": "default",
+      "automountToken": true,
+      "secrets": null,
+      "imagePullSecrets": null
+    },
+    {
+      "serviceAccountName": "kubernetes-dashboard-metrics-scraper",
+      "namespace": "default",
+      "automountToken": false,
+      "secrets": null,
+      "imagePullSecrets": null
+    },
+    {
+      "serviceAccountName": "kubernetes-dashboard-cert-manager-startupapicheck",
+      "namespace": "default",
+      "automountToken": true,
+      "secrets": null,
+      "imagePullSecrets": null
+    },
+    {
+      "serviceAccountName": "kubernetes-dashboard-kong",
+      "namespace": "default",
+      "automountToken": false,
+      "secrets": null,
+      "imagePullSecrets": null
+    },
+    {
+      "serviceAccountName": "kubernetes-dashboard-web",
+      "namespace": "default",
+      "automountToken": false,
+      "secrets": null,
+      "imagePullSecrets": null
+    },
+    {
+      "serviceAccountName": "kubernetes-dashboard-cert-manager-cainjector",
+      "namespace": "default",
+      "automountToken": true,
+      "secrets": null,
+      "imagePullSecrets": null
+    },
+    {
+      "serviceAccountName": "kubernetes-dashboard-ingress-nginx",
+      "namespace": "default",
+      "automountToken": true,
+      "secrets": null,
+      "imagePullSecrets": null
+    }
+  ],
+  "serviceAccountPermissions": [
+    {
+      "serviceAccountName": "kubernetes-dashboard-cert-manager-startupapicheck",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "kubernetes-dashboard-cert-manager-startupapicheck:create-cert",
+      "apiGroup": "cert-manager.io",
+      "resource": "certificates",
+      "resourceName": "",
+      "verbs": [
+        "create"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kubernetes-dashboard-cert-manager",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "kubernetes-dashboard-cert-manager:leaderelection",
+      "apiGroup": "coordination.k8s.io",
+      "resource": "leases",
+      "resourceName": "cert-manager-controller",
+      "verbs": [
+        "get",
+        "patch",
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [
+        "ResourceNameRestricted"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kubernetes-dashboard-cert-manager",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "kubernetes-dashboard-cert-manager:leaderelection",
+      "apiGroup": "coordination.k8s.io",
+      "resource": "leases",
+      "resourceName": "",
+      "verbs": [
+        "create"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kubernetes-dashboard-cert-manager",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kubernetes-dashboard-cert-manager-controller-issuers",
+      "apiGroup": "cert-manager.io",
+      "resource": "issuers",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kubernetes-dashboard-cert-manager",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kubernetes-dashboard-cert-manager-controller-issuers",
+      "apiGroup": "cert-manager.io",
+      "resource": "issuers/status",
+      "resourceName": "",
+      "verbs": [
+        "patch",
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kubernetes-dashboard-cert-manager",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kubernetes-dashboard-cert-manager-controller-issuers",
+      "apiGroup": "",
+      "resource": "secrets",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "ClusterWideSecretAccess",
+        "CredentialAccess",
+        "DataExposure",
+        "InformationDisclosure",
+        "SecretAccess"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1010,
+          "name": "Read secrets cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1010/"
+        },
+        {
+          "id": 1011,
+          "name": "Read secrets in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1011/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kubernetes-dashboard-cert-manager",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kubernetes-dashboard-cert-manager-controller-issuers",
+      "apiGroup": "",
+      "resource": "events",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "patch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kubernetes-dashboard-cert-manager",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kubernetes-dashboard-cert-manager-controller-clusterissuers",
+      "apiGroup": "cert-manager.io",
+      "resource": "clusterissuers",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kubernetes-dashboard-cert-manager",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kubernetes-dashboard-cert-manager-controller-clusterissuers",
+      "apiGroup": "cert-manager.io",
+      "resource": "clusterissuers/status",
+      "resourceName": "",
+      "verbs": [
+        "patch",
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kubernetes-dashboard-cert-manager",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kubernetes-dashboard-cert-manager-controller-clusterissuers",
+      "apiGroup": "",
+      "resource": "secrets",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "ClusterWideSecretAccess",
+        "CredentialAccess",
+        "DataExposure",
+        "InformationDisclosure",
+        "SecretAccess"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1010,
+          "name": "Read secrets cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1010/"
+        },
+        {
+          "id": 1011,
+          "name": "Read secrets in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1011/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kubernetes-dashboard-cert-manager",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kubernetes-dashboard-cert-manager-controller-clusterissuers",
+      "apiGroup": "",
+      "resource": "events",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "patch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kubernetes-dashboard-cert-manager",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kubernetes-dashboard-cert-manager-controller-certificates",
+      "apiGroup": "cert-manager.io",
+      "resource": "certificates/status",
+      "resourceName": "",
+      "verbs": [
+        "patch",
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kubernetes-dashboard-cert-manager",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kubernetes-dashboard-cert-manager-controller-certificates",
+      "apiGroup": "cert-manager.io",
+      "resource": "certificaterequests",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kubernetes-dashboard-cert-manager",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kubernetes-dashboard-cert-manager-controller-certificates",
+      "apiGroup": "cert-manager.io",
+      "resource": "certificaterequests/status",
+      "resourceName": "",
+      "verbs": [
+        "patch",
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kubernetes-dashboard-cert-manager",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kubernetes-dashboard-cert-manager-controller-certificates",
+      "apiGroup": "cert-manager.io",
+      "resource": "clusterissuers",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kubernetes-dashboard-cert-manager",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kubernetes-dashboard-cert-manager-controller-certificates",
+      "apiGroup": "cert-manager.io",
+      "resource": "issuers",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kubernetes-dashboard-cert-manager",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kubernetes-dashboard-cert-manager-controller-certificates",
+      "apiGroup": "cert-manager.io",
+      "resource": "certificates/finalizers",
+      "resourceName": "",
+      "verbs": [
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kubernetes-dashboard-cert-manager",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kubernetes-dashboard-cert-manager-controller-certificates",
+      "apiGroup": "cert-manager.io",
+      "resource": "certificaterequests/finalizers",
+      "resourceName": "",
+      "verbs": [
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kubernetes-dashboard-cert-manager",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kubernetes-dashboard-cert-manager-controller-certificates",
+      "apiGroup": "cert-manager.io",
+      "resource": "certificates",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kubernetes-dashboard-cert-manager",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kubernetes-dashboard-cert-manager-controller-certificates",
+      "apiGroup": "acme.cert-manager.io",
+      "resource": "orders",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kubernetes-dashboard-cert-manager",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kubernetes-dashboard-cert-manager-controller-certificates",
+      "apiGroup": "",
+      "resource": "secrets",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "ClusterWideSecretAccess",
+        "DataExposure",
+        "InformationDisclosure",
+        "SecretAccess",
+        "PrivilegeEscalation",
+        "PotentialPrivilegeEscalation",
+        "CredentialAccess",
+        "Tampering",
+        "Persistence"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1010,
+          "name": "Read secrets cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1010/"
+        },
+        {
+          "id": 1011,
+          "name": "Read secrets in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1011/"
+        },
+        {
+          "id": 1012,
+          "name": "Modify secrets cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1012/"
+        },
+        {
+          "id": 1013,
+          "name": "Modify secrets in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1013/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kubernetes-dashboard-cert-manager",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kubernetes-dashboard-cert-manager-controller-certificates",
+      "apiGroup": "",
+      "resource": "events",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "patch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kubernetes-dashboard-cert-manager",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kubernetes-dashboard-cert-manager-controller-orders",
+      "apiGroup": "",
+      "resource": "secrets",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "InformationDisclosure",
+        "SecretAccess",
+        "ClusterWideSecretAccess",
+        "CredentialAccess",
+        "DataExposure"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1010,
+          "name": "Read secrets cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1010/"
+        },
+        {
+          "id": 1011,
+          "name": "Read secrets in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1011/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kubernetes-dashboard-cert-manager",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kubernetes-dashboard-cert-manager-controller-orders",
+      "apiGroup": "",
+      "resource": "events",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "patch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kubernetes-dashboard-cert-manager",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kubernetes-dashboard-cert-manager-controller-orders",
+      "apiGroup": "acme.cert-manager.io",
+      "resource": "orders",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kubernetes-dashboard-cert-manager",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kubernetes-dashboard-cert-manager-controller-orders",
+      "apiGroup": "acme.cert-manager.io",
+      "resource": "orders/status",
+      "resourceName": "",
+      "verbs": [
+        "patch",
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kubernetes-dashboard-cert-manager",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kubernetes-dashboard-cert-manager-controller-orders",
+      "apiGroup": "acme.cert-manager.io",
+      "resource": "challenges",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kubernetes-dashboard-cert-manager",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kubernetes-dashboard-cert-manager-controller-orders",
+      "apiGroup": "acme.cert-manager.io",
+      "resource": "orders/finalizers",
+      "resourceName": "",
+      "verbs": [
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kubernetes-dashboard-cert-manager",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kubernetes-dashboard-cert-manager-controller-orders",
+      "apiGroup": "cert-manager.io",
+      "resource": "clusterissuers",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kubernetes-dashboard-cert-manager",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kubernetes-dashboard-cert-manager-controller-orders",
+      "apiGroup": "cert-manager.io",
+      "resource": "issuers",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kubernetes-dashboard-cert-manager",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kubernetes-dashboard-cert-manager-controller-challenges",
+      "apiGroup": "acme.cert-manager.io",
+      "resource": "challenges",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kubernetes-dashboard-cert-manager",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kubernetes-dashboard-cert-manager-controller-challenges",
+      "apiGroup": "acme.cert-manager.io",
+      "resource": "challenges/status",
+      "resourceName": "",
+      "verbs": [
+        "patch",
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kubernetes-dashboard-cert-manager",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kubernetes-dashboard-cert-manager-controller-challenges",
+      "apiGroup": "acme.cert-manager.io",
+      "resource": "challenges/finalizers",
+      "resourceName": "",
+      "verbs": [
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kubernetes-dashboard-cert-manager",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kubernetes-dashboard-cert-manager-controller-challenges",
+      "apiGroup": "cert-manager.io",
+      "resource": "issuers",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kubernetes-dashboard-cert-manager",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kubernetes-dashboard-cert-manager-controller-challenges",
+      "apiGroup": "cert-manager.io",
+      "resource": "clusterissuers",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kubernetes-dashboard-cert-manager",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kubernetes-dashboard-cert-manager-controller-challenges",
+      "apiGroup": "",
+      "resource": "secrets",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "ClusterWideSecretAccess",
+        "CredentialAccess",
+        "DataExposure",
+        "InformationDisclosure",
+        "SecretAccess"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1010,
+          "name": "Read secrets cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1010/"
+        },
+        {
+          "id": 1011,
+          "name": "Read secrets in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1011/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kubernetes-dashboard-cert-manager",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kubernetes-dashboard-cert-manager-controller-challenges",
+      "apiGroup": "",
+      "resource": "events",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "patch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kubernetes-dashboard-cert-manager",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kubernetes-dashboard-cert-manager-controller-challenges",
+      "apiGroup": "",
+      "resource": "pods",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "WorkloadExecution",
+        "PrivilegeEscalation",
+        "LateralMovement",
+        "Persistence",
+        "PotentialPrivilegeEscalation"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1006,
+          "name": "Create pods cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1006/"
+        },
+        {
+          "id": 1007,
+          "name": "Create pods in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1007/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kubernetes-dashboard-cert-manager",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kubernetes-dashboard-cert-manager-controller-challenges",
+      "apiGroup": "",
+      "resource": "services",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kubernetes-dashboard-cert-manager",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kubernetes-dashboard-cert-manager-controller-challenges",
+      "apiGroup": "networking.k8s.io",
+      "resource": "ingresses",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kubernetes-dashboard-cert-manager",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kubernetes-dashboard-cert-manager-controller-challenges",
+      "apiGroup": "gateway.networking.k8s.io",
+      "resource": "httproutes",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kubernetes-dashboard-cert-manager",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kubernetes-dashboard-cert-manager-controller-challenges",
+      "apiGroup": "route.openshift.io",
+      "resource": "routes/custom-host",
+      "resourceName": "",
+      "verbs": [
+        "create"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kubernetes-dashboard-cert-manager",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kubernetes-dashboard-cert-manager-controller-ingress-shim",
+      "apiGroup": "cert-manager.io",
+      "resource": "certificaterequests",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kubernetes-dashboard-cert-manager",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kubernetes-dashboard-cert-manager-controller-ingress-shim",
+      "apiGroup": "cert-manager.io",
+      "resource": "issuers",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kubernetes-dashboard-cert-manager",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kubernetes-dashboard-cert-manager-controller-ingress-shim",
+      "apiGroup": "cert-manager.io",
+      "resource": "clusterissuers",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kubernetes-dashboard-cert-manager",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kubernetes-dashboard-cert-manager-controller-ingress-shim",
+      "apiGroup": "cert-manager.io",
+      "resource": "certificates",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kubernetes-dashboard-cert-manager",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kubernetes-dashboard-cert-manager-controller-ingress-shim",
+      "apiGroup": "networking.k8s.io",
+      "resource": "ingresses",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kubernetes-dashboard-cert-manager",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kubernetes-dashboard-cert-manager-controller-ingress-shim",
+      "apiGroup": "networking.k8s.io",
+      "resource": "ingresses/finalizers",
+      "resourceName": "",
+      "verbs": [
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kubernetes-dashboard-cert-manager",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kubernetes-dashboard-cert-manager-controller-ingress-shim",
+      "apiGroup": "gateway.networking.k8s.io",
+      "resource": "httproutes",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kubernetes-dashboard-cert-manager",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kubernetes-dashboard-cert-manager-controller-ingress-shim",
+      "apiGroup": "gateway.networking.k8s.io",
+      "resource": "gateways/finalizers",
+      "resourceName": "",
+      "verbs": [
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kubernetes-dashboard-cert-manager",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kubernetes-dashboard-cert-manager-controller-ingress-shim",
+      "apiGroup": "gateway.networking.k8s.io",
+      "resource": "httproutes/finalizers",
+      "resourceName": "",
+      "verbs": [
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kubernetes-dashboard-cert-manager",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kubernetes-dashboard-cert-manager-controller-ingress-shim",
+      "apiGroup": "gateway.networking.k8s.io",
+      "resource": "gateways",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kubernetes-dashboard-cert-manager",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kubernetes-dashboard-cert-manager-controller-ingress-shim",
+      "apiGroup": "",
+      "resource": "events",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "patch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kubernetes-dashboard-cert-manager",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kubernetes-dashboard-cert-manager-controller-approve:cert-manager-io",
+      "apiGroup": "cert-manager.io",
+      "resource": "signers",
+      "resourceName": "issuers.cert-manager.io/*",
+      "verbs": [
+        "approve"
+      ],
+      "riskLevel": "Low",
+      "tags": [
+        "ResourceNameRestricted"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kubernetes-dashboard-cert-manager",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kubernetes-dashboard-cert-manager-controller-approve:cert-manager-io",
+      "apiGroup": "cert-manager.io",
+      "resource": "signers",
+      "resourceName": "clusterissuers.cert-manager.io/*",
+      "verbs": [
+        "approve"
+      ],
+      "riskLevel": "Low",
+      "tags": [
+        "ResourceNameRestricted"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kubernetes-dashboard-cert-manager",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kubernetes-dashboard-cert-manager-controller-certificatesigningrequests",
+      "apiGroup": "authorization.k8s.io",
+      "resource": "subjectaccessreviews",
+      "resourceName": "",
+      "verbs": [
+        "create"
+      ],
+      "riskLevel": "Medium",
+      "tags": [
+        "InformationDisclosure",
+        "RBACQuery"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1050,
+          "name": "Create SubjectAccessReviews (check arbitrary permissions)",
+          "link": "https://rbac-atlas.github.io/rules/1050/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kubernetes-dashboard-cert-manager",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kubernetes-dashboard-cert-manager-controller-certificatesigningrequests",
+      "apiGroup": "certificates.k8s.io",
+      "resource": "certificatesigningrequests",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kubernetes-dashboard-cert-manager",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kubernetes-dashboard-cert-manager-controller-certificatesigningrequests",
+      "apiGroup": "certificates.k8s.io",
+      "resource": "certificatesigningrequests/status",
+      "resourceName": "",
+      "verbs": [
+        "patch",
+        "update"
+      ],
+      "riskLevel": "Medium",
+      "tags": [
+        "Tampering",
+        "CertificateManagement",
+        "DenialOfService"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1090,
+          "name": "Update CertificateSigningRequest Status (Tampering/DoS)",
+          "link": "https://rbac-atlas.github.io/rules/1090/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kubernetes-dashboard-cert-manager",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kubernetes-dashboard-cert-manager-controller-certificatesigningrequests",
+      "apiGroup": "certificates.k8s.io",
+      "resource": "signers",
+      "resourceName": "issuers.cert-manager.io/*",
+      "verbs": [
+        "sign"
+      ],
+      "riskLevel": "Low",
+      "tags": [
+        "ResourceNameRestricted"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kubernetes-dashboard-cert-manager",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kubernetes-dashboard-cert-manager-controller-certificatesigningrequests",
+      "apiGroup": "certificates.k8s.io",
+      "resource": "signers",
+      "resourceName": "clusterissuers.cert-manager.io/*",
+      "verbs": [
+        "sign"
+      ],
+      "riskLevel": "Low",
+      "tags": [
+        "ResourceNameRestricted"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kubernetes-dashboard-metrics-scraper",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kubernetes-dashboard-metrics-scraper",
+      "apiGroup": "metrics.k8s.io",
+      "resource": "pods",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kubernetes-dashboard-metrics-scraper",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kubernetes-dashboard-metrics-scraper",
+      "apiGroup": "metrics.k8s.io",
+      "resource": "nodes",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kubernetes-dashboard-ingress-nginx",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kubernetes-dashboard-ingress-nginx",
+      "apiGroup": "",
+      "resource": "secrets",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "ClusterWideSecretAccess",
+        "CredentialAccess",
+        "DataExposure",
+        "InformationDisclosure",
+        "SecretAccess"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1010,
+          "name": "Read secrets cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1010/"
+        },
+        {
+          "id": 1011,
+          "name": "Read secrets in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1011/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kubernetes-dashboard-ingress-nginx",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kubernetes-dashboard-ingress-nginx",
+      "apiGroup": "",
+      "resource": "namespaces",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [
+        "InformationDisclosure",
+        "Reconnaissance",
+        "ClusterStructure"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1082,
+          "name": "List Namespaces (Cluster Reconnaissance)",
+          "link": "https://rbac-atlas.github.io/rules/1082/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kubernetes-dashboard-ingress-nginx",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kubernetes-dashboard-ingress-nginx",
+      "apiGroup": "",
+      "resource": "services",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kubernetes-dashboard-ingress-nginx",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kubernetes-dashboard-ingress-nginx",
+      "apiGroup": "",
+      "resource": "events",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "patch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kubernetes-dashboard-ingress-nginx",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kubernetes-dashboard-ingress-nginx",
+      "apiGroup": "",
+      "resource": "configmaps",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "InformationDisclosure",
+        "ConfigMapAccess",
+        "DataExposure"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1022,
+          "name": "Read ConfigMaps cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1022/"
+        },
+        {
+          "id": 1023,
+          "name": "Read ConfigMaps in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1023/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kubernetes-dashboard-ingress-nginx",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kubernetes-dashboard-ingress-nginx",
+      "apiGroup": "",
+      "resource": "endpoints",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kubernetes-dashboard-ingress-nginx",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kubernetes-dashboard-ingress-nginx",
+      "apiGroup": "",
+      "resource": "nodes",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kubernetes-dashboard-ingress-nginx",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kubernetes-dashboard-ingress-nginx",
+      "apiGroup": "",
+      "resource": "pods",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kubernetes-dashboard-ingress-nginx",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kubernetes-dashboard-ingress-nginx",
+      "apiGroup": "coordination.k8s.io",
+      "resource": "leases",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kubernetes-dashboard-ingress-nginx",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kubernetes-dashboard-ingress-nginx",
+      "apiGroup": "networking.k8s.io",
+      "resource": "ingresses",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kubernetes-dashboard-ingress-nginx",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kubernetes-dashboard-ingress-nginx",
+      "apiGroup": "networking.k8s.io",
+      "resource": "ingresses/status",
+      "resourceName": "",
+      "verbs": [
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kubernetes-dashboard-ingress-nginx",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kubernetes-dashboard-ingress-nginx",
+      "apiGroup": "networking.k8s.io",
+      "resource": "ingressclasses",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kubernetes-dashboard-ingress-nginx",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kubernetes-dashboard-ingress-nginx",
+      "apiGroup": "discovery.k8s.io",
+      "resource": "endpointslices",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kubernetes-dashboard-ingress-nginx",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "kubernetes-dashboard-ingress-nginx",
+      "apiGroup": "",
+      "resource": "events",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "patch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kubernetes-dashboard-ingress-nginx",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "kubernetes-dashboard-ingress-nginx",
+      "apiGroup": "",
+      "resource": "namespaces",
+      "resourceName": "",
+      "verbs": [
+        "get"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kubernetes-dashboard-ingress-nginx",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "kubernetes-dashboard-ingress-nginx",
+      "apiGroup": "",
+      "resource": "configmaps",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Medium",
+      "tags": [
+        "InformationDisclosure",
+        "ConfigMapAccess",
+        "DataExposure"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1023,
+          "name": "Read ConfigMaps in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1023/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kubernetes-dashboard-ingress-nginx",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "kubernetes-dashboard-ingress-nginx",
+      "apiGroup": "",
+      "resource": "pods",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kubernetes-dashboard-ingress-nginx",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "kubernetes-dashboard-ingress-nginx",
+      "apiGroup": "",
+      "resource": "secrets",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "DataExposure",
+        "InformationDisclosure",
+        "SecretAccess",
+        "CredentialAccess"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1011,
+          "name": "Read secrets in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1011/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kubernetes-dashboard-ingress-nginx",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "kubernetes-dashboard-ingress-nginx",
+      "apiGroup": "",
+      "resource": "endpoints",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kubernetes-dashboard-ingress-nginx",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "kubernetes-dashboard-ingress-nginx",
+      "apiGroup": "",
+      "resource": "services",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kubernetes-dashboard-ingress-nginx",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "kubernetes-dashboard-ingress-nginx",
+      "apiGroup": "networking.k8s.io",
+      "resource": "ingressclasses",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kubernetes-dashboard-ingress-nginx",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "kubernetes-dashboard-ingress-nginx",
+      "apiGroup": "networking.k8s.io",
+      "resource": "ingresses",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kubernetes-dashboard-ingress-nginx",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "kubernetes-dashboard-ingress-nginx",
+      "apiGroup": "networking.k8s.io",
+      "resource": "ingresses/status",
+      "resourceName": "",
+      "verbs": [
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kubernetes-dashboard-ingress-nginx",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "kubernetes-dashboard-ingress-nginx",
+      "apiGroup": "coordination.k8s.io",
+      "resource": "leases",
+      "resourceName": "kubernetes-dashboard-ingress-nginx-leader",
+      "verbs": [
+        "get",
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [
+        "ResourceNameRestricted"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kubernetes-dashboard-ingress-nginx",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "kubernetes-dashboard-ingress-nginx",
+      "apiGroup": "coordination.k8s.io",
+      "resource": "leases",
+      "resourceName": "",
+      "verbs": [
+        "create"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kubernetes-dashboard-ingress-nginx",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "kubernetes-dashboard-ingress-nginx",
+      "apiGroup": "discovery.k8s.io",
+      "resource": "endpointslices",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kubernetes-dashboard-ingress-nginx-admission",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "kubernetes-dashboard-ingress-nginx-admission",
+      "apiGroup": "",
+      "resource": "secrets",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "get"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kubernetes-dashboard-ingress-nginx-admission",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kubernetes-dashboard-ingress-nginx-admission",
+      "apiGroup": "admissionregistration.k8s.io",
+      "resource": "validatingwebhookconfigurations",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kubernetes-dashboard-cert-manager-webhook",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "kubernetes-dashboard-cert-manager-webhook:dynamic-serving",
+      "apiGroup": "",
+      "resource": "secrets",
+      "resourceName": "kubernetes-dashboard-cert-manager-webhook-ca",
+      "verbs": [
+        "get",
+        "list",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [
+        "InformationDisclosure",
+        "ResourceNameRestricted",
+        "SecretAccess",
+        "CredentialAccess",
+        "DataExposure"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1011,
+          "name": "Read secrets in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1011/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kubernetes-dashboard-cert-manager-webhook",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "kubernetes-dashboard-cert-manager-webhook:dynamic-serving",
+      "apiGroup": "",
+      "resource": "secrets",
+      "resourceName": "",
+      "verbs": [
+        "create"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kubernetes-dashboard-cert-manager-webhook",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kubernetes-dashboard-cert-manager-webhook:subjectaccessreviews",
+      "apiGroup": "authorization.k8s.io",
+      "resource": "subjectaccessreviews",
+      "resourceName": "",
+      "verbs": [
+        "create"
+      ],
+      "riskLevel": "Medium",
+      "tags": [
+        "InformationDisclosure",
+        "RBACQuery"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1050,
+          "name": "Create SubjectAccessReviews (check arbitrary permissions)",
+          "link": "https://rbac-atlas.github.io/rules/1050/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kubernetes-dashboard-metrics-server",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "system:kubernetes-dashboard-metrics-server",
+      "apiGroup": "",
+      "resource": "nodes/metrics",
+      "resourceName": "",
+      "verbs": [
+        "get"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kubernetes-dashboard-metrics-server",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "system:kubernetes-dashboard-metrics-server",
+      "apiGroup": "",
+      "resource": "pods",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kubernetes-dashboard-metrics-server",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "system:kubernetes-dashboard-metrics-server",
+      "apiGroup": "",
+      "resource": "nodes",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kubernetes-dashboard-metrics-server",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "system:kubernetes-dashboard-metrics-server",
+      "apiGroup": "",
+      "resource": "namespaces",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [
+        "InformationDisclosure",
+        "Reconnaissance",
+        "ClusterStructure"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1082,
+          "name": "List Namespaces (Cluster Reconnaissance)",
+          "link": "https://rbac-atlas.github.io/rules/1082/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kubernetes-dashboard-metrics-server",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "system:kubernetes-dashboard-metrics-server",
+      "apiGroup": "",
+      "resource": "configmaps",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "ConfigMapAccess",
+        "DataExposure",
+        "InformationDisclosure"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1022,
+          "name": "Read ConfigMaps cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1022/"
+        },
+        {
+          "id": 1023,
+          "name": "Read ConfigMaps in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1023/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kubernetes-dashboard-cert-manager-cainjector",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kubernetes-dashboard-cert-manager-cainjector",
+      "apiGroup": "cert-manager.io",
+      "resource": "certificates",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kubernetes-dashboard-cert-manager-cainjector",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kubernetes-dashboard-cert-manager-cainjector",
+      "apiGroup": "",
+      "resource": "secrets",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "ClusterWideSecretAccess",
+        "CredentialAccess",
+        "DataExposure",
+        "InformationDisclosure",
+        "SecretAccess"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1010,
+          "name": "Read secrets cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1010/"
+        },
+        {
+          "id": 1011,
+          "name": "Read secrets in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1011/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kubernetes-dashboard-cert-manager-cainjector",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kubernetes-dashboard-cert-manager-cainjector",
+      "apiGroup": "",
+      "resource": "events",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "get",
+        "patch",
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kubernetes-dashboard-cert-manager-cainjector",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kubernetes-dashboard-cert-manager-cainjector",
+      "apiGroup": "admissionregistration.k8s.io",
+      "resource": "mutatingwebhookconfigurations",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Medium",
+      "tags": [
+        "InformationDisclosure",
+        "WebhookReconnaissance",
+        "Reconnaissance"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1084,
+          "name": "List MutatingWebhookConfigurations (Reconnaissance)",
+          "link": "https://rbac-atlas.github.io/rules/1084/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kubernetes-dashboard-cert-manager-cainjector",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kubernetes-dashboard-cert-manager-cainjector",
+      "apiGroup": "admissionregistration.k8s.io",
+      "resource": "validatingwebhookconfigurations",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Medium",
+      "tags": [
+        "InformationDisclosure",
+        "WebhookReconnaissance",
+        "Reconnaissance"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1083,
+          "name": "List ValidatingWebhookConfigurations (Reconnaissance)",
+          "link": "https://rbac-atlas.github.io/rules/1083/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kubernetes-dashboard-cert-manager-cainjector",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kubernetes-dashboard-cert-manager-cainjector",
+      "apiGroup": "apiregistration.k8s.io",
+      "resource": "apiservices",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kubernetes-dashboard-cert-manager-cainjector",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kubernetes-dashboard-cert-manager-cainjector",
+      "apiGroup": "apiextensions.k8s.io",
+      "resource": "customresourcedefinitions",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kubernetes-dashboard-cert-manager-cainjector",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "kubernetes-dashboard-cert-manager-cainjector:leaderelection",
+      "apiGroup": "coordination.k8s.io",
+      "resource": "leases",
+      "resourceName": "cert-manager-cainjector-leader-election",
+      "verbs": [
+        "get",
+        "patch",
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [
+        "ResourceNameRestricted"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kubernetes-dashboard-cert-manager-cainjector",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "kubernetes-dashboard-cert-manager-cainjector:leaderelection",
+      "apiGroup": "coordination.k8s.io",
+      "resource": "leases",
+      "resourceName": "cert-manager-cainjector-leader-election-core",
+      "verbs": [
+        "get",
+        "patch",
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [
+        "ResourceNameRestricted"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kubernetes-dashboard-cert-manager-cainjector",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "kubernetes-dashboard-cert-manager-cainjector:leaderelection",
+      "apiGroup": "coordination.k8s.io",
+      "resource": "leases",
+      "resourceName": "",
+      "verbs": [
+        "create"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    }
+  ],
+  "serviceAccountWorkloads": [
+    {
+      "serviceAccountName": "kubernetes-dashboard-ingress-nginx",
+      "namespace": "default",
+      "workloadType": "Deployment",
+      "workloadName": "kubernetes-dashboard-ingress-nginx-controller",
+      "containerName": "controller",
+      "image": "registry.k8s.io/ingress-nginx/controller:v1.10.0@sha256:42b3f0e5d0846876b1791cd3afeb5f1cbbe4259d6f35651dcc1b5c980925379c"
+    },
+    {
+      "serviceAccountName": "kubernetes-dashboard-metrics-server",
+      "namespace": "default",
+      "workloadType": "Deployment",
+      "workloadName": "kubernetes-dashboard-metrics-server",
+      "containerName": "metrics-server",
+      "image": "registry.k8s.io/metrics-server/metrics-server:v0.7.0"
+    },
+    {
+      "serviceAccountName": "default",
+      "namespace": "default",
+      "workloadType": "StatefulSet",
+      "workloadName": "kubernetes-dashboard-postgresql",
+      "containerName": "postgresql",
+      "image": "docker.io/bitnami/postgresql:13.11.0-debian-11-r20"
+    },
+    {
+      "serviceAccountName": "kubernetes-dashboard-cert-manager-startupapicheck",
+      "namespace": "default",
+      "workloadType": "Job",
+      "workloadName": "kubernetes-dashboard-cert-manager-startupapicheck",
+      "containerName": "cert-manager-startupapicheck",
+      "image": "quay.io/jetstack/cert-manager-startupapicheck:v1.14.3"
+    },
+    {
+      "serviceAccountName": "kubernetes-dashboard-cert-manager-webhook",
+      "namespace": "default",
+      "workloadType": "Deployment",
+      "workloadName": "kubernetes-dashboard-cert-manager-webhook",
+      "containerName": "cert-manager-webhook",
+      "image": "quay.io/jetstack/cert-manager-webhook:v1.14.3"
+    },
+    {
+      "serviceAccountName": "kubernetes-dashboard-ingress-nginx-admission",
+      "namespace": "default",
+      "workloadType": "Job",
+      "workloadName": "kubernetes-dashboard-ingress-nginx-admission-patch",
+      "containerName": "patch",
+      "image": "registry.k8s.io/ingress-nginx/kube-webhook-certgen:v1.4.0@sha256:44d1d0e9f19c63f58b380c5fddaca7cf22c7cee564adeff365225a5df5ef3334"
+    },
+    {
+      "serviceAccountName": "kubernetes-dashboard-ingress-nginx-admission",
+      "namespace": "default",
+      "workloadType": "Job",
+      "workloadName": "kubernetes-dashboard-ingress-nginx-admission-create",
+      "containerName": "create",
+      "image": "registry.k8s.io/ingress-nginx/kube-webhook-certgen:v1.4.0@sha256:44d1d0e9f19c63f58b380c5fddaca7cf22c7cee564adeff365225a5df5ef3334"
+    },
+    {
+      "serviceAccountName": "kubernetes-dashboard-api",
+      "namespace": "default",
+      "workloadType": "Deployment",
+      "workloadName": "kubernetes-dashboard-api",
+      "containerName": "kubernetes-dashboard-api",
+      "image": "docker.io/kubernetesui/dashboard-api:1.2.0"
+    },
+    {
+      "serviceAccountName": "kubernetes-dashboard-metrics-scraper",
+      "namespace": "default",
+      "workloadType": "Deployment",
+      "workloadName": "kubernetes-dashboard-metrics-scraper",
+      "containerName": "kubernetes-dashboard-metrics-scraper",
+      "image": "docker.io/kubernetesui/dashboard-metrics-scraper:1.1.1"
+    },
+    {
+      "serviceAccountName": "",
+      "namespace": "default",
+      "workloadType": "Deployment",
+      "workloadName": "kubernetes-dashboard-auth",
+      "containerName": "kubernetes-dashboard-auth",
+      "image": "docker.io/kubernetesui/dashboard-auth:1.1.1"
+    },
+    {
+      "serviceAccountName": "kubernetes-dashboard-cert-manager-cainjector",
+      "namespace": "default",
+      "workloadType": "Deployment",
+      "workloadName": "kubernetes-dashboard-cert-manager-cainjector",
+      "containerName": "cert-manager-cainjector",
+      "image": "quay.io/jetstack/cert-manager-cainjector:v1.14.3"
+    },
+    {
+      "serviceAccountName": "kubernetes-dashboard-kong",
+      "namespace": "default",
+      "workloadType": "Deployment",
+      "workloadName": "kubernetes-dashboard-kong",
+      "containerName": "proxy",
+      "image": "kong:3.6"
+    },
+    {
+      "serviceAccountName": "kubernetes-dashboard-web",
+      "namespace": "default",
+      "workloadType": "Deployment",
+      "workloadName": "kubernetes-dashboard-web",
+      "containerName": "kubernetes-dashboard-web",
+      "image": "docker.io/kubernetesui/dashboard-web:1.2.2"
+    },
+    {
+      "serviceAccountName": "kubernetes-dashboard-cert-manager",
+      "namespace": "default",
+      "workloadType": "Deployment",
+      "workloadName": "kubernetes-dashboard-cert-manager",
+      "containerName": "cert-manager-controller",
+      "image": "quay.io/jetstack/cert-manager-controller:v1.14.3"
+    }
+  ]
+}

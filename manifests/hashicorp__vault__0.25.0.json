@@ -1,0 +1,109 @@
+{
+  "metadata": {
+    "version": "0.25.0",
+    "name": "vault",
+    "source": "charts/hashicorp__vault__0.25.0/",
+    "timestamp": 1769793829,
+    "extra": {
+      "helm": {
+        "description": "Official HashiCorp Vault Chart",
+        "home": "https://www.vaultproject.io",
+        "icon": "https://github.com/hashicorp/vault/raw/f22d202cde2018f9455dec755118a9b84586e082/Vault_PrimaryLogo_Black.png",
+        "keywords": [
+          "vault",
+          "security",
+          "encryption",
+          "secrets",
+          "management",
+          "automation",
+          "infrastructure"
+        ],
+        "kubeVersion": "\u003e= 1.20.0-0",
+        "maintainers": null,
+        "sources": [
+          "https://github.com/hashicorp/vault",
+          "https://github.com/hashicorp/vault-helm",
+          "https://github.com/hashicorp/vault-k8s",
+          "https://github.com/hashicorp/vault-csi-provider"
+        ]
+      }
+    }
+  },
+  "serviceAccountData": [
+    {
+      "serviceAccountName": "vault",
+      "namespace": "default",
+      "automountToken": false,
+      "secrets": null,
+      "imagePullSecrets": null
+    },
+    {
+      "serviceAccountName": "vault-agent-injector",
+      "namespace": "default",
+      "automountToken": false,
+      "secrets": null,
+      "imagePullSecrets": null
+    }
+  ],
+  "serviceAccountPermissions": [
+    {
+      "serviceAccountName": "vault-agent-injector",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "vault-agent-injector-clusterrole",
+      "apiGroup": "admissionregistration.k8s.io",
+      "resource": "mutatingwebhookconfigurations",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "patch",
+        "watch"
+      ],
+      "riskLevel": "Medium",
+      "tags": [
+        "WebhookReconnaissance",
+        "Reconnaissance",
+        "InformationDisclosure"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1084,
+          "name": "List MutatingWebhookConfigurations (Reconnaissance)",
+          "link": "https://rbac-atlas.github.io/rules/1084/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    }
+  ],
+  "serviceAccountWorkloads": [
+    {
+      "serviceAccountName": "",
+      "namespace": "default",
+      "workloadType": "Pod",
+      "workloadName": "vault-server-test",
+      "containerName": "vault-server-test",
+      "image": "hashicorp/vault:1.14.0"
+    },
+    {
+      "serviceAccountName": "vault-agent-injector",
+      "namespace": "default",
+      "workloadType": "Deployment",
+      "workloadName": "vault-agent-injector",
+      "containerName": "sidecar-injector",
+      "image": "hashicorp/vault-k8s:1.2.1"
+    },
+    {
+      "serviceAccountName": "vault",
+      "namespace": "default",
+      "workloadType": "StatefulSet",
+      "workloadName": "vault",
+      "containerName": "vault",
+      "image": "hashicorp/vault:1.14.0"
+    }
+  ]
+}

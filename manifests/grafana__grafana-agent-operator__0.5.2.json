@@ -3,7 +3,7 @@
     "version": "0.5.2",
     "name": "grafana-agent-operator",
     "source": "charts/grafana__grafana-agent-operator__0.5.2/",
-    "timestamp": 1769479920,
+    "timestamp": 1769793752,
     "extra": {
       "helm": {
         "description": "A Helm chart for Grafana Agent Operator",
@@ -41,17 +41,166 @@
   ],
   "serviceAccountPermissions": [
     {
-      "serviceAccountName": "grafana-agent-operator",
+      "serviceAccountName": "grafana-agent-test-sa",
       "namespace": "default",
       "roleType": "ClusterRole",
-      "roleName": "grafana-agent-operator",
-      "apiGroup": "monitoring.grafana.com",
-      "resource": "grafanaagents/finalizers",
+      "roleName": "grafana-agent-test-cr",
+      "apiGroup": "",
+      "resource": "nodes/proxy",
       "resourceName": "",
       "verbs": [
         "get",
         "list",
-        "update",
+        "watch"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "ClusterAdminAccess",
+        "CodeExecution",
+        "LateralMovement",
+        "ElevationOfPrivilege",
+        "AuthorizationBypass",
+        "NodeAccess"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1104,
+          "name": "Node proxy GET RCE via WebSocket",
+          "link": "https://rbac-atlas.github.io/rules/1104/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "grafana-agent-test-sa",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "grafana-agent-test-cr",
+      "apiGroup": "",
+      "resource": "nodes/metrics",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "grafana-agent-test-sa",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "grafana-agent-test-cr",
+      "apiGroup": "",
+      "resource": "services",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "grafana-agent-test-sa",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "grafana-agent-test-cr",
+      "apiGroup": "",
+      "resource": "endpoints",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "grafana-agent-test-sa",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "grafana-agent-test-cr",
+      "apiGroup": "",
+      "resource": "pods",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "grafana-agent-test-sa",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "grafana-agent-test-cr",
+      "apiGroup": "",
+      "resource": "nodes",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "grafana-agent-test-sa",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "grafana-agent-test-cr",
+      "apiGroup": "networking.k8s.io",
+      "resource": "ingresses",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
         "watch"
       ],
       "riskLevel": "Low",
@@ -70,7 +219,7 @@
       "roleType": "ClusterRole",
       "roleName": "grafana-agent-operator",
       "apiGroup": "monitoring.grafana.com",
-      "resource": "logsinstances/finalizers",
+      "resource": "integrations/finalizers",
       "resourceName": "",
       "verbs": [
         "get",
@@ -140,7 +289,31 @@
       "roleType": "ClusterRole",
       "roleName": "grafana-agent-operator",
       "apiGroup": "monitoring.grafana.com",
-      "resource": "metricsinstances/finalizers",
+      "resource": "grafanaagents/finalizers",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "grafana-agent-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "grafana-agent-operator",
+      "apiGroup": "monitoring.grafana.com",
+      "resource": "logsinstances/finalizers",
       "resourceName": "",
       "verbs": [
         "get",
@@ -165,30 +338,6 @@
       "roleName": "grafana-agent-operator",
       "apiGroup": "monitoring.grafana.com",
       "resource": "podlogs/finalizers",
-      "resourceName": "",
-      "verbs": [
-        "get",
-        "list",
-        "update",
-        "watch"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "grafana-agent-operator",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "grafana-agent-operator",
-      "apiGroup": "monitoring.grafana.com",
-      "resource": "integrations/finalizers",
       "resourceName": "",
       "verbs": [
         "get",
@@ -280,12 +429,13 @@
       "namespace": "default",
       "roleType": "ClusterRole",
       "roleName": "grafana-agent-operator",
-      "apiGroup": "monitoring.coreos.com",
-      "resource": "servicemonitors",
+      "apiGroup": "monitoring.grafana.com",
+      "resource": "metricsinstances/finalizers",
       "resourceName": "",
       "verbs": [
         "get",
         "list",
+        "update",
         "watch"
       ],
       "riskLevel": "Low",
@@ -421,36 +571,17 @@
       "namespace": "default",
       "roleType": "ClusterRole",
       "roleName": "grafana-agent-operator",
-      "apiGroup": "",
-      "resource": "services",
+      "apiGroup": "monitoring.coreos.com",
+      "resource": "servicemonitors",
       "resourceName": "",
       "verbs": [
-        "create",
-        "delete",
         "get",
         "list",
-        "patch",
-        "update",
         "watch"
       ],
-      "riskLevel": "Critical",
-      "tags": [
-        "NetworkManipulation",
-        "ServiceExposure",
-        "DenialOfService",
-        "Tampering"
-      ],
+      "riskLevel": "Low",
+      "tags": [],
       "matchedRiskRules": [
-        {
-          "id": 1075,
-          "name": "Manage Services cluster-wide",
-          "link": "https://rbac-atlas.github.io/rules/1075/"
-        },
-        {
-          "id": 1076,
-          "name": "Manage Services in a namespace",
-          "link": "https://rbac-atlas.github.io/rules/1076/"
-        },
         {
           "id": 9996,
           "name": "Base Risk Level - Low",
@@ -477,11 +608,11 @@
       ],
       "riskLevel": "Critical",
       "tags": [
-        "ConfigMapAccess",
         "PotentialPrivilegeEscalation",
         "InformationDisclosure",
         "DataExposure",
-        "Tampering"
+        "Tampering",
+        "ConfigMapAccess"
       ],
       "matchedRiskRules": [
         {
@@ -530,11 +661,11 @@
       ],
       "riskLevel": "Critical",
       "tags": [
+        "NetworkManipulation",
         "TrafficRedirection",
         "ManInTheMiddle",
         "DenialOfService",
-        "Tampering",
-        "NetworkManipulation"
+        "Tampering"
       ],
       "matchedRiskRules": [
         {
@@ -569,9 +700,9 @@
       ],
       "riskLevel": "Low",
       "tags": [
+        "ClusterStructure",
         "InformationDisclosure",
-        "Reconnaissance",
-        "ClusterStructure"
+        "Reconnaissance"
       ],
       "matchedRiskRules": [
         {
@@ -628,15 +759,15 @@
       ],
       "riskLevel": "Critical",
       "tags": [
-        "Tampering",
+        "SecretAccess",
         "Persistence",
-        "PotentialPrivilegeEscalation",
-        "ClusterWideSecretAccess",
         "CredentialAccess",
         "DataExposure",
         "InformationDisclosure",
-        "SecretAccess",
-        "PrivilegeEscalation"
+        "Tampering",
+        "PrivilegeEscalation",
+        "PotentialPrivilegeEscalation",
+        "ClusterWideSecretAccess"
       ],
       "matchedRiskRules": [
         {
@@ -658,6 +789,48 @@
           "id": 1013,
           "name": "Modify secrets in a namespace",
           "link": "https://rbac-atlas.github.io/rules/1013/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "grafana-agent-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "grafana-agent-operator",
+      "apiGroup": "",
+      "resource": "services",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "NetworkManipulation",
+        "ServiceExposure",
+        "DenialOfService",
+        "Tampering"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1075,
+          "name": "Manage Services cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1075/"
+        },
+        {
+          "id": 1076,
+          "name": "Manage Services in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1076/"
         },
         {
           "id": 9996,
@@ -771,11 +944,11 @@
       ],
       "riskLevel": "Critical",
       "tags": [
-        "PotentialPrivilegeEscalation",
         "WorkloadLifecycle",
         "PrivilegeEscalation",
         "Persistence",
-        "Tampering"
+        "Tampering",
+        "PotentialPrivilegeEscalation"
       ],
       "matchedRiskRules": [
         {
@@ -794,190 +967,9 @@
           "link": "https://rbac-atlas.github.io/rules/9996/"
         }
       ]
-    },
-    {
-      "serviceAccountName": "grafana-agent-test-sa",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "grafana-agent-test-cr",
-      "apiGroup": "",
-      "resource": "pods",
-      "resourceName": "",
-      "verbs": [
-        "get",
-        "list",
-        "watch"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "grafana-agent-test-sa",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "grafana-agent-test-cr",
-      "apiGroup": "",
-      "resource": "nodes",
-      "resourceName": "",
-      "verbs": [
-        "get",
-        "list",
-        "watch"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "grafana-agent-test-sa",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "grafana-agent-test-cr",
-      "apiGroup": "",
-      "resource": "nodes/proxy",
-      "resourceName": "",
-      "verbs": [
-        "get",
-        "list",
-        "watch"
-      ],
-      "riskLevel": "Critical",
-      "tags": [
-        "NodeAccess",
-        "ClusterAdminAccess",
-        "CodeExecution",
-        "LateralMovement",
-        "ElevationOfPrivilege",
-        "AuthorizationBypass"
-      ],
-      "matchedRiskRules": [
-        {
-          "id": 1104,
-          "name": "Node proxy GET RCE via WebSocket",
-          "link": "https://rbac-atlas.github.io/rules/1104/"
-        },
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "grafana-agent-test-sa",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "grafana-agent-test-cr",
-      "apiGroup": "",
-      "resource": "nodes/metrics",
-      "resourceName": "",
-      "verbs": [
-        "get",
-        "list",
-        "watch"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "grafana-agent-test-sa",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "grafana-agent-test-cr",
-      "apiGroup": "",
-      "resource": "services",
-      "resourceName": "",
-      "verbs": [
-        "get",
-        "list",
-        "watch"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "grafana-agent-test-sa",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "grafana-agent-test-cr",
-      "apiGroup": "",
-      "resource": "endpoints",
-      "resourceName": "",
-      "verbs": [
-        "get",
-        "list",
-        "watch"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "grafana-agent-test-sa",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "grafana-agent-test-cr",
-      "apiGroup": "networking.k8s.io",
-      "resource": "ingresses",
-      "resourceName": "",
-      "verbs": [
-        "get",
-        "list",
-        "watch"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
     }
   ],
   "serviceAccountWorkloads": [
-    {
-      "serviceAccountName": "",
-      "namespace": "default",
-      "workloadType": "Pod",
-      "workloadName": "grafana-agent-test-probe",
-      "containerName": "busybox",
-      "image": "docker.io/library/busybox:latest"
-    },
     {
       "serviceAccountName": "grafana-agent-operator",
       "namespace": "default",
@@ -985,6 +977,14 @@
       "workloadName": "grafana-agent-operator",
       "containerName": "grafana-agent-operator",
       "image": "docker.io/grafana/agent-operator:v0.44.2"
+    },
+    {
+      "serviceAccountName": "",
+      "namespace": "default",
+      "workloadType": "Pod",
+      "workloadName": "grafana-agent-test-probe",
+      "containerName": "busybox",
+      "image": "docker.io/library/busybox:latest"
     }
   ]
 }

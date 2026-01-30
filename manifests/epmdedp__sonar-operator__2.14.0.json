@@ -1,0 +1,79 @@
+{
+  "metadata": {
+    "version": "2.14.0",
+    "name": "sonar-operator",
+    "source": "charts/epmdedp__sonar-operator__2.14.0/",
+    "timestamp": 1769793466,
+    "extra": {
+      "helm": {
+        "description": "A Helm chart for EDP Sonar Operator",
+        "home": "https://epam.github.io/edp-install/",
+        "icon": "https://epam.github.io/edp-install/assets/logo.png",
+        "keywords": [
+          "edp",
+          "sonarqube",
+          "gates",
+          "pipelines"
+        ],
+        "kubeVersion": "",
+        "maintainers": [
+          {
+            "name": "epmd-edp",
+            "email": "SupportEPMD-EDP@epam.com",
+            "url": "https://solutionshub.epam.com/solution/epam-delivery-platform"
+          },
+          {
+            "name": "sergk",
+            "url": "https://github.com/SergK"
+          }
+        ],
+        "sources": [
+          "https://github.com/epam/edp-sonar-operator"
+        ]
+      }
+    }
+  },
+  "serviceAccountData": [
+    {
+      "serviceAccountName": "edp-sonar-operator",
+      "namespace": "default",
+      "automountToken": false,
+      "secrets": null,
+      "imagePullSecrets": null
+    },
+    {
+      "serviceAccountName": "sonar",
+      "namespace": "default",
+      "automountToken": false,
+      "secrets": null,
+      "imagePullSecrets": null
+    }
+  ],
+  "serviceAccountPermissions": [],
+  "serviceAccountWorkloads": [
+    {
+      "serviceAccountName": "sonar",
+      "namespace": "default",
+      "workloadType": "Deployment",
+      "workloadName": "sonar",
+      "containerName": "sonar",
+      "image": "sonarqube:8.9.10-community"
+    },
+    {
+      "serviceAccountName": "sonar",
+      "namespace": "default",
+      "workloadType": "Deployment",
+      "workloadName": "sonar-db",
+      "containerName": "sonar-db",
+      "image": "postgres:9.6"
+    },
+    {
+      "serviceAccountName": "edp-sonar-operator",
+      "namespace": "default",
+      "workloadType": "Deployment",
+      "workloadName": "sonar-operator",
+      "containerName": "sonar-operator",
+      "image": "epamedp/sonar-operator:2.14.0"
+    }
+  ]
+}

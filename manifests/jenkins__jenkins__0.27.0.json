@@ -1,0 +1,56 @@
+{
+  "metadata": {
+    "version": "0.27.0",
+    "name": "jenkins",
+    "source": "charts/jenkins__jenkins__0.27.0/",
+    "timestamp": 1769793873,
+    "extra": {
+      "helm": {
+        "description": "Open source continuous integration server. It supports multiple SCM tools including CVS, Subversion and Git. It can execute Apache Ant and Apache Maven-based projects as well as arbitrary scripts.",
+        "home": "https://jenkins.io/",
+        "icon": "https://wiki.jenkins-ci.org/download/attachments/2916393/logo.png",
+        "keywords": null,
+        "kubeVersion": "",
+        "maintainers": [
+          {
+            "name": "lachie83",
+            "email": "lachlan.evenson@microsoft.com"
+          },
+          {
+            "name": "viglesiasce",
+            "email": "viglesias@google.com"
+          },
+          {
+            "name": "maorfr",
+            "email": "maorfr@gmail.com"
+          }
+        ],
+        "sources": [
+          "https://github.com/jenkinsci/jenkins",
+          "https://github.com/jenkinsci/docker-jnlp-slave",
+          "https://github.com/nuvo/kube-tasks"
+        ]
+      }
+    }
+  },
+  "serviceAccountData": [],
+  "serviceAccountPermissions": [],
+  "serviceAccountWorkloads": [
+    {
+      "serviceAccountName": "",
+      "namespace": "default",
+      "workloadType": "Pod",
+      "workloadName": "jenkins-ui-test-s6ioh",
+      "containerName": "jenkins-ui-test",
+      "image": "jenkins/jenkins:lts"
+    },
+    {
+      "serviceAccountName": "default",
+      "namespace": "default",
+      "workloadType": "Deployment",
+      "workloadName": "jenkins",
+      "containerName": "jenkins",
+      "image": "jenkins/jenkins:lts"
+    }
+  ]
+}

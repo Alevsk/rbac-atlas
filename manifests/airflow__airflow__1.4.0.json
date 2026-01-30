@@ -1,0 +1,369 @@
+{
+  "metadata": {
+    "version": "1.4.0",
+    "name": "airflow",
+    "source": "charts/airflow__airflow__1.4.0/",
+    "timestamp": 1769792964,
+    "extra": {
+      "helm": {
+        "description": "The official Helm chart to deploy Apache Airflow, a platform to programmatically author, schedule, and monitor workflows",
+        "home": "https://airflow.apache.org/",
+        "icon": "https://airflow.apache.org/docs/apache-airflow/stable/_images/pin_large.png",
+        "keywords": [
+          "apache",
+          "airflow",
+          "workflow",
+          "scheduler"
+        ],
+        "kubeVersion": "",
+        "maintainers": [
+          {
+            "name": "Apache Airflow PMC",
+            "email": "dev@airflow.apache.org"
+          }
+        ],
+        "sources": [
+          "https://github.com/apache/airflow"
+        ]
+      }
+    }
+  },
+  "serviceAccountData": [
+    {
+      "serviceAccountName": "airflow-redis",
+      "namespace": "default",
+      "automountToken": false,
+      "secrets": null,
+      "imagePullSecrets": null
+    },
+    {
+      "serviceAccountName": "airflow-create-user-job",
+      "namespace": "default",
+      "automountToken": false,
+      "secrets": null,
+      "imagePullSecrets": null
+    },
+    {
+      "serviceAccountName": "airflow-flower",
+      "namespace": "default",
+      "automountToken": false,
+      "secrets": null,
+      "imagePullSecrets": null
+    },
+    {
+      "serviceAccountName": "airflow-worker",
+      "namespace": "default",
+      "automountToken": false,
+      "secrets": null,
+      "imagePullSecrets": null
+    },
+    {
+      "serviceAccountName": "airflow-webserver",
+      "namespace": "default",
+      "automountToken": false,
+      "secrets": null,
+      "imagePullSecrets": null
+    },
+    {
+      "serviceAccountName": "airflow-statsd",
+      "namespace": "default",
+      "automountToken": false,
+      "secrets": null,
+      "imagePullSecrets": null
+    },
+    {
+      "serviceAccountName": "airflow-migrate-database-job",
+      "namespace": "default",
+      "automountToken": false,
+      "secrets": null,
+      "imagePullSecrets": null
+    },
+    {
+      "serviceAccountName": "airflow-triggerer",
+      "namespace": "default",
+      "automountToken": false,
+      "secrets": null,
+      "imagePullSecrets": null
+    },
+    {
+      "serviceAccountName": "airflow-scheduler",
+      "namespace": "default",
+      "automountToken": false,
+      "secrets": null,
+      "imagePullSecrets": null
+    }
+  ],
+  "serviceAccountPermissions": [
+    {
+      "serviceAccountName": "airflow-worker",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "airflow-pod-launcher-role",
+      "apiGroup": "",
+      "resource": "pods",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "watch"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "PotentialPrivilegeEscalation",
+        "LateralMovement",
+        "Persistence",
+        "WorkloadExecution"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1007,
+          "name": "Create pods in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1007/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "airflow-worker",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "airflow-pod-launcher-role",
+      "apiGroup": "",
+      "resource": "pods/log",
+      "resourceName": "",
+      "verbs": [
+        "get"
+      ],
+      "riskLevel": "Medium",
+      "tags": [
+        "LogAccess",
+        "InformationDisclosure",
+        "DataExposure"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1019,
+          "name": "Read pod logs in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1019/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "airflow-worker",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "airflow-pod-launcher-role",
+      "apiGroup": "",
+      "resource": "pods/exec",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "get"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "PodExec",
+        "CodeExecution",
+        "LateralMovement",
+        "PotentialPrivilegeEscalation"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1001,
+          "name": "Namespaced pod exec",
+          "link": "https://rbac-atlas.github.io/rules/1001/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "airflow-worker",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "airflow-pod-launcher-role",
+      "apiGroup": "",
+      "resource": "events",
+      "resourceName": "",
+      "verbs": [
+        "list"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "airflow-webserver",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "airflow-pod-log-reader-role",
+      "apiGroup": "",
+      "resource": "pods",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "airflow-webserver",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "airflow-pod-log-reader-role",
+      "apiGroup": "",
+      "resource": "pods/log",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list"
+      ],
+      "riskLevel": "Medium",
+      "tags": [
+        "InformationDisclosure",
+        "DataExposure",
+        "LogAccess"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1019,
+          "name": "Read pod logs in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1019/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    }
+  ],
+  "serviceAccountWorkloads": [
+    {
+      "serviceAccountName": "airflow-worker",
+      "namespace": "default",
+      "workloadType": "StatefulSet",
+      "workloadName": "airflow-worker",
+      "containerName": "worker",
+      "image": "apache/airflow:2.2.3"
+    },
+    {
+      "serviceAccountName": "airflow-worker",
+      "namespace": "default",
+      "workloadType": "StatefulSet",
+      "workloadName": "airflow-worker",
+      "containerName": "worker-log-groomer",
+      "image": "apache/airflow:2.2.3"
+    },
+    {
+      "serviceAccountName": "airflow-statsd",
+      "namespace": "default",
+      "workloadType": "Deployment",
+      "workloadName": "airflow-statsd",
+      "containerName": "statsd",
+      "image": "apache/airflow:airflow-statsd-exporter-2021.04.28-v0.17.0"
+    },
+    {
+      "serviceAccountName": "airflow-migrate-database-job",
+      "namespace": "default",
+      "workloadType": "Job",
+      "workloadName": "airflow-run-airflow-migrations",
+      "containerName": "run-airflow-migrations",
+      "image": "apache/airflow:2.2.3"
+    },
+    {
+      "serviceAccountName": "airflow-scheduler",
+      "namespace": "default",
+      "workloadType": "Deployment",
+      "workloadName": "airflow-scheduler",
+      "containerName": "scheduler",
+      "image": "apache/airflow:2.2.3"
+    },
+    {
+      "serviceAccountName": "airflow-scheduler",
+      "namespace": "default",
+      "workloadType": "Deployment",
+      "workloadName": "airflow-scheduler",
+      "containerName": "scheduler-log-groomer",
+      "image": "apache/airflow:2.2.3"
+    },
+    {
+      "serviceAccountName": "airflow-webserver",
+      "namespace": "default",
+      "workloadType": "Deployment",
+      "workloadName": "airflow-webserver",
+      "containerName": "webserver",
+      "image": "apache/airflow:2.2.3"
+    },
+    {
+      "serviceAccountName": "airflow-triggerer",
+      "namespace": "default",
+      "workloadType": "Deployment",
+      "workloadName": "airflow-triggerer",
+      "containerName": "triggerer",
+      "image": "apache/airflow:2.2.3"
+    },
+    {
+      "serviceAccountName": "airflow-flower",
+      "namespace": "default",
+      "workloadType": "Deployment",
+      "workloadName": "airflow-flower",
+      "containerName": "flower",
+      "image": "apache/airflow:2.2.3"
+    },
+    {
+      "serviceAccountName": "",
+      "namespace": "default",
+      "workloadType": "StatefulSet",
+      "workloadName": "airflow-postgresql",
+      "containerName": "airflow-postgresql",
+      "image": "docker.io/bitnami/postgresql:11.12.0-debian-10-r44"
+    },
+    {
+      "serviceAccountName": "airflow-redis",
+      "namespace": "default",
+      "workloadType": "StatefulSet",
+      "workloadName": "airflow-redis",
+      "containerName": "redis",
+      "image": "redis:6-buster"
+    },
+    {
+      "serviceAccountName": "airflow-create-user-job",
+      "namespace": "default",
+      "workloadType": "Job",
+      "workloadName": "airflow-create-user",
+      "containerName": "create-user",
+      "image": "apache/airflow:2.2.3"
+    }
+  ]
+}

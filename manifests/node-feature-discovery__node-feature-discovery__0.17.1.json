@@ -1,0 +1,538 @@
+{
+  "metadata": {
+    "version": "0.17.1",
+    "name": "node-feature-discovery",
+    "source": "charts/node-feature-discovery__node-feature-discovery__0.17.1/",
+    "timestamp": 1769794137,
+    "extra": {
+      "helm": {
+        "description": "Detects hardware features available on each node in a Kubernetes cluster, and advertises those features using node labels. ",
+        "home": "https://github.com/kubernetes-sigs/node-feature-discovery",
+        "icon": "",
+        "keywords": [
+          "feature-discovery",
+          "feature-detection",
+          "node-labels"
+        ],
+        "kubeVersion": "",
+        "maintainers": null,
+        "sources": [
+          "https://github.com/kubernetes-sigs/node-feature-discovery"
+        ]
+      }
+    }
+  },
+  "serviceAccountData": [
+    {
+      "serviceAccountName": "node-feature-discovery-prune",
+      "namespace": "default",
+      "automountToken": false,
+      "secrets": null,
+      "imagePullSecrets": null
+    },
+    {
+      "serviceAccountName": "node-feature-discovery",
+      "namespace": "default",
+      "automountToken": false,
+      "secrets": null,
+      "imagePullSecrets": null
+    },
+    {
+      "serviceAccountName": "node-feature-discovery-gc",
+      "namespace": "default",
+      "automountToken": false,
+      "secrets": null,
+      "imagePullSecrets": null
+    },
+    {
+      "serviceAccountName": "node-feature-discovery-worker",
+      "namespace": "default",
+      "automountToken": false,
+      "secrets": null,
+      "imagePullSecrets": null
+    }
+  ],
+  "serviceAccountPermissions": [
+    {
+      "serviceAccountName": "node-feature-discovery-gc",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "node-feature-discovery-gc",
+      "apiGroup": "",
+      "resource": "nodes",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "node-feature-discovery-gc",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "node-feature-discovery-gc",
+      "apiGroup": "",
+      "resource": "nodes/proxy",
+      "resourceName": "",
+      "verbs": [
+        "get"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "NodeAccess",
+        "ClusterAdminAccess",
+        "CodeExecution",
+        "LateralMovement",
+        "ElevationOfPrivilege",
+        "AuthorizationBypass"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1104,
+          "name": "Node proxy GET RCE via WebSocket",
+          "link": "https://rbac-atlas.github.io/rules/1104/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "node-feature-discovery-gc",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "node-feature-discovery-gc",
+      "apiGroup": "topology.node.k8s.io",
+      "resource": "noderesourcetopologies",
+      "resourceName": "",
+      "verbs": [
+        "delete",
+        "list"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "node-feature-discovery-gc",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "node-feature-discovery-gc",
+      "apiGroup": "nfd.k8s-sigs.io",
+      "resource": "nodefeatures",
+      "resourceName": "",
+      "verbs": [
+        "delete",
+        "list"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "node-feature-discovery-prune",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "node-feature-discovery-prune",
+      "apiGroup": "",
+      "resource": "nodes",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "patch",
+        "update"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "NodeAccess",
+        "Tampering",
+        "PotentialPrivilegeEscalation",
+        "DenialOfService"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1015,
+          "name": "Modify node configuration (labels, taints)",
+          "link": "https://rbac-atlas.github.io/rules/1015/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "node-feature-discovery-prune",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "node-feature-discovery-prune",
+      "apiGroup": "",
+      "resource": "nodes/status",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "patch",
+        "update"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "SchedulingAbuse",
+        "NodeManipulation",
+        "Tampering",
+        "DenialOfService"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1069,
+          "name": "Patch node status cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1069/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "node-feature-discovery-worker",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "node-feature-discovery-worker",
+      "apiGroup": "nfd.k8s-sigs.io",
+      "resource": "nodefeatures",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "node-feature-discovery-worker",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "node-feature-discovery-worker",
+      "apiGroup": "",
+      "resource": "pods",
+      "resourceName": "",
+      "verbs": [
+        "get"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "node-feature-discovery",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "node-feature-discovery",
+      "apiGroup": "",
+      "resource": "namespaces",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [
+        "InformationDisclosure",
+        "Reconnaissance",
+        "ClusterStructure"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1082,
+          "name": "List Namespaces (Cluster Reconnaissance)",
+          "link": "https://rbac-atlas.github.io/rules/1082/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "node-feature-discovery",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "node-feature-discovery",
+      "apiGroup": "",
+      "resource": "nodes",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "patch",
+        "update"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "DenialOfService",
+        "NodeAccess",
+        "Tampering",
+        "PotentialPrivilegeEscalation"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1015,
+          "name": "Modify node configuration (labels, taints)",
+          "link": "https://rbac-atlas.github.io/rules/1015/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "node-feature-discovery",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "node-feature-discovery",
+      "apiGroup": "",
+      "resource": "nodes/status",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "patch",
+        "update"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "NodeManipulation",
+        "Tampering",
+        "DenialOfService",
+        "SchedulingAbuse"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1069,
+          "name": "Patch node status cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1069/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "node-feature-discovery",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "node-feature-discovery",
+      "apiGroup": "nfd.k8s-sigs.io",
+      "resource": "nodefeatures",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "node-feature-discovery",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "node-feature-discovery",
+      "apiGroup": "nfd.k8s-sigs.io",
+      "resource": "nodefeaturerules",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "node-feature-discovery",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "node-feature-discovery",
+      "apiGroup": "nfd.k8s-sigs.io",
+      "resource": "nodefeaturegroups",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "node-feature-discovery",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "node-feature-discovery",
+      "apiGroup": "nfd.k8s-sigs.io",
+      "resource": "nodefeaturegroups/status",
+      "resourceName": "",
+      "verbs": [
+        "patch",
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "node-feature-discovery",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "node-feature-discovery",
+      "apiGroup": "coordination.k8s.io",
+      "resource": "leases",
+      "resourceName": "",
+      "verbs": [
+        "create"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "node-feature-discovery",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "node-feature-discovery",
+      "apiGroup": "coordination.k8s.io",
+      "resource": "leases",
+      "resourceName": "nfd-master.nfd.kubernetes.io",
+      "verbs": [
+        "get",
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [
+        "ResourceNameRestricted"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    }
+  ],
+  "serviceAccountWorkloads": [
+    {
+      "serviceAccountName": "node-feature-discovery-worker",
+      "namespace": "default",
+      "workloadType": "DaemonSet",
+      "workloadName": "node-feature-discovery-worker",
+      "containerName": "worker",
+      "image": "registry.k8s.io/nfd/node-feature-discovery:v0.17.1"
+    },
+    {
+      "serviceAccountName": "node-feature-discovery-gc",
+      "namespace": "default",
+      "workloadType": "Deployment",
+      "workloadName": "node-feature-discovery-gc",
+      "containerName": "gc",
+      "image": "registry.k8s.io/nfd/node-feature-discovery:v0.17.1"
+    },
+    {
+      "serviceAccountName": "node-feature-discovery-prune",
+      "namespace": "default",
+      "workloadType": "Job",
+      "workloadName": "node-feature-discovery-prune",
+      "containerName": "nfd-master",
+      "image": "registry.k8s.io/nfd/node-feature-discovery:v0.17.1"
+    },
+    {
+      "serviceAccountName": "node-feature-discovery",
+      "namespace": "default",
+      "workloadType": "Deployment",
+      "workloadName": "node-feature-discovery-master",
+      "containerName": "master",
+      "image": "registry.k8s.io/nfd/node-feature-discovery:v0.17.1"
+    }
+  ]
+}

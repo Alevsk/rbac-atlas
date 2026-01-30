@@ -3,7 +3,7 @@
     "version": "2.4.20",
     "name": "argo-events",
     "source": "charts/argo__argo-events__2.4.20/",
-    "timestamp": 1769047132,
+    "timestamp": 1769793027,
     "extra": {
       "helm": {
         "description": "A Helm chart for Argo Events, the event-driven workflow automation framework",
@@ -28,14 +28,14 @@
   },
   "serviceAccountData": [
     {
-      "serviceAccountName": "argo-events-events-webhook",
+      "serviceAccountName": "argo-events-controller-manager",
       "namespace": "default",
       "automountToken": true,
       "secrets": null,
       "imagePullSecrets": null
     },
     {
-      "serviceAccountName": "argo-events-controller-manager",
+      "serviceAccountName": "argo-events-events-webhook",
       "namespace": "default",
       "automountToken": true,
       "secrets": null,
@@ -48,107 +48,13 @@
       "namespace": "default",
       "roleType": "ClusterRole",
       "roleName": "argo-events-controller-manager",
-      "apiGroup": "",
-      "resource": "configmaps",
+      "apiGroup": "argoproj.io",
+      "resource": "eventbus/status",
       "resourceName": "",
       "verbs": [
         "create",
         "delete",
-        "get",
-        "list",
-        "patch",
-        "update",
-        "watch"
-      ],
-      "riskLevel": "Critical",
-      "tags": [
-        "Tampering",
-        "ConfigMapAccess",
-        "PotentialPrivilegeEscalation",
-        "InformationDisclosure",
-        "DataExposure"
-      ],
-      "matchedRiskRules": [
-        {
-          "id": 1024,
-          "name": "Modify ConfigMaps cluster-wide",
-          "link": "https://rbac-atlas.github.io/rules/1024/"
-        },
-        {
-          "id": 1022,
-          "name": "Read ConfigMaps cluster-wide",
-          "link": "https://rbac-atlas.github.io/rules/1022/"
-        },
-        {
-          "id": 1025,
-          "name": "Modify ConfigMaps in a namespace",
-          "link": "https://rbac-atlas.github.io/rules/1025/"
-        },
-        {
-          "id": 1023,
-          "name": "Read ConfigMaps in a namespace",
-          "link": "https://rbac-atlas.github.io/rules/1023/"
-        },
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "argo-events-controller-manager",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "argo-events-controller-manager",
-      "apiGroup": "",
-      "resource": "services",
-      "resourceName": "",
-      "verbs": [
-        "create",
-        "delete",
-        "get",
-        "list",
-        "patch",
-        "update",
-        "watch"
-      ],
-      "riskLevel": "Critical",
-      "tags": [
-        "NetworkManipulation",
-        "ServiceExposure",
-        "DenialOfService",
-        "Tampering"
-      ],
-      "matchedRiskRules": [
-        {
-          "id": 1075,
-          "name": "Manage Services cluster-wide",
-          "link": "https://rbac-atlas.github.io/rules/1075/"
-        },
-        {
-          "id": 1076,
-          "name": "Manage Services in a namespace",
-          "link": "https://rbac-atlas.github.io/rules/1076/"
-        },
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "argo-events-controller-manager",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "argo-events-controller-manager",
-      "apiGroup": "",
-      "resource": "persistentvolumeclaims",
-      "resourceName": "",
-      "verbs": [
-        "create",
-        "delete",
+        "deletecollection",
         "get",
         "list",
         "patch",
@@ -158,6 +64,316 @@
       "riskLevel": "Low",
       "tags": [],
       "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "argo-events-controller-manager",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "argo-events-controller-manager",
+      "apiGroup": "argoproj.io",
+      "resource": "sensors/finalizers",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "deletecollection",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "argo-events-controller-manager",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "argo-events-controller-manager",
+      "apiGroup": "argoproj.io",
+      "resource": "eventsources/status",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "deletecollection",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "argo-events-controller-manager",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "argo-events-controller-manager",
+      "apiGroup": "argoproj.io",
+      "resource": "eventbus",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "deletecollection",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "argo-events-controller-manager",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "argo-events-controller-manager",
+      "apiGroup": "argoproj.io",
+      "resource": "eventbus/finalizers",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "deletecollection",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "argo-events-controller-manager",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "argo-events-controller-manager",
+      "apiGroup": "argoproj.io",
+      "resource": "sensors",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "deletecollection",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "argo-events-controller-manager",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "argo-events-controller-manager",
+      "apiGroup": "argoproj.io",
+      "resource": "sensors/status",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "deletecollection",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "argo-events-controller-manager",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "argo-events-controller-manager",
+      "apiGroup": "argoproj.io",
+      "resource": "eventsources",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "deletecollection",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "argo-events-controller-manager",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "argo-events-controller-manager",
+      "apiGroup": "argoproj.io",
+      "resource": "eventsources/finalizers",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "deletecollection",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "argo-events-controller-manager",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "argo-events-controller-manager",
+      "apiGroup": "apps",
+      "resource": "deployments",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "Persistence",
+        "Tampering",
+        "PotentialPrivilegeEscalation",
+        "WorkloadLifecycle",
+        "PrivilegeEscalation"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1033,
+          "name": "Manage Deployments cluster-wide (potential for privileged pod execution)",
+          "link": "https://rbac-atlas.github.io/rules/1033/"
+        },
+        {
+          "id": 1034,
+          "name": "Manage Deployments in a namespace (potential for privileged pod execution)",
+          "link": "https://rbac-atlas.github.io/rules/1034/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "argo-events-controller-manager",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "argo-events-controller-manager",
+      "apiGroup": "apps",
+      "resource": "statefulsets",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "PrivilegeEscalation",
+        "Persistence",
+        "Tampering",
+        "PotentialPrivilegeEscalation",
+        "WorkloadLifecycle"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1037,
+          "name": "Manage StatefulSets cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1037/"
+        },
+        {
+          "id": 1038,
+          "name": "Manage StatefulSets in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1038/"
+        },
         {
           "id": 9996,
           "name": "Base Risk Level - Low",
@@ -249,12 +465,12 @@
       ],
       "riskLevel": "Critical",
       "tags": [
-        "WorkloadExecution",
-        "PrivilegeEscalation",
-        "LateralMovement",
         "Persistence",
         "Tampering",
-        "PotentialPrivilegeEscalation"
+        "PotentialPrivilegeEscalation",
+        "WorkloadExecution",
+        "PrivilegeEscalation",
+        "LateralMovement"
       ],
       "matchedRiskRules": [
         {
@@ -303,12 +519,12 @@
       ],
       "riskLevel": "Critical",
       "tags": [
+        "PotentialPrivilegeEscalation",
+        "ClusterWidePodExec",
         "CodeExecution",
         "LateralMovement",
         "ElevationOfPrivilege",
-        "PodExec",
-        "PotentialPrivilegeEscalation",
-        "ClusterWidePodExec"
+        "PodExec"
       ],
       "matchedRiskRules": [
         {
@@ -321,6 +537,128 @@
           "name": "Namespaced pod exec",
           "link": "https://rbac-atlas.github.io/rules/1001/"
         },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "argo-events-controller-manager",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "argo-events-controller-manager",
+      "apiGroup": "",
+      "resource": "configmaps",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "Tampering",
+        "ConfigMapAccess",
+        "PotentialPrivilegeEscalation",
+        "InformationDisclosure",
+        "DataExposure"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1024,
+          "name": "Modify ConfigMaps cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1024/"
+        },
+        {
+          "id": 1022,
+          "name": "Read ConfigMaps cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1022/"
+        },
+        {
+          "id": 1025,
+          "name": "Modify ConfigMaps in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1025/"
+        },
+        {
+          "id": 1023,
+          "name": "Read ConfigMaps in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1023/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "argo-events-controller-manager",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "argo-events-controller-manager",
+      "apiGroup": "",
+      "resource": "services",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "DenialOfService",
+        "Tampering",
+        "NetworkManipulation",
+        "ServiceExposure"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1075,
+          "name": "Manage Services cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1075/"
+        },
+        {
+          "id": 1076,
+          "name": "Manage Services in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1076/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "argo-events-controller-manager",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "argo-events-controller-manager",
+      "apiGroup": "",
+      "resource": "persistentvolumeclaims",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
         {
           "id": 9996,
           "name": "Base Risk Level - Low",
@@ -363,344 +701,6 @@
           "id": 1081,
           "name": "Manage Leases in kube-system or kube-node-lease namespace",
           "link": "https://rbac-atlas.github.io/rules/1081/"
-        },
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "argo-events-controller-manager",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "argo-events-controller-manager",
-      "apiGroup": "argoproj.io",
-      "resource": "sensors",
-      "resourceName": "",
-      "verbs": [
-        "create",
-        "delete",
-        "deletecollection",
-        "get",
-        "list",
-        "patch",
-        "update",
-        "watch"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "argo-events-controller-manager",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "argo-events-controller-manager",
-      "apiGroup": "argoproj.io",
-      "resource": "eventsources/finalizers",
-      "resourceName": "",
-      "verbs": [
-        "create",
-        "delete",
-        "deletecollection",
-        "get",
-        "list",
-        "patch",
-        "update",
-        "watch"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "argo-events-controller-manager",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "argo-events-controller-manager",
-      "apiGroup": "argoproj.io",
-      "resource": "eventbus",
-      "resourceName": "",
-      "verbs": [
-        "create",
-        "delete",
-        "deletecollection",
-        "get",
-        "list",
-        "patch",
-        "update",
-        "watch"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "argo-events-controller-manager",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "argo-events-controller-manager",
-      "apiGroup": "argoproj.io",
-      "resource": "eventbus/finalizers",
-      "resourceName": "",
-      "verbs": [
-        "create",
-        "delete",
-        "deletecollection",
-        "get",
-        "list",
-        "patch",
-        "update",
-        "watch"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "argo-events-controller-manager",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "argo-events-controller-manager",
-      "apiGroup": "argoproj.io",
-      "resource": "sensors/finalizers",
-      "resourceName": "",
-      "verbs": [
-        "create",
-        "delete",
-        "deletecollection",
-        "get",
-        "list",
-        "patch",
-        "update",
-        "watch"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "argo-events-controller-manager",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "argo-events-controller-manager",
-      "apiGroup": "argoproj.io",
-      "resource": "sensors/status",
-      "resourceName": "",
-      "verbs": [
-        "create",
-        "delete",
-        "deletecollection",
-        "get",
-        "list",
-        "patch",
-        "update",
-        "watch"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "argo-events-controller-manager",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "argo-events-controller-manager",
-      "apiGroup": "argoproj.io",
-      "resource": "eventsources",
-      "resourceName": "",
-      "verbs": [
-        "create",
-        "delete",
-        "deletecollection",
-        "get",
-        "list",
-        "patch",
-        "update",
-        "watch"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "argo-events-controller-manager",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "argo-events-controller-manager",
-      "apiGroup": "argoproj.io",
-      "resource": "eventsources/status",
-      "resourceName": "",
-      "verbs": [
-        "create",
-        "delete",
-        "deletecollection",
-        "get",
-        "list",
-        "patch",
-        "update",
-        "watch"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "argo-events-controller-manager",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "argo-events-controller-manager",
-      "apiGroup": "argoproj.io",
-      "resource": "eventbus/status",
-      "resourceName": "",
-      "verbs": [
-        "create",
-        "delete",
-        "deletecollection",
-        "get",
-        "list",
-        "patch",
-        "update",
-        "watch"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "argo-events-controller-manager",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "argo-events-controller-manager",
-      "apiGroup": "apps",
-      "resource": "statefulsets",
-      "resourceName": "",
-      "verbs": [
-        "create",
-        "delete",
-        "get",
-        "list",
-        "patch",
-        "update",
-        "watch"
-      ],
-      "riskLevel": "Critical",
-      "tags": [
-        "WorkloadLifecycle",
-        "PrivilegeEscalation",
-        "Persistence",
-        "Tampering",
-        "PotentialPrivilegeEscalation"
-      ],
-      "matchedRiskRules": [
-        {
-          "id": 1037,
-          "name": "Manage StatefulSets cluster-wide",
-          "link": "https://rbac-atlas.github.io/rules/1037/"
-        },
-        {
-          "id": 1038,
-          "name": "Manage StatefulSets in a namespace",
-          "link": "https://rbac-atlas.github.io/rules/1038/"
-        },
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "argo-events-controller-manager",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "argo-events-controller-manager",
-      "apiGroup": "apps",
-      "resource": "deployments",
-      "resourceName": "",
-      "verbs": [
-        "create",
-        "delete",
-        "get",
-        "list",
-        "patch",
-        "update",
-        "watch"
-      ],
-      "riskLevel": "Critical",
-      "tags": [
-        "WorkloadLifecycle",
-        "PrivilegeEscalation",
-        "Persistence",
-        "Tampering",
-        "PotentialPrivilegeEscalation"
-      ],
-      "matchedRiskRules": [
-        {
-          "id": 1033,
-          "name": "Manage Deployments cluster-wide (potential for privileged pod execution)",
-          "link": "https://rbac-atlas.github.io/rules/1033/"
-        },
-        {
-          "id": 1034,
-          "name": "Manage Deployments in a namespace (potential for privileged pod execution)",
-          "link": "https://rbac-atlas.github.io/rules/1034/"
         },
         {
           "id": 9996,

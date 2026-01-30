@@ -3,7 +3,7 @@
     "version": "0.0.28",
     "name": "virtualcluster",
     "source": "charts/loft__virtualcluster__0.0.28/",
-    "timestamp": 1769479922,
+    "timestamp": 1769794080,
     "extra": {
       "helm": {
         "description": "A virtual kubernetes cluster",
@@ -31,8 +31,8 @@
       "namespace": "default",
       "roleType": "Role",
       "roleName": "virtualcluster",
-      "apiGroup": "",
-      "resource": "services",
+      "apiGroup": "networking.k8s.io",
+      "resource": "ingresses",
       "resourceName": "",
       "verbs": [
         "*"
@@ -40,18 +40,18 @@
       "riskLevel": "High",
       "tags": [
         "Tampering",
+        "DenialOfService",
         "NamespaceAdmin",
         "NamespaceWideAccess",
         "WildcardPermission",
         "NetworkManipulation",
-        "ServiceExposure",
-        "DenialOfService"
+        "ServiceExposure"
       ],
       "matchedRiskRules": [
         {
-          "id": 1076,
-          "name": "Manage Services in a namespace",
-          "link": "https://rbac-atlas.github.io/rules/1076/"
+          "id": 1091,
+          "name": "Manage Ingresses (Namespace Service Exposure/Traffic Redirection)",
+          "link": "https://rbac-atlas.github.io/rules/1091/"
         },
         {
           "id": 9997,
@@ -65,23 +65,21 @@
       "namespace": "default",
       "roleType": "Role",
       "roleName": "virtualcluster",
-      "apiGroup": "",
-      "resource": "services/proxy",
+      "apiGroup": "apps",
+      "resource": "statefulsets",
       "resourceName": "",
       "verbs": [
-        "*"
+        "get",
+        "list",
+        "watch"
       ],
-      "riskLevel": "Medium",
-      "tags": [
-        "WildcardPermission",
-        "NamespaceAdmin",
-        "NamespaceWideAccess"
-      ],
+      "riskLevel": "Low",
+      "tags": [],
       "matchedRiskRules": [
         {
-          "id": 9997,
-          "name": "Base Risk Level - Medium",
-          "link": "https://rbac-atlas.github.io/rules/9997/"
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
         }
       ]
     },
@@ -91,32 +89,74 @@
       "roleType": "Role",
       "roleName": "virtualcluster",
       "apiGroup": "",
-      "resource": "pods",
+      "resource": "configmaps",
       "resourceName": "",
       "verbs": [
         "*"
       ],
       "riskLevel": "High",
       "tags": [
-        "WorkloadExecution",
-        "PotentialPrivilegeEscalation",
-        "LateralMovement",
-        "Persistence",
         "Tampering",
+        "ConfigMapAccess",
+        "PotentialPrivilegeEscalation",
+        "InformationDisclosure",
+        "DataExposure",
         "NamespaceAdmin",
         "NamespaceWideAccess",
         "WildcardPermission"
       ],
       "matchedRiskRules": [
         {
-          "id": 1007,
-          "name": "Create pods in a namespace",
-          "link": "https://rbac-atlas.github.io/rules/1007/"
+          "id": 1025,
+          "name": "Modify ConfigMaps in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1025/"
         },
         {
-          "id": 1009,
-          "name": "Update/Patch pods in a namespace",
-          "link": "https://rbac-atlas.github.io/rules/1009/"
+          "id": 1023,
+          "name": "Read ConfigMaps in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1023/"
+        },
+        {
+          "id": 9997,
+          "name": "Base Risk Level - Medium",
+          "link": "https://rbac-atlas.github.io/rules/9997/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "vc-virtualcluster",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "virtualcluster",
+      "apiGroup": "",
+      "resource": "secrets",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "DataExposure",
+        "Persistence",
+        "NamespaceWideAccess",
+        "CredentialAccess",
+        "InformationDisclosure",
+        "Tampering",
+        "PotentialPrivilegeEscalation",
+        "NamespaceAdmin",
+        "WildcardPermission",
+        "SecretAccess"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1011,
+          "name": "Read secrets in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1011/"
+        },
+        {
+          "id": 1013,
+          "name": "Modify secrets in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1013/"
         },
         {
           "id": 9997,
@@ -156,104 +196,6 @@
       "roleType": "Role",
       "roleName": "virtualcluster",
       "apiGroup": "",
-      "resource": "pods/log",
-      "resourceName": "",
-      "verbs": [
-        "*"
-      ],
-      "riskLevel": "Medium",
-      "tags": [
-        "LogAccess",
-        "InformationDisclosure",
-        "DataExposure",
-        "NamespaceAdmin",
-        "NamespaceWideAccess",
-        "WildcardPermission"
-      ],
-      "matchedRiskRules": [
-        {
-          "id": 1019,
-          "name": "Read pod logs in a namespace",
-          "link": "https://rbac-atlas.github.io/rules/1019/"
-        },
-        {
-          "id": 9997,
-          "name": "Base Risk Level - Medium",
-          "link": "https://rbac-atlas.github.io/rules/9997/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "vc-virtualcluster",
-      "namespace": "default",
-      "roleType": "Role",
-      "roleName": "virtualcluster",
-      "apiGroup": "",
-      "resource": "namespaces",
-      "resourceName": "",
-      "verbs": [
-        "get",
-        "list",
-        "watch"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "vc-virtualcluster",
-      "namespace": "default",
-      "roleType": "Role",
-      "roleName": "virtualcluster",
-      "apiGroup": "",
-      "resource": "secrets",
-      "resourceName": "",
-      "verbs": [
-        "*"
-      ],
-      "riskLevel": "Critical",
-      "tags": [
-        "DataExposure",
-        "InformationDisclosure",
-        "Tampering",
-        "NamespaceAdmin",
-        "SecretAccess",
-        "PotentialPrivilegeEscalation",
-        "Persistence",
-        "NamespaceWideAccess",
-        "WildcardPermission",
-        "CredentialAccess"
-      ],
-      "matchedRiskRules": [
-        {
-          "id": 1011,
-          "name": "Read secrets in a namespace",
-          "link": "https://rbac-atlas.github.io/rules/1011/"
-        },
-        {
-          "id": 1013,
-          "name": "Modify secrets in a namespace",
-          "link": "https://rbac-atlas.github.io/rules/1013/"
-        },
-        {
-          "id": 9997,
-          "name": "Base Risk Level - Medium",
-          "link": "https://rbac-atlas.github.io/rules/9997/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "vc-virtualcluster",
-      "namespace": "default",
-      "roleType": "Role",
-      "roleName": "virtualcluster",
-      "apiGroup": "",
       "resource": "pods/attach",
       "resourceName": "",
       "verbs": [
@@ -261,13 +203,13 @@
       ],
       "riskLevel": "High",
       "tags": [
+        "PodAttach",
+        "CodeExecution",
         "LateralMovement",
         "PotentialPrivilegeEscalation",
         "NamespaceAdmin",
         "NamespaceWideAccess",
-        "WildcardPermission",
-        "PodAttach",
-        "CodeExecution"
+        "WildcardPermission"
       ],
       "matchedRiskRules": [
         {
@@ -328,13 +270,13 @@
       ],
       "riskLevel": "High",
       "tags": [
+        "CodeExecution",
         "LateralMovement",
         "PotentialPrivilegeEscalation",
         "NamespaceAdmin",
         "NamespaceWideAccess",
         "WildcardPermission",
-        "PodExec",
-        "CodeExecution"
+        "PodExec"
       ],
       "matchedRiskRules": [
         {
@@ -355,16 +297,16 @@
       "roleType": "Role",
       "roleName": "virtualcluster",
       "apiGroup": "",
-      "resource": "events",
+      "resource": "persistentvolumeclaims",
       "resourceName": "",
       "verbs": [
         "*"
       ],
       "riskLevel": "Medium",
       "tags": [
-        "NamespaceWideAccess",
         "WildcardPermission",
-        "NamespaceAdmin"
+        "NamespaceAdmin",
+        "NamespaceWideAccess"
       ],
       "matchedRiskRules": [
         {
@@ -380,26 +322,26 @@
       "roleType": "Role",
       "roleName": "virtualcluster",
       "apiGroup": "",
-      "resource": "endpoints",
+      "resource": "services",
       "resourceName": "",
       "verbs": [
         "*"
       ],
       "riskLevel": "High",
       "tags": [
-        "DenialOfService",
-        "Tampering",
         "NamespaceAdmin",
         "NamespaceWideAccess",
         "WildcardPermission",
         "NetworkManipulation",
-        "TrafficRedirection"
+        "ServiceExposure",
+        "DenialOfService",
+        "Tampering"
       ],
       "matchedRiskRules": [
         {
-          "id": 1074,
-          "name": "Manage Endpoints or EndpointSlices in a namespace",
-          "link": "https://rbac-atlas.github.io/rules/1074/"
+          "id": 1076,
+          "name": "Manage Services in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1076/"
         },
         {
           "id": 9997,
@@ -414,7 +356,7 @@
       "roleType": "Role",
       "roleName": "virtualcluster",
       "apiGroup": "",
-      "resource": "persistentvolumeclaims",
+      "resource": "services/proxy",
       "resourceName": "",
       "verbs": [
         "*"
@@ -439,32 +381,32 @@
       "roleType": "Role",
       "roleName": "virtualcluster",
       "apiGroup": "",
-      "resource": "configmaps",
+      "resource": "pods",
       "resourceName": "",
       "verbs": [
         "*"
       ],
       "riskLevel": "High",
       "tags": [
+        "Tampering",
+        "NamespaceAdmin",
         "NamespaceWideAccess",
         "WildcardPermission",
-        "Tampering",
-        "ConfigMapAccess",
+        "WorkloadExecution",
         "PotentialPrivilegeEscalation",
-        "InformationDisclosure",
-        "DataExposure",
-        "NamespaceAdmin"
+        "LateralMovement",
+        "Persistence"
       ],
       "matchedRiskRules": [
         {
-          "id": 1025,
-          "name": "Modify ConfigMaps in a namespace",
-          "link": "https://rbac-atlas.github.io/rules/1025/"
+          "id": 1007,
+          "name": "Create pods in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1007/"
         },
         {
-          "id": 1023,
-          "name": "Read ConfigMaps in a namespace",
-          "link": "https://rbac-atlas.github.io/rules/1023/"
+          "id": 1009,
+          "name": "Update/Patch pods in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1009/"
         },
         {
           "id": 9997,
@@ -478,27 +420,85 @@
       "namespace": "default",
       "roleType": "Role",
       "roleName": "virtualcluster",
-      "apiGroup": "networking.k8s.io",
-      "resource": "ingresses",
+      "apiGroup": "",
+      "resource": "pods/log",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "Medium",
+      "tags": [
+        "NamespaceAdmin",
+        "NamespaceWideAccess",
+        "WildcardPermission",
+        "LogAccess",
+        "InformationDisclosure",
+        "DataExposure"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1019,
+          "name": "Read pod logs in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1019/"
+        },
+        {
+          "id": 9997,
+          "name": "Base Risk Level - Medium",
+          "link": "https://rbac-atlas.github.io/rules/9997/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "vc-virtualcluster",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "virtualcluster",
+      "apiGroup": "",
+      "resource": "events",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "Medium",
+      "tags": [
+        "NamespaceAdmin",
+        "NamespaceWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9997,
+          "name": "Base Risk Level - Medium",
+          "link": "https://rbac-atlas.github.io/rules/9997/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "vc-virtualcluster",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "virtualcluster",
+      "apiGroup": "",
+      "resource": "endpoints",
       "resourceName": "",
       "verbs": [
         "*"
       ],
       "riskLevel": "High",
       "tags": [
-        "Tampering",
-        "DenialOfService",
         "NamespaceAdmin",
         "NamespaceWideAccess",
         "WildcardPermission",
         "NetworkManipulation",
-        "ServiceExposure"
+        "TrafficRedirection",
+        "DenialOfService",
+        "Tampering"
       ],
       "matchedRiskRules": [
         {
-          "id": 1091,
-          "name": "Manage Ingresses (Namespace Service Exposure/Traffic Redirection)",
-          "link": "https://rbac-atlas.github.io/rules/1091/"
+          "id": 1074,
+          "name": "Manage Endpoints or EndpointSlices in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1074/"
         },
         {
           "id": 9997,
@@ -512,8 +512,8 @@
       "namespace": "default",
       "roleType": "Role",
       "roleName": "virtualcluster",
-      "apiGroup": "apps",
-      "resource": "statefulsets",
+      "apiGroup": "",
+      "resource": "namespaces",
       "resourceName": "",
       "verbs": [
         "get",

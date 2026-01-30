@@ -3,7 +3,7 @@
     "version": "5.8.130",
     "name": "jenkins",
     "source": "charts/jenkins__jenkins__5.8.130/",
-    "timestamp": 1769219532,
+    "timestamp": 1769793889,
     "extra": {
       "helm": {
         "description": "Jenkins - Build great things at any scale! As the leading open source automation server, Jenkins provides over 2000 plugins to support building, deploying and automating any project. ",
@@ -62,6 +62,50 @@
       "roleType": "Role",
       "roleName": "jenkins-schedule-agents",
       "apiGroup": "",
+      "resource": "pods",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "deletecollection",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "WorkloadExecution",
+        "PotentialPrivilegeEscalation",
+        "LateralMovement",
+        "Persistence",
+        "Tampering"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1007,
+          "name": "Create pods in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1007/"
+        },
+        {
+          "id": 1009,
+          "name": "Update/Patch pods in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1009/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "jenkins",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "jenkins-schedule-agents",
+      "apiGroup": "",
       "resource": "pods/exec",
       "resourceName": "",
       "verbs": [
@@ -76,10 +120,10 @@
       ],
       "riskLevel": "High",
       "tags": [
-        "PodExec",
         "CodeExecution",
         "LateralMovement",
-        "PotentialPrivilegeEscalation"
+        "PotentialPrivilegeEscalation",
+        "PodExec"
       ],
       "matchedRiskRules": [
         {
@@ -109,9 +153,9 @@
       ],
       "riskLevel": "Medium",
       "tags": [
-        "DataExposure",
         "LogAccess",
-        "InformationDisclosure"
+        "InformationDisclosure",
+        "DataExposure"
       ],
       "matchedRiskRules": [
         {
@@ -181,50 +225,6 @@
       "serviceAccountName": "jenkins",
       "namespace": "default",
       "roleType": "Role",
-      "roleName": "jenkins-schedule-agents",
-      "apiGroup": "",
-      "resource": "pods",
-      "resourceName": "",
-      "verbs": [
-        "create",
-        "delete",
-        "deletecollection",
-        "get",
-        "list",
-        "patch",
-        "update",
-        "watch"
-      ],
-      "riskLevel": "High",
-      "tags": [
-        "PotentialPrivilegeEscalation",
-        "LateralMovement",
-        "Persistence",
-        "Tampering",
-        "WorkloadExecution"
-      ],
-      "matchedRiskRules": [
-        {
-          "id": 1007,
-          "name": "Create pods in a namespace",
-          "link": "https://rbac-atlas.github.io/rules/1007/"
-        },
-        {
-          "id": 1009,
-          "name": "Update/Patch pods in a namespace",
-          "link": "https://rbac-atlas.github.io/rules/1009/"
-        },
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "jenkins",
-      "namespace": "default",
-      "roleType": "Role",
       "roleName": "jenkins-casc-reload",
       "apiGroup": "",
       "resource": "configmaps",
@@ -256,6 +256,14 @@
   ],
   "serviceAccountWorkloads": [
     {
+      "serviceAccountName": "",
+      "namespace": "default",
+      "workloadType": "Pod",
+      "workloadName": "jenkins-ui-test-k554k",
+      "containerName": "jenkins-ui-test",
+      "image": "docker.io/jenkins/jenkins:2.541.1-jdk21"
+    },
+    {
       "serviceAccountName": "jenkins",
       "namespace": "default",
       "workloadType": "StatefulSet",
@@ -270,14 +278,6 @@
       "workloadName": "jenkins",
       "containerName": "config-reload",
       "image": "docker.io/kiwigrid/k8s-sidecar:2.5.0"
-    },
-    {
-      "serviceAccountName": "",
-      "namespace": "default",
-      "workloadType": "Pod",
-      "workloadName": "jenkins-ui-test-ihe6q",
-      "containerName": "jenkins-ui-test",
-      "image": "docker.io/jenkins/jenkins:2.541.1-jdk21"
     }
   ]
 }

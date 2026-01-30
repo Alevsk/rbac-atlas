@@ -1,0 +1,1204 @@
+{
+  "metadata": {
+    "version": "2024.4.2",
+    "name": "linkerd-control-plane",
+    "source": "charts/linkerd-edge__linkerd-control-plane__2024.4.2/",
+    "timestamp": 1769798237,
+    "extra": {
+      "helm": {
+        "description": "Linkerd gives you observability, reliability, and security for your microservices — with no code change required. ",
+        "home": "https://linkerd.io",
+        "icon": "https://linkerd.io/images/logo-only-200h.png",
+        "keywords": [
+          "service-mesh"
+        ],
+        "kubeVersion": "\u003e=1.22.0-0",
+        "maintainers": [
+          {
+            "name": "Linkerd authors",
+            "email": "cncf-linkerd-dev@lists.cncf.io",
+            "url": "https://linkerd.io/"
+          }
+        ],
+        "sources": [
+          "https://github.com/linkerd/linkerd2/"
+        ]
+      }
+    }
+  },
+  "serviceAccountData": [
+    {
+      "serviceAccountName": "linkerd-identity",
+      "namespace": "default",
+      "automountToken": false,
+      "secrets": null,
+      "imagePullSecrets": null
+    },
+    {
+      "serviceAccountName": "linkerd-proxy-injector",
+      "namespace": "default",
+      "automountToken": false,
+      "secrets": null,
+      "imagePullSecrets": null
+    },
+    {
+      "serviceAccountName": "linkerd-heartbeat",
+      "namespace": "default",
+      "automountToken": false,
+      "secrets": null,
+      "imagePullSecrets": null
+    },
+    {
+      "serviceAccountName": "linkerd-destination",
+      "namespace": "default",
+      "automountToken": false,
+      "secrets": null,
+      "imagePullSecrets": null
+    }
+  ],
+  "serviceAccountPermissions": [
+    {
+      "serviceAccountName": "linkerd-proxy-injector",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "linkerd-default-proxy-injector",
+      "apiGroup": "batch",
+      "resource": "cronjobs",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "linkerd-proxy-injector",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "linkerd-default-proxy-injector",
+      "apiGroup": "batch",
+      "resource": "jobs",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "linkerd-proxy-injector",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "linkerd-default-proxy-injector",
+      "apiGroup": "",
+      "resource": "events",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "patch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "linkerd-proxy-injector",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "linkerd-default-proxy-injector",
+      "apiGroup": "",
+      "resource": "namespaces",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [
+        "InformationDisclosure",
+        "Reconnaissance",
+        "ClusterStructure"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1082,
+          "name": "List Namespaces (Cluster Reconnaissance)",
+          "link": "https://rbac-atlas.github.io/rules/1082/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "linkerd-proxy-injector",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "linkerd-default-proxy-injector",
+      "apiGroup": "",
+      "resource": "replicationcontrollers",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "linkerd-proxy-injector",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "linkerd-default-proxy-injector",
+      "apiGroup": "",
+      "resource": "pods",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "linkerd-proxy-injector",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "linkerd-default-proxy-injector",
+      "apiGroup": "extensions",
+      "resource": "statefulsets",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "linkerd-proxy-injector",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "linkerd-default-proxy-injector",
+      "apiGroup": "extensions",
+      "resource": "cronjobs",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "linkerd-proxy-injector",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "linkerd-default-proxy-injector",
+      "apiGroup": "extensions",
+      "resource": "jobs",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "linkerd-proxy-injector",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "linkerd-default-proxy-injector",
+      "apiGroup": "extensions",
+      "resource": "deployments",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "linkerd-proxy-injector",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "linkerd-default-proxy-injector",
+      "apiGroup": "extensions",
+      "resource": "replicasets",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "linkerd-proxy-injector",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "linkerd-default-proxy-injector",
+      "apiGroup": "extensions",
+      "resource": "daemonsets",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "linkerd-proxy-injector",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "linkerd-default-proxy-injector",
+      "apiGroup": "apps",
+      "resource": "daemonsets",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "linkerd-proxy-injector",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "linkerd-default-proxy-injector",
+      "apiGroup": "apps",
+      "resource": "statefulsets",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "linkerd-proxy-injector",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "linkerd-default-proxy-injector",
+      "apiGroup": "apps",
+      "resource": "deployments",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "linkerd-proxy-injector",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "linkerd-default-proxy-injector",
+      "apiGroup": "apps",
+      "resource": "replicasets",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "linkerd-heartbeat",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "linkerd-heartbeat",
+      "apiGroup": "",
+      "resource": "configmaps",
+      "resourceName": "linkerd-config",
+      "verbs": [
+        "get"
+      ],
+      "riskLevel": "Low",
+      "tags": [
+        "ResourceNameRestricted"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "linkerd-heartbeat",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "linkerd-heartbeat",
+      "apiGroup": "",
+      "resource": "namespaces",
+      "resourceName": "",
+      "verbs": [
+        "list"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "linkerd-heartbeat",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "linkerd-heartbeat",
+      "apiGroup": "linkerd.io",
+      "resource": "serviceprofiles",
+      "resourceName": "",
+      "verbs": [
+        "list"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "linkerd-destination",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "linkerd-default-destination",
+      "apiGroup": "discovery.k8s.io",
+      "resource": "endpointslices",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "Tampering",
+        "NetworkManipulation",
+        "TrafficRedirection",
+        "ManInTheMiddle",
+        "DenialOfService"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1073,
+          "name": "Manage Endpoints or EndpointSlices cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1073/"
+        },
+        {
+          "id": 1074,
+          "name": "Manage Endpoints or EndpointSlices in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1074/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "linkerd-destination",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "linkerd-default-destination",
+      "apiGroup": "apps",
+      "resource": "replicasets",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "linkerd-destination",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "linkerd-default-destination",
+      "apiGroup": "batch",
+      "resource": "jobs",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "linkerd-destination",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "linkerd-default-destination",
+      "apiGroup": "",
+      "resource": "pods",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "linkerd-destination",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "linkerd-default-destination",
+      "apiGroup": "",
+      "resource": "endpoints",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "linkerd-destination",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "linkerd-default-destination",
+      "apiGroup": "",
+      "resource": "services",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "linkerd-destination",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "linkerd-default-destination",
+      "apiGroup": "",
+      "resource": "nodes",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "linkerd-destination",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "linkerd-default-destination",
+      "apiGroup": "linkerd.io",
+      "resource": "serviceprofiles",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "linkerd-destination",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "linkerd-default-destination",
+      "apiGroup": "workload.linkerd.io",
+      "resource": "externalworkloads",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "linkerd-destination",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "linkerd-default-destination",
+      "apiGroup": "coordination.k8s.io",
+      "resource": "leases",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "get",
+        "patch",
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "linkerd-destination",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "linkerd-policy",
+      "apiGroup": "policy.linkerd.io",
+      "resource": "authorizationpolicies",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "linkerd-destination",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "linkerd-policy",
+      "apiGroup": "policy.linkerd.io",
+      "resource": "httproutes",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "linkerd-destination",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "linkerd-policy",
+      "apiGroup": "policy.linkerd.io",
+      "resource": "meshtlsauthentications",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "linkerd-destination",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "linkerd-policy",
+      "apiGroup": "policy.linkerd.io",
+      "resource": "networkauthentications",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "linkerd-destination",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "linkerd-policy",
+      "apiGroup": "policy.linkerd.io",
+      "resource": "servers",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "linkerd-destination",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "linkerd-policy",
+      "apiGroup": "policy.linkerd.io",
+      "resource": "serverauthorizations",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "linkerd-destination",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "linkerd-policy",
+      "apiGroup": "policy.linkerd.io",
+      "resource": "httproutes/status",
+      "resourceName": "",
+      "verbs": [
+        "patch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "linkerd-destination",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "linkerd-policy",
+      "apiGroup": "gateway.networking.k8s.io",
+      "resource": "httproutes",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "linkerd-destination",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "linkerd-policy",
+      "apiGroup": "gateway.networking.k8s.io",
+      "resource": "httproutes/status",
+      "resourceName": "",
+      "verbs": [
+        "patch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "linkerd-destination",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "linkerd-policy",
+      "apiGroup": "workload.linkerd.io",
+      "resource": "externalworkloads",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "linkerd-destination",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "linkerd-policy",
+      "apiGroup": "coordination.k8s.io",
+      "resource": "leases",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "get",
+        "patch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "linkerd-destination",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "linkerd-policy",
+      "apiGroup": "",
+      "resource": "pods",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "linkerd-destination",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "linkerd-policy",
+      "apiGroup": "apps",
+      "resource": "deployments",
+      "resourceName": "",
+      "verbs": [
+        "get"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "linkerd-destination",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "remote-discovery",
+      "apiGroup": "",
+      "resource": "secrets",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "SecretAccess",
+        "CredentialAccess",
+        "DataExposure",
+        "InformationDisclosure"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1011,
+          "name": "Read secrets in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1011/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "linkerd-identity",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "linkerd-default-identity",
+      "apiGroup": "",
+      "resource": "events",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "patch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "linkerd-identity",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "linkerd-default-identity",
+      "apiGroup": "authentication.k8s.io",
+      "resource": "tokenreviews",
+      "resourceName": "",
+      "verbs": [
+        "create"
+      ],
+      "riskLevel": "Medium",
+      "tags": [
+        "InformationDisclosure",
+        "CredentialAccess",
+        "RBACQuery"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1049,
+          "name": "Create TokenReviews (validate arbitrary tokens)",
+          "link": "https://rbac-atlas.github.io/rules/1049/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    }
+  ],
+  "serviceAccountWorkloads": [
+    {
+      "serviceAccountName": "linkerd-heartbeat",
+      "namespace": "default",
+      "workloadType": "CronJob",
+      "workloadName": "linkerd-heartbeat",
+      "containerName": "heartbeat",
+      "image": "cr.l5d.io/linkerd/controller:edge-24.4.2"
+    },
+    {
+      "serviceAccountName": "linkerd-proxy-injector",
+      "namespace": "default",
+      "workloadType": "Deployment",
+      "workloadName": "linkerd-proxy-injector",
+      "containerName": "linkerd-proxy",
+      "image": "cr.l5d.io/linkerd/proxy:edge-24.4.2"
+    },
+    {
+      "serviceAccountName": "linkerd-proxy-injector",
+      "namespace": "default",
+      "workloadType": "Deployment",
+      "workloadName": "linkerd-proxy-injector",
+      "containerName": "proxy-injector",
+      "image": "cr.l5d.io/linkerd/controller:edge-24.4.2"
+    },
+    {
+      "serviceAccountName": "linkerd-identity",
+      "namespace": "default",
+      "workloadType": "Deployment",
+      "workloadName": "linkerd-identity",
+      "containerName": "identity",
+      "image": "cr.l5d.io/linkerd/controller:edge-24.4.2"
+    },
+    {
+      "serviceAccountName": "linkerd-identity",
+      "namespace": "default",
+      "workloadType": "Deployment",
+      "workloadName": "linkerd-identity",
+      "containerName": "linkerd-proxy",
+      "image": "cr.l5d.io/linkerd/proxy:edge-24.4.2"
+    },
+    {
+      "serviceAccountName": "linkerd-destination",
+      "namespace": "default",
+      "workloadType": "Deployment",
+      "workloadName": "linkerd-destination",
+      "containerName": "linkerd-proxy",
+      "image": "cr.l5d.io/linkerd/proxy:edge-24.4.2"
+    },
+    {
+      "serviceAccountName": "linkerd-destination",
+      "namespace": "default",
+      "workloadType": "Deployment",
+      "workloadName": "linkerd-destination",
+      "containerName": "destination",
+      "image": "cr.l5d.io/linkerd/controller:edge-24.4.2"
+    },
+    {
+      "serviceAccountName": "linkerd-destination",
+      "namespace": "default",
+      "workloadType": "Deployment",
+      "workloadName": "linkerd-destination",
+      "containerName": "sp-validator",
+      "image": "cr.l5d.io/linkerd/controller:edge-24.4.2"
+    },
+    {
+      "serviceAccountName": "linkerd-destination",
+      "namespace": "default",
+      "workloadType": "Deployment",
+      "workloadName": "linkerd-destination",
+      "containerName": "policy",
+      "image": "cr.l5d.io/linkerd/policy-controller:edge-24.4.2"
+    }
+  ]
+}

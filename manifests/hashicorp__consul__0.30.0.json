@@ -1,0 +1,66 @@
+{
+  "metadata": {
+    "version": "0.30.0",
+    "name": "consul",
+    "source": "charts/hashicorp__consul__0.30.0/",
+    "timestamp": 1769793821,
+    "extra": {
+      "helm": {
+        "description": "Official HashiCorp Consul Chart",
+        "home": "https://www.consul.io",
+        "icon": "https://raw.githubusercontent.com/hashicorp/consul-helm/master/assets/icon.png",
+        "keywords": null,
+        "kubeVersion": "",
+        "maintainers": null,
+        "sources": [
+          "https://github.com/hashicorp/consul",
+          "https://github.com/hashicorp/consul-helm",
+          "https://github.com/hashicorp/consul-k8s"
+        ]
+      }
+    }
+  },
+  "serviceAccountData": [
+    {
+      "serviceAccountName": "consul-consul-client",
+      "namespace": "default",
+      "automountToken": false,
+      "secrets": null,
+      "imagePullSecrets": null
+    },
+    {
+      "serviceAccountName": "consul-consul-server",
+      "namespace": "default",
+      "automountToken": false,
+      "secrets": null,
+      "imagePullSecrets": null
+    }
+  ],
+  "serviceAccountPermissions": [],
+  "serviceAccountWorkloads": [
+    {
+      "serviceAccountName": "consul-consul-server",
+      "namespace": "default",
+      "workloadType": "StatefulSet",
+      "workloadName": "consul-consul-server",
+      "containerName": "consul",
+      "image": "hashicorp/consul:1.9.3"
+    },
+    {
+      "serviceAccountName": "consul-consul-client",
+      "namespace": "default",
+      "workloadType": "DaemonSet",
+      "workloadName": "consul-consul",
+      "containerName": "consul",
+      "image": "hashicorp/consul:1.9.3"
+    },
+    {
+      "serviceAccountName": "",
+      "namespace": "default",
+      "workloadType": "Pod",
+      "workloadName": "consul-consul-test",
+      "containerName": "consul-test",
+      "image": "hashicorp/consul:1.9.3"
+    }
+  ]
+}

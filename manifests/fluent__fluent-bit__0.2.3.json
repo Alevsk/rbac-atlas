@@ -1,0 +1,80 @@
+{
+  "metadata": {
+    "version": "0.2.3",
+    "name": "fluent-bit",
+    "source": "charts/fluent__fluent-bit__0.2.3/",
+    "timestamp": 1769793482,
+    "extra": {
+      "helm": {
+        "description": "Fast and lightweight log processor and forwarder or Linux, OSX and BSD family operating systems.",
+        "home": "https://fluentbit.io/",
+        "icon": "https://fluentbit.io/assets/img/logo1-default.png",
+        "keywords": null,
+        "kubeVersion": "",
+        "maintainers": [
+          {
+            "name": "edsiper",
+            "email": "eduardo@treasure-data.com"
+          },
+          {
+            "name": "naseemkullah",
+            "email": "naseem@transit.app"
+          }
+        ],
+        "sources": [
+          "https://github.com/fluent/fluent-bit/"
+        ]
+      }
+    }
+  },
+  "serviceAccountData": [
+    {
+      "serviceAccountName": "fluent-bit",
+      "namespace": "default",
+      "automountToken": false,
+      "secrets": null,
+      "imagePullSecrets": null
+    }
+  ],
+  "serviceAccountPermissions": [
+    {
+      "serviceAccountName": "fluent-bit",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "fluent-bit",
+      "apiGroup": "",
+      "resource": "pods",
+      "resourceName": "",
+      "verbs": [
+        "get"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    }
+  ],
+  "serviceAccountWorkloads": [
+    {
+      "serviceAccountName": "",
+      "namespace": "default",
+      "workloadType": "Pod",
+      "workloadName": "fluent-bit-test-connection",
+      "containerName": "wget",
+      "image": "busybox"
+    },
+    {
+      "serviceAccountName": "fluent-bit",
+      "namespace": "default",
+      "workloadType": "DaemonSet",
+      "workloadName": "fluent-bit",
+      "containerName": "fluent-bit",
+      "image": "fluent/fluent-bit:1.3.7"
+    }
+  ]
+}

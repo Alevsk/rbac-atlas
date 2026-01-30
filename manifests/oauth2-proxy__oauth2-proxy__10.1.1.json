@@ -3,7 +3,7 @@
     "version": "10.1.1",
     "name": "oauth2-proxy",
     "source": "charts/oauth2-proxy__oauth2-proxy__10.1.1/",
-    "timestamp": 1769306741,
+    "timestamp": 1769794138,
     "extra": {
       "helm": {
         "description": "A reverse proxy that provides authentication with Google, Github or other providers",
@@ -42,22 +42,30 @@
   },
   "serviceAccountData": [
     {
-      "serviceAccountName": "oauth2-proxy-redis-ha",
+      "serviceAccountName": "oauth2-proxy",
       "namespace": "default",
-      "automountToken": false,
+      "automountToken": true,
       "secrets": null,
       "imagePullSecrets": null
     },
     {
-      "serviceAccountName": "oauth2-proxy",
+      "serviceAccountName": "oauth2-proxy-redis-ha",
       "namespace": "default",
-      "automountToken": true,
+      "automountToken": false,
       "secrets": null,
       "imagePullSecrets": null
     }
   ],
   "serviceAccountPermissions": [],
   "serviceAccountWorkloads": [
+    {
+      "serviceAccountName": "",
+      "namespace": "default",
+      "workloadType": "Pod",
+      "workloadName": "oauth2-proxy-redis-ha-configmap-test",
+      "containerName": "check-init",
+      "image": "koalaman/shellcheck:v0.10.0"
+    },
     {
       "serviceAccountName": "oauth2-proxy-redis-ha",
       "namespace": "default",
@@ -89,14 +97,6 @@
       "workloadName": "oauth2-proxy",
       "containerName": "oauth2-proxy",
       "image": "quay.io/oauth2-proxy/oauth2-proxy:v7.13.0"
-    },
-    {
-      "serviceAccountName": "",
-      "namespace": "default",
-      "workloadType": "Pod",
-      "workloadName": "oauth2-proxy-redis-ha-configmap-test",
-      "containerName": "check-init",
-      "image": "koalaman/shellcheck:v0.10.0"
     }
   ]
 }

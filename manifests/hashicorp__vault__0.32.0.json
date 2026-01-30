@@ -3,7 +3,7 @@
     "version": "0.32.0",
     "name": "vault",
     "source": "charts/hashicorp__vault__0.32.0/",
-    "timestamp": 1768614599,
+    "timestamp": 1769793830,
     "extra": {
       "helm": {
         "description": "Official HashiCorp Vault Chart",
@@ -82,12 +82,12 @@
   ],
   "serviceAccountWorkloads": [
     {
-      "serviceAccountName": "",
+      "serviceAccountName": "vault-agent-injector",
       "namespace": "default",
-      "workloadType": "Pod",
-      "workloadName": "vault-server-test",
-      "containerName": "vault-server-test",
-      "image": "hashicorp/vault:1.21.2"
+      "workloadType": "Deployment",
+      "workloadName": "vault-agent-injector",
+      "containerName": "sidecar-injector",
+      "image": "hashicorp/vault-k8s:1.7.2"
     },
     {
       "serviceAccountName": "vault",
@@ -98,12 +98,12 @@
       "image": "hashicorp/vault:1.21.2"
     },
     {
-      "serviceAccountName": "vault-agent-injector",
+      "serviceAccountName": "",
       "namespace": "default",
-      "workloadType": "Deployment",
-      "workloadName": "vault-agent-injector",
-      "containerName": "sidecar-injector",
-      "image": "hashicorp/vault-k8s:1.7.2"
+      "workloadType": "Pod",
+      "workloadName": "vault-server-test",
+      "containerName": "vault-server-test",
+      "image": "hashicorp/vault:1.21.2"
     }
   ]
 }

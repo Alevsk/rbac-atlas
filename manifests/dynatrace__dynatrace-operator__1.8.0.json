@@ -3,7 +3,7 @@
     "version": "1.8.0",
     "name": "dynatrace-operator",
     "source": "charts/dynatrace__dynatrace-operator__1.8.0/",
-    "timestamp": 1769652733,
+    "timestamp": 1769793445,
     "extra": {
       "helm": {
         "description": "The Dynatrace Operator Helm chart for Kubernetes and OpenShift",
@@ -33,14 +33,14 @@
   },
   "serviceAccountData": [
     {
-      "serviceAccountName": "dynatrace-sql-ext-exec",
+      "serviceAccountName": "dynatrace-extension-controller",
       "namespace": "default",
       "automountToken": false,
       "secrets": null,
       "imagePullSecrets": null
     },
     {
-      "serviceAccountName": "dynatrace-crd-storage-migration",
+      "serviceAccountName": "dynatrace-logmonitoring",
       "namespace": "default",
       "automountToken": false,
       "secrets": null,
@@ -54,7 +54,7 @@
       "imagePullSecrets": null
     },
     {
-      "serviceAccountName": "dynatrace-extension-controller",
+      "serviceAccountName": "dynatrace-node-config-collector",
       "namespace": "default",
       "automountToken": false,
       "secrets": null,
@@ -68,7 +68,14 @@
       "imagePullSecrets": null
     },
     {
-      "serviceAccountName": "dynatrace-activegate",
+      "serviceAccountName": "dynatrace-oneagent-csi-driver",
+      "namespace": "default",
+      "automountToken": false,
+      "secrets": null,
+      "imagePullSecrets": null
+    },
+    {
+      "serviceAccountName": "dynatrace-sql-ext-exec",
       "namespace": "default",
       "automountToken": false,
       "secrets": null,
@@ -82,13 +89,6 @@
       "imagePullSecrets": null
     },
     {
-      "serviceAccountName": "dynatrace-operator",
-      "namespace": "default",
-      "automountToken": false,
-      "secrets": null,
-      "imagePullSecrets": null
-    },
-    {
       "serviceAccountName": "dynatrace-edgeconnect",
       "namespace": "default",
       "automountToken": false,
@@ -96,21 +96,21 @@
       "imagePullSecrets": null
     },
     {
-      "serviceAccountName": "dynatrace-logmonitoring",
+      "serviceAccountName": "dynatrace-activegate",
       "namespace": "default",
       "automountToken": false,
       "secrets": null,
       "imagePullSecrets": null
     },
     {
-      "serviceAccountName": "dynatrace-node-config-collector",
+      "serviceAccountName": "dynatrace-crd-storage-migration",
       "namespace": "default",
       "automountToken": false,
       "secrets": null,
       "imagePullSecrets": null
     },
     {
-      "serviceAccountName": "dynatrace-oneagent-csi-driver",
+      "serviceAccountName": "dynatrace-operator",
       "namespace": "default",
       "automountToken": false,
       "secrets": null,
@@ -119,7 +119,28 @@
   ],
   "serviceAccountPermissions": [
     {
-      "serviceAccountName": "dynatrace-logmonitoring",
+      "serviceAccountName": "dynatrace-extension-controller",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "dynatrace-extension-controller-database",
+      "apiGroup": "",
+      "resource": "pods",
+      "resourceName": "",
+      "verbs": [
+        "list"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "dynatrace-dynakube-oneagent",
       "namespace": "default",
       "roleType": "ClusterRole",
       "roleName": "dynatrace-logmonitoring",
@@ -131,12 +152,12 @@
       ],
       "riskLevel": "Critical",
       "tags": [
+        "NodeAccess",
+        "ClusterAdminAccess",
         "CodeExecution",
         "LateralMovement",
         "ElevationOfPrivilege",
-        "AuthorizationBypass",
-        "NodeAccess",
-        "ClusterAdminAccess"
+        "AuthorizationBypass"
       ],
       "matchedRiskRules": [
         {
@@ -152,7 +173,7 @@
       ]
     },
     {
-      "serviceAccountName": "dynatrace-logmonitoring",
+      "serviceAccountName": "dynatrace-dynakube-oneagent",
       "namespace": "default",
       "roleType": "ClusterRole",
       "roleName": "dynatrace-logmonitoring",
@@ -175,108 +196,12 @@
       ]
     },
     {
-      "serviceAccountName": "dynatrace-crd-storage-migration",
+      "serviceAccountName": "dynatrace-operator",
       "namespace": "default",
       "roleType": "ClusterRole",
-      "roleName": "dynatrace-crd-storage-migration",
-      "apiGroup": "apiextensions.k8s.io",
-      "resource": "customresourcedefinitions",
-      "resourceName": "dynakubes.dynatrace.com",
-      "verbs": [
-        "get",
-        "update"
-      ],
-      "riskLevel": "Low",
-      "tags": [
-        "ResourceNameRestricted"
-      ],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "dynatrace-crd-storage-migration",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "dynatrace-crd-storage-migration",
-      "apiGroup": "apiextensions.k8s.io",
-      "resource": "customresourcedefinitions",
-      "resourceName": "edgeconnects.dynatrace.com",
-      "verbs": [
-        "get",
-        "update"
-      ],
-      "riskLevel": "Low",
-      "tags": [
-        "ResourceNameRestricted"
-      ],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "dynatrace-crd-storage-migration",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "dynatrace-crd-storage-migration",
-      "apiGroup": "apiextensions.k8s.io",
-      "resource": "customresourcedefinitions/status",
-      "resourceName": "dynakubes.dynatrace.com",
-      "verbs": [
-        "get",
-        "update"
-      ],
-      "riskLevel": "Low",
-      "tags": [
-        "ResourceNameRestricted"
-      ],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "dynatrace-crd-storage-migration",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "dynatrace-crd-storage-migration",
-      "apiGroup": "apiextensions.k8s.io",
-      "resource": "customresourcedefinitions/status",
-      "resourceName": "edgeconnects.dynatrace.com",
-      "verbs": [
-        "get",
-        "update"
-      ],
-      "riskLevel": "Low",
-      "tags": [
-        "ResourceNameRestricted"
-      ],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "dynatrace-oneagent-csi-driver",
-      "namespace": "default",
-      "roleType": "Role",
-      "roleName": "dynatrace-oneagent-csi-driver",
-      "apiGroup": "dynatrace.com",
-      "resource": "dynakubes",
+      "roleName": "dynatrace-operator",
+      "apiGroup": "",
+      "resource": "nodes",
       "resourceName": "",
       "verbs": [
         "get",
@@ -294,15 +219,48 @@
       ]
     },
     {
-      "serviceAccountName": "dynatrace-oneagent-csi-driver",
+      "serviceAccountName": "dynatrace-operator",
       "namespace": "default",
-      "roleType": "Role",
-      "roleName": "dynatrace-oneagent-csi-driver",
-      "apiGroup": "dynatrace.com",
-      "resource": "dynakubes/finalizers",
+      "roleType": "ClusterRole",
+      "roleName": "dynatrace-operator",
+      "apiGroup": "",
+      "resource": "namespaces",
       "resourceName": "",
       "verbs": [
-        "update"
+        "get",
+        "list",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [
+        "InformationDisclosure",
+        "Reconnaissance",
+        "ClusterStructure"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1082,
+          "name": "List Namespaces (Cluster Reconnaissance)",
+          "link": "https://rbac-atlas.github.io/rules/1082/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "dynatrace-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "dynatrace-operator",
+      "apiGroup": "",
+      "resource": "secrets",
+      "resourceName": "",
+      "verbs": [
+        "create"
       ],
       "riskLevel": "Low",
       "tags": [],
@@ -315,10 +273,387 @@
       ]
     },
     {
-      "serviceAccountName": "dynatrace-oneagent-csi-driver",
+      "serviceAccountName": "dynatrace-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "dynatrace-operator",
+      "apiGroup": "",
+      "resource": "secrets",
+      "resourceName": "dynatrace-bootstrapper-config",
+      "verbs": [
+        "delete",
+        "get",
+        "list",
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [
+        "ResourceNameRestricted"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "dynatrace-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "dynatrace-operator",
+      "apiGroup": "",
+      "resource": "secrets",
+      "resourceName": "dynatrace-bootstrapper-certs",
+      "verbs": [
+        "delete",
+        "get",
+        "list",
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [
+        "ResourceNameRestricted"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "dynatrace-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "dynatrace-operator",
+      "apiGroup": "",
+      "resource": "secrets",
+      "resourceName": "dynatrace-dynakube-config",
+      "verbs": [
+        "delete",
+        "get",
+        "list",
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [
+        "ResourceNameRestricted"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "dynatrace-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "dynatrace-operator",
+      "apiGroup": "",
+      "resource": "secrets",
+      "resourceName": "dynatrace-metadata-enrichment-endpoint",
+      "verbs": [
+        "delete",
+        "get",
+        "list",
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [
+        "ResourceNameRestricted"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "dynatrace-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "dynatrace-operator",
+      "apiGroup": "",
+      "resource": "secrets",
+      "resourceName": "dynatrace-otlp-exporter-config",
+      "verbs": [
+        "delete",
+        "get",
+        "list",
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [
+        "ResourceNameRestricted"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "dynatrace-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "dynatrace-operator",
+      "apiGroup": "",
+      "resource": "secrets",
+      "resourceName": "dynatrace-otlp-exporter-certs",
+      "verbs": [
+        "delete",
+        "get",
+        "list",
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [
+        "ResourceNameRestricted"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "dynatrace-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "dynatrace-operator",
+      "apiGroup": "admissionregistration.k8s.io",
+      "resource": "mutatingwebhookconfigurations",
+      "resourceName": "dynatrace-webhook",
+      "verbs": [
+        "get",
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [
+        "ResourceNameRestricted"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "dynatrace-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "dynatrace-operator",
+      "apiGroup": "admissionregistration.k8s.io",
+      "resource": "validatingwebhookconfigurations",
+      "resourceName": "dynatrace-webhook",
+      "verbs": [
+        "get",
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [
+        "ResourceNameRestricted"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "dynatrace-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "dynatrace-operator",
+      "apiGroup": "apiextensions.k8s.io",
+      "resource": "customresourcedefinitions",
+      "resourceName": "dynakubes.dynatrace.com",
+      "verbs": [
+        "get",
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [
+        "ResourceNameRestricted"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "dynatrace-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "dynatrace-operator",
+      "apiGroup": "apiextensions.k8s.io",
+      "resource": "customresourcedefinitions",
+      "resourceName": "edgeconnects.dynatrace.com",
+      "verbs": [
+        "get",
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [
+        "ResourceNameRestricted"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "dynatrace-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "dynatrace-operator",
+      "apiGroup": "apiextensions.k8s.io",
+      "resource": "customresourcedefinitions/status",
+      "resourceName": "edgeconnects.dynatrace.com",
+      "verbs": [
+        "get",
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [
+        "ResourceNameRestricted"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "dynatrace-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "dynatrace-operator",
+      "apiGroup": "apiextensions.k8s.io",
+      "resource": "customresourcedefinitions/status",
+      "resourceName": "dynakubes.dynatrace.com",
+      "verbs": [
+        "get",
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [
+        "ResourceNameRestricted"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "dynatrace-webhook",
       "namespace": "default",
       "roleType": "Role",
-      "roleName": "dynatrace-oneagent-csi-driver",
+      "roleName": "dynatrace-webhook",
+      "apiGroup": "",
+      "resource": "pods",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "dynatrace-webhook",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "dynatrace-webhook",
+      "apiGroup": "",
+      "resource": "configmaps",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Medium",
+      "tags": [
+        "InformationDisclosure",
+        "ConfigMapAccess",
+        "DataExposure"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1023,
+          "name": "Read ConfigMaps in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1023/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "dynatrace-webhook",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "dynatrace-webhook",
+      "apiGroup": "",
+      "resource": "events",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "patch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "dynatrace-webhook",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "dynatrace-webhook",
       "apiGroup": "",
       "resource": "secrets",
       "resourceName": "",
@@ -348,255 +683,17 @@
       ]
     },
     {
-      "serviceAccountName": "dynatrace-oneagent-csi-driver",
+      "serviceAccountName": "dynatrace-webhook",
       "namespace": "default",
       "roleType": "Role",
-      "roleName": "dynatrace-oneagent-csi-driver",
-      "apiGroup": "",
-      "resource": "configmaps",
+      "roleName": "dynatrace-webhook",
+      "apiGroup": "dynatrace.com",
+      "resource": "dynakubes",
       "resourceName": "",
       "verbs": [
         "get",
         "list",
         "watch"
-      ],
-      "riskLevel": "Medium",
-      "tags": [
-        "DataExposure",
-        "InformationDisclosure",
-        "ConfigMapAccess"
-      ],
-      "matchedRiskRules": [
-        {
-          "id": 1023,
-          "name": "Read ConfigMaps in a namespace",
-          "link": "https://rbac-atlas.github.io/rules/1023/"
-        },
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "dynatrace-oneagent-csi-driver",
-      "namespace": "default",
-      "roleType": "Role",
-      "roleName": "dynatrace-oneagent-csi-driver",
-      "apiGroup": "",
-      "resource": "events",
-      "resourceName": "",
-      "verbs": [
-        "create",
-        "patch"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "dynatrace-oneagent-csi-driver",
-      "namespace": "default",
-      "roleType": "Role",
-      "roleName": "dynatrace-oneagent-csi-driver",
-      "apiGroup": "batch",
-      "resource": "jobs",
-      "resourceName": "",
-      "verbs": [
-        "create",
-        "delete",
-        "get",
-        "list",
-        "watch"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "dynatrace-dynakube-oneagent",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "dynatrace-logmonitoring",
-      "apiGroup": "",
-      "resource": "nodes/proxy",
-      "resourceName": "",
-      "verbs": [
-        "get"
-      ],
-      "riskLevel": "Critical",
-      "tags": [
-        "AuthorizationBypass",
-        "NodeAccess",
-        "ClusterAdminAccess",
-        "CodeExecution",
-        "LateralMovement",
-        "ElevationOfPrivilege"
-      ],
-      "matchedRiskRules": [
-        {
-          "id": 1104,
-          "name": "Node proxy GET RCE via WebSocket",
-          "link": "https://rbac-atlas.github.io/rules/1104/"
-        },
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "dynatrace-dynakube-oneagent",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "dynatrace-logmonitoring",
-      "apiGroup": "security.openshift.io",
-      "resource": "securitycontextconstraints",
-      "resourceName": "privileged",
-      "verbs": [
-        "use"
-      ],
-      "riskLevel": "Low",
-      "tags": [
-        "ResourceNameRestricted"
-      ],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "dynatrace-webhook",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "dynatrace-webhook",
-      "apiGroup": "apps",
-      "resource": "replicasets",
-      "resourceName": "",
-      "verbs": [
-        "get"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "dynatrace-webhook",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "dynatrace-webhook",
-      "apiGroup": "apps",
-      "resource": "statefulsets",
-      "resourceName": "",
-      "verbs": [
-        "get"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "dynatrace-webhook",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "dynatrace-webhook",
-      "apiGroup": "apps",
-      "resource": "daemonsets",
-      "resourceName": "",
-      "verbs": [
-        "get"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "dynatrace-webhook",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "dynatrace-webhook",
-      "apiGroup": "apps",
-      "resource": "deployments",
-      "resourceName": "",
-      "verbs": [
-        "get"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "dynatrace-webhook",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "dynatrace-webhook",
-      "apiGroup": "batch",
-      "resource": "jobs",
-      "resourceName": "",
-      "verbs": [
-        "get"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "dynatrace-webhook",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "dynatrace-webhook",
-      "apiGroup": "batch",
-      "resource": "cronjobs",
-      "resourceName": "",
-      "verbs": [
-        "get"
       ],
       "riskLevel": "Low",
       "tags": [],
@@ -699,12 +796,12 @@
       ],
       "riskLevel": "Low",
       "tags": [
-        "CredentialAccess",
-        "DataExposure",
-        "InformationDisclosure",
         "ResourceNameRestricted",
         "SecretAccess",
-        "ClusterWideSecretAccess"
+        "ClusterWideSecretAccess",
+        "CredentialAccess",
+        "DataExposure",
+        "InformationDisclosure"
       ],
       "matchedRiskRules": [
         {
@@ -802,12 +899,12 @@
       ],
       "riskLevel": "Low",
       "tags": [
-        "ClusterWideSecretAccess",
-        "CredentialAccess",
-        "DataExposure",
         "InformationDisclosure",
         "ResourceNameRestricted",
-        "SecretAccess"
+        "SecretAccess",
+        "ClusterWideSecretAccess",
+        "CredentialAccess",
+        "DataExposure"
       ],
       "matchedRiskRules": [
         {
@@ -843,12 +940,12 @@
       ],
       "riskLevel": "Low",
       "tags": [
+        "ResourceNameRestricted",
+        "SecretAccess",
         "ClusterWideSecretAccess",
         "CredentialAccess",
         "DataExposure",
-        "InformationDisclosure",
-        "ResourceNameRestricted",
-        "SecretAccess"
+        "InformationDisclosure"
       ],
       "matchedRiskRules": [
         {
@@ -925,12 +1022,12 @@
       ],
       "riskLevel": "Low",
       "tags": [
-        "InformationDisclosure",
-        "ResourceNameRestricted",
-        "SecretAccess",
         "ClusterWideSecretAccess",
         "CredentialAccess",
-        "DataExposure"
+        "DataExposure",
+        "InformationDisclosure",
+        "ResourceNameRestricted",
+        "SecretAccess"
       ],
       "matchedRiskRules": [
         {
@@ -953,14 +1050,13 @@
     {
       "serviceAccountName": "dynatrace-webhook",
       "namespace": "default",
-      "roleType": "Role",
+      "roleType": "ClusterRole",
       "roleName": "dynatrace-webhook",
-      "apiGroup": "",
-      "resource": "events",
+      "apiGroup": "apps",
+      "resource": "deployments",
       "resourceName": "",
       "verbs": [
-        "create",
-        "patch"
+        "get"
       ],
       "riskLevel": "Low",
       "tags": [],
@@ -975,8 +1071,113 @@
     {
       "serviceAccountName": "dynatrace-webhook",
       "namespace": "default",
-      "roleType": "Role",
+      "roleType": "ClusterRole",
       "roleName": "dynatrace-webhook",
+      "apiGroup": "apps",
+      "resource": "replicasets",
+      "resourceName": "",
+      "verbs": [
+        "get"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "dynatrace-webhook",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "dynatrace-webhook",
+      "apiGroup": "apps",
+      "resource": "statefulsets",
+      "resourceName": "",
+      "verbs": [
+        "get"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "dynatrace-webhook",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "dynatrace-webhook",
+      "apiGroup": "apps",
+      "resource": "daemonsets",
+      "resourceName": "",
+      "verbs": [
+        "get"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "dynatrace-webhook",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "dynatrace-webhook",
+      "apiGroup": "batch",
+      "resource": "jobs",
+      "resourceName": "",
+      "verbs": [
+        "get"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "dynatrace-webhook",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "dynatrace-webhook",
+      "apiGroup": "batch",
+      "resource": "cronjobs",
+      "resourceName": "",
+      "verbs": [
+        "get"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "dynatrace-oneagent-csi-driver",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "dynatrace-oneagent-csi-driver",
       "apiGroup": "",
       "resource": "secrets",
       "resourceName": "",
@@ -1006,33 +1207,10 @@
       ]
     },
     {
-      "serviceAccountName": "dynatrace-webhook",
+      "serviceAccountName": "dynatrace-oneagent-csi-driver",
       "namespace": "default",
       "roleType": "Role",
-      "roleName": "dynatrace-webhook",
-      "apiGroup": "",
-      "resource": "pods",
-      "resourceName": "",
-      "verbs": [
-        "get",
-        "list",
-        "watch"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "dynatrace-webhook",
-      "namespace": "default",
-      "roleType": "Role",
-      "roleName": "dynatrace-webhook",
+      "roleName": "dynatrace-oneagent-csi-driver",
       "apiGroup": "",
       "resource": "configmaps",
       "resourceName": "",
@@ -1061,10 +1239,57 @@
       ]
     },
     {
-      "serviceAccountName": "dynatrace-webhook",
+      "serviceAccountName": "dynatrace-oneagent-csi-driver",
       "namespace": "default",
       "roleType": "Role",
-      "roleName": "dynatrace-webhook",
+      "roleName": "dynatrace-oneagent-csi-driver",
+      "apiGroup": "",
+      "resource": "events",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "patch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "dynatrace-oneagent-csi-driver",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "dynatrace-oneagent-csi-driver",
+      "apiGroup": "batch",
+      "resource": "jobs",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "dynatrace-oneagent-csi-driver",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "dynatrace-oneagent-csi-driver",
       "apiGroup": "dynatrace.com",
       "resource": "dynakubes",
       "resourceName": "",
@@ -1072,6 +1297,27 @@
         "get",
         "list",
         "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "dynatrace-oneagent-csi-driver",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "dynatrace-oneagent-csi-driver",
+      "apiGroup": "dynatrace.com",
+      "resource": "dynakubes/finalizers",
+      "resourceName": "",
+      "verbs": [
+        "update"
       ],
       "riskLevel": "Low",
       "tags": [],
@@ -1189,8 +1435,8 @@
       "namespace": "default",
       "roleType": "ClusterRole",
       "roleName": "dynatrace-extensions-prometheus",
-      "apiGroup": "apps",
-      "resource": "replicasets",
+      "apiGroup": "",
+      "resource": "namespaces",
       "resourceName": "",
       "verbs": [
         "get",
@@ -1198,77 +1444,17 @@
         "watch"
       ],
       "riskLevel": "Low",
-      "tags": [],
+      "tags": [
+        "InformationDisclosure",
+        "Reconnaissance",
+        "ClusterStructure"
+      ],
       "matchedRiskRules": [
         {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "dynatrace-otel-collector",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "dynatrace-extensions-prometheus",
-      "apiGroup": "apps",
-      "resource": "statefulsets",
-      "resourceName": "",
-      "verbs": [
-        "get",
-        "list",
-        "watch"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "dynatrace-otel-collector",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "dynatrace-extensions-prometheus",
-      "apiGroup": "apps",
-      "resource": "deployments",
-      "resourceName": "",
-      "verbs": [
-        "get",
-        "list",
-        "watch"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "dynatrace-otel-collector",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "dynatrace-extensions-prometheus",
-      "apiGroup": "apps",
-      "resource": "daemonsets",
-      "resourceName": "",
-      "verbs": [
-        "get",
-        "list",
-        "watch"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
+          "id": 1082,
+          "name": "List Namespaces (Cluster Reconnaissance)",
+          "link": "https://rbac-atlas.github.io/rules/1082/"
+        },
         {
           "id": 9996,
           "name": "Base Risk Level - Low",
@@ -1396,8 +1582,8 @@
       "namespace": "default",
       "roleType": "ClusterRole",
       "roleName": "dynatrace-extensions-prometheus",
-      "apiGroup": "",
-      "resource": "namespaces",
+      "apiGroup": "apps",
+      "resource": "deployments",
       "resourceName": "",
       "verbs": [
         "get",
@@ -1405,16 +1591,109 @@
         "watch"
       ],
       "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "dynatrace-otel-collector",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "dynatrace-extensions-prometheus",
+      "apiGroup": "apps",
+      "resource": "daemonsets",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "dynatrace-otel-collector",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "dynatrace-extensions-prometheus",
+      "apiGroup": "apps",
+      "resource": "replicasets",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "dynatrace-otel-collector",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "dynatrace-extensions-prometheus",
+      "apiGroup": "apps",
+      "resource": "statefulsets",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "dynatrace-logmonitoring",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "dynatrace-logmonitoring",
+      "apiGroup": "",
+      "resource": "nodes/proxy",
+      "resourceName": "",
+      "verbs": [
+        "get"
+      ],
+      "riskLevel": "Critical",
       "tags": [
-        "ClusterStructure",
-        "InformationDisclosure",
-        "Reconnaissance"
+        "ClusterAdminAccess",
+        "CodeExecution",
+        "LateralMovement",
+        "ElevationOfPrivilege",
+        "AuthorizationBypass",
+        "NodeAccess"
       ],
       "matchedRiskRules": [
         {
-          "id": 1082,
-          "name": "List Namespaces (Cluster Reconnaissance)",
-          "link": "https://rbac-atlas.github.io/rules/1082/"
+          "id": 1104,
+          "name": "Node proxy GET RCE via WebSocket",
+          "link": "https://rbac-atlas.github.io/rules/1104/"
         },
         {
           "id": 9996,
@@ -1424,39 +1703,15 @@
       ]
     },
     {
-      "serviceAccountName": "dynatrace-extension-controller",
-      "namespace": "default",
-      "roleType": "Role",
-      "roleName": "dynatrace-extension-controller-database",
-      "apiGroup": "",
-      "resource": "pods",
-      "resourceName": "",
-      "verbs": [
-        "list"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "dynatrace-operator",
+      "serviceAccountName": "dynatrace-logmonitoring",
       "namespace": "default",
       "roleType": "ClusterRole",
-      "roleName": "dynatrace-operator",
-      "apiGroup": "",
-      "resource": "secrets",
-      "resourceName": "dynatrace-metadata-enrichment-endpoint",
+      "roleName": "dynatrace-logmonitoring",
+      "apiGroup": "security.openshift.io",
+      "resource": "securitycontextconstraints",
+      "resourceName": "privileged",
       "verbs": [
-        "delete",
-        "get",
-        "list",
-        "update"
+        "use"
       ],
       "riskLevel": "Low",
       "tags": [
@@ -1471,265 +1726,10 @@
       ]
     },
     {
-      "serviceAccountName": "dynatrace-operator",
+      "serviceAccountName": "dynatrace-crd-storage-migration",
       "namespace": "default",
       "roleType": "ClusterRole",
-      "roleName": "dynatrace-operator",
-      "apiGroup": "",
-      "resource": "secrets",
-      "resourceName": "dynatrace-otlp-exporter-config",
-      "verbs": [
-        "delete",
-        "get",
-        "list",
-        "update"
-      ],
-      "riskLevel": "Low",
-      "tags": [
-        "ResourceNameRestricted"
-      ],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "dynatrace-operator",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "dynatrace-operator",
-      "apiGroup": "",
-      "resource": "secrets",
-      "resourceName": "dynatrace-otlp-exporter-certs",
-      "verbs": [
-        "delete",
-        "get",
-        "list",
-        "update"
-      ],
-      "riskLevel": "Low",
-      "tags": [
-        "ResourceNameRestricted"
-      ],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "dynatrace-operator",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "dynatrace-operator",
-      "apiGroup": "",
-      "resource": "secrets",
-      "resourceName": "",
-      "verbs": [
-        "create"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "dynatrace-operator",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "dynatrace-operator",
-      "apiGroup": "",
-      "resource": "secrets",
-      "resourceName": "dynatrace-bootstrapper-config",
-      "verbs": [
-        "delete",
-        "get",
-        "list",
-        "update"
-      ],
-      "riskLevel": "Low",
-      "tags": [
-        "ResourceNameRestricted"
-      ],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "dynatrace-operator",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "dynatrace-operator",
-      "apiGroup": "",
-      "resource": "secrets",
-      "resourceName": "dynatrace-bootstrapper-certs",
-      "verbs": [
-        "delete",
-        "get",
-        "list",
-        "update"
-      ],
-      "riskLevel": "Low",
-      "tags": [
-        "ResourceNameRestricted"
-      ],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "dynatrace-operator",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "dynatrace-operator",
-      "apiGroup": "",
-      "resource": "secrets",
-      "resourceName": "dynatrace-dynakube-config",
-      "verbs": [
-        "delete",
-        "get",
-        "list",
-        "update"
-      ],
-      "riskLevel": "Low",
-      "tags": [
-        "ResourceNameRestricted"
-      ],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "dynatrace-operator",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "dynatrace-operator",
-      "apiGroup": "",
-      "resource": "nodes",
-      "resourceName": "",
-      "verbs": [
-        "get",
-        "list",
-        "watch"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "dynatrace-operator",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "dynatrace-operator",
-      "apiGroup": "",
-      "resource": "namespaces",
-      "resourceName": "",
-      "verbs": [
-        "get",
-        "list",
-        "update",
-        "watch"
-      ],
-      "riskLevel": "Low",
-      "tags": [
-        "InformationDisclosure",
-        "Reconnaissance",
-        "ClusterStructure"
-      ],
-      "matchedRiskRules": [
-        {
-          "id": 1082,
-          "name": "List Namespaces (Cluster Reconnaissance)",
-          "link": "https://rbac-atlas.github.io/rules/1082/"
-        },
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "dynatrace-operator",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "dynatrace-operator",
-      "apiGroup": "admissionregistration.k8s.io",
-      "resource": "mutatingwebhookconfigurations",
-      "resourceName": "dynatrace-webhook",
-      "verbs": [
-        "get",
-        "update"
-      ],
-      "riskLevel": "Low",
-      "tags": [
-        "ResourceNameRestricted"
-      ],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "dynatrace-operator",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "dynatrace-operator",
-      "apiGroup": "admissionregistration.k8s.io",
-      "resource": "validatingwebhookconfigurations",
-      "resourceName": "dynatrace-webhook",
-      "verbs": [
-        "get",
-        "update"
-      ],
-      "riskLevel": "Low",
-      "tags": [
-        "ResourceNameRestricted"
-      ],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "dynatrace-operator",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "dynatrace-operator",
+      "roleName": "dynatrace-crd-storage-migration",
       "apiGroup": "apiextensions.k8s.io",
       "resource": "customresourcedefinitions",
       "resourceName": "dynakubes.dynatrace.com",
@@ -1750,10 +1750,10 @@
       ]
     },
     {
-      "serviceAccountName": "dynatrace-operator",
+      "serviceAccountName": "dynatrace-crd-storage-migration",
       "namespace": "default",
       "roleType": "ClusterRole",
-      "roleName": "dynatrace-operator",
+      "roleName": "dynatrace-crd-storage-migration",
       "apiGroup": "apiextensions.k8s.io",
       "resource": "customresourcedefinitions",
       "resourceName": "edgeconnects.dynatrace.com",
@@ -1774,10 +1774,10 @@
       ]
     },
     {
-      "serviceAccountName": "dynatrace-operator",
+      "serviceAccountName": "dynatrace-crd-storage-migration",
       "namespace": "default",
       "roleType": "ClusterRole",
-      "roleName": "dynatrace-operator",
+      "roleName": "dynatrace-crd-storage-migration",
       "apiGroup": "apiextensions.k8s.io",
       "resource": "customresourcedefinitions/status",
       "resourceName": "dynakubes.dynatrace.com",
@@ -1798,10 +1798,10 @@
       ]
     },
     {
-      "serviceAccountName": "dynatrace-operator",
+      "serviceAccountName": "dynatrace-crd-storage-migration",
       "namespace": "default",
       "roleType": "ClusterRole",
-      "roleName": "dynatrace-operator",
+      "roleName": "dynatrace-crd-storage-migration",
       "apiGroup": "apiextensions.k8s.io",
       "resource": "customresourcedefinitions/status",
       "resourceName": "edgeconnects.dynatrace.com",
@@ -1824,11 +1824,19 @@
   ],
   "serviceAccountWorkloads": [
     {
-      "serviceAccountName": "dynatrace-webhook",
+      "serviceAccountName": "dynatrace-crd-storage-migration",
+      "namespace": "default",
+      "workloadType": "Job",
+      "workloadName": "dynatrace-operator-crd-storage-migration",
+      "containerName": "crd-storage-migration",
+      "image": "public.ecr.aws/dynatrace/dynatrace-operator:v1.8.0"
+    },
+    {
+      "serviceAccountName": "dynatrace-operator",
       "namespace": "default",
       "workloadType": "Deployment",
-      "workloadName": "dynatrace-webhook",
-      "containerName": "webhook",
+      "workloadName": "dynatrace-operator",
+      "containerName": "operator",
       "image": "public.ecr.aws/dynatrace/dynatrace-operator:v1.8.0"
     },
     {
@@ -1864,19 +1872,11 @@
       "image": "public.ecr.aws/dynatrace/dynatrace-operator:v1.8.0"
     },
     {
-      "serviceAccountName": "dynatrace-operator",
+      "serviceAccountName": "dynatrace-webhook",
       "namespace": "default",
       "workloadType": "Deployment",
-      "workloadName": "dynatrace-operator",
-      "containerName": "operator",
-      "image": "public.ecr.aws/dynatrace/dynatrace-operator:v1.8.0"
-    },
-    {
-      "serviceAccountName": "dynatrace-crd-storage-migration",
-      "namespace": "default",
-      "workloadType": "Job",
-      "workloadName": "dynatrace-operator-crd-storage-migration",
-      "containerName": "crd-storage-migration",
+      "workloadName": "dynatrace-webhook",
+      "containerName": "webhook",
       "image": "public.ecr.aws/dynatrace/dynatrace-operator:v1.8.0"
     }
   ]

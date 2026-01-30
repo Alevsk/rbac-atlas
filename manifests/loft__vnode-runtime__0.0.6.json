@@ -1,0 +1,149 @@
+{
+  "metadata": {
+    "version": "0.0.6",
+    "name": "vnode-runtime",
+    "source": "charts/loft__vnode-runtime__0.0.6/",
+    "timestamp": 1769794081,
+    "extra": {
+      "helm": {
+        "description": "vnode-runtime - Multi-Tenancy Container Runtime",
+        "home": "",
+        "icon": "",
+        "keywords": [
+          "developer",
+          "development",
+          "sharing",
+          "share",
+          "multi-tenancy",
+          "tenancy",
+          "cluster",
+          "space",
+          "namespace",
+          "vnode",
+          "vnode",
+          "vnodes"
+        ],
+        "kubeVersion": "",
+        "maintainers": [
+          {
+            "name": "Loft Labs, Inc.",
+            "email": "info@loft.sh",
+            "url": "https://twitter.com/loft_sh"
+          }
+        ],
+        "sources": [
+          "https://github.com/loft-sh/vnode"
+        ]
+      }
+    }
+  },
+  "serviceAccountData": [
+    {
+      "serviceAccountName": "vnode-runtime",
+      "namespace": "default",
+      "automountToken": false,
+      "secrets": null,
+      "imagePullSecrets": null
+    }
+  ],
+  "serviceAccountPermissions": [
+    {
+      "serviceAccountName": "vnode-runtime",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "vnode-runtime",
+      "apiGroup": "",
+      "resource": "pods",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "vnode-runtime",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "vnode-runtime",
+      "apiGroup": "",
+      "resource": "namespaces",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [
+        "InformationDisclosure",
+        "Reconnaissance",
+        "ClusterStructure"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1082,
+          "name": "List Namespaces (Cluster Reconnaissance)",
+          "link": "https://rbac-atlas.github.io/rules/1082/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "vnode-runtime",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "vnode-runtime",
+      "apiGroup": "",
+      "resource": "nodes/proxy",
+      "resourceName": "",
+      "verbs": [
+        "get"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "LateralMovement",
+        "ElevationOfPrivilege",
+        "AuthorizationBypass",
+        "NodeAccess",
+        "ClusterAdminAccess",
+        "CodeExecution"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1104,
+          "name": "Node proxy GET RCE via WebSocket",
+          "link": "https://rbac-atlas.github.io/rules/1104/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    }
+  ],
+  "serviceAccountWorkloads": [
+    {
+      "serviceAccountName": "vnode-runtime",
+      "namespace": "default",
+      "workloadType": "DaemonSet",
+      "workloadName": "vnode-runtime",
+      "containerName": "vnode-runtime",
+      "image": "ghcr.io/loft-sh/vnode-runtime:0.0.6"
+    }
+  ]
+}

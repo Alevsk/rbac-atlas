@@ -3,7 +3,7 @@
     "version": "3.13.0-SNAPSHOT.12",
     "name": "edp-install",
     "source": "charts/epmdedp-dev__edp-install__3.13.0-SNAPSHOT.12/",
-    "timestamp": 1768614596,
+    "timestamp": 1769793466,
     "extra": {
       "helm": {
         "description": "A Helm chart for KubeRocketCI Platform",
@@ -35,14 +35,21 @@
   },
   "serviceAccountData": [
     {
-      "serviceAccountName": "edp-headlamp",
+      "serviceAccountName": "edp-cd-pipeline-operator",
       "namespace": "default",
       "automountToken": false,
       "secrets": null,
       "imagePullSecrets": null
     },
     {
-      "serviceAccountName": "edp-cd-pipeline-operator",
+      "serviceAccountName": "tekton-resource-pruner",
+      "namespace": "default",
+      "automountToken": false,
+      "secrets": null,
+      "imagePullSecrets": null
+    },
+    {
+      "serviceAccountName": "edp-headlamp",
       "namespace": "default",
       "automountToken": false,
       "secrets": null,
@@ -56,7 +63,21 @@
       "imagePullSecrets": null
     },
     {
-      "serviceAccountName": "tekton-resource-pruner",
+      "serviceAccountName": "gerrit",
+      "namespace": "default",
+      "automountToken": false,
+      "secrets": null,
+      "imagePullSecrets": null
+    },
+    {
+      "serviceAccountName": "tekton-interceptor",
+      "namespace": "default",
+      "automountToken": false,
+      "secrets": null,
+      "imagePullSecrets": null
+    },
+    {
+      "serviceAccountName": "edp-gerrit-operator",
       "namespace": "default",
       "automountToken": false,
       "secrets": null,
@@ -73,27 +94,6 @@
     },
     {
       "serviceAccountName": "edp-codebase-operator",
-      "namespace": "default",
-      "automountToken": false,
-      "secrets": null,
-      "imagePullSecrets": null
-    },
-    {
-      "serviceAccountName": "tekton-interceptor",
-      "namespace": "default",
-      "automountToken": false,
-      "secrets": null,
-      "imagePullSecrets": null
-    },
-    {
-      "serviceAccountName": "gerrit",
-      "namespace": "default",
-      "automountToken": false,
-      "secrets": null,
-      "imagePullSecrets": null
-    },
-    {
-      "serviceAccountName": "edp-gerrit-operator",
       "namespace": "default",
       "automountToken": false,
       "secrets": null,
@@ -139,6 +139,38 @@
       "namespace": "default",
       "roleType": "ClusterRole",
       "roleName": "edp-cd-pipeline-operator-default-validation-webhook",
+      "apiGroup": "",
+      "resource": "namespaces",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [
+        "InformationDisclosure",
+        "Reconnaissance",
+        "ClusterStructure"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1082,
+          "name": "List Namespaces (Cluster Reconnaissance)",
+          "link": "https://rbac-atlas.github.io/rules/1082/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "edp-cd-pipeline-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "edp-cd-pipeline-operator-default-validation-webhook",
       "apiGroup": "admissionregistration.k8s.io",
       "resource": "validatingwebhookconfigurations",
       "resourceName": "",
@@ -160,27 +192,31 @@
     {
       "serviceAccountName": "edp-cd-pipeline-operator",
       "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "edp-cd-pipeline-operator-default-validation-webhook",
+      "roleType": "Role",
+      "roleName": "edp-cd-pipeline-operator",
       "apiGroup": "",
-      "resource": "namespaces",
+      "resource": "secrets",
       "resourceName": "",
       "verbs": [
+        "create",
         "get",
         "list",
+        "patch",
+        "update",
         "watch"
       ],
-      "riskLevel": "Low",
+      "riskLevel": "Critical",
       "tags": [
-        "InformationDisclosure",
-        "Reconnaissance",
-        "ClusterStructure"
+        "SecretAccess",
+        "CredentialAccess",
+        "DataExposure",
+        "InformationDisclosure"
       ],
       "matchedRiskRules": [
         {
-          "id": 1082,
-          "name": "List Namespaces (Cluster Reconnaissance)",
-          "link": "https://rbac-atlas.github.io/rules/1082/"
+          "id": 1011,
+          "name": "Read secrets in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1011/"
         },
         {
           "id": 9996,
@@ -221,132 +257,7 @@
       "roleType": "Role",
       "roleName": "edp-cd-pipeline-operator",
       "apiGroup": "*",
-      "resource": "codebaseimagestreams/status",
-      "resourceName": "",
-      "verbs": [
-        "*"
-      ],
-      "riskLevel": "Medium",
-      "tags": [
-        "NamespaceAdmin",
-        "NamespaceWideAccess",
-        "WildcardPermission"
-      ],
-      "matchedRiskRules": [
-        {
-          "id": 9997,
-          "name": "Base Risk Level - Medium",
-          "link": "https://rbac-atlas.github.io/rules/9997/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "edp-cd-pipeline-operator",
-      "namespace": "default",
-      "roleType": "Role",
-      "roleName": "edp-cd-pipeline-operator",
-      "apiGroup": "*",
-      "resource": "codebaseimagestreams/finalizers",
-      "resourceName": "",
-      "verbs": [
-        "*"
-      ],
-      "riskLevel": "Medium",
-      "tags": [
-        "NamespaceAdmin",
-        "NamespaceWideAccess",
-        "WildcardPermission"
-      ],
-      "matchedRiskRules": [
-        {
-          "id": 9997,
-          "name": "Base Risk Level - Medium",
-          "link": "https://rbac-atlas.github.io/rules/9997/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "edp-cd-pipeline-operator",
-      "namespace": "default",
-      "roleType": "Role",
-      "roleName": "edp-cd-pipeline-operator",
-      "apiGroup": "*",
-      "resource": "cdpipelines",
-      "resourceName": "",
-      "verbs": [
-        "*"
-      ],
-      "riskLevel": "Medium",
-      "tags": [
-        "WildcardPermission",
-        "NamespaceAdmin",
-        "NamespaceWideAccess"
-      ],
-      "matchedRiskRules": [
-        {
-          "id": 9997,
-          "name": "Base Risk Level - Medium",
-          "link": "https://rbac-atlas.github.io/rules/9997/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "edp-cd-pipeline-operator",
-      "namespace": "default",
-      "roleType": "Role",
-      "roleName": "edp-cd-pipeline-operator",
-      "apiGroup": "*",
-      "resource": "cdpipelines/status",
-      "resourceName": "",
-      "verbs": [
-        "*"
-      ],
-      "riskLevel": "Medium",
-      "tags": [
-        "NamespaceAdmin",
-        "NamespaceWideAccess",
-        "WildcardPermission"
-      ],
-      "matchedRiskRules": [
-        {
-          "id": 9997,
-          "name": "Base Risk Level - Medium",
-          "link": "https://rbac-atlas.github.io/rules/9997/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "edp-cd-pipeline-operator",
-      "namespace": "default",
-      "roleType": "Role",
-      "roleName": "edp-cd-pipeline-operator",
-      "apiGroup": "*",
-      "resource": "codebasebranches",
-      "resourceName": "",
-      "verbs": [
-        "*"
-      ],
-      "riskLevel": "Medium",
-      "tags": [
-        "WildcardPermission",
-        "NamespaceAdmin",
-        "NamespaceWideAccess"
-      ],
-      "matchedRiskRules": [
-        {
-          "id": 9997,
-          "name": "Base Risk Level - Medium",
-          "link": "https://rbac-atlas.github.io/rules/9997/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "edp-cd-pipeline-operator",
-      "namespace": "default",
-      "roleType": "Role",
-      "roleName": "edp-cd-pipeline-operator",
-      "apiGroup": "*",
-      "resource": "codebasebranches/status",
+      "resource": "codebases",
       "resourceName": "",
       "verbs": [
         "*"
@@ -396,31 +307,6 @@
       "roleType": "Role",
       "roleName": "edp-cd-pipeline-operator",
       "apiGroup": "*",
-      "resource": "stages/status",
-      "resourceName": "",
-      "verbs": [
-        "*"
-      ],
-      "riskLevel": "Medium",
-      "tags": [
-        "NamespaceAdmin",
-        "NamespaceWideAccess",
-        "WildcardPermission"
-      ],
-      "matchedRiskRules": [
-        {
-          "id": 9997,
-          "name": "Base Risk Level - Medium",
-          "link": "https://rbac-atlas.github.io/rules/9997/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "edp-cd-pipeline-operator",
-      "namespace": "default",
-      "roleType": "Role",
-      "roleName": "edp-cd-pipeline-operator",
-      "apiGroup": "*",
       "resource": "edpcomponents/finalizers",
       "resourceName": "",
       "verbs": [
@@ -446,16 +332,16 @@
       "roleType": "Role",
       "roleName": "edp-cd-pipeline-operator",
       "apiGroup": "*",
-      "resource": "edpcomponents/status",
+      "resource": "stages",
       "resourceName": "",
       "verbs": [
         "*"
       ],
       "riskLevel": "Medium",
       "tags": [
-        "NamespaceAdmin",
         "NamespaceWideAccess",
-        "WildcardPermission"
+        "WildcardPermission",
+        "NamespaceAdmin"
       ],
       "matchedRiskRules": [
         {
@@ -471,7 +357,32 @@
       "roleType": "Role",
       "roleName": "edp-cd-pipeline-operator",
       "apiGroup": "*",
-      "resource": "codebases",
+      "resource": "edpcomponents/status",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "Medium",
+      "tags": [
+        "NamespaceWideAccess",
+        "WildcardPermission",
+        "NamespaceAdmin"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9997,
+          "name": "Base Risk Level - Medium",
+          "link": "https://rbac-atlas.github.io/rules/9997/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "edp-cd-pipeline-operator",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "edp-cd-pipeline-operator",
+      "apiGroup": "*",
+      "resource": "gitservers",
       "resourceName": "",
       "verbs": [
         "*"
@@ -521,7 +432,207 @@
       "roleType": "Role",
       "roleName": "edp-cd-pipeline-operator",
       "apiGroup": "*",
-      "resource": "gitservers",
+      "resource": "codebasebranches",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "Medium",
+      "tags": [
+        "NamespaceAdmin",
+        "NamespaceWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9997,
+          "name": "Base Risk Level - Medium",
+          "link": "https://rbac-atlas.github.io/rules/9997/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "edp-cd-pipeline-operator",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "edp-cd-pipeline-operator",
+      "apiGroup": "*",
+      "resource": "codebasebranches/status",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "Medium",
+      "tags": [
+        "NamespaceAdmin",
+        "NamespaceWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9997,
+          "name": "Base Risk Level - Medium",
+          "link": "https://rbac-atlas.github.io/rules/9997/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "edp-cd-pipeline-operator",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "edp-cd-pipeline-operator",
+      "apiGroup": "*",
+      "resource": "codebaseimagestreams",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "Medium",
+      "tags": [
+        "NamespaceAdmin",
+        "NamespaceWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9997,
+          "name": "Base Risk Level - Medium",
+          "link": "https://rbac-atlas.github.io/rules/9997/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "edp-cd-pipeline-operator",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "edp-cd-pipeline-operator",
+      "apiGroup": "*",
+      "resource": "codebaseimagestreams/finalizers",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "Medium",
+      "tags": [
+        "NamespaceAdmin",
+        "NamespaceWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9997,
+          "name": "Base Risk Level - Medium",
+          "link": "https://rbac-atlas.github.io/rules/9997/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "edp-cd-pipeline-operator",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "edp-cd-pipeline-operator",
+      "apiGroup": "*",
+      "resource": "events",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "Medium",
+      "tags": [
+        "NamespaceAdmin",
+        "NamespaceWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9997,
+          "name": "Base Risk Level - Medium",
+          "link": "https://rbac-atlas.github.io/rules/9997/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "edp-cd-pipeline-operator",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "edp-cd-pipeline-operator",
+      "apiGroup": "*",
+      "resource": "codebases/status",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "Medium",
+      "tags": [
+        "NamespaceAdmin",
+        "NamespaceWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9997,
+          "name": "Base Risk Level - Medium",
+          "link": "https://rbac-atlas.github.io/rules/9997/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "edp-cd-pipeline-operator",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "edp-cd-pipeline-operator",
+      "apiGroup": "*",
+      "resource": "codebasebranches/finalizers",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "Medium",
+      "tags": [
+        "NamespaceAdmin",
+        "NamespaceWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9997,
+          "name": "Base Risk Level - Medium",
+          "link": "https://rbac-atlas.github.io/rules/9997/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "edp-cd-pipeline-operator",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "edp-cd-pipeline-operator",
+      "apiGroup": "*",
+      "resource": "stages/status",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "Medium",
+      "tags": [
+        "NamespaceAdmin",
+        "NamespaceWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9997,
+          "name": "Base Risk Level - Medium",
+          "link": "https://rbac-atlas.github.io/rules/9997/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "edp-cd-pipeline-operator",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "edp-cd-pipeline-operator",
+      "apiGroup": "*",
+      "resource": "gitservers/status",
       "resourceName": "",
       "verbs": [
         "*"
@@ -596,7 +707,7 @@
       "roleType": "Role",
       "roleName": "edp-cd-pipeline-operator",
       "apiGroup": "*",
-      "resource": "events",
+      "resource": "codebaseimagestreams/status",
       "resourceName": "",
       "verbs": [
         "*"
@@ -606,6 +717,71 @@
         "NamespaceAdmin",
         "NamespaceWideAccess",
         "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9997,
+          "name": "Base Risk Level - Medium",
+          "link": "https://rbac-atlas.github.io/rules/9997/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "edp-cd-pipeline-operator",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "edp-cd-pipeline-operator",
+      "apiGroup": "*",
+      "resource": "configmaps",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "WildcardPermission",
+        "Tampering",
+        "ConfigMapAccess",
+        "PotentialPrivilegeEscalation",
+        "InformationDisclosure",
+        "DataExposure",
+        "NamespaceAdmin",
+        "NamespaceWideAccess"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1025,
+          "name": "Modify ConfigMaps in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1025/"
+        },
+        {
+          "id": 1023,
+          "name": "Read ConfigMaps in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1023/"
+        },
+        {
+          "id": 9997,
+          "name": "Base Risk Level - Medium",
+          "link": "https://rbac-atlas.github.io/rules/9997/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "edp-cd-pipeline-operator",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "edp-cd-pipeline-operator",
+      "apiGroup": "*",
+      "resource": "cdpipelines",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "Medium",
+      "tags": [
+        "WildcardPermission",
+        "NamespaceAdmin",
+        "NamespaceWideAccess"
       ],
       "matchedRiskRules": [
         {
@@ -628,99 +804,9 @@
       ],
       "riskLevel": "Medium",
       "tags": [
-        "NamespaceAdmin",
-        "NamespaceWideAccess",
-        "WildcardPermission"
-      ],
-      "matchedRiskRules": [
-        {
-          "id": 9997,
-          "name": "Base Risk Level - Medium",
-          "link": "https://rbac-atlas.github.io/rules/9997/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "edp-cd-pipeline-operator",
-      "namespace": "default",
-      "roleType": "Role",
-      "roleName": "edp-cd-pipeline-operator",
-      "apiGroup": "*",
-      "resource": "gitservers/status",
-      "resourceName": "",
-      "verbs": [
-        "*"
-      ],
-      "riskLevel": "Medium",
-      "tags": [
-        "NamespaceAdmin",
-        "NamespaceWideAccess",
-        "WildcardPermission"
-      ],
-      "matchedRiskRules": [
-        {
-          "id": 9997,
-          "name": "Base Risk Level - Medium",
-          "link": "https://rbac-atlas.github.io/rules/9997/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "edp-cd-pipeline-operator",
-      "namespace": "default",
-      "roleType": "Role",
-      "roleName": "edp-cd-pipeline-operator",
-      "apiGroup": "*",
-      "resource": "configmaps",
-      "resourceName": "",
-      "verbs": [
-        "*"
-      ],
-      "riskLevel": "High",
-      "tags": [
-        "NamespaceAdmin",
-        "NamespaceWideAccess",
         "WildcardPermission",
-        "Tampering",
-        "ConfigMapAccess",
-        "PotentialPrivilegeEscalation",
-        "InformationDisclosure",
-        "DataExposure"
-      ],
-      "matchedRiskRules": [
-        {
-          "id": 1025,
-          "name": "Modify ConfigMaps in a namespace",
-          "link": "https://rbac-atlas.github.io/rules/1025/"
-        },
-        {
-          "id": 1023,
-          "name": "Read ConfigMaps in a namespace",
-          "link": "https://rbac-atlas.github.io/rules/1023/"
-        },
-        {
-          "id": 9997,
-          "name": "Base Risk Level - Medium",
-          "link": "https://rbac-atlas.github.io/rules/9997/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "edp-cd-pipeline-operator",
-      "namespace": "default",
-      "roleType": "Role",
-      "roleName": "edp-cd-pipeline-operator",
-      "apiGroup": "*",
-      "resource": "codebases/status",
-      "resourceName": "",
-      "verbs": [
-        "*"
-      ],
-      "riskLevel": "Medium",
-      "tags": [
         "NamespaceAdmin",
-        "NamespaceWideAccess",
-        "WildcardPermission"
+        "NamespaceWideAccess"
       ],
       "matchedRiskRules": [
         {
@@ -736,57 +822,7 @@
       "roleType": "Role",
       "roleName": "edp-cd-pipeline-operator",
       "apiGroup": "*",
-      "resource": "codebasebranches/finalizers",
-      "resourceName": "",
-      "verbs": [
-        "*"
-      ],
-      "riskLevel": "Medium",
-      "tags": [
-        "NamespaceAdmin",
-        "NamespaceWideAccess",
-        "WildcardPermission"
-      ],
-      "matchedRiskRules": [
-        {
-          "id": 9997,
-          "name": "Base Risk Level - Medium",
-          "link": "https://rbac-atlas.github.io/rules/9997/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "edp-cd-pipeline-operator",
-      "namespace": "default",
-      "roleType": "Role",
-      "roleName": "edp-cd-pipeline-operator",
-      "apiGroup": "*",
-      "resource": "stages",
-      "resourceName": "",
-      "verbs": [
-        "*"
-      ],
-      "riskLevel": "Medium",
-      "tags": [
-        "NamespaceWideAccess",
-        "WildcardPermission",
-        "NamespaceAdmin"
-      ],
-      "matchedRiskRules": [
-        {
-          "id": 9997,
-          "name": "Base Risk Level - Medium",
-          "link": "https://rbac-atlas.github.io/rules/9997/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "edp-cd-pipeline-operator",
-      "namespace": "default",
-      "roleType": "Role",
-      "roleName": "edp-cd-pipeline-operator",
-      "apiGroup": "*",
-      "resource": "codebaseimagestreams",
+      "resource": "cdpipelines/status",
       "resourceName": "",
       "verbs": [
         "*"
@@ -830,23 +866,300 @@
       ]
     },
     {
-      "serviceAccountName": "edp-cd-pipeline-operator",
+      "serviceAccountName": "tekton-resource-pruner",
       "namespace": "default",
       "roleType": "Role",
-      "roleName": "edp-cd-pipeline-operator",
+      "roleName": "tekton-resource-pruner",
+      "apiGroup": "tekton.dev",
+      "resource": "pipelineruns",
+      "resourceName": "",
+      "verbs": [
+        "delete",
+        "get",
+        "list"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "tekton-resource-pruner",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "tekton-resource-pruner",
+      "apiGroup": "",
+      "resource": "ConfigMap",
+      "resourceName": "tekton-resource-pruner-scripts",
+      "verbs": [
+        "get"
+      ],
+      "riskLevel": "Low",
+      "tags": [
+        "ResourceNameRestricted"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "tekton-interceptor",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "tekton-triggers-edp-interceptor",
+      "apiGroup": "v2.edp.epam.com",
+      "resource": "codebases",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "tekton-interceptor",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "tekton-triggers-edp-interceptor",
+      "apiGroup": "v2.edp.epam.com",
+      "resource": "codebases/finalizers",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "tekton-interceptor",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "tekton-triggers-edp-interceptor",
+      "apiGroup": "v2.edp.epam.com",
+      "resource": "gitservers",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "tekton-interceptor",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "tekton-triggers-edp-interceptor",
+      "apiGroup": "v2.edp.epam.com",
+      "resource": "gitservers/status",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "tekton-interceptor",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "tekton-triggers-edp-interceptor",
+      "apiGroup": "v2.edp.epam.com",
+      "resource": "gitservers/finalizers",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "tekton-interceptor",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "tekton-triggers-edp-interceptor",
+      "apiGroup": "v2.edp.epam.com",
+      "resource": "codebases/status",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "tekton-interceptor",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "tekton-triggers-edp-interceptor",
+      "apiGroup": "v2.edp.epam.com",
+      "resource": "codebasebranches",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "tekton-interceptor",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "tekton-triggers-edp-interceptor",
+      "apiGroup": "v2.edp.epam.com",
+      "resource": "codebasebranches/status",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "tekton-interceptor",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "tekton-triggers-edp-interceptor",
+      "apiGroup": "v2.edp.epam.com",
+      "resource": "codebasebranches/finalizers",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "tekton-interceptor",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "tekton-triggers-edp-interceptor",
+      "apiGroup": "triggers.tekton.dev",
+      "resource": "interceptors",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "tekton-interceptor",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "tekton-triggers-edp-interceptor",
       "apiGroup": "",
       "resource": "secrets",
-      "resourceName": "",
+      "resourceName": "tekton-edp-interceptor-certs",
       "verbs": [
         "create",
         "get",
         "list",
-        "patch",
         "update",
         "watch"
       ],
-      "riskLevel": "Critical",
+      "riskLevel": "Low",
       "tags": [
+        "ResourceNameRestricted",
         "SecretAccess",
         "CredentialAccess",
         "DataExposure",
@@ -866,950 +1179,15 @@
       ]
     },
     {
-      "serviceAccountName": "edp-codebase-operator",
+      "serviceAccountName": "tekton-interceptor",
       "namespace": "default",
       "roleType": "Role",
-      "roleName": "edp-codebase-operator",
-      "apiGroup": "triggers.tekton.dev",
-      "resource": "triggertemplates",
-      "resourceName": "",
-      "verbs": [
-        "get",
-        "list",
-        "watch"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "edp-codebase-operator",
-      "namespace": "default",
-      "roleType": "Role",
-      "roleName": "edp-codebase-operator",
-      "apiGroup": "argoproj.io",
-      "resource": "applications",
-      "resourceName": "",
-      "verbs": [
-        "get",
-        "list",
-        "patch",
-        "update",
-        "watch"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "edp-codebase-operator",
-      "namespace": "default",
-      "roleType": "Role",
-      "roleName": "edp-codebase-operator",
-      "apiGroup": "*",
-      "resource": "codebasebranches/finalizers",
-      "resourceName": "",
-      "verbs": [
-        "*"
-      ],
-      "riskLevel": "Medium",
-      "tags": [
-        "NamespaceAdmin",
-        "NamespaceWideAccess",
-        "WildcardPermission"
-      ],
-      "matchedRiskRules": [
-        {
-          "id": 9997,
-          "name": "Base Risk Level - Medium",
-          "link": "https://rbac-atlas.github.io/rules/9997/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "edp-codebase-operator",
-      "namespace": "default",
-      "roleType": "Role",
-      "roleName": "edp-codebase-operator",
-      "apiGroup": "*",
-      "resource": "jiraservers/status",
-      "resourceName": "",
-      "verbs": [
-        "*"
-      ],
-      "riskLevel": "Medium",
-      "tags": [
-        "NamespaceAdmin",
-        "NamespaceWideAccess",
-        "WildcardPermission"
-      ],
-      "matchedRiskRules": [
-        {
-          "id": 9997,
-          "name": "Base Risk Level - Medium",
-          "link": "https://rbac-atlas.github.io/rules/9997/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "edp-codebase-operator",
-      "namespace": "default",
-      "roleType": "Role",
-      "roleName": "edp-codebase-operator",
-      "apiGroup": "*",
-      "resource": "jiraissuemetadatas/status",
-      "resourceName": "",
-      "verbs": [
-        "*"
-      ],
-      "riskLevel": "Medium",
-      "tags": [
-        "NamespaceAdmin",
-        "NamespaceWideAccess",
-        "WildcardPermission"
-      ],
-      "matchedRiskRules": [
-        {
-          "id": 9997,
-          "name": "Base Risk Level - Medium",
-          "link": "https://rbac-atlas.github.io/rules/9997/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "edp-codebase-operator",
-      "namespace": "default",
-      "roleType": "Role",
-      "roleName": "edp-codebase-operator",
-      "apiGroup": "*",
-      "resource": "stages/status",
-      "resourceName": "",
-      "verbs": [
-        "*"
-      ],
-      "riskLevel": "Medium",
-      "tags": [
-        "NamespaceAdmin",
-        "NamespaceWideAccess",
-        "WildcardPermission"
-      ],
-      "matchedRiskRules": [
-        {
-          "id": 9997,
-          "name": "Base Risk Level - Medium",
-          "link": "https://rbac-atlas.github.io/rules/9997/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "edp-codebase-operator",
-      "namespace": "default",
-      "roleType": "Role",
-      "roleName": "edp-codebase-operator",
-      "apiGroup": "*",
-      "resource": "gitservers/status",
-      "resourceName": "",
-      "verbs": [
-        "*"
-      ],
-      "riskLevel": "Medium",
-      "tags": [
-        "NamespaceAdmin",
-        "NamespaceWideAccess",
-        "WildcardPermission"
-      ],
-      "matchedRiskRules": [
-        {
-          "id": 9997,
-          "name": "Base Risk Level - Medium",
-          "link": "https://rbac-atlas.github.io/rules/9997/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "edp-codebase-operator",
-      "namespace": "default",
-      "roleType": "Role",
-      "roleName": "edp-codebase-operator",
-      "apiGroup": "*",
-      "resource": "gitservers/finalizers",
-      "resourceName": "",
-      "verbs": [
-        "*"
-      ],
-      "riskLevel": "Medium",
-      "tags": [
-        "NamespaceAdmin",
-        "NamespaceWideAccess",
-        "WildcardPermission"
-      ],
-      "matchedRiskRules": [
-        {
-          "id": 9997,
-          "name": "Base Risk Level - Medium",
-          "link": "https://rbac-atlas.github.io/rules/9997/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "edp-codebase-operator",
-      "namespace": "default",
-      "roleType": "Role",
-      "roleName": "edp-codebase-operator",
-      "apiGroup": "*",
-      "resource": "codebases/finalizers",
-      "resourceName": "",
-      "verbs": [
-        "*"
-      ],
-      "riskLevel": "Medium",
-      "tags": [
-        "NamespaceAdmin",
-        "NamespaceWideAccess",
-        "WildcardPermission"
-      ],
-      "matchedRiskRules": [
-        {
-          "id": 9997,
-          "name": "Base Risk Level - Medium",
-          "link": "https://rbac-atlas.github.io/rules/9997/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "edp-codebase-operator",
-      "namespace": "default",
-      "roleType": "Role",
-      "roleName": "edp-codebase-operator",
-      "apiGroup": "*",
-      "resource": "codebasebranches",
-      "resourceName": "",
-      "verbs": [
-        "*"
-      ],
-      "riskLevel": "Medium",
-      "tags": [
-        "NamespaceAdmin",
-        "NamespaceWideAccess",
-        "WildcardPermission"
-      ],
-      "matchedRiskRules": [
-        {
-          "id": 9997,
-          "name": "Base Risk Level - Medium",
-          "link": "https://rbac-atlas.github.io/rules/9997/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "edp-codebase-operator",
-      "namespace": "default",
-      "roleType": "Role",
-      "roleName": "edp-codebase-operator",
-      "apiGroup": "*",
-      "resource": "cdpipelines",
-      "resourceName": "",
-      "verbs": [
-        "*"
-      ],
-      "riskLevel": "Medium",
-      "tags": [
-        "NamespaceAdmin",
-        "NamespaceWideAccess",
-        "WildcardPermission"
-      ],
-      "matchedRiskRules": [
-        {
-          "id": 9997,
-          "name": "Base Risk Level - Medium",
-          "link": "https://rbac-atlas.github.io/rules/9997/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "edp-codebase-operator",
-      "namespace": "default",
-      "roleType": "Role",
-      "roleName": "edp-codebase-operator",
-      "apiGroup": "*",
-      "resource": "gitservers",
-      "resourceName": "",
-      "verbs": [
-        "*"
-      ],
-      "riskLevel": "Medium",
-      "tags": [
-        "NamespaceAdmin",
-        "NamespaceWideAccess",
-        "WildcardPermission"
-      ],
-      "matchedRiskRules": [
-        {
-          "id": 9997,
-          "name": "Base Risk Level - Medium",
-          "link": "https://rbac-atlas.github.io/rules/9997/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "edp-codebase-operator",
-      "namespace": "default",
-      "roleType": "Role",
-      "roleName": "edp-codebase-operator",
-      "apiGroup": "*",
-      "resource": "codebaseimagestreams",
-      "resourceName": "",
-      "verbs": [
-        "*"
-      ],
-      "riskLevel": "Medium",
-      "tags": [
-        "NamespaceAdmin",
-        "NamespaceWideAccess",
-        "WildcardPermission"
-      ],
-      "matchedRiskRules": [
-        {
-          "id": 9997,
-          "name": "Base Risk Level - Medium",
-          "link": "https://rbac-atlas.github.io/rules/9997/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "edp-codebase-operator",
-      "namespace": "default",
-      "roleType": "Role",
-      "roleName": "edp-codebase-operator",
-      "apiGroup": "*",
-      "resource": "codebaseimagestreams/status",
-      "resourceName": "",
-      "verbs": [
-        "*"
-      ],
-      "riskLevel": "Medium",
-      "tags": [
-        "NamespaceAdmin",
-        "NamespaceWideAccess",
-        "WildcardPermission"
-      ],
-      "matchedRiskRules": [
-        {
-          "id": 9997,
-          "name": "Base Risk Level - Medium",
-          "link": "https://rbac-atlas.github.io/rules/9997/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "edp-codebase-operator",
-      "namespace": "default",
-      "roleType": "Role",
-      "roleName": "edp-codebase-operator",
-      "apiGroup": "*",
-      "resource": "jirafixversions/status",
-      "resourceName": "",
-      "verbs": [
-        "*"
-      ],
-      "riskLevel": "Medium",
-      "tags": [
-        "NamespaceAdmin",
-        "NamespaceWideAccess",
-        "WildcardPermission"
-      ],
-      "matchedRiskRules": [
-        {
-          "id": 9997,
-          "name": "Base Risk Level - Medium",
-          "link": "https://rbac-atlas.github.io/rules/9997/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "edp-codebase-operator",
-      "namespace": "default",
-      "roleType": "Role",
-      "roleName": "edp-codebase-operator",
-      "apiGroup": "*",
-      "resource": "jiraissuemetadatas",
-      "resourceName": "",
-      "verbs": [
-        "*"
-      ],
-      "riskLevel": "Medium",
-      "tags": [
-        "NamespaceAdmin",
-        "NamespaceWideAccess",
-        "WildcardPermission"
-      ],
-      "matchedRiskRules": [
-        {
-          "id": 9997,
-          "name": "Base Risk Level - Medium",
-          "link": "https://rbac-atlas.github.io/rules/9997/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "edp-codebase-operator",
-      "namespace": "default",
-      "roleType": "Role",
-      "roleName": "edp-codebase-operator",
-      "apiGroup": "*",
-      "resource": "cdstagedeployments/status",
-      "resourceName": "",
-      "verbs": [
-        "*"
-      ],
-      "riskLevel": "Medium",
-      "tags": [
-        "NamespaceWideAccess",
-        "WildcardPermission",
-        "NamespaceAdmin"
-      ],
-      "matchedRiskRules": [
-        {
-          "id": 9997,
-          "name": "Base Risk Level - Medium",
-          "link": "https://rbac-atlas.github.io/rules/9997/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "edp-codebase-operator",
-      "namespace": "default",
-      "roleType": "Role",
-      "roleName": "edp-codebase-operator",
-      "apiGroup": "*",
-      "resource": "stages/finalizers",
-      "resourceName": "",
-      "verbs": [
-        "*"
-      ],
-      "riskLevel": "Medium",
-      "tags": [
-        "NamespaceAdmin",
-        "NamespaceWideAccess",
-        "WildcardPermission"
-      ],
-      "matchedRiskRules": [
-        {
-          "id": 9997,
-          "name": "Base Risk Level - Medium",
-          "link": "https://rbac-atlas.github.io/rules/9997/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "edp-codebase-operator",
-      "namespace": "default",
-      "roleType": "Role",
-      "roleName": "edp-codebase-operator",
-      "apiGroup": "*",
-      "resource": "codebases",
-      "resourceName": "",
-      "verbs": [
-        "*"
-      ],
-      "riskLevel": "Medium",
-      "tags": [
-        "NamespaceAdmin",
-        "NamespaceWideAccess",
-        "WildcardPermission"
-      ],
-      "matchedRiskRules": [
-        {
-          "id": 9997,
-          "name": "Base Risk Level - Medium",
-          "link": "https://rbac-atlas.github.io/rules/9997/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "edp-codebase-operator",
-      "namespace": "default",
-      "roleType": "Role",
-      "roleName": "edp-codebase-operator",
-      "apiGroup": "*",
-      "resource": "configmaps",
-      "resourceName": "",
-      "verbs": [
-        "*"
-      ],
-      "riskLevel": "High",
-      "tags": [
-        "NamespaceWideAccess",
-        "WildcardPermission",
-        "Tampering",
-        "ConfigMapAccess",
-        "PotentialPrivilegeEscalation",
-        "InformationDisclosure",
-        "DataExposure",
-        "NamespaceAdmin"
-      ],
-      "matchedRiskRules": [
-        {
-          "id": 1025,
-          "name": "Modify ConfigMaps in a namespace",
-          "link": "https://rbac-atlas.github.io/rules/1025/"
-        },
-        {
-          "id": 1023,
-          "name": "Read ConfigMaps in a namespace",
-          "link": "https://rbac-atlas.github.io/rules/1023/"
-        },
-        {
-          "id": 9997,
-          "name": "Base Risk Level - Medium",
-          "link": "https://rbac-atlas.github.io/rules/9997/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "edp-codebase-operator",
-      "namespace": "default",
-      "roleType": "Role",
-      "roleName": "edp-codebase-operator",
-      "apiGroup": "*",
-      "resource": "jiraservers/finalizers",
-      "resourceName": "",
-      "verbs": [
-        "*"
-      ],
-      "riskLevel": "Medium",
-      "tags": [
-        "WildcardPermission",
-        "NamespaceAdmin",
-        "NamespaceWideAccess"
-      ],
-      "matchedRiskRules": [
-        {
-          "id": 9997,
-          "name": "Base Risk Level - Medium",
-          "link": "https://rbac-atlas.github.io/rules/9997/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "edp-codebase-operator",
-      "namespace": "default",
-      "roleType": "Role",
-      "roleName": "edp-codebase-operator",
-      "apiGroup": "*",
-      "resource": "cdstagedeployments/finalizers",
-      "resourceName": "",
-      "verbs": [
-        "*"
-      ],
-      "riskLevel": "Medium",
-      "tags": [
-        "NamespaceAdmin",
-        "NamespaceWideAccess",
-        "WildcardPermission"
-      ],
-      "matchedRiskRules": [
-        {
-          "id": 9997,
-          "name": "Base Risk Level - Medium",
-          "link": "https://rbac-atlas.github.io/rules/9997/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "edp-codebase-operator",
-      "namespace": "default",
-      "roleType": "Role",
-      "roleName": "edp-codebase-operator",
-      "apiGroup": "*",
-      "resource": "codebases/status",
-      "resourceName": "",
-      "verbs": [
-        "*"
-      ],
-      "riskLevel": "Medium",
-      "tags": [
-        "NamespaceAdmin",
-        "NamespaceWideAccess",
-        "WildcardPermission"
-      ],
-      "matchedRiskRules": [
-        {
-          "id": 9997,
-          "name": "Base Risk Level - Medium",
-          "link": "https://rbac-atlas.github.io/rules/9997/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "edp-codebase-operator",
-      "namespace": "default",
-      "roleType": "Role",
-      "roleName": "edp-codebase-operator",
-      "apiGroup": "*",
-      "resource": "codebasebranches/status",
-      "resourceName": "",
-      "verbs": [
-        "*"
-      ],
-      "riskLevel": "Medium",
-      "tags": [
-        "NamespaceAdmin",
-        "NamespaceWideAccess",
-        "WildcardPermission"
-      ],
-      "matchedRiskRules": [
-        {
-          "id": 9997,
-          "name": "Base Risk Level - Medium",
-          "link": "https://rbac-atlas.github.io/rules/9997/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "edp-codebase-operator",
-      "namespace": "default",
-      "roleType": "Role",
-      "roleName": "edp-codebase-operator",
-      "apiGroup": "*",
-      "resource": "quicklinks",
-      "resourceName": "",
-      "verbs": [
-        "*"
-      ],
-      "riskLevel": "Medium",
-      "tags": [
-        "WildcardPermission",
-        "NamespaceAdmin",
-        "NamespaceWideAccess"
-      ],
-      "matchedRiskRules": [
-        {
-          "id": 9997,
-          "name": "Base Risk Level - Medium",
-          "link": "https://rbac-atlas.github.io/rules/9997/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "edp-codebase-operator",
-      "namespace": "default",
-      "roleType": "Role",
-      "roleName": "edp-codebase-operator",
-      "apiGroup": "*",
-      "resource": "jiraissuemetadatas/finalizers",
-      "resourceName": "",
-      "verbs": [
-        "*"
-      ],
-      "riskLevel": "Medium",
-      "tags": [
-        "NamespaceAdmin",
-        "NamespaceWideAccess",
-        "WildcardPermission"
-      ],
-      "matchedRiskRules": [
-        {
-          "id": 9997,
-          "name": "Base Risk Level - Medium",
-          "link": "https://rbac-atlas.github.io/rules/9997/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "edp-codebase-operator",
-      "namespace": "default",
-      "roleType": "Role",
-      "roleName": "edp-codebase-operator",
-      "apiGroup": "*",
-      "resource": "stages",
-      "resourceName": "",
-      "verbs": [
-        "*"
-      ],
-      "riskLevel": "Medium",
-      "tags": [
-        "WildcardPermission",
-        "NamespaceAdmin",
-        "NamespaceWideAccess"
-      ],
-      "matchedRiskRules": [
-        {
-          "id": 9997,
-          "name": "Base Risk Level - Medium",
-          "link": "https://rbac-atlas.github.io/rules/9997/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "edp-codebase-operator",
-      "namespace": "default",
-      "roleType": "Role",
-      "roleName": "edp-codebase-operator",
-      "apiGroup": "*",
-      "resource": "codebaseimagestreams/finalizers",
-      "resourceName": "",
-      "verbs": [
-        "*"
-      ],
-      "riskLevel": "Medium",
-      "tags": [
-        "NamespaceAdmin",
-        "NamespaceWideAccess",
-        "WildcardPermission"
-      ],
-      "matchedRiskRules": [
-        {
-          "id": 9997,
-          "name": "Base Risk Level - Medium",
-          "link": "https://rbac-atlas.github.io/rules/9997/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "edp-codebase-operator",
-      "namespace": "default",
-      "roleType": "Role",
-      "roleName": "edp-codebase-operator",
-      "apiGroup": "*",
-      "resource": "jiraservers",
-      "resourceName": "",
-      "verbs": [
-        "*"
-      ],
-      "riskLevel": "Medium",
-      "tags": [
-        "NamespaceAdmin",
-        "NamespaceWideAccess",
-        "WildcardPermission"
-      ],
-      "matchedRiskRules": [
-        {
-          "id": 9997,
-          "name": "Base Risk Level - Medium",
-          "link": "https://rbac-atlas.github.io/rules/9997/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "edp-codebase-operator",
-      "namespace": "default",
-      "roleType": "Role",
-      "roleName": "edp-codebase-operator",
-      "apiGroup": "*",
-      "resource": "jirafixversions",
-      "resourceName": "",
-      "verbs": [
-        "*"
-      ],
-      "riskLevel": "Medium",
-      "tags": [
-        "NamespaceAdmin",
-        "NamespaceWideAccess",
-        "WildcardPermission"
-      ],
-      "matchedRiskRules": [
-        {
-          "id": 9997,
-          "name": "Base Risk Level - Medium",
-          "link": "https://rbac-atlas.github.io/rules/9997/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "edp-codebase-operator",
-      "namespace": "default",
-      "roleType": "Role",
-      "roleName": "edp-codebase-operator",
-      "apiGroup": "*",
-      "resource": "cdstagedeployments",
-      "resourceName": "",
-      "verbs": [
-        "*"
-      ],
-      "riskLevel": "Medium",
-      "tags": [
-        "NamespaceWideAccess",
-        "WildcardPermission",
-        "NamespaceAdmin"
-      ],
-      "matchedRiskRules": [
-        {
-          "id": 9997,
-          "name": "Base Risk Level - Medium",
-          "link": "https://rbac-atlas.github.io/rules/9997/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "edp-codebase-operator",
-      "namespace": "default",
-      "roleType": "Role",
-      "roleName": "edp-codebase-operator",
-      "apiGroup": "coordination.k8s.io",
-      "resource": "leases",
-      "resourceName": "",
-      "verbs": [
-        "create",
-        "delete",
-        "get",
-        "list",
-        "patch",
-        "update",
-        "watch"
-      ],
-      "riskLevel": "Critical",
-      "tags": [
-        "Tampering",
-        "DenialOfService",
-        "ControlPlaneDisruption",
-        "CriticalNamespace"
-      ],
-      "matchedRiskRules": [
-        {
-          "id": 1081,
-          "name": "Manage Leases in kube-system or kube-node-lease namespace",
-          "link": "https://rbac-atlas.github.io/rules/1081/"
-        },
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "edp-codebase-operator",
-      "namespace": "default",
-      "roleType": "Role",
-      "roleName": "edp-codebase-operator",
-      "apiGroup": "networking.k8s.io",
-      "resource": "ingresses",
-      "resourceName": "",
-      "verbs": [
-        "create",
-        "get",
-        "list",
-        "watch"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "edp-codebase-operator",
-      "namespace": "default",
-      "roleType": "Role",
-      "roleName": "edp-codebase-operator",
-      "apiGroup": "",
-      "resource": "events",
-      "resourceName": "",
-      "verbs": [
-        "create",
-        "patch"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "edp-codebase-operator",
-      "namespace": "default",
-      "roleType": "Role",
-      "roleName": "edp-codebase-operator",
+      "roleName": "tekton-triggers-edp-interceptor",
       "apiGroup": "",
       "resource": "secrets",
       "resourceName": "",
       "verbs": [
-        "create",
-        "get",
-        "list",
-        "patch",
-        "update",
-        "watch"
-      ],
-      "riskLevel": "Critical",
-      "tags": [
-        "DataExposure",
-        "InformationDisclosure",
-        "SecretAccess",
-        "CredentialAccess"
-      ],
-      "matchedRiskRules": [
-        {
-          "id": 1011,
-          "name": "Read secrets in a namespace",
-          "link": "https://rbac-atlas.github.io/rules/1011/"
-        },
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "edp-codebase-operator",
-      "namespace": "default",
-      "roleType": "Role",
-      "roleName": "edp-codebase-operator",
-      "apiGroup": "tekton.dev",
-      "resource": "pipelineruns",
-      "resourceName": "",
-      "verbs": [
-        "create",
-        "get",
-        "list",
-        "patch",
-        "update",
-        "watch"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "edp-codebase-operator",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "edp-codebase-operator-default",
-      "apiGroup": "admissionregistration.k8s.io",
-      "resource": "validatingwebhookconfigurations",
-      "resourceName": "",
-      "verbs": [
-        "get",
-        "patch",
-        "update"
+        "get"
       ],
       "riskLevel": "Low",
       "tags": [],
@@ -1827,7 +1205,357 @@
       "roleType": "Role",
       "roleName": "edp-gerrit-operator",
       "apiGroup": "*",
+      "resource": "gerritgroupmembers/finalizers",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "Medium",
+      "tags": [
+        "NamespaceAdmin",
+        "NamespaceWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9997,
+          "name": "Base Risk Level - Medium",
+          "link": "https://rbac-atlas.github.io/rules/9997/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "edp-gerrit-operator",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "edp-gerrit-operator",
+      "apiGroup": "*",
+      "resource": "gerritprojectaccesses/finalizers",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "Medium",
+      "tags": [
+        "NamespaceAdmin",
+        "NamespaceWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9997,
+          "name": "Base Risk Level - Medium",
+          "link": "https://rbac-atlas.github.io/rules/9997/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "edp-gerrit-operator",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "edp-gerrit-operator",
+      "apiGroup": "*",
+      "resource": "gerritprojects",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "Medium",
+      "tags": [
+        "NamespaceAdmin",
+        "NamespaceWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9997,
+          "name": "Base Risk Level - Medium",
+          "link": "https://rbac-atlas.github.io/rules/9997/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "edp-gerrit-operator",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "edp-gerrit-operator",
+      "apiGroup": "*",
+      "resource": "gerritmergerequests/finalizers",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "Medium",
+      "tags": [
+        "NamespaceAdmin",
+        "NamespaceWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9997,
+          "name": "Base Risk Level - Medium",
+          "link": "https://rbac-atlas.github.io/rules/9997/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "edp-gerrit-operator",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "edp-gerrit-operator",
+      "apiGroup": "*",
+      "resource": "gerrits/finalizers",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "Medium",
+      "tags": [
+        "NamespaceAdmin",
+        "NamespaceWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9997,
+          "name": "Base Risk Level - Medium",
+          "link": "https://rbac-atlas.github.io/rules/9997/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "edp-gerrit-operator",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "edp-gerrit-operator",
+      "apiGroup": "*",
+      "resource": "keycloaks/status",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "Medium",
+      "tags": [
+        "NamespaceAdmin",
+        "NamespaceWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9997,
+          "name": "Base Risk Level - Medium",
+          "link": "https://rbac-atlas.github.io/rules/9997/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "edp-gerrit-operator",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "edp-gerrit-operator",
+      "apiGroup": "*",
+      "resource": "keycloakclients/finalizers",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "Medium",
+      "tags": [
+        "NamespaceAdmin",
+        "NamespaceWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9997,
+          "name": "Base Risk Level - Medium",
+          "link": "https://rbac-atlas.github.io/rules/9997/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "edp-gerrit-operator",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "edp-gerrit-operator",
+      "apiGroup": "*",
+      "resource": "keycloakrealms/status",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "Medium",
+      "tags": [
+        "NamespaceAdmin",
+        "NamespaceWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9997,
+          "name": "Base Risk Level - Medium",
+          "link": "https://rbac-atlas.github.io/rules/9997/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "edp-gerrit-operator",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "edp-gerrit-operator",
+      "apiGroup": "*",
+      "resource": "gerritprojectaccesses/status",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "Medium",
+      "tags": [
+        "NamespaceAdmin",
+        "NamespaceWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9997,
+          "name": "Base Risk Level - Medium",
+          "link": "https://rbac-atlas.github.io/rules/9997/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "edp-gerrit-operator",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "edp-gerrit-operator",
+      "apiGroup": "*",
+      "resource": "gerritmergerequests",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "Medium",
+      "tags": [
+        "NamespaceAdmin",
+        "NamespaceWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9997,
+          "name": "Base Risk Level - Medium",
+          "link": "https://rbac-atlas.github.io/rules/9997/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "edp-gerrit-operator",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "edp-gerrit-operator",
+      "apiGroup": "*",
+      "resource": "gerritreplicationconfigs/status",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "Medium",
+      "tags": [
+        "NamespaceAdmin",
+        "NamespaceWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9997,
+          "name": "Base Risk Level - Medium",
+          "link": "https://rbac-atlas.github.io/rules/9997/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "edp-gerrit-operator",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "edp-gerrit-operator",
+      "apiGroup": "*",
+      "resource": "gerritgroups/status",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "Medium",
+      "tags": [
+        "NamespaceAdmin",
+        "NamespaceWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9997,
+          "name": "Base Risk Level - Medium",
+          "link": "https://rbac-atlas.github.io/rules/9997/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "edp-gerrit-operator",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "edp-gerrit-operator",
+      "apiGroup": "*",
       "resource": "keycloakclients/status",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "Medium",
+      "tags": [
+        "NamespaceAdmin",
+        "NamespaceWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9997,
+          "name": "Base Risk Level - Medium",
+          "link": "https://rbac-atlas.github.io/rules/9997/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "edp-gerrit-operator",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "edp-gerrit-operator",
+      "apiGroup": "*",
+      "resource": "keycloakrealms",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "Medium",
+      "tags": [
+        "NamespaceAdmin",
+        "NamespaceWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9997,
+          "name": "Base Risk Level - Medium",
+          "link": "https://rbac-atlas.github.io/rules/9997/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "edp-gerrit-operator",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "edp-gerrit-operator",
+      "apiGroup": "*",
+      "resource": "gerritgroupmembers/status",
       "resourceName": "",
       "verbs": [
         "*"
@@ -1884,31 +1612,6 @@
       ],
       "riskLevel": "Medium",
       "tags": [
-        "NamespaceAdmin",
-        "NamespaceWideAccess",
-        "WildcardPermission"
-      ],
-      "matchedRiskRules": [
-        {
-          "id": 9997,
-          "name": "Base Risk Level - Medium",
-          "link": "https://rbac-atlas.github.io/rules/9997/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "edp-gerrit-operator",
-      "namespace": "default",
-      "roleType": "Role",
-      "roleName": "edp-gerrit-operator",
-      "apiGroup": "*",
-      "resource": "gerritmergerequests/finalizers",
-      "resourceName": "",
-      "verbs": [
-        "*"
-      ],
-      "riskLevel": "Medium",
-      "tags": [
         "NamespaceWideAccess",
         "WildcardPermission",
         "NamespaceAdmin"
@@ -1927,7 +1630,57 @@
       "roleType": "Role",
       "roleName": "edp-gerrit-operator",
       "apiGroup": "*",
-      "resource": "gerrits/finalizers",
+      "resource": "gerritmergerequests/status",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "Medium",
+      "tags": [
+        "NamespaceAdmin",
+        "NamespaceWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9997,
+          "name": "Base Risk Level - Medium",
+          "link": "https://rbac-atlas.github.io/rules/9997/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "edp-gerrit-operator",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "edp-gerrit-operator",
+      "apiGroup": "*",
+      "resource": "gerrits",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "Medium",
+      "tags": [
+        "NamespaceAdmin",
+        "NamespaceWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9997,
+          "name": "Base Risk Level - Medium",
+          "link": "https://rbac-atlas.github.io/rules/9997/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "edp-gerrit-operator",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "edp-gerrit-operator",
+      "apiGroup": "*",
+      "resource": "gerrits/status",
       "resourceName": "",
       "verbs": [
         "*"
@@ -1977,57 +1730,7 @@
       "roleType": "Role",
       "roleName": "edp-gerrit-operator",
       "apiGroup": "*",
-      "resource": "keycloaks",
-      "resourceName": "",
-      "verbs": [
-        "*"
-      ],
-      "riskLevel": "Medium",
-      "tags": [
-        "NamespaceAdmin",
-        "NamespaceWideAccess",
-        "WildcardPermission"
-      ],
-      "matchedRiskRules": [
-        {
-          "id": 9997,
-          "name": "Base Risk Level - Medium",
-          "link": "https://rbac-atlas.github.io/rules/9997/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "edp-gerrit-operator",
-      "namespace": "default",
-      "roleType": "Role",
-      "roleName": "edp-gerrit-operator",
-      "apiGroup": "*",
-      "resource": "keycloakrealms/status",
-      "resourceName": "",
-      "verbs": [
-        "*"
-      ],
-      "riskLevel": "Medium",
-      "tags": [
-        "NamespaceAdmin",
-        "NamespaceWideAccess",
-        "WildcardPermission"
-      ],
-      "matchedRiskRules": [
-        {
-          "id": 9997,
-          "name": "Base Risk Level - Medium",
-          "link": "https://rbac-atlas.github.io/rules/9997/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "edp-gerrit-operator",
-      "namespace": "default",
-      "roleType": "Role",
-      "roleName": "edp-gerrit-operator",
-      "apiGroup": "*",
-      "resource": "gerritgroupmembers/finalizers",
+      "resource": "keycloakclients",
       "resourceName": "",
       "verbs": [
         "*"
@@ -2102,131 +1805,6 @@
       "roleType": "Role",
       "roleName": "edp-gerrit-operator",
       "apiGroup": "*",
-      "resource": "gerritreplicationconfigs/status",
-      "resourceName": "",
-      "verbs": [
-        "*"
-      ],
-      "riskLevel": "Medium",
-      "tags": [
-        "NamespaceAdmin",
-        "NamespaceWideAccess",
-        "WildcardPermission"
-      ],
-      "matchedRiskRules": [
-        {
-          "id": 9997,
-          "name": "Base Risk Level - Medium",
-          "link": "https://rbac-atlas.github.io/rules/9997/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "edp-gerrit-operator",
-      "namespace": "default",
-      "roleType": "Role",
-      "roleName": "edp-gerrit-operator",
-      "apiGroup": "*",
-      "resource": "gerritprojectaccesses/status",
-      "resourceName": "",
-      "verbs": [
-        "*"
-      ],
-      "riskLevel": "Medium",
-      "tags": [
-        "NamespaceAdmin",
-        "NamespaceWideAccess",
-        "WildcardPermission"
-      ],
-      "matchedRiskRules": [
-        {
-          "id": 9997,
-          "name": "Base Risk Level - Medium",
-          "link": "https://rbac-atlas.github.io/rules/9997/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "edp-gerrit-operator",
-      "namespace": "default",
-      "roleType": "Role",
-      "roleName": "edp-gerrit-operator",
-      "apiGroup": "*",
-      "resource": "gerritprojectaccesses/finalizers",
-      "resourceName": "",
-      "verbs": [
-        "*"
-      ],
-      "riskLevel": "Medium",
-      "tags": [
-        "NamespaceAdmin",
-        "NamespaceWideAccess",
-        "WildcardPermission"
-      ],
-      "matchedRiskRules": [
-        {
-          "id": 9997,
-          "name": "Base Risk Level - Medium",
-          "link": "https://rbac-atlas.github.io/rules/9997/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "edp-gerrit-operator",
-      "namespace": "default",
-      "roleType": "Role",
-      "roleName": "edp-gerrit-operator",
-      "apiGroup": "*",
-      "resource": "gerritmergerequests",
-      "resourceName": "",
-      "verbs": [
-        "*"
-      ],
-      "riskLevel": "Medium",
-      "tags": [
-        "NamespaceWideAccess",
-        "WildcardPermission",
-        "NamespaceAdmin"
-      ],
-      "matchedRiskRules": [
-        {
-          "id": 9997,
-          "name": "Base Risk Level - Medium",
-          "link": "https://rbac-atlas.github.io/rules/9997/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "edp-gerrit-operator",
-      "namespace": "default",
-      "roleType": "Role",
-      "roleName": "edp-gerrit-operator",
-      "apiGroup": "*",
-      "resource": "gerrits/status",
-      "resourceName": "",
-      "verbs": [
-        "*"
-      ],
-      "riskLevel": "Medium",
-      "tags": [
-        "NamespaceWideAccess",
-        "WildcardPermission",
-        "NamespaceAdmin"
-      ],
-      "matchedRiskRules": [
-        {
-          "id": 9997,
-          "name": "Base Risk Level - Medium",
-          "link": "https://rbac-atlas.github.io/rules/9997/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "edp-gerrit-operator",
-      "namespace": "default",
-      "roleType": "Role",
-      "roleName": "edp-gerrit-operator",
-      "apiGroup": "*",
       "resource": "gerritreplicationconfigs",
       "resourceName": "",
       "verbs": [
@@ -2252,32 +1830,7 @@
       "roleType": "Role",
       "roleName": "edp-gerrit-operator",
       "apiGroup": "*",
-      "resource": "keycloakclients/finalizers",
-      "resourceName": "",
-      "verbs": [
-        "*"
-      ],
-      "riskLevel": "Medium",
-      "tags": [
-        "NamespaceAdmin",
-        "NamespaceWideAccess",
-        "WildcardPermission"
-      ],
-      "matchedRiskRules": [
-        {
-          "id": 9997,
-          "name": "Base Risk Level - Medium",
-          "link": "https://rbac-atlas.github.io/rules/9997/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "edp-gerrit-operator",
-      "namespace": "default",
-      "roleType": "Role",
-      "roleName": "edp-gerrit-operator",
-      "apiGroup": "*",
-      "resource": "keycloakrealms",
+      "resource": "keycloaks",
       "resourceName": "",
       "verbs": [
         "*"
@@ -2326,181 +1879,6 @@
       "namespace": "default",
       "roleType": "Role",
       "roleName": "edp-gerrit-operator",
-      "apiGroup": "*",
-      "resource": "gerritgroupmembers/status",
-      "resourceName": "",
-      "verbs": [
-        "*"
-      ],
-      "riskLevel": "Medium",
-      "tags": [
-        "NamespaceAdmin",
-        "NamespaceWideAccess",
-        "WildcardPermission"
-      ],
-      "matchedRiskRules": [
-        {
-          "id": 9997,
-          "name": "Base Risk Level - Medium",
-          "link": "https://rbac-atlas.github.io/rules/9997/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "edp-gerrit-operator",
-      "namespace": "default",
-      "roleType": "Role",
-      "roleName": "edp-gerrit-operator",
-      "apiGroup": "*",
-      "resource": "gerritprojects",
-      "resourceName": "",
-      "verbs": [
-        "*"
-      ],
-      "riskLevel": "Medium",
-      "tags": [
-        "NamespaceAdmin",
-        "NamespaceWideAccess",
-        "WildcardPermission"
-      ],
-      "matchedRiskRules": [
-        {
-          "id": 9997,
-          "name": "Base Risk Level - Medium",
-          "link": "https://rbac-atlas.github.io/rules/9997/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "edp-gerrit-operator",
-      "namespace": "default",
-      "roleType": "Role",
-      "roleName": "edp-gerrit-operator",
-      "apiGroup": "*",
-      "resource": "gerritmergerequests/status",
-      "resourceName": "",
-      "verbs": [
-        "*"
-      ],
-      "riskLevel": "Medium",
-      "tags": [
-        "WildcardPermission",
-        "NamespaceAdmin",
-        "NamespaceWideAccess"
-      ],
-      "matchedRiskRules": [
-        {
-          "id": 9997,
-          "name": "Base Risk Level - Medium",
-          "link": "https://rbac-atlas.github.io/rules/9997/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "edp-gerrit-operator",
-      "namespace": "default",
-      "roleType": "Role",
-      "roleName": "edp-gerrit-operator",
-      "apiGroup": "*",
-      "resource": "gerrits",
-      "resourceName": "",
-      "verbs": [
-        "*"
-      ],
-      "riskLevel": "Medium",
-      "tags": [
-        "NamespaceAdmin",
-        "NamespaceWideAccess",
-        "WildcardPermission"
-      ],
-      "matchedRiskRules": [
-        {
-          "id": 9997,
-          "name": "Base Risk Level - Medium",
-          "link": "https://rbac-atlas.github.io/rules/9997/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "edp-gerrit-operator",
-      "namespace": "default",
-      "roleType": "Role",
-      "roleName": "edp-gerrit-operator",
-      "apiGroup": "*",
-      "resource": "gerritgroups/status",
-      "resourceName": "",
-      "verbs": [
-        "*"
-      ],
-      "riskLevel": "Medium",
-      "tags": [
-        "NamespaceAdmin",
-        "NamespaceWideAccess",
-        "WildcardPermission"
-      ],
-      "matchedRiskRules": [
-        {
-          "id": 9997,
-          "name": "Base Risk Level - Medium",
-          "link": "https://rbac-atlas.github.io/rules/9997/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "edp-gerrit-operator",
-      "namespace": "default",
-      "roleType": "Role",
-      "roleName": "edp-gerrit-operator",
-      "apiGroup": "*",
-      "resource": "keycloaks/status",
-      "resourceName": "",
-      "verbs": [
-        "*"
-      ],
-      "riskLevel": "Medium",
-      "tags": [
-        "NamespaceAdmin",
-        "NamespaceWideAccess",
-        "WildcardPermission"
-      ],
-      "matchedRiskRules": [
-        {
-          "id": 9997,
-          "name": "Base Risk Level - Medium",
-          "link": "https://rbac-atlas.github.io/rules/9997/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "edp-gerrit-operator",
-      "namespace": "default",
-      "roleType": "Role",
-      "roleName": "edp-gerrit-operator",
-      "apiGroup": "*",
-      "resource": "keycloakclients",
-      "resourceName": "",
-      "verbs": [
-        "*"
-      ],
-      "riskLevel": "Medium",
-      "tags": [
-        "NamespaceAdmin",
-        "NamespaceWideAccess",
-        "WildcardPermission"
-      ],
-      "matchedRiskRules": [
-        {
-          "id": 9997,
-          "name": "Base Risk Level - Medium",
-          "link": "https://rbac-atlas.github.io/rules/9997/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "edp-gerrit-operator",
-      "namespace": "default",
-      "roleType": "Role",
-      "roleName": "edp-gerrit-operator",
       "apiGroup": "coordination.k8s.io",
       "resource": "leases",
       "resourceName": "",
@@ -2521,18 +1899,16 @@
       ]
     },
     {
-      "serviceAccountName": "tekton-interceptor",
+      "serviceAccountName": "edp-codebase-operator",
       "namespace": "default",
       "roleType": "Role",
-      "roleName": "tekton-triggers-edp-interceptor",
-      "apiGroup": "triggers.tekton.dev",
-      "resource": "interceptors",
+      "roleName": "edp-codebase-operator",
+      "apiGroup": "",
+      "resource": "events",
       "resourceName": "",
       "verbs": [
-        "get",
-        "list",
-        "update",
-        "watch"
+        "create",
+        "patch"
       ],
       "riskLevel": "Low",
       "tags": [],
@@ -2545,24 +1921,24 @@
       ]
     },
     {
-      "serviceAccountName": "tekton-interceptor",
+      "serviceAccountName": "edp-codebase-operator",
       "namespace": "default",
       "roleType": "Role",
-      "roleName": "tekton-triggers-edp-interceptor",
+      "roleName": "edp-codebase-operator",
       "apiGroup": "",
       "resource": "secrets",
-      "resourceName": "tekton-edp-interceptor-certs",
+      "resourceName": "",
       "verbs": [
         "create",
         "get",
         "list",
+        "patch",
         "update",
         "watch"
       ],
-      "riskLevel": "Low",
+      "riskLevel": "Critical",
       "tags": [
         "InformationDisclosure",
-        "ResourceNameRestricted",
         "SecretAccess",
         "CredentialAccess",
         "DataExposure"
@@ -2581,245 +1957,20 @@
       ]
     },
     {
-      "serviceAccountName": "tekton-interceptor",
+      "serviceAccountName": "edp-codebase-operator",
       "namespace": "default",
       "roleType": "Role",
-      "roleName": "tekton-triggers-edp-interceptor",
-      "apiGroup": "",
-      "resource": "secrets",
-      "resourceName": "",
-      "verbs": [
-        "get"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "tekton-interceptor",
-      "namespace": "default",
-      "roleType": "Role",
-      "roleName": "tekton-triggers-edp-interceptor",
-      "apiGroup": "v2.edp.epam.com",
-      "resource": "codebasebranches",
-      "resourceName": "",
-      "verbs": [
-        "get",
-        "list",
-        "watch"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "tekton-interceptor",
-      "namespace": "default",
-      "roleType": "Role",
-      "roleName": "tekton-triggers-edp-interceptor",
-      "apiGroup": "v2.edp.epam.com",
-      "resource": "codebasebranches/finalizers",
-      "resourceName": "",
-      "verbs": [
-        "get",
-        "list",
-        "watch"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "tekton-interceptor",
-      "namespace": "default",
-      "roleType": "Role",
-      "roleName": "tekton-triggers-edp-interceptor",
-      "apiGroup": "v2.edp.epam.com",
-      "resource": "codebases",
-      "resourceName": "",
-      "verbs": [
-        "get",
-        "list",
-        "watch"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "tekton-interceptor",
-      "namespace": "default",
-      "roleType": "Role",
-      "roleName": "tekton-triggers-edp-interceptor",
-      "apiGroup": "v2.edp.epam.com",
-      "resource": "codebases/status",
-      "resourceName": "",
-      "verbs": [
-        "get",
-        "list",
-        "watch"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "tekton-interceptor",
-      "namespace": "default",
-      "roleType": "Role",
-      "roleName": "tekton-triggers-edp-interceptor",
-      "apiGroup": "v2.edp.epam.com",
-      "resource": "codebases/finalizers",
-      "resourceName": "",
-      "verbs": [
-        "get",
-        "list",
-        "watch"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "tekton-interceptor",
-      "namespace": "default",
-      "roleType": "Role",
-      "roleName": "tekton-triggers-edp-interceptor",
-      "apiGroup": "v2.edp.epam.com",
-      "resource": "codebasebranches/status",
-      "resourceName": "",
-      "verbs": [
-        "get",
-        "list",
-        "watch"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "tekton-interceptor",
-      "namespace": "default",
-      "roleType": "Role",
-      "roleName": "tekton-triggers-edp-interceptor",
-      "apiGroup": "v2.edp.epam.com",
-      "resource": "gitservers",
-      "resourceName": "",
-      "verbs": [
-        "get",
-        "list",
-        "watch"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "tekton-interceptor",
-      "namespace": "default",
-      "roleType": "Role",
-      "roleName": "tekton-triggers-edp-interceptor",
-      "apiGroup": "v2.edp.epam.com",
-      "resource": "gitservers/status",
-      "resourceName": "",
-      "verbs": [
-        "get",
-        "list",
-        "watch"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "tekton-interceptor",
-      "namespace": "default",
-      "roleType": "Role",
-      "roleName": "tekton-triggers-edp-interceptor",
-      "apiGroup": "v2.edp.epam.com",
-      "resource": "gitservers/finalizers",
-      "resourceName": "",
-      "verbs": [
-        "get",
-        "list",
-        "watch"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "tekton-resource-pruner",
-      "namespace": "default",
-      "roleType": "Role",
-      "roleName": "tekton-resource-pruner",
+      "roleName": "edp-codebase-operator",
       "apiGroup": "tekton.dev",
       "resource": "pipelineruns",
       "resourceName": "",
       "verbs": [
-        "delete",
+        "create",
         "get",
-        "list"
+        "list",
+        "patch",
+        "update",
+        "watch"
       ],
       "riskLevel": "Low",
       "tags": [],
@@ -2832,20 +1983,894 @@
       ]
     },
     {
-      "serviceAccountName": "tekton-resource-pruner",
+      "serviceAccountName": "edp-codebase-operator",
       "namespace": "default",
       "roleType": "Role",
-      "roleName": "tekton-resource-pruner",
-      "apiGroup": "",
-      "resource": "ConfigMap",
-      "resourceName": "tekton-resource-pruner-scripts",
+      "roleName": "edp-codebase-operator",
+      "apiGroup": "triggers.tekton.dev",
+      "resource": "triggertemplates",
+      "resourceName": "",
       "verbs": [
-        "get"
+        "get",
+        "list",
+        "watch"
       ],
       "riskLevel": "Low",
-      "tags": [
-        "ResourceNameRestricted"
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "edp-codebase-operator",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "edp-codebase-operator",
+      "apiGroup": "argoproj.io",
+      "resource": "applications",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
       ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "edp-codebase-operator",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "edp-codebase-operator",
+      "apiGroup": "*",
+      "resource": "codebases/finalizers",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "Medium",
+      "tags": [
+        "NamespaceWideAccess",
+        "WildcardPermission",
+        "NamespaceAdmin"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9997,
+          "name": "Base Risk Level - Medium",
+          "link": "https://rbac-atlas.github.io/rules/9997/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "edp-codebase-operator",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "edp-codebase-operator",
+      "apiGroup": "*",
+      "resource": "stages/status",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "Medium",
+      "tags": [
+        "NamespaceAdmin",
+        "NamespaceWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9997,
+          "name": "Base Risk Level - Medium",
+          "link": "https://rbac-atlas.github.io/rules/9997/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "edp-codebase-operator",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "edp-codebase-operator",
+      "apiGroup": "*",
+      "resource": "codebasebranches/status",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "Medium",
+      "tags": [
+        "WildcardPermission",
+        "NamespaceAdmin",
+        "NamespaceWideAccess"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9997,
+          "name": "Base Risk Level - Medium",
+          "link": "https://rbac-atlas.github.io/rules/9997/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "edp-codebase-operator",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "edp-codebase-operator",
+      "apiGroup": "*",
+      "resource": "configmaps",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "WildcardPermission",
+        "Tampering",
+        "ConfigMapAccess",
+        "PotentialPrivilegeEscalation",
+        "InformationDisclosure",
+        "DataExposure",
+        "NamespaceAdmin",
+        "NamespaceWideAccess"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1025,
+          "name": "Modify ConfigMaps in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1025/"
+        },
+        {
+          "id": 1023,
+          "name": "Read ConfigMaps in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1023/"
+        },
+        {
+          "id": 9997,
+          "name": "Base Risk Level - Medium",
+          "link": "https://rbac-atlas.github.io/rules/9997/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "edp-codebase-operator",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "edp-codebase-operator",
+      "apiGroup": "*",
+      "resource": "quicklinks",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "Medium",
+      "tags": [
+        "NamespaceAdmin",
+        "NamespaceWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9997,
+          "name": "Base Risk Level - Medium",
+          "link": "https://rbac-atlas.github.io/rules/9997/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "edp-codebase-operator",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "edp-codebase-operator",
+      "apiGroup": "*",
+      "resource": "jiraservers",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "Medium",
+      "tags": [
+        "NamespaceAdmin",
+        "NamespaceWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9997,
+          "name": "Base Risk Level - Medium",
+          "link": "https://rbac-atlas.github.io/rules/9997/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "edp-codebase-operator",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "edp-codebase-operator",
+      "apiGroup": "*",
+      "resource": "jirafixversions/status",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "Medium",
+      "tags": [
+        "NamespaceAdmin",
+        "NamespaceWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9997,
+          "name": "Base Risk Level - Medium",
+          "link": "https://rbac-atlas.github.io/rules/9997/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "edp-codebase-operator",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "edp-codebase-operator",
+      "apiGroup": "*",
+      "resource": "stages/finalizers",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "Medium",
+      "tags": [
+        "NamespaceAdmin",
+        "NamespaceWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9997,
+          "name": "Base Risk Level - Medium",
+          "link": "https://rbac-atlas.github.io/rules/9997/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "edp-codebase-operator",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "edp-codebase-operator",
+      "apiGroup": "*",
+      "resource": "gitservers",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "Medium",
+      "tags": [
+        "NamespaceAdmin",
+        "NamespaceWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9997,
+          "name": "Base Risk Level - Medium",
+          "link": "https://rbac-atlas.github.io/rules/9997/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "edp-codebase-operator",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "edp-codebase-operator",
+      "apiGroup": "*",
+      "resource": "gitservers/status",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "Medium",
+      "tags": [
+        "NamespaceWideAccess",
+        "WildcardPermission",
+        "NamespaceAdmin"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9997,
+          "name": "Base Risk Level - Medium",
+          "link": "https://rbac-atlas.github.io/rules/9997/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "edp-codebase-operator",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "edp-codebase-operator",
+      "apiGroup": "*",
+      "resource": "jiraissuemetadatas",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "Medium",
+      "tags": [
+        "WildcardPermission",
+        "NamespaceAdmin",
+        "NamespaceWideAccess"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9997,
+          "name": "Base Risk Level - Medium",
+          "link": "https://rbac-atlas.github.io/rules/9997/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "edp-codebase-operator",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "edp-codebase-operator",
+      "apiGroup": "*",
+      "resource": "stages",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "Medium",
+      "tags": [
+        "NamespaceAdmin",
+        "NamespaceWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9997,
+          "name": "Base Risk Level - Medium",
+          "link": "https://rbac-atlas.github.io/rules/9997/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "edp-codebase-operator",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "edp-codebase-operator",
+      "apiGroup": "*",
+      "resource": "codebaseimagestreams",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "Medium",
+      "tags": [
+        "NamespaceAdmin",
+        "NamespaceWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9997,
+          "name": "Base Risk Level - Medium",
+          "link": "https://rbac-atlas.github.io/rules/9997/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "edp-codebase-operator",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "edp-codebase-operator",
+      "apiGroup": "*",
+      "resource": "cdstagedeployments/status",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "Medium",
+      "tags": [
+        "NamespaceAdmin",
+        "NamespaceWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9997,
+          "name": "Base Risk Level - Medium",
+          "link": "https://rbac-atlas.github.io/rules/9997/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "edp-codebase-operator",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "edp-codebase-operator",
+      "apiGroup": "*",
+      "resource": "gitservers/finalizers",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "Medium",
+      "tags": [
+        "NamespaceAdmin",
+        "NamespaceWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9997,
+          "name": "Base Risk Level - Medium",
+          "link": "https://rbac-atlas.github.io/rules/9997/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "edp-codebase-operator",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "edp-codebase-operator",
+      "apiGroup": "*",
+      "resource": "cdstagedeployments",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "Medium",
+      "tags": [
+        "NamespaceAdmin",
+        "NamespaceWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9997,
+          "name": "Base Risk Level - Medium",
+          "link": "https://rbac-atlas.github.io/rules/9997/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "edp-codebase-operator",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "edp-codebase-operator",
+      "apiGroup": "*",
+      "resource": "cdpipelines",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "Medium",
+      "tags": [
+        "NamespaceAdmin",
+        "NamespaceWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9997,
+          "name": "Base Risk Level - Medium",
+          "link": "https://rbac-atlas.github.io/rules/9997/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "edp-codebase-operator",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "edp-codebase-operator",
+      "apiGroup": "*",
+      "resource": "codebases",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "Medium",
+      "tags": [
+        "WildcardPermission",
+        "NamespaceAdmin",
+        "NamespaceWideAccess"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9997,
+          "name": "Base Risk Level - Medium",
+          "link": "https://rbac-atlas.github.io/rules/9997/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "edp-codebase-operator",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "edp-codebase-operator",
+      "apiGroup": "*",
+      "resource": "codebasebranches/finalizers",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "Medium",
+      "tags": [
+        "NamespaceAdmin",
+        "NamespaceWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9997,
+          "name": "Base Risk Level - Medium",
+          "link": "https://rbac-atlas.github.io/rules/9997/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "edp-codebase-operator",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "edp-codebase-operator",
+      "apiGroup": "*",
+      "resource": "jiraservers/status",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "Medium",
+      "tags": [
+        "NamespaceAdmin",
+        "NamespaceWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9997,
+          "name": "Base Risk Level - Medium",
+          "link": "https://rbac-atlas.github.io/rules/9997/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "edp-codebase-operator",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "edp-codebase-operator",
+      "apiGroup": "*",
+      "resource": "jirafixversions",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "Medium",
+      "tags": [
+        "NamespaceAdmin",
+        "NamespaceWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9997,
+          "name": "Base Risk Level - Medium",
+          "link": "https://rbac-atlas.github.io/rules/9997/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "edp-codebase-operator",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "edp-codebase-operator",
+      "apiGroup": "*",
+      "resource": "jiraissuemetadatas/finalizers",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "Medium",
+      "tags": [
+        "WildcardPermission",
+        "NamespaceAdmin",
+        "NamespaceWideAccess"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9997,
+          "name": "Base Risk Level - Medium",
+          "link": "https://rbac-atlas.github.io/rules/9997/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "edp-codebase-operator",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "edp-codebase-operator",
+      "apiGroup": "*",
+      "resource": "codebasebranches",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "Medium",
+      "tags": [
+        "NamespaceAdmin",
+        "NamespaceWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9997,
+          "name": "Base Risk Level - Medium",
+          "link": "https://rbac-atlas.github.io/rules/9997/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "edp-codebase-operator",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "edp-codebase-operator",
+      "apiGroup": "*",
+      "resource": "codebaseimagestreams/status",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "Medium",
+      "tags": [
+        "WildcardPermission",
+        "NamespaceAdmin",
+        "NamespaceWideAccess"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9997,
+          "name": "Base Risk Level - Medium",
+          "link": "https://rbac-atlas.github.io/rules/9997/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "edp-codebase-operator",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "edp-codebase-operator",
+      "apiGroup": "*",
+      "resource": "codebases/status",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "Medium",
+      "tags": [
+        "NamespaceAdmin",
+        "NamespaceWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9997,
+          "name": "Base Risk Level - Medium",
+          "link": "https://rbac-atlas.github.io/rules/9997/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "edp-codebase-operator",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "edp-codebase-operator",
+      "apiGroup": "*",
+      "resource": "codebaseimagestreams/finalizers",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "Medium",
+      "tags": [
+        "WildcardPermission",
+        "NamespaceAdmin",
+        "NamespaceWideAccess"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9997,
+          "name": "Base Risk Level - Medium",
+          "link": "https://rbac-atlas.github.io/rules/9997/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "edp-codebase-operator",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "edp-codebase-operator",
+      "apiGroup": "*",
+      "resource": "jiraservers/finalizers",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "Medium",
+      "tags": [
+        "NamespaceAdmin",
+        "NamespaceWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9997,
+          "name": "Base Risk Level - Medium",
+          "link": "https://rbac-atlas.github.io/rules/9997/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "edp-codebase-operator",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "edp-codebase-operator",
+      "apiGroup": "*",
+      "resource": "jiraissuemetadatas/status",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "Medium",
+      "tags": [
+        "NamespaceAdmin",
+        "NamespaceWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9997,
+          "name": "Base Risk Level - Medium",
+          "link": "https://rbac-atlas.github.io/rules/9997/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "edp-codebase-operator",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "edp-codebase-operator",
+      "apiGroup": "*",
+      "resource": "cdstagedeployments/finalizers",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "Medium",
+      "tags": [
+        "NamespaceAdmin",
+        "NamespaceWideAccess",
+        "WildcardPermission"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9997,
+          "name": "Base Risk Level - Medium",
+          "link": "https://rbac-atlas.github.io/rules/9997/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "edp-codebase-operator",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "edp-codebase-operator",
+      "apiGroup": "coordination.k8s.io",
+      "resource": "leases",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "Tampering",
+        "DenialOfService",
+        "ControlPlaneDisruption",
+        "CriticalNamespace"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1081,
+          "name": "Manage Leases in kube-system or kube-node-lease namespace",
+          "link": "https://rbac-atlas.github.io/rules/1081/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "edp-codebase-operator",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "edp-codebase-operator",
+      "apiGroup": "networking.k8s.io",
+      "resource": "ingresses",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "edp-codebase-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "edp-codebase-operator-default",
+      "apiGroup": "admissionregistration.k8s.io",
+      "resource": "validatingwebhookconfigurations",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "patch",
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "tekton",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "tekton-pipeline-role",
+      "apiGroup": "argoproj.io",
+      "resource": "applicationsets",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
       "matchedRiskRules": [
         {
           "id": 9996,
@@ -2879,78 +2904,6 @@
           "name": "Read ConfigMaps in a namespace",
           "link": "https://rbac-atlas.github.io/rules/1023/"
         },
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "tekton",
-      "namespace": "default",
-      "roleType": "Role",
-      "roleName": "tekton-pipeline-role",
-      "apiGroup": "v2.edp.epam.com",
-      "resource": "cdpipelines",
-      "resourceName": "",
-      "verbs": [
-        "get",
-        "list",
-        "patch",
-        "update"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "tekton",
-      "namespace": "default",
-      "roleType": "Role",
-      "roleName": "tekton-pipeline-role",
-      "apiGroup": "v2.edp.epam.com",
-      "resource": "codebasebranches",
-      "resourceName": "",
-      "verbs": [
-        "get",
-        "list",
-        "patch",
-        "update"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "tekton",
-      "namespace": "default",
-      "roleType": "Role",
-      "roleName": "tekton-pipeline-role",
-      "apiGroup": "v2.edp.epam.com",
-      "resource": "codebasebranches/status",
-      "resourceName": "",
-      "verbs": [
-        "get",
-        "list",
-        "patch",
-        "update"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
         {
           "id": 9996,
           "name": "Base Risk Level - Low",
@@ -3057,13 +3010,14 @@
       "namespace": "default",
       "roleType": "Role",
       "roleName": "tekton-pipeline-role",
-      "apiGroup": "tekton.dev",
-      "resource": "taskruns",
+      "apiGroup": "v2.edp.epam.com",
+      "resource": "cdpipelines",
       "resourceName": "",
       "verbs": [
         "get",
         "list",
-        "watch"
+        "patch",
+        "update"
       ],
       "riskLevel": "Low",
       "tags": [],
@@ -3080,14 +3034,60 @@
       "namespace": "default",
       "roleType": "Role",
       "roleName": "tekton-pipeline-role",
-      "apiGroup": "argoproj.io",
-      "resource": "applicationsets",
+      "apiGroup": "v2.edp.epam.com",
+      "resource": "codebasebranches",
       "resourceName": "",
       "verbs": [
         "get",
         "list",
         "patch",
-        "update",
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "tekton",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "tekton-pipeline-role",
+      "apiGroup": "v2.edp.epam.com",
+      "resource": "codebasebranches/status",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "patch",
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "tekton",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "tekton-pipeline-role",
+      "apiGroup": "tekton.dev",
+      "resource": "taskruns",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
         "watch"
       ],
       "riskLevel": "Low",
@@ -3279,22 +3279,6 @@
   ],
   "serviceAccountWorkloads": [
     {
-      "serviceAccountName": "tekton-interceptor",
-      "namespace": "default",
-      "workloadType": "Deployment",
-      "workloadName": "tekton-interceptor",
-      "containerName": "tekton-triggers-edp-interceptor",
-      "image": "epamedp/edp-tekton:0.20.0"
-    },
-    {
-      "serviceAccountName": "edp-gerrit-operator",
-      "namespace": "default",
-      "workloadType": "Deployment",
-      "workloadName": "gerrit-operator",
-      "containerName": "gerrit-operator",
-      "image": "epamedp/gerrit-operator:2.24.0"
-    },
-    {
       "serviceAccountName": "edp-cd-pipeline-operator",
       "namespace": "default",
       "workloadType": "Deployment",
@@ -3303,20 +3287,20 @@
       "image": "epamedp/cd-pipeline-operator:2.26.0"
     },
     {
-      "serviceAccountName": "edp-headlamp",
+      "serviceAccountName": "tekton-interceptor",
       "namespace": "default",
       "workloadType": "Deployment",
-      "workloadName": "portal",
-      "containerName": "portal",
-      "image": "epamedp/edp-headlamp:0.23.1"
+      "workloadName": "tekton-interceptor",
+      "containerName": "tekton-triggers-edp-interceptor",
+      "image": "epamedp/edp-tekton:0.20.0"
     },
     {
-      "serviceAccountName": "edp-codebase-operator",
+      "serviceAccountName": "gerrit",
       "namespace": "default",
       "workloadType": "Deployment",
-      "workloadName": "codebase-operator",
-      "containerName": "codebase-operator",
-      "image": "epamedp/codebase-operator:2.28.0"
+      "workloadName": "gerrit",
+      "containerName": "gerrit",
+      "image": "epamedp/edp-gerrit:3.6.2-oauth"
     },
     {
       "serviceAccountName": "",
@@ -3327,6 +3311,22 @@
       "image": "ghcr.io/kuberocketci/krci-cache:0.1.1"
     },
     {
+      "serviceAccountName": "edp-codebase-operator",
+      "namespace": "default",
+      "workloadType": "Deployment",
+      "workloadName": "codebase-operator",
+      "containerName": "codebase-operator",
+      "image": "epamedp/codebase-operator:2.28.0"
+    },
+    {
+      "serviceAccountName": "edp-gerrit-operator",
+      "namespace": "default",
+      "workloadType": "Deployment",
+      "workloadName": "gerrit-operator",
+      "containerName": "gerrit-operator",
+      "image": "epamedp/gerrit-operator:2.24.0"
+    },
+    {
       "serviceAccountName": "tekton-resource-pruner",
       "namespace": "default",
       "workloadType": "CronJob",
@@ -3335,12 +3335,12 @@
       "image": "docker.io/bitnamilegacy/kubectl:1.25.4"
     },
     {
-      "serviceAccountName": "gerrit",
+      "serviceAccountName": "edp-headlamp",
       "namespace": "default",
       "workloadType": "Deployment",
-      "workloadName": "gerrit",
-      "containerName": "gerrit",
-      "image": "epamedp/edp-gerrit:3.6.2-oauth"
+      "workloadName": "portal",
+      "containerName": "portal",
+      "image": "epamedp/edp-headlamp:0.23.1"
     }
   ]
 }

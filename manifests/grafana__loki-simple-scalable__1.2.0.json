@@ -1,0 +1,164 @@
+{
+  "metadata": {
+    "version": "1.2.0",
+    "name": "loki-simple-scalable",
+    "source": "charts/grafana__loki-simple-scalable__1.2.0/",
+    "timestamp": 1769793769,
+    "extra": {
+      "helm": {
+        "description": "Helm chart for Grafana Loki in simple, scalable mode",
+        "home": "https://grafana.github.io/helm-charts",
+        "icon": "https://grafana.com/docs/loki/latest/logo_and_name.png",
+        "keywords": null,
+        "kubeVersion": "",
+        "maintainers": [
+          {
+            "name": "trevorwhitney"
+          }
+        ],
+        "sources": [
+          "https://github.com/grafana/loki",
+          "https://grafana.com/oss/loki/",
+          "https://grafana.com/docs/loki/latest/"
+        ]
+      }
+    }
+  },
+  "serviceAccountData": [
+    {
+      "serviceAccountName": "loki",
+      "namespace": "default",
+      "automountToken": true,
+      "secrets": null,
+      "imagePullSecrets": null
+    },
+    {
+      "serviceAccountName": "loki-simple-scalable-minio-update-prometheus-secret",
+      "namespace": "default",
+      "automountToken": false,
+      "secrets": null,
+      "imagePullSecrets": null
+    },
+    {
+      "serviceAccountName": "loki-simple-scalable-minio",
+      "namespace": "default",
+      "automountToken": false,
+      "secrets": null,
+      "imagePullSecrets": null
+    }
+  ],
+  "serviceAccountPermissions": [
+    {
+      "serviceAccountName": "loki-simple-scalable-minio-update-prometheus-secret",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "loki-simple-scalable-minio-update-prometheus-secret",
+      "apiGroup": "",
+      "resource": "secrets",
+      "resourceName": "",
+      "verbs": [
+        "create"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "loki-simple-scalable-minio-update-prometheus-secret",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "loki-simple-scalable-minio-update-prometheus-secret",
+      "apiGroup": "",
+      "resource": "secrets",
+      "resourceName": "loki-simple-scalable-minio-prometheus",
+      "verbs": [
+        "create",
+        "get",
+        "patch",
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [
+        "ResourceNameRestricted"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "loki-simple-scalable-minio-update-prometheus-secret",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "loki-simple-scalable-minio-update-prometheus-secret",
+      "apiGroup": "monitoring.coreos.com",
+      "resource": "servicemonitors",
+      "resourceName": "loki-simple-scalable-minio",
+      "verbs": [
+        "get"
+      ],
+      "riskLevel": "Low",
+      "tags": [
+        "ResourceNameRestricted"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    }
+  ],
+  "serviceAccountWorkloads": [
+    {
+      "serviceAccountName": "loki",
+      "namespace": "default",
+      "workloadType": "Deployment",
+      "workloadName": "loki-gateway",
+      "containerName": "nginx",
+      "image": "docker.io/nginxinc/nginx-unprivileged:1.19-alpine"
+    },
+    {
+      "serviceAccountName": "loki",
+      "namespace": "default",
+      "workloadType": "StatefulSet",
+      "workloadName": "loki-write",
+      "containerName": "loki",
+      "image": "docker.io/grafana/loki:2.5.0"
+    },
+    {
+      "serviceAccountName": "loki",
+      "namespace": "default",
+      "workloadType": "StatefulSet",
+      "workloadName": "loki-read",
+      "containerName": "loki",
+      "image": "docker.io/grafana/loki:2.5.0"
+    },
+    {
+      "serviceAccountName": "loki-simple-scalable-minio",
+      "namespace": "default",
+      "workloadType": "Deployment",
+      "workloadName": "loki-simple-scalable-minio",
+      "containerName": "minio",
+      "image": "minio/minio:RELEASE.2020-12-03T05-49-24Z"
+    },
+    {
+      "serviceAccountName": "loki-simple-scalable-minio",
+      "namespace": "default",
+      "workloadType": "Job",
+      "workloadName": "loki-simple-scalable-minio-make-bucket-job",
+      "containerName": "minio-mc",
+      "image": "minio/mc:RELEASE.2020-11-25T23-04-07Z"
+    }
+  ]
+}

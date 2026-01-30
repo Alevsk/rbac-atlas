@@ -1,0 +1,124 @@
+{
+  "metadata": {
+    "version": "1.5.5",
+    "name": "gitea",
+    "source": "charts/gitea__gitea__1.5.5/",
+    "timestamp": 1769793491,
+    "extra": {
+      "helm": {
+        "description": "Gitea Helm chart for Kubernetes",
+        "home": "",
+        "icon": "https://docs.gitea.io/images/gitea.png",
+        "keywords": [
+          "git",
+          "issue tracker",
+          "code review",
+          "wiki",
+          "gitea",
+          "gogs"
+        ],
+        "kubeVersion": "",
+        "maintainers": [
+          {
+            "name": "Charlie Drage",
+            "email": "charlie@charliedrage.com"
+          },
+          {
+            "name": "Gitea Authors",
+            "email": "maintainers@gitea.io"
+          },
+          {
+            "name": "Konrad Lother",
+            "email": "konrad.lother@novum-rgi.de"
+          },
+          {
+            "name": "Lucas Hahn",
+            "email": "lucas.hahn@novum-rgi.de"
+          }
+        ],
+        "sources": [
+          "https://github.com/go-gitea/gitea",
+          "https://hub.docker.com/r/gitea/gitea/"
+        ]
+      }
+    }
+  },
+  "serviceAccountData": [
+    {
+      "serviceAccountName": "gitea-mysql",
+      "namespace": "default",
+      "automountToken": false,
+      "secrets": [
+        "gitea-mysql"
+      ],
+      "imagePullSecrets": null
+    }
+  ],
+  "serviceAccountPermissions": [],
+  "serviceAccountWorkloads": [
+    {
+      "serviceAccountName": "default",
+      "namespace": "default",
+      "workloadType": "StatefulSet",
+      "workloadName": "gitea-mariadb-master",
+      "containerName": "mariadb",
+      "image": "docker.io/bitnami/mariadb:10.3.24-debian-10-r17"
+    },
+    {
+      "serviceAccountName": "default",
+      "namespace": "default",
+      "workloadType": "StatefulSet",
+      "workloadName": "gitea-mariadb-slave",
+      "containerName": "mariadb",
+      "image": "docker.io/bitnami/mariadb:10.3.24-debian-10-r17"
+    },
+    {
+      "serviceAccountName": "",
+      "namespace": "default",
+      "workloadType": "StatefulSet",
+      "workloadName": "gitea-postgresql",
+      "containerName": "gitea-postgresql",
+      "image": "docker.io/bitnami/postgresql:11.9.0-debian-10-r34"
+    },
+    {
+      "serviceAccountName": "",
+      "namespace": "default",
+      "workloadType": "StatefulSet",
+      "workloadName": "gitea",
+      "containerName": "gitea",
+      "image": "gitea/gitea:1.12.5"
+    },
+    {
+      "serviceAccountName": "",
+      "namespace": "default",
+      "workloadType": "Pod",
+      "workloadName": "gitea-test-connection",
+      "containerName": "wget",
+      "image": "busybox"
+    },
+    {
+      "serviceAccountName": "",
+      "namespace": "default",
+      "workloadType": "Deployment",
+      "workloadName": "gitea-memcached",
+      "containerName": "memcached",
+      "image": "docker.io/bitnami/memcached:1.6.6-debian-10-r54"
+    },
+    {
+      "serviceAccountName": "gitea-mysql",
+      "namespace": "default",
+      "workloadType": "StatefulSet",
+      "workloadName": "gitea-mysql-master",
+      "containerName": "mysql",
+      "image": "docker.io/bitnami/mysql:8.0.21-debian-10-r46"
+    },
+    {
+      "serviceAccountName": "gitea-mysql",
+      "namespace": "default",
+      "workloadType": "StatefulSet",
+      "workloadName": "gitea-mysql-slave",
+      "containerName": "mysql",
+      "image": "docker.io/bitnami/mysql:8.0.21-debian-10-r46"
+    }
+  ]
+}

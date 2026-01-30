@@ -1,0 +1,71 @@
+{
+  "metadata": {
+    "version": "2.13.4",
+    "name": "gerrit-operator",
+    "source": "charts/epmdedp__gerrit-operator__2.13.4/",
+    "timestamp": 1769793465,
+    "extra": {
+      "helm": {
+        "description": "A Helm chart for EDP Gerrit Operator",
+        "home": "https://epam.github.io/edp-install/",
+        "icon": "https://epam.github.io/edp-install/assets/logo.png",
+        "keywords": [
+          "edp",
+          "gerrit",
+          "operator",
+          "git"
+        ],
+        "kubeVersion": "",
+        "maintainers": [
+          {
+            "name": "epmd-edp",
+            "email": "SupportEPMD-EDP@epam.com",
+            "url": "https://solutionshub.epam.com/solution/epam-delivery-platform"
+          },
+          {
+            "name": "sergk",
+            "url": "https://github.com/SergK"
+          }
+        ],
+        "sources": [
+          "https://github.com/epam/edp-gerrit-operator"
+        ]
+      }
+    }
+  },
+  "serviceAccountData": [
+    {
+      "serviceAccountName": "edp-gerrit-operator",
+      "namespace": "default",
+      "automountToken": false,
+      "secrets": null,
+      "imagePullSecrets": null
+    },
+    {
+      "serviceAccountName": "gerrit",
+      "namespace": "default",
+      "automountToken": false,
+      "secrets": null,
+      "imagePullSecrets": null
+    }
+  ],
+  "serviceAccountPermissions": [],
+  "serviceAccountWorkloads": [
+    {
+      "serviceAccountName": "gerrit",
+      "namespace": "default",
+      "workloadType": "Deployment",
+      "workloadName": "gerrit",
+      "containerName": "gerrit",
+      "image": "epamedp/edp-gerrit:3.6.2"
+    },
+    {
+      "serviceAccountName": "edp-gerrit-operator",
+      "namespace": "default",
+      "workloadType": "Deployment",
+      "workloadName": "gerrit-operator",
+      "containerName": "gerrit-operator",
+      "image": "epamedp/gerrit-operator:2.13.4"
+    }
+  ]
+}

@@ -3,7 +3,7 @@
     "version": "8.9.0",
     "name": "nextcloud",
     "source": "charts/nextcloud__nextcloud__8.9.0/",
-    "timestamp": 1769047137,
+    "timestamp": 1769794136,
     "extra": {
       "helm": {
         "description": "A file sharing server that puts the control and security of your own data back into your hands.",
@@ -48,7 +48,21 @@
   },
   "serviceAccountData": [
     {
+      "serviceAccountName": "nextcloud-redis-replica",
+      "namespace": "default",
+      "automountToken": false,
+      "secrets": null,
+      "imagePullSecrets": null
+    },
+    {
       "serviceAccountName": "nextcloud-redis-master",
+      "namespace": "default",
+      "automountToken": false,
+      "secrets": null,
+      "imagePullSecrets": null
+    },
+    {
+      "serviceAccountName": "nextcloud-postgresql",
       "namespace": "default",
       "automountToken": false,
       "secrets": null,
@@ -60,31 +74,17 @@
       "automountToken": false,
       "secrets": null,
       "imagePullSecrets": null
-    },
-    {
-      "serviceAccountName": "nextcloud-redis-replica",
-      "namespace": "default",
-      "automountToken": false,
-      "secrets": null,
-      "imagePullSecrets": null
-    },
-    {
-      "serviceAccountName": "nextcloud-postgresql",
-      "namespace": "default",
-      "automountToken": false,
-      "secrets": null,
-      "imagePullSecrets": null
     }
   ],
   "serviceAccountPermissions": [],
   "serviceAccountWorkloads": [
     {
-      "serviceAccountName": "nextcloud-postgresql",
+      "serviceAccountName": "nextcloud-mariadb",
       "namespace": "default",
       "workloadType": "StatefulSet",
-      "workloadName": "nextcloud-postgresql",
-      "containerName": "postgresql",
-      "image": "docker.io/bitnamilegacy/postgresql:17.5.0-debian-12-r3"
+      "workloadName": "nextcloud-mariadb",
+      "containerName": "mariadb",
+      "image": "docker.io/bitnamilegacy/mariadb:11.4.6-debian-12-r0"
     },
     {
       "serviceAccountName": "nextcloud-redis-master",
@@ -95,14 +95,6 @@
       "image": "docker.io/bitnamilegacy/redis:8.0.1-debian-12-r1"
     },
     {
-      "serviceAccountName": "default",
-      "namespace": "default",
-      "workloadType": "Deployment",
-      "workloadName": "nextcloud-collabora-online",
-      "containerName": "collabora-online",
-      "image": "collabora/code:25.04.7.2.1"
-    },
-    {
       "serviceAccountName": "nextcloud-redis-replica",
       "namespace": "default",
       "workloadType": "StatefulSet",
@@ -111,12 +103,20 @@
       "image": "docker.io/bitnamilegacy/redis:8.0.1-debian-12-r1"
     },
     {
-      "serviceAccountName": "nextcloud-mariadb",
+      "serviceAccountName": "nextcloud-postgresql",
       "namespace": "default",
       "workloadType": "StatefulSet",
-      "workloadName": "nextcloud-mariadb",
-      "containerName": "mariadb",
-      "image": "docker.io/bitnamilegacy/mariadb:11.4.6-debian-12-r0"
+      "workloadName": "nextcloud-postgresql",
+      "containerName": "postgresql",
+      "image": "docker.io/bitnamilegacy/postgresql:17.5.0-debian-12-r3"
+    },
+    {
+      "serviceAccountName": "default",
+      "namespace": "default",
+      "workloadType": "Deployment",
+      "workloadName": "nextcloud-collabora-online",
+      "containerName": "collabora-online",
+      "image": "collabora/code:25.04.7.2.1"
     },
     {
       "serviceAccountName": "",

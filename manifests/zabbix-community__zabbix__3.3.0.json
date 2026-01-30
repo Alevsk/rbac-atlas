@@ -1,0 +1,90 @@
+{
+  "metadata": {
+    "version": "3.3.0",
+    "name": "zabbix",
+    "source": "charts/zabbix-community__zabbix__3.3.0/",
+    "timestamp": 1769794546,
+    "extra": {
+      "helm": {
+        "description": "Zabbix is a mature and effortless enterprise-class open source monitoring solution for network monitoring and application monitoring of millions of metrics.",
+        "home": "https://www.zabbix.com",
+        "icon": "https://assets.zabbix.com/img/logo/zabbix_logo_500x131.png",
+        "keywords": [
+          "zabbix",
+          "monitoring",
+          "metrics",
+          "kubernetes",
+          "helm"
+        ],
+        "kubeVersion": "",
+        "maintainers": [
+          {
+            "name": "Aecio Pires",
+            "email": "aeciopires@gmail.com",
+            "url": "https://github.com/aeciopires"
+          },
+          {
+            "name": "Christian Anton",
+            "email": "christian.anton@secadm.de",
+            "url": "https://secadm.de"
+          }
+        ],
+        "sources": [
+          "https://github.com/zabbix-community/helm-zabbix"
+        ]
+      }
+    }
+  },
+  "serviceAccountData": [],
+  "serviceAccountPermissions": [],
+  "serviceAccountWorkloads": [
+    {
+      "serviceAccountName": "",
+      "namespace": "default",
+      "workloadType": "StatefulSet",
+      "workloadName": "zabbix-postgresql",
+      "containerName": "postgresql",
+      "image": "postgres:14"
+    },
+    {
+      "serviceAccountName": "",
+      "namespace": "default",
+      "workloadType": "Deployment",
+      "workloadName": "zabbix-zabbix-web",
+      "containerName": "zabbix-web",
+      "image": "zabbix/zabbix-web-nginx-pgsql:ubuntu-6.0.9"
+    },
+    {
+      "serviceAccountName": "",
+      "namespace": "default",
+      "workloadType": "Deployment",
+      "workloadName": "zabbix-zabbix-server",
+      "containerName": "zabbix-server",
+      "image": "zabbix/zabbix-server-pgsql:ubuntu-6.0.9"
+    },
+    {
+      "serviceAccountName": "",
+      "namespace": "default",
+      "workloadType": "Deployment",
+      "workloadName": "zabbix-zabbix-server",
+      "containerName": "zabbix-agent",
+      "image": "zabbix/zabbix-agent2:ubuntu-6.0.9"
+    },
+    {
+      "serviceAccountName": "",
+      "namespace": "default",
+      "workloadType": "Deployment",
+      "workloadName": "zabbix-zabbix-webservice",
+      "containerName": "zabbix-webservice",
+      "image": "zabbix/zabbix-web-service:ubuntu-6.0.9"
+    },
+    {
+      "serviceAccountName": "",
+      "namespace": "default",
+      "workloadType": "CronJob",
+      "workloadName": "zabbix-nodesclean",
+      "containerName": "hanodes-autoclean",
+      "image": "postgres:14"
+    }
+  ]
+}

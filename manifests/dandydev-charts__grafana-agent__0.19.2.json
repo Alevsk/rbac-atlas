@@ -3,7 +3,7 @@
     "version": "0.19.2",
     "name": "grafana-agent",
     "source": "charts/dandydev-charts__grafana-agent__0.19.2/",
-    "timestamp": 1769482630,
+    "timestamp": 1769793399,
     "extra": {
       "helm": {
         "description": "Deploy an instance of the Grafana agent on all appropriate nodes for scraping Prometheus metrics.",
@@ -31,28 +31,7 @@
   },
   "serviceAccountData": [
     {
-      "serviceAccountName": "grafana-agent-consul-gateway-resources",
-      "namespace": "default",
-      "automountToken": false,
-      "secrets": null,
-      "imagePullSecrets": null
-    },
-    {
-      "serviceAccountName": "grafana-agent-consul-gateway-cleanup",
-      "namespace": "default",
-      "automountToken": false,
-      "secrets": null,
-      "imagePullSecrets": null
-    },
-    {
       "serviceAccountName": "grafana-agent-consul-connect-injector",
-      "namespace": "default",
-      "automountToken": false,
-      "secrets": null,
-      "imagePullSecrets": null
-    },
-    {
-      "serviceAccountName": "grafana-agent-consul-webhook-cert-manager",
       "namespace": "default",
       "automountToken": false,
       "secrets": null,
@@ -66,7 +45,28 @@
       "imagePullSecrets": null
     },
     {
+      "serviceAccountName": "grafana-agent-consul-gateway-cleanup",
+      "namespace": "default",
+      "automountToken": false,
+      "secrets": null,
+      "imagePullSecrets": null
+    },
+    {
       "serviceAccountName": "grafana-agent-consul-server",
+      "namespace": "default",
+      "automountToken": false,
+      "secrets": null,
+      "imagePullSecrets": null
+    },
+    {
+      "serviceAccountName": "grafana-agent-consul-webhook-cert-manager",
+      "namespace": "default",
+      "automountToken": false,
+      "secrets": null,
+      "imagePullSecrets": null
+    },
+    {
+      "serviceAccountName": "grafana-agent-consul-gateway-resources",
       "namespace": "default",
       "automountToken": false,
       "secrets": null,
@@ -101,29 +101,6 @@
       "roleType": "ClusterRole",
       "roleName": "grafana-agent",
       "apiGroup": "",
-      "resource": "nodes",
-      "resourceName": "",
-      "verbs": [
-        "get",
-        "list",
-        "watch"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "grafana-agent",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "grafana-agent",
-      "apiGroup": "",
       "resource": "nodes/proxy",
       "resourceName": "",
       "verbs": [
@@ -133,12 +110,12 @@
       ],
       "riskLevel": "Critical",
       "tags": [
-        "CodeExecution",
         "LateralMovement",
         "ElevationOfPrivilege",
         "AuthorizationBypass",
         "NodeAccess",
-        "ClusterAdminAccess"
+        "ClusterAdminAccess",
+        "CodeExecution"
       ],
       "matchedRiskRules": [
         {
@@ -223,6 +200,142 @@
       ]
     },
     {
+      "serviceAccountName": "grafana-agent",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "grafana-agent",
+      "apiGroup": "",
+      "resource": "nodes",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "grafana-agent-consul-gateway-cleanup",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "grafana-agent-consul-gateway-cleanup",
+      "apiGroup": "consul.hashicorp.com",
+      "resource": "gatewayclassconfigs",
+      "resourceName": "",
+      "verbs": [
+        "delete",
+        "get"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "grafana-agent-consul-gateway-cleanup",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "grafana-agent-consul-gateway-cleanup",
+      "apiGroup": "gateway.networking.k8s.io",
+      "resource": "gatewayclasses",
+      "resourceName": "",
+      "verbs": [
+        "delete",
+        "get"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "grafana-agent-consul-gateway-resources",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "grafana-agent-consul-gateway-resources",
+      "apiGroup": "consul.hashicorp.com",
+      "resource": "gatewayclassconfigs",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "get",
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "grafana-agent-consul-gateway-resources",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "grafana-agent-consul-gateway-resources",
+      "apiGroup": "gateway.networking.k8s.io",
+      "resource": "gatewayclasses",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "get",
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "grafana-agent-consul-webhook-cert-manager",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "grafana-agent-consul-webhook-cert-manager",
+      "apiGroup": "apps",
+      "resource": "deployments",
+      "resourceName": "grafana-agent-consul-webhook-cert-manager",
+      "verbs": [
+        "get"
+      ],
+      "riskLevel": "Low",
+      "tags": [
+        "ResourceNameRestricted"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
       "serviceAccountName": "grafana-agent-consul-webhook-cert-manager",
       "namespace": "default",
       "roleType": "ClusterRole",
@@ -241,15 +354,15 @@
       ],
       "riskLevel": "Critical",
       "tags": [
-        "ClusterWideSecretAccess",
         "CredentialAccess",
-        "Tampering",
-        "PrivilegeEscalation",
-        "Persistence",
         "DataExposure",
         "InformationDisclosure",
         "SecretAccess",
-        "PotentialPrivilegeEscalation"
+        "PrivilegeEscalation",
+        "Persistence",
+        "PotentialPrivilegeEscalation",
+        "Tampering",
+        "ClusterWideSecretAccess"
       ],
       "matchedRiskRules": [
         {
@@ -337,1100 +450,6 @@
           "id": 1083,
           "name": "List ValidatingWebhookConfigurations (Reconnaissance)",
           "link": "https://rbac-atlas.github.io/rules/1083/"
-        },
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "grafana-agent-consul-webhook-cert-manager",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "grafana-agent-consul-webhook-cert-manager",
-      "apiGroup": "apps",
-      "resource": "deployments",
-      "resourceName": "grafana-agent-consul-webhook-cert-manager",
-      "verbs": [
-        "get"
-      ],
-      "riskLevel": "Low",
-      "tags": [
-        "ResourceNameRestricted"
-      ],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "grafana-agent-consul-connect-injector",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "grafana-agent-consul-connect-injector",
-      "apiGroup": "consul.hashicorp.com",
-      "resource": "terminatinggateways/status",
-      "resourceName": "",
-      "verbs": [
-        "get",
-        "patch",
-        "update"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "grafana-agent-consul-connect-injector",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "grafana-agent-consul-connect-injector",
-      "apiGroup": "consul.hashicorp.com",
-      "resource": "controlplanerequestlimits/status",
-      "resourceName": "",
-      "verbs": [
-        "get",
-        "patch",
-        "update"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "grafana-agent-consul-connect-injector",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "grafana-agent-consul-connect-injector",
-      "apiGroup": "consul.hashicorp.com",
-      "resource": "exportedservices",
-      "resourceName": "",
-      "verbs": [
-        "create",
-        "delete",
-        "get",
-        "list",
-        "patch",
-        "update",
-        "watch"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "grafana-agent-consul-connect-injector",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "grafana-agent-consul-connect-injector",
-      "apiGroup": "consul.hashicorp.com",
-      "resource": "gatewayclassconfigs",
-      "resourceName": "",
-      "verbs": [
-        "create",
-        "delete",
-        "get",
-        "list",
-        "patch",
-        "update",
-        "watch"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "grafana-agent-consul-connect-injector",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "grafana-agent-consul-connect-injector",
-      "apiGroup": "consul.hashicorp.com",
-      "resource": "proxydefaults/status",
-      "resourceName": "",
-      "verbs": [
-        "get",
-        "patch",
-        "update"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "grafana-agent-consul-connect-injector",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "grafana-agent-consul-connect-injector",
-      "apiGroup": "consul.hashicorp.com",
-      "resource": "routeauthfilters/status",
-      "resourceName": "",
-      "verbs": [
-        "get",
-        "patch",
-        "update"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "grafana-agent-consul-connect-injector",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "grafana-agent-consul-connect-injector",
-      "apiGroup": "consul.hashicorp.com",
-      "resource": "servicedefaults",
-      "resourceName": "",
-      "verbs": [
-        "create",
-        "delete",
-        "get",
-        "list",
-        "patch",
-        "update",
-        "watch"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "grafana-agent-consul-connect-injector",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "grafana-agent-consul-connect-injector",
-      "apiGroup": "consul.hashicorp.com",
-      "resource": "routeauthfilters",
-      "resourceName": "",
-      "verbs": [
-        "create",
-        "delete",
-        "get",
-        "list",
-        "patch",
-        "update",
-        "watch"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "grafana-agent-consul-connect-injector",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "grafana-agent-consul-connect-injector",
-      "apiGroup": "consul.hashicorp.com",
-      "resource": "meshes/status",
-      "resourceName": "",
-      "verbs": [
-        "get",
-        "patch",
-        "update"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "grafana-agent-consul-connect-injector",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "grafana-agent-consul-connect-injector",
-      "apiGroup": "consul.hashicorp.com",
-      "resource": "exportedservices/status",
-      "resourceName": "",
-      "verbs": [
-        "get",
-        "patch",
-        "update"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "grafana-agent-consul-connect-injector",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "grafana-agent-consul-connect-injector",
-      "apiGroup": "consul.hashicorp.com",
-      "resource": "serviceintentions/status",
-      "resourceName": "",
-      "verbs": [
-        "get",
-        "patch",
-        "update"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "grafana-agent-consul-connect-injector",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "grafana-agent-consul-connect-injector",
-      "apiGroup": "consul.hashicorp.com",
-      "resource": "servicedefaults/status",
-      "resourceName": "",
-      "verbs": [
-        "get",
-        "patch",
-        "update"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "grafana-agent-consul-connect-injector",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "grafana-agent-consul-connect-injector",
-      "apiGroup": "consul.hashicorp.com",
-      "resource": "servicesplitters/status",
-      "resourceName": "",
-      "verbs": [
-        "get",
-        "patch",
-        "update"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "grafana-agent-consul-connect-injector",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "grafana-agent-consul-connect-injector",
-      "apiGroup": "consul.hashicorp.com",
-      "resource": "servicesplitters",
-      "resourceName": "",
-      "verbs": [
-        "create",
-        "delete",
-        "get",
-        "list",
-        "patch",
-        "update",
-        "watch"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "grafana-agent-consul-connect-injector",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "grafana-agent-consul-connect-injector",
-      "apiGroup": "consul.hashicorp.com",
-      "resource": "gatewaypolicies",
-      "resourceName": "",
-      "verbs": [
-        "create",
-        "delete",
-        "get",
-        "list",
-        "patch",
-        "update",
-        "watch"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "grafana-agent-consul-connect-injector",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "grafana-agent-consul-connect-injector",
-      "apiGroup": "consul.hashicorp.com",
-      "resource": "serviceresolvers/status",
-      "resourceName": "",
-      "verbs": [
-        "get",
-        "patch",
-        "update"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "grafana-agent-consul-connect-injector",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "grafana-agent-consul-connect-injector",
-      "apiGroup": "consul.hashicorp.com",
-      "resource": "servicerouters/status",
-      "resourceName": "",
-      "verbs": [
-        "get",
-        "patch",
-        "update"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "grafana-agent-consul-connect-injector",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "grafana-agent-consul-connect-injector",
-      "apiGroup": "consul.hashicorp.com",
-      "resource": "samenessgroups/status",
-      "resourceName": "",
-      "verbs": [
-        "get",
-        "patch",
-        "update"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "grafana-agent-consul-connect-injector",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "grafana-agent-consul-connect-injector",
-      "apiGroup": "consul.hashicorp.com",
-      "resource": "jwtproviders/status",
-      "resourceName": "",
-      "verbs": [
-        "get",
-        "patch",
-        "update"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "grafana-agent-consul-connect-injector",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "grafana-agent-consul-connect-injector",
-      "apiGroup": "consul.hashicorp.com",
-      "resource": "gatewaypolicies/status",
-      "resourceName": "",
-      "verbs": [
-        "get",
-        "patch",
-        "update"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "grafana-agent-consul-connect-injector",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "grafana-agent-consul-connect-injector",
-      "apiGroup": "consul.hashicorp.com",
-      "resource": "controlplanerequestlimits",
-      "resourceName": "",
-      "verbs": [
-        "create",
-        "delete",
-        "get",
-        "list",
-        "patch",
-        "update",
-        "watch"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "grafana-agent-consul-connect-injector",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "grafana-agent-consul-connect-injector",
-      "apiGroup": "consul.hashicorp.com",
-      "resource": "routetimeoutfilters",
-      "resourceName": "",
-      "verbs": [
-        "create",
-        "delete",
-        "get",
-        "list",
-        "patch",
-        "update",
-        "watch"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "grafana-agent-consul-connect-injector",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "grafana-agent-consul-connect-injector",
-      "apiGroup": "consul.hashicorp.com",
-      "resource": "meshes",
-      "resourceName": "",
-      "verbs": [
-        "create",
-        "delete",
-        "get",
-        "list",
-        "patch",
-        "update",
-        "watch"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "grafana-agent-consul-connect-injector",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "grafana-agent-consul-connect-injector",
-      "apiGroup": "consul.hashicorp.com",
-      "resource": "terminatinggateways",
-      "resourceName": "",
-      "verbs": [
-        "create",
-        "delete",
-        "get",
-        "list",
-        "patch",
-        "update",
-        "watch"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "grafana-agent-consul-connect-injector",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "grafana-agent-consul-connect-injector",
-      "apiGroup": "consul.hashicorp.com",
-      "resource": "proxydefaults",
-      "resourceName": "",
-      "verbs": [
-        "create",
-        "delete",
-        "get",
-        "list",
-        "patch",
-        "update",
-        "watch"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "grafana-agent-consul-connect-injector",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "grafana-agent-consul-connect-injector",
-      "apiGroup": "consul.hashicorp.com",
-      "resource": "servicerouters",
-      "resourceName": "",
-      "verbs": [
-        "create",
-        "delete",
-        "get",
-        "list",
-        "patch",
-        "update",
-        "watch"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "grafana-agent-consul-connect-injector",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "grafana-agent-consul-connect-injector",
-      "apiGroup": "consul.hashicorp.com",
-      "resource": "serviceintentions",
-      "resourceName": "",
-      "verbs": [
-        "create",
-        "delete",
-        "get",
-        "list",
-        "patch",
-        "update",
-        "watch"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "grafana-agent-consul-connect-injector",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "grafana-agent-consul-connect-injector",
-      "apiGroup": "consul.hashicorp.com",
-      "resource": "samenessgroups",
-      "resourceName": "",
-      "verbs": [
-        "create",
-        "delete",
-        "get",
-        "list",
-        "patch",
-        "update",
-        "watch"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "grafana-agent-consul-connect-injector",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "grafana-agent-consul-connect-injector",
-      "apiGroup": "consul.hashicorp.com",
-      "resource": "jwtproviders",
-      "resourceName": "",
-      "verbs": [
-        "create",
-        "delete",
-        "get",
-        "list",
-        "patch",
-        "update",
-        "watch"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "grafana-agent-consul-connect-injector",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "grafana-agent-consul-connect-injector",
-      "apiGroup": "consul.hashicorp.com",
-      "resource": "ingressgateways/status",
-      "resourceName": "",
-      "verbs": [
-        "get",
-        "patch",
-        "update"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "grafana-agent-consul-connect-injector",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "grafana-agent-consul-connect-injector",
-      "apiGroup": "consul.hashicorp.com",
-      "resource": "serviceresolvers",
-      "resourceName": "",
-      "verbs": [
-        "create",
-        "delete",
-        "get",
-        "list",
-        "patch",
-        "update",
-        "watch"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "grafana-agent-consul-connect-injector",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "grafana-agent-consul-connect-injector",
-      "apiGroup": "consul.hashicorp.com",
-      "resource": "ingressgateways",
-      "resourceName": "",
-      "verbs": [
-        "create",
-        "delete",
-        "get",
-        "list",
-        "patch",
-        "update",
-        "watch"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "grafana-agent-consul-connect-injector",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "grafana-agent-consul-connect-injector",
-      "apiGroup": "consul.hashicorp.com",
-      "resource": "meshservices",
-      "resourceName": "",
-      "verbs": [
-        "create",
-        "delete",
-        "get",
-        "list",
-        "patch",
-        "update",
-        "watch"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "grafana-agent-consul-connect-injector",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "grafana-agent-consul-connect-injector",
-      "apiGroup": "consul.hashicorp.com",
-      "resource": "routeretryfilters",
-      "resourceName": "",
-      "verbs": [
-        "create",
-        "delete",
-        "get",
-        "list",
-        "patch",
-        "update",
-        "watch"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "grafana-agent-consul-connect-injector",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "grafana-agent-consul-connect-injector",
-      "apiGroup": "",
-      "resource": "serviceaccounts",
-      "resourceName": "",
-      "verbs": [
-        "create",
-        "delete",
-        "get",
-        "list",
-        "update",
-        "watch"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "grafana-agent-consul-connect-injector",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "grafana-agent-consul-connect-injector",
-      "apiGroup": "",
-      "resource": "endpoints",
-      "resourceName": "",
-      "verbs": [
-        "create",
-        "delete",
-        "get",
-        "list",
-        "update",
-        "watch"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "grafana-agent-consul-connect-injector",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "grafana-agent-consul-connect-injector",
-      "apiGroup": "",
-      "resource": "services",
-      "resourceName": "",
-      "verbs": [
-        "create",
-        "delete",
-        "get",
-        "list",
-        "update",
-        "watch"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "grafana-agent-consul-connect-injector",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "grafana-agent-consul-connect-injector",
-      "apiGroup": "",
-      "resource": "namespaces",
-      "resourceName": "",
-      "verbs": [
-        "create",
-        "delete",
-        "get",
-        "list",
-        "update",
-        "watch"
-      ],
-      "riskLevel": "High",
-      "tags": [
-        "DenialOfService",
-        "InformationDisclosure",
-        "Reconnaissance",
-        "ClusterStructure",
-        "NamespaceLifecycle",
-        "ResourceDeletion"
-      ],
-      "matchedRiskRules": [
-        {
-          "id": 1026,
-          "name": "Delete namespaces",
-          "link": "https://rbac-atlas.github.io/rules/1026/"
-        },
-        {
-          "id": 1082,
-          "name": "List Namespaces (Cluster Reconnaissance)",
-          "link": "https://rbac-atlas.github.io/rules/1082/"
-        },
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "grafana-agent-consul-connect-injector",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "grafana-agent-consul-connect-injector",
-      "apiGroup": "",
-      "resource": "nodes",
-      "resourceName": "",
-      "verbs": [
-        "create",
-        "delete",
-        "get",
-        "list",
-        "update",
-        "watch"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "grafana-agent-consul-connect-injector",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "grafana-agent-consul-connect-injector",
-      "apiGroup": "",
-      "resource": "pods",
-      "resourceName": "",
-      "verbs": [
-        "get",
-        "list",
-        "update",
-        "watch"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "grafana-agent-consul-connect-injector",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "grafana-agent-consul-connect-injector",
-      "apiGroup": "",
-      "resource": "secrets",
-      "resourceName": "",
-      "verbs": [
-        "create",
-        "delete",
-        "get",
-        "list",
-        "update",
-        "watch"
-      ],
-      "riskLevel": "Critical",
-      "tags": [
-        "ClusterWideSecretAccess",
-        "CredentialAccess",
-        "DataExposure",
-        "InformationDisclosure",
-        "SecretAccess"
-      ],
-      "matchedRiskRules": [
-        {
-          "id": 1010,
-          "name": "Read secrets cluster-wide",
-          "link": "https://rbac-atlas.github.io/rules/1010/"
-        },
-        {
-          "id": 1011,
-          "name": "Read secrets in a namespace",
-          "link": "https://rbac-atlas.github.io/rules/1011/"
         },
         {
           "id": 9996,
@@ -1570,60 +589,6 @@
       "roleType": "ClusterRole",
       "roleName": "grafana-agent-consul-connect-injector",
       "apiGroup": "gateway.networking.k8s.io",
-      "resource": "gatewayclasses",
-      "resourceName": "",
-      "verbs": [
-        "create",
-        "delete",
-        "get",
-        "list",
-        "patch",
-        "update",
-        "watch"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "grafana-agent-consul-connect-injector",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "grafana-agent-consul-connect-injector",
-      "apiGroup": "gateway.networking.k8s.io",
-      "resource": "gateways",
-      "resourceName": "",
-      "verbs": [
-        "create",
-        "delete",
-        "get",
-        "list",
-        "patch",
-        "update",
-        "watch"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "grafana-agent-consul-connect-injector",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "grafana-agent-consul-connect-injector",
-      "apiGroup": "gateway.networking.k8s.io",
       "resource": "httproutes",
       "resourceName": "",
       "verbs": [
@@ -1679,6 +644,27 @@
       "roleName": "grafana-agent-consul-connect-injector",
       "apiGroup": "gateway.networking.k8s.io",
       "resource": "gatewayclasses/finalizers",
+      "resourceName": "",
+      "verbs": [
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "grafana-agent-consul-connect-injector",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "grafana-agent-consul-connect-injector",
+      "apiGroup": "gateway.networking.k8s.io",
+      "resource": "gateways/finalizers",
       "resourceName": "",
       "verbs": [
         "update"
@@ -1764,7 +750,30 @@
       "roleType": "ClusterRole",
       "roleName": "grafana-agent-consul-connect-injector",
       "apiGroup": "gateway.networking.k8s.io",
-      "resource": "tcproutes",
+      "resource": "gateways/status",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "patch",
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "grafana-agent-consul-connect-injector",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "grafana-agent-consul-connect-injector",
+      "apiGroup": "gateway.networking.k8s.io",
+      "resource": "gatewayclasses",
       "resourceName": "",
       "verbs": [
         "create",
@@ -1791,10 +800,16 @@
       "roleType": "ClusterRole",
       "roleName": "grafana-agent-consul-connect-injector",
       "apiGroup": "gateway.networking.k8s.io",
-      "resource": "gateways/finalizers",
+      "resource": "gateways",
       "resourceName": "",
       "verbs": [
-        "update"
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
       ],
       "riskLevel": "Low",
       "tags": [],
@@ -1812,12 +827,16 @@
       "roleType": "ClusterRole",
       "roleName": "grafana-agent-consul-connect-injector",
       "apiGroup": "gateway.networking.k8s.io",
-      "resource": "gateways/status",
+      "resource": "tcproutes",
       "resourceName": "",
       "verbs": [
+        "create",
+        "delete",
         "get",
+        "list",
         "patch",
-        "update"
+        "update",
+        "watch"
       ],
       "riskLevel": "Low",
       "tags": [],
@@ -1926,6 +945,1077 @@
     {
       "serviceAccountName": "grafana-agent-consul-connect-injector",
       "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "grafana-agent-consul-connect-injector",
+      "apiGroup": "consul.hashicorp.com",
+      "resource": "proxydefaults/status",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "patch",
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "grafana-agent-consul-connect-injector",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "grafana-agent-consul-connect-injector",
+      "apiGroup": "consul.hashicorp.com",
+      "resource": "servicesplitters/status",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "patch",
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "grafana-agent-consul-connect-injector",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "grafana-agent-consul-connect-injector",
+      "apiGroup": "consul.hashicorp.com",
+      "resource": "serviceresolvers",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "grafana-agent-consul-connect-injector",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "grafana-agent-consul-connect-injector",
+      "apiGroup": "consul.hashicorp.com",
+      "resource": "ingressgateways",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "grafana-agent-consul-connect-injector",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "grafana-agent-consul-connect-injector",
+      "apiGroup": "consul.hashicorp.com",
+      "resource": "meshservices",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "grafana-agent-consul-connect-injector",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "grafana-agent-consul-connect-injector",
+      "apiGroup": "consul.hashicorp.com",
+      "resource": "samenessgroups/status",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "patch",
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "grafana-agent-consul-connect-injector",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "grafana-agent-consul-connect-injector",
+      "apiGroup": "consul.hashicorp.com",
+      "resource": "jwtproviders/status",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "patch",
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "grafana-agent-consul-connect-injector",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "grafana-agent-consul-connect-injector",
+      "apiGroup": "consul.hashicorp.com",
+      "resource": "serviceintentions",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "grafana-agent-consul-connect-injector",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "grafana-agent-consul-connect-injector",
+      "apiGroup": "consul.hashicorp.com",
+      "resource": "jwtproviders",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "grafana-agent-consul-connect-injector",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "grafana-agent-consul-connect-injector",
+      "apiGroup": "consul.hashicorp.com",
+      "resource": "ingressgateways/status",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "patch",
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "grafana-agent-consul-connect-injector",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "grafana-agent-consul-connect-injector",
+      "apiGroup": "consul.hashicorp.com",
+      "resource": "serviceresolvers/status",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "patch",
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "grafana-agent-consul-connect-injector",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "grafana-agent-consul-connect-injector",
+      "apiGroup": "consul.hashicorp.com",
+      "resource": "gatewaypolicies/status",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "patch",
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "grafana-agent-consul-connect-injector",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "grafana-agent-consul-connect-injector",
+      "apiGroup": "consul.hashicorp.com",
+      "resource": "gatewayclassconfigs",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "grafana-agent-consul-connect-injector",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "grafana-agent-consul-connect-injector",
+      "apiGroup": "consul.hashicorp.com",
+      "resource": "samenessgroups",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "grafana-agent-consul-connect-injector",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "grafana-agent-consul-connect-injector",
+      "apiGroup": "consul.hashicorp.com",
+      "resource": "exportedservices/status",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "patch",
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "grafana-agent-consul-connect-injector",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "grafana-agent-consul-connect-injector",
+      "apiGroup": "consul.hashicorp.com",
+      "resource": "servicerouters/status",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "patch",
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "grafana-agent-consul-connect-injector",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "grafana-agent-consul-connect-injector",
+      "apiGroup": "consul.hashicorp.com",
+      "resource": "terminatinggateways/status",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "patch",
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "grafana-agent-consul-connect-injector",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "grafana-agent-consul-connect-injector",
+      "apiGroup": "consul.hashicorp.com",
+      "resource": "servicedefaults",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "grafana-agent-consul-connect-injector",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "grafana-agent-consul-connect-injector",
+      "apiGroup": "consul.hashicorp.com",
+      "resource": "proxydefaults",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "grafana-agent-consul-connect-injector",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "grafana-agent-consul-connect-injector",
+      "apiGroup": "consul.hashicorp.com",
+      "resource": "servicerouters",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "grafana-agent-consul-connect-injector",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "grafana-agent-consul-connect-injector",
+      "apiGroup": "consul.hashicorp.com",
+      "resource": "routetimeoutfilters",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "grafana-agent-consul-connect-injector",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "grafana-agent-consul-connect-injector",
+      "apiGroup": "consul.hashicorp.com",
+      "resource": "servicedefaults/status",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "patch",
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "grafana-agent-consul-connect-injector",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "grafana-agent-consul-connect-injector",
+      "apiGroup": "consul.hashicorp.com",
+      "resource": "controlplanerequestlimits/status",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "patch",
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "grafana-agent-consul-connect-injector",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "grafana-agent-consul-connect-injector",
+      "apiGroup": "consul.hashicorp.com",
+      "resource": "meshes",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "grafana-agent-consul-connect-injector",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "grafana-agent-consul-connect-injector",
+      "apiGroup": "consul.hashicorp.com",
+      "resource": "terminatinggateways",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "grafana-agent-consul-connect-injector",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "grafana-agent-consul-connect-injector",
+      "apiGroup": "consul.hashicorp.com",
+      "resource": "controlplanerequestlimits",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "grafana-agent-consul-connect-injector",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "grafana-agent-consul-connect-injector",
+      "apiGroup": "consul.hashicorp.com",
+      "resource": "meshes/status",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "patch",
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "grafana-agent-consul-connect-injector",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "grafana-agent-consul-connect-injector",
+      "apiGroup": "consul.hashicorp.com",
+      "resource": "routeauthfilters/status",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "patch",
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "grafana-agent-consul-connect-injector",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "grafana-agent-consul-connect-injector",
+      "apiGroup": "consul.hashicorp.com",
+      "resource": "exportedservices",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "grafana-agent-consul-connect-injector",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "grafana-agent-consul-connect-injector",
+      "apiGroup": "consul.hashicorp.com",
+      "resource": "servicesplitters",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "grafana-agent-consul-connect-injector",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "grafana-agent-consul-connect-injector",
+      "apiGroup": "consul.hashicorp.com",
+      "resource": "routeretryfilters",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "grafana-agent-consul-connect-injector",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "grafana-agent-consul-connect-injector",
+      "apiGroup": "consul.hashicorp.com",
+      "resource": "routeauthfilters",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "grafana-agent-consul-connect-injector",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "grafana-agent-consul-connect-injector",
+      "apiGroup": "consul.hashicorp.com",
+      "resource": "serviceintentions/status",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "patch",
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "grafana-agent-consul-connect-injector",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "grafana-agent-consul-connect-injector",
+      "apiGroup": "consul.hashicorp.com",
+      "resource": "gatewaypolicies",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "grafana-agent-consul-connect-injector",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "grafana-agent-consul-connect-injector",
+      "apiGroup": "",
+      "resource": "serviceaccounts",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "grafana-agent-consul-connect-injector",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "grafana-agent-consul-connect-injector",
+      "apiGroup": "",
+      "resource": "endpoints",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "grafana-agent-consul-connect-injector",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "grafana-agent-consul-connect-injector",
+      "apiGroup": "",
+      "resource": "services",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "grafana-agent-consul-connect-injector",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "grafana-agent-consul-connect-injector",
+      "apiGroup": "",
+      "resource": "namespaces",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "ClusterStructure",
+        "NamespaceLifecycle",
+        "ResourceDeletion",
+        "DenialOfService",
+        "InformationDisclosure",
+        "Reconnaissance"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1026,
+          "name": "Delete namespaces",
+          "link": "https://rbac-atlas.github.io/rules/1026/"
+        },
+        {
+          "id": 1082,
+          "name": "List Namespaces (Cluster Reconnaissance)",
+          "link": "https://rbac-atlas.github.io/rules/1082/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "grafana-agent-consul-connect-injector",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "grafana-agent-consul-connect-injector",
+      "apiGroup": "",
+      "resource": "nodes",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "grafana-agent-consul-connect-injector",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "grafana-agent-consul-connect-injector",
+      "apiGroup": "",
+      "resource": "pods",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "grafana-agent-consul-connect-injector",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "grafana-agent-consul-connect-injector",
+      "apiGroup": "",
+      "resource": "secrets",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "ClusterWideSecretAccess",
+        "CredentialAccess",
+        "DataExposure",
+        "InformationDisclosure",
+        "SecretAccess"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1010,
+          "name": "Read secrets cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1010/"
+        },
+        {
+          "id": 1011,
+          "name": "Read secrets in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1011/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "grafana-agent-consul-connect-injector",
+      "namespace": "default",
       "roleType": "Role",
       "roleName": "grafana-agent-consul-connect-inject-leader-election",
       "apiGroup": "",
@@ -2010,99 +2100,17 @@
           "link": "https://rbac-atlas.github.io/rules/9996/"
         }
       ]
-    },
-    {
-      "serviceAccountName": "grafana-agent-consul-gateway-resources",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "grafana-agent-consul-gateway-resources",
-      "apiGroup": "consul.hashicorp.com",
-      "resource": "gatewayclassconfigs",
-      "resourceName": "",
-      "verbs": [
-        "create",
-        "get",
-        "update"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "grafana-agent-consul-gateway-resources",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "grafana-agent-consul-gateway-resources",
-      "apiGroup": "gateway.networking.k8s.io",
-      "resource": "gatewayclasses",
-      "resourceName": "",
-      "verbs": [
-        "create",
-        "get",
-        "update"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "grafana-agent-consul-gateway-cleanup",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "grafana-agent-consul-gateway-cleanup",
-      "apiGroup": "consul.hashicorp.com",
-      "resource": "gatewayclassconfigs",
-      "resourceName": "",
-      "verbs": [
-        "delete",
-        "get"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "grafana-agent-consul-gateway-cleanup",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "grafana-agent-consul-gateway-cleanup",
-      "apiGroup": "gateway.networking.k8s.io",
-      "resource": "gatewayclasses",
-      "resourceName": "",
-      "verbs": [
-        "delete",
-        "get"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
     }
   ],
   "serviceAccountWorkloads": [
+    {
+      "serviceAccountName": "grafana-agent-consul-connect-injector",
+      "namespace": "default",
+      "workloadType": "Deployment",
+      "workloadName": "grafana-agent-consul-connect-injector",
+      "containerName": "sidecar-injector",
+      "image": "hashicorp/consul-k8s-control-plane:1.3.2"
+    },
     {
       "serviceAccountName": "",
       "namespace": "default",
@@ -2128,12 +2136,12 @@
       "image": "hashicorp/consul-k8s-control-plane:1.3.2"
     },
     {
-      "serviceAccountName": "grafana-agent-consul-server",
+      "serviceAccountName": "grafana-agent-consul-gateway-cleanup",
       "namespace": "default",
-      "workloadType": "StatefulSet",
-      "workloadName": "grafana-agent-consul-server",
-      "containerName": "consul",
-      "image": "hashicorp/consul:1.17.2"
+      "workloadType": "Job",
+      "workloadName": "grafana-agent-consul-gateway-cleanup",
+      "containerName": "gateway-cleanup",
+      "image": "hashicorp/consul-k8s-control-plane:1.3.2"
     },
     {
       "serviceAccountName": "grafana-agent",
@@ -2144,14 +2152,6 @@
       "image": "grafana/agent:v0.20.0"
     },
     {
-      "serviceAccountName": "grafana-agent-consul-connect-injector",
-      "namespace": "default",
-      "workloadType": "Deployment",
-      "workloadName": "grafana-agent-consul-connect-injector",
-      "containerName": "sidecar-injector",
-      "image": "hashicorp/consul-k8s-control-plane:1.3.2"
-    },
-    {
       "serviceAccountName": "grafana-agent-consul-gateway-resources",
       "namespace": "default",
       "workloadType": "Job",
@@ -2160,12 +2160,12 @@
       "image": "hashicorp/consul-k8s-control-plane:1.3.2"
     },
     {
-      "serviceAccountName": "grafana-agent-consul-gateway-cleanup",
+      "serviceAccountName": "grafana-agent-consul-server",
       "namespace": "default",
-      "workloadType": "Job",
-      "workloadName": "grafana-agent-consul-gateway-cleanup",
-      "containerName": "gateway-cleanup",
-      "image": "hashicorp/consul-k8s-control-plane:1.3.2"
+      "workloadType": "StatefulSet",
+      "workloadName": "grafana-agent-consul-server",
+      "containerName": "consul",
+      "image": "hashicorp/consul:1.17.2"
     }
   ]
 }

@@ -1,0 +1,70 @@
+{
+  "metadata": {
+    "version": "19.0.6",
+    "name": "wordpress",
+    "source": "charts/bitnami__wordpress__19.0.6/",
+    "timestamp": 1769793356,
+    "extra": {
+      "helm": {
+        "description": "WordPress is the world's most popular blogging and content management platform. Powerful yet simple, everyone from students to global corporations use it to build beautiful, functional websites.",
+        "home": "https://bitnami.com",
+        "icon": "https://bitnami.com/assets/stacks/wordpress/img/wordpress-stack-220x234.png",
+        "keywords": [
+          "application",
+          "blog",
+          "cms",
+          "http",
+          "php",
+          "web",
+          "wordpress"
+        ],
+        "kubeVersion": "",
+        "maintainers": [
+          {
+            "name": "VMware, Inc.",
+            "url": "https://github.com/bitnami/charts"
+          }
+        ],
+        "sources": [
+          "https://github.com/bitnami/charts/tree/main/bitnami/wordpress"
+        ]
+      }
+    }
+  },
+  "serviceAccountData": [
+    {
+      "serviceAccountName": "wordpress-mariadb",
+      "namespace": "default",
+      "automountToken": false,
+      "secrets": null,
+      "imagePullSecrets": null
+    }
+  ],
+  "serviceAccountPermissions": [],
+  "serviceAccountWorkloads": [
+    {
+      "serviceAccountName": "default",
+      "namespace": "default",
+      "workloadType": "Deployment",
+      "workloadName": "wordpress",
+      "containerName": "wordpress",
+      "image": "docker.io/bitnami/wordpress:6.4.2-debian-11-r13"
+    },
+    {
+      "serviceAccountName": "default",
+      "namespace": "default",
+      "workloadType": "Deployment",
+      "workloadName": "wordpress-memcached",
+      "containerName": "memcached",
+      "image": "docker.io/bitnami/memcached:1.6.23-debian-11-r0"
+    },
+    {
+      "serviceAccountName": "wordpress-mariadb",
+      "namespace": "default",
+      "workloadType": "StatefulSet",
+      "workloadName": "wordpress-mariadb",
+      "containerName": "mariadb",
+      "image": "docker.io/bitnami/mariadb:11.2.2-debian-11-r1"
+    }
+  ]
+}

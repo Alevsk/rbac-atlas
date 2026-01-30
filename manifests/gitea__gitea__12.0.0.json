@@ -1,0 +1,144 @@
+{
+  "metadata": {
+    "version": "12.0.0",
+    "name": "gitea",
+    "source": "charts/gitea__gitea__12.0.0/",
+    "timestamp": 1769798057,
+    "extra": {
+      "helm": {
+        "description": "Gitea Helm chart for Kubernetes",
+        "home": "",
+        "icon": "https://gitea.com/assets/img/logo.svg",
+        "keywords": [
+          "git",
+          "issue tracker",
+          "code review",
+          "wiki",
+          "gitea",
+          "gogs"
+        ],
+        "kubeVersion": "",
+        "maintainers": [
+          {
+            "name": "Charlie Drage",
+            "email": "charlie@charliedrage.com"
+          },
+          {
+            "name": "Gitea Authors",
+            "email": "maintainers@gitea.io"
+          },
+          {
+            "name": "Konrad Lother",
+            "email": "konrad.lother@novum-rgi.de"
+          },
+          {
+            "name": "Lucas Hahn",
+            "email": "lucas.hahn@novum-rgi.de"
+          },
+          {
+            "name": "Steven Kriegler",
+            "email": "sk.bunsenbrenner@gmail.com"
+          },
+          {
+            "name": "Patrick Schratz",
+            "email": "patrick.schratz@gmail.com"
+          }
+        ],
+        "sources": [
+          "https://gitea.com/gitea/helm-gitea",
+          "https://github.com/go-gitea/gitea",
+          "https://docker.gitea.com/gitea"
+        ]
+      }
+    }
+  },
+  "serviceAccountData": [
+    {
+      "serviceAccountName": "gitea-valkey-cluster",
+      "namespace": "default",
+      "automountToken": false,
+      "secrets": null,
+      "imagePullSecrets": null
+    },
+    {
+      "serviceAccountName": "gitea-postgresql-ha",
+      "namespace": "default",
+      "automountToken": false,
+      "secrets": null,
+      "imagePullSecrets": null
+    },
+    {
+      "serviceAccountName": "gitea-valkey-primary",
+      "namespace": "default",
+      "automountToken": false,
+      "secrets": null,
+      "imagePullSecrets": null
+    },
+    {
+      "serviceAccountName": "gitea-postgresql",
+      "namespace": "default",
+      "automountToken": false,
+      "secrets": null,
+      "imagePullSecrets": null
+    }
+  ],
+  "serviceAccountPermissions": [],
+  "serviceAccountWorkloads": [
+    {
+      "serviceAccountName": "",
+      "namespace": "default",
+      "workloadType": "Deployment",
+      "workloadName": "gitea",
+      "containerName": "gitea",
+      "image": "docker.gitea.com/gitea:1.23.8-rootless"
+    },
+    {
+      "serviceAccountName": "",
+      "namespace": "default",
+      "workloadType": "Pod",
+      "workloadName": "gitea-test-connection",
+      "containerName": "wget",
+      "image": "busybox:latest"
+    },
+    {
+      "serviceAccountName": "gitea-valkey-cluster",
+      "namespace": "default",
+      "workloadType": "StatefulSet",
+      "workloadName": "gitea-valkey-cluster",
+      "containerName": "gitea-valkey-cluster",
+      "image": "docker.io/bitnami/valkey-cluster:8.1.1-debian-12-r0"
+    },
+    {
+      "serviceAccountName": "gitea-postgresql-ha",
+      "namespace": "default",
+      "workloadType": "StatefulSet",
+      "workloadName": "gitea-postgresql-ha-postgresql",
+      "containerName": "postgresql",
+      "image": "docker.io/bitnami/postgresql-repmgr:17.5.0-debian-12-r1"
+    },
+    {
+      "serviceAccountName": "gitea-postgresql-ha",
+      "namespace": "default",
+      "workloadType": "Deployment",
+      "workloadName": "gitea-postgresql-ha-pgpool",
+      "containerName": "pgpool",
+      "image": "docker.io/bitnami/pgpool:4.6.0-debian-12-r8"
+    },
+    {
+      "serviceAccountName": "gitea-valkey-primary",
+      "namespace": "default",
+      "workloadType": "StatefulSet",
+      "workloadName": "gitea-valkey-primary",
+      "containerName": "valkey",
+      "image": "docker.io/bitnami/valkey:8.1.1-debian-12-r0"
+    },
+    {
+      "serviceAccountName": "gitea-postgresql",
+      "namespace": "default",
+      "workloadType": "StatefulSet",
+      "workloadName": "gitea-postgresql",
+      "containerName": "postgresql",
+      "image": "docker.io/bitnami/postgresql:17.5.0-debian-12-r2"
+    }
+  ]
+}

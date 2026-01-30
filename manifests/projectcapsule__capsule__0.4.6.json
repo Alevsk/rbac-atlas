@@ -1,0 +1,130 @@
+{
+  "metadata": {
+    "version": "0.4.6",
+    "name": "capsule",
+    "source": "charts/projectcapsule__capsule__0.4.6/",
+    "timestamp": 1769794187,
+    "extra": {
+      "helm": {
+        "description": "A Helm chart to deploy the Capsule Operator for easily implementing, managing, and maintaining mutitenancy and access control in Kubernetes.",
+        "home": "https://github.com/projectcapsule/capsule",
+        "icon": "https://github.com/projectcapsule/capsule/raw/master/assets/logo/capsule_small.png",
+        "keywords": [
+          "kubernetes",
+          "operator",
+          "multi-tenancy",
+          "multi-tenant",
+          "multitenancy",
+          "multitenant",
+          "namespace"
+        ],
+        "kubeVersion": "",
+        "maintainers": [
+          {
+            "name": "Clastix Labs Team",
+            "email": "hello@clastix.io"
+          }
+        ],
+        "sources": [
+          "https://github.com/projectcapsule/capsule"
+        ]
+      }
+    }
+  },
+  "serviceAccountData": [
+    {
+      "serviceAccountName": "capsule",
+      "namespace": "default",
+      "automountToken": false,
+      "secrets": null,
+      "imagePullSecrets": null
+    }
+  ],
+  "serviceAccountPermissions": [
+    {
+      "serviceAccountName": "capsule",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "capsule-proxy-role",
+      "apiGroup": "authentication.k8s.io",
+      "resource": "tokenreviews",
+      "resourceName": "",
+      "verbs": [
+        "create"
+      ],
+      "riskLevel": "Medium",
+      "tags": [
+        "CredentialAccess",
+        "RBACQuery",
+        "InformationDisclosure"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1049,
+          "name": "Create TokenReviews (validate arbitrary tokens)",
+          "link": "https://rbac-atlas.github.io/rules/1049/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "capsule",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "capsule-proxy-role",
+      "apiGroup": "authorization.k8s.io",
+      "resource": "subjectaccessreviews",
+      "resourceName": "",
+      "verbs": [
+        "create"
+      ],
+      "riskLevel": "Medium",
+      "tags": [
+        "InformationDisclosure",
+        "RBACQuery"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1050,
+          "name": "Create SubjectAccessReviews (check arbitrary permissions)",
+          "link": "https://rbac-atlas.github.io/rules/1050/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    }
+  ],
+  "serviceAccountWorkloads": [
+    {
+      "serviceAccountName": "capsule",
+      "namespace": "default",
+      "workloadType": "Job",
+      "workloadName": "capsule-rbac-cleaner",
+      "containerName": "pre-delete-job",
+      "image": "docker.io/clastix/kubectl:v1.20"
+    },
+    {
+      "serviceAccountName": "capsule",
+      "namespace": "default",
+      "workloadType": "Job",
+      "workloadName": "capsule-waiting-certs",
+      "containerName": "post-install-job",
+      "image": "docker.io/clastix/kubectl:v1.20"
+    },
+    {
+      "serviceAccountName": "capsule",
+      "namespace": "default",
+      "workloadType": "Deployment",
+      "workloadName": "capsule-controller-manager",
+      "containerName": "manager",
+      "image": "ghcr.io/projectcapsule/capsule:v0.3.3"
+    }
+  ]
+}

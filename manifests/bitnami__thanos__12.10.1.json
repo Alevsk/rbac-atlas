@@ -1,0 +1,83 @@
+{
+  "metadata": {
+    "version": "12.10.1",
+    "name": "thanos",
+    "source": "charts/bitnami__thanos__12.10.1/",
+    "timestamp": 1769793331,
+    "extra": {
+      "helm": {
+        "description": "Thanos is a highly available metrics system that can be added on top of existing Prometheus deployments, providing a global query view across all Prometheus installations.",
+        "home": "https://bitnami.com",
+        "icon": "https://bitnami.com/assets/stacks/thanos/img/thanos-stack-220x234.png",
+        "keywords": [
+          "analytics",
+          "monitoring",
+          "prometheus",
+          "thanos"
+        ],
+        "kubeVersion": "",
+        "maintainers": [
+          {
+            "name": "VMware, Inc.",
+            "url": "https://github.com/bitnami/charts"
+          }
+        ],
+        "sources": [
+          "https://github.com/bitnami/charts/tree/main/bitnami/thanos"
+        ]
+      }
+    }
+  },
+  "serviceAccountData": [
+    {
+      "serviceAccountName": "thanos-minio",
+      "namespace": "default",
+      "automountToken": true,
+      "secrets": [
+        "thanos-minio"
+      ],
+      "imagePullSecrets": null
+    },
+    {
+      "serviceAccountName": "thanos-query",
+      "namespace": "default",
+      "automountToken": true,
+      "secrets": null,
+      "imagePullSecrets": null
+    },
+    {
+      "serviceAccountName": "thanos-query-frontend",
+      "namespace": "default",
+      "automountToken": true,
+      "secrets": null,
+      "imagePullSecrets": null
+    }
+  ],
+  "serviceAccountPermissions": [],
+  "serviceAccountWorkloads": [
+    {
+      "serviceAccountName": "thanos-minio",
+      "namespace": "default",
+      "workloadType": "Deployment",
+      "workloadName": "thanos-minio",
+      "containerName": "minio",
+      "image": "docker.io/bitnami/minio:2023.7.18-debian-11-r0"
+    },
+    {
+      "serviceAccountName": "thanos-query",
+      "namespace": "default",
+      "workloadType": "Deployment",
+      "workloadName": "thanos-query",
+      "containerName": "query",
+      "image": "docker.io/bitnami/thanos:0.31.0-scratch-r12"
+    },
+    {
+      "serviceAccountName": "thanos-query-frontend",
+      "namespace": "default",
+      "workloadType": "Deployment",
+      "workloadName": "thanos-query-frontend",
+      "containerName": "query-frontend",
+      "image": "docker.io/bitnami/thanos:0.31.0-scratch-r12"
+    }
+  ]
+}

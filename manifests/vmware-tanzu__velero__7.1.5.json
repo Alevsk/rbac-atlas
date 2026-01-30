@@ -1,0 +1,356 @@
+{
+  "metadata": {
+    "version": "7.1.5",
+    "name": "velero",
+    "source": "charts/vmware-tanzu__velero__7.1.5/",
+    "timestamp": 1769794537,
+    "extra": {
+      "helm": {
+        "description": "A Helm chart for velero",
+        "home": "https://github.com/vmware-tanzu/velero",
+        "icon": "https://cdn-images-1.medium.com/max/1600/1*-9mb3AKnKdcL_QD3CMnthQ.png",
+        "keywords": null,
+        "kubeVersion": "\u003e=1.16.0-0",
+        "maintainers": [
+          {
+            "name": "jenting",
+            "email": "hsiaoairplane@gmail.com"
+          },
+          {
+            "name": "reasonerjt",
+            "email": "jiangd@vmware.com"
+          },
+          {
+            "name": "qiuming-best",
+            "email": "mqiu@vmware.com"
+          },
+          {
+            "name": "ywk253100",
+            "email": "yinw@vmware.com"
+          }
+        ],
+        "sources": [
+          "https://github.com/vmware-tanzu/velero"
+        ]
+      }
+    }
+  },
+  "serviceAccountData": [
+    {
+      "serviceAccountName": "velero-server",
+      "namespace": "default",
+      "automountToken": false,
+      "secrets": null,
+      "imagePullSecrets": null
+    },
+    {
+      "serviceAccountName": "velero-server-upgrade-crds",
+      "namespace": "default",
+      "automountToken": false,
+      "secrets": null,
+      "imagePullSecrets": null
+    }
+  ],
+  "serviceAccountPermissions": [
+    {
+      "serviceAccountName": "velero-server-upgrade-crds",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "velero-upgrade-crds",
+      "apiGroup": "apiextensions.k8s.io",
+      "resource": "customresourcedefinitions",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "get",
+        "list",
+        "patch",
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "velero-server",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "velero-server",
+      "apiGroup": "*",
+      "resource": "*",
+      "resourceName": "",
+      "verbs": [
+        "*"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "LateralMovement",
+        "RBACQuery",
+        "NamespaceWideAccess",
+        "CriticalNamespace",
+        "Spoofing",
+        "CredentialAccess",
+        "NetworkManipulation",
+        "ServiceExposure",
+        "ControllerRevisionTampering",
+        "InformationDisclosure",
+        "Tampering",
+        "NodeAccess",
+        "QuotaTampering",
+        "DataLoss",
+        "LogAccess",
+        "DenialOfService",
+        "ControlPlaneDisruption",
+        "WorkloadDeployment",
+        "SecretAccess",
+        "ConfigMapAccess",
+        "RBACManipulation",
+        "AvailabilityImpact",
+        "ResourceConfiguration",
+        "WorkloadExecution",
+        "CodeExecution",
+        "ResourceModification",
+        "BindingToPrivilegedRole",
+        "Reconnaissance",
+        "NetworkPolicyManagement",
+        "PodPortForward",
+        "NamespaceAdmin",
+        "PotentialPrivilegeEscalation",
+        "DataExposure",
+        "PodAttach",
+        "TrafficRedirection",
+        "Persistence",
+        "TokenCreation",
+        "PodExec",
+        "IdentityManagement",
+        "SelfPermissionReviewQuery",
+        "StorageDetailsDisclosure",
+        "WildcardPermission",
+        "WorkloadLifecycle",
+        "PrivilegeEscalation",
+        "Impersonation"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1081,
+          "name": "Manage Leases in kube-system or kube-node-lease namespace",
+          "link": "https://rbac-atlas.github.io/rules/1081/"
+        },
+        {
+          "id": 1036,
+          "name": "Manage DaemonSets in a namespace (runs on nodes, high impact)",
+          "link": "https://rbac-atlas.github.io/rules/1036/"
+        },
+        {
+          "id": 1063,
+          "name": "Manage ArgoCD Applications (argoproj.io)",
+          "link": "https://rbac-atlas.github.io/rules/1063/"
+        },
+        {
+          "id": 1061,
+          "name": "Wildcard permission on all resources in a namespace (Namespace Admin)",
+          "link": "https://rbac-atlas.github.io/rules/1061/"
+        },
+        {
+          "id": 1047,
+          "name": "Create ServiceAccount Tokens",
+          "link": "https://rbac-atlas.github.io/rules/1047/"
+        },
+        {
+          "id": 1011,
+          "name": "Read secrets in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1011/"
+        },
+        {
+          "id": 1013,
+          "name": "Modify secrets in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1013/"
+        },
+        {
+          "id": 1034,
+          "name": "Manage Deployments in a namespace (potential for privileged pod execution)",
+          "link": "https://rbac-atlas.github.io/rules/1034/"
+        },
+        {
+          "id": 1040,
+          "name": "Manage CronJobs in a namespace (scheduled privileged execution, persistence)",
+          "link": "https://rbac-atlas.github.io/rules/1040/"
+        },
+        {
+          "id": 1096,
+          "name": "Update Deployment Scale (Resource Abuse/DoS)",
+          "link": "https://rbac-atlas.github.io/rules/1096/"
+        },
+        {
+          "id": 1025,
+          "name": "Modify ConfigMaps in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1025/"
+        },
+        {
+          "id": 1029,
+          "name": "Manage Roles in a namespace (create, update, patch, delete)",
+          "link": "https://rbac-atlas.github.io/rules/1029/"
+        },
+        {
+          "id": 1030,
+          "name": "Manage RoleBindings in a namespace (create, update, patch, delete)",
+          "link": "https://rbac-atlas.github.io/rules/1030/"
+        },
+        {
+          "id": 1076,
+          "name": "Manage Services in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1076/"
+        },
+        {
+          "id": 1097,
+          "name": "Update StatefulSet Scale (Resource Abuse/DoS)",
+          "link": "https://rbac-atlas.github.io/rules/1097/"
+        },
+        {
+          "id": 1038,
+          "name": "Manage StatefulSets in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1038/"
+        },
+        {
+          "id": 1021,
+          "name": "Manage ephemeral containers in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1021/"
+        },
+        {
+          "id": 1042,
+          "name": "Manage Jobs in a namespace (one-off privileged execution)",
+          "link": "https://rbac-atlas.github.io/rules/1042/"
+        },
+        {
+          "id": 1003,
+          "name": "Namespaced pod attach",
+          "link": "https://rbac-atlas.github.io/rules/1003/"
+        },
+        {
+          "id": 1091,
+          "name": "Manage Ingresses (Namespace Service Exposure/Traffic Redirection)",
+          "link": "https://rbac-atlas.github.io/rules/1091/"
+        },
+        {
+          "id": 1009,
+          "name": "Update/Patch pods in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1009/"
+        },
+        {
+          "id": 1007,
+          "name": "Create pods in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1007/"
+        },
+        {
+          "id": 1103,
+          "name": "Watch All Resources in a Namespace (Broad Information Disclosure)",
+          "link": "https://rbac-atlas.github.io/rules/1103/"
+        },
+        {
+          "id": 1001,
+          "name": "Namespaced pod exec",
+          "link": "https://rbac-atlas.github.io/rules/1001/"
+        },
+        {
+          "id": 1072,
+          "name": "Manage NetworkPolicies in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1072/"
+        },
+        {
+          "id": 1074,
+          "name": "Manage Endpoints or EndpointSlices in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1074/"
+        },
+        {
+          "id": 1085,
+          "name": "Create/Update ControllerRevisions (Potential Tampering)",
+          "link": "https://rbac-atlas.github.io/rules/1085/"
+        },
+        {
+          "id": 1068,
+          "name": "Manage ServiceAccounts in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1068/"
+        },
+        {
+          "id": 1023,
+          "name": "Read ConfigMaps in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1023/"
+        },
+        {
+          "id": 1094,
+          "name": "Update PodDisruptionBudget Status (Namespace Tampering/DoS)",
+          "link": "https://rbac-atlas.github.io/rules/1094/"
+        },
+        {
+          "id": 1058,
+          "name": "Evict Pods in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1058/"
+        },
+        {
+          "id": 1019,
+          "name": "Read pod logs in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1019/"
+        },
+        {
+          "id": 1005,
+          "name": "Namespaced pod port-forward",
+          "link": "https://rbac-atlas.github.io/rules/1005/"
+        },
+        {
+          "id": 1086,
+          "name": "Create SelfSubjectRulesReviews (Discover Own Permissions)",
+          "link": "https://rbac-atlas.github.io/rules/1086/"
+        },
+        {
+          "id": 1087,
+          "name": "Read LimitRanges (Namespace Information Disclosure)",
+          "link": "https://rbac-atlas.github.io/rules/1087/"
+        },
+        {
+          "id": 1088,
+          "name": "Read ResourceQuotas (Namespace Information Disclosure)",
+          "link": "https://rbac-atlas.github.io/rules/1088/"
+        },
+        {
+          "id": 1051,
+          "name": "Create LocalSubjectAccessReviews (check permissions in a namespace)",
+          "link": "https://rbac-atlas.github.io/rules/1051/"
+        },
+        {
+          "id": 1101,
+          "name": "Read CSIStorageCapacities (Namespace Storage Reconnaissance)",
+          "link": "https://rbac-atlas.github.io/rules/1101/"
+        },
+        {
+          "id": 9997,
+          "name": "Base Risk Level - Medium",
+          "link": "https://rbac-atlas.github.io/rules/9997/"
+        }
+      ]
+    }
+  ],
+  "serviceAccountWorkloads": [
+    {
+      "serviceAccountName": "velero-server-upgrade-crds",
+      "namespace": "default",
+      "workloadType": "Job",
+      "workloadName": "velero-upgrade-crds",
+      "containerName": "velero",
+      "image": "velero/velero:v1.14.0"
+    },
+    {
+      "serviceAccountName": "velero-server",
+      "namespace": "default",
+      "workloadType": "Deployment",
+      "workloadName": "velero",
+      "containerName": "velero",
+      "image": "velero/velero:v1.14.0"
+    }
+  ]
+}

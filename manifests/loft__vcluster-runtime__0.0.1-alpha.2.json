@@ -3,7 +3,7 @@
     "version": "0.0.1-alpha.2",
     "name": "vcluster-runtime",
     "source": "charts/loft__vcluster-runtime__0.0.1-alpha.2/",
-    "timestamp": 1769482632,
+    "timestamp": 1769794080,
     "extra": {
       "helm": {
         "description": "vcluster-runtime - Virtual Kubernetes Clusters",
@@ -52,6 +52,39 @@
       "roleType": "ClusterRole",
       "roleName": "vcluster-runtime",
       "apiGroup": "",
+      "resource": "nodes/proxy",
+      "resourceName": "",
+      "verbs": [
+        "get"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "AuthorizationBypass",
+        "NodeAccess",
+        "ClusterAdminAccess",
+        "CodeExecution",
+        "LateralMovement",
+        "ElevationOfPrivilege"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1104,
+          "name": "Node proxy GET RCE via WebSocket",
+          "link": "https://rbac-atlas.github.io/rules/1104/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "vcluster-runtime",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "vcluster-runtime",
+      "apiGroup": "",
       "resource": "pods",
       "resourceName": "",
       "verbs": [
@@ -84,48 +117,15 @@
       ],
       "riskLevel": "Low",
       "tags": [
-        "InformationDisclosure",
         "Reconnaissance",
-        "ClusterStructure"
+        "ClusterStructure",
+        "InformationDisclosure"
       ],
       "matchedRiskRules": [
         {
           "id": 1082,
           "name": "List Namespaces (Cluster Reconnaissance)",
           "link": "https://rbac-atlas.github.io/rules/1082/"
-        },
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "vcluster-runtime",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "vcluster-runtime",
-      "apiGroup": "",
-      "resource": "nodes/proxy",
-      "resourceName": "",
-      "verbs": [
-        "get"
-      ],
-      "riskLevel": "Critical",
-      "tags": [
-        "CodeExecution",
-        "LateralMovement",
-        "ElevationOfPrivilege",
-        "AuthorizationBypass",
-        "NodeAccess",
-        "ClusterAdminAccess"
-      ],
-      "matchedRiskRules": [
-        {
-          "id": 1104,
-          "name": "Node proxy GET RCE via WebSocket",
-          "link": "https://rbac-atlas.github.io/rules/1104/"
         },
         {
           "id": 9996,

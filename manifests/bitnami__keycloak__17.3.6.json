@@ -1,0 +1,57 @@
+{
+  "metadata": {
+    "version": "17.3.6",
+    "name": "keycloak",
+    "source": "charts/bitnami__keycloak__17.3.6/",
+    "timestamp": 1769793264,
+    "extra": {
+      "helm": {
+        "description": "Keycloak is a high performance Java-based identity and access management solution. It lets developers add an authentication layer to their applications with minimum effort.",
+        "home": "https://bitnami.com",
+        "icon": "https://bitnami.com/assets/stacks/keycloak/img/keycloak-stack-220x234.png",
+        "keywords": [
+          "keycloak",
+          "access-management"
+        ],
+        "kubeVersion": "",
+        "maintainers": [
+          {
+            "name": "VMware, Inc.",
+            "url": "https://github.com/bitnami/charts"
+          }
+        ],
+        "sources": [
+          "https://github.com/bitnami/charts/tree/main/bitnami/keycloak"
+        ]
+      }
+    }
+  },
+  "serviceAccountData": [
+    {
+      "serviceAccountName": "keycloak",
+      "namespace": "default",
+      "automountToken": true,
+      "secrets": null,
+      "imagePullSecrets": null
+    }
+  ],
+  "serviceAccountPermissions": [],
+  "serviceAccountWorkloads": [
+    {
+      "serviceAccountName": "default",
+      "namespace": "default",
+      "workloadType": "StatefulSet",
+      "workloadName": "keycloak-postgresql",
+      "containerName": "postgresql",
+      "image": "docker.io/bitnami/postgresql:16.1.0-debian-11-r15"
+    },
+    {
+      "serviceAccountName": "keycloak",
+      "namespace": "default",
+      "workloadType": "StatefulSet",
+      "workloadName": "keycloak",
+      "containerName": "keycloak",
+      "image": "docker.io/bitnami/keycloak:22.0.5-debian-11-r4"
+    }
+  ]
+}

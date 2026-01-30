@@ -1,0 +1,72 @@
+{
+  "metadata": {
+    "version": "2.12.0",
+    "name": "nexus-operator",
+    "source": "charts/epmdedp__nexus-operator__2.12.0/",
+    "timestamp": 1769793466,
+    "extra": {
+      "helm": {
+        "description": "A Helm chart for EDP Nexus Operator",
+        "home": "https://epam.github.io/edp-install/",
+        "icon": "https://epam.github.io/edp-install/assets/logo.png",
+        "keywords": [
+          "edp",
+          "nexus",
+          "operator",
+          "artifact",
+          "storage"
+        ],
+        "kubeVersion": "",
+        "maintainers": [
+          {
+            "name": "epmd-edp",
+            "email": "SupportEPMD-EDP@epam.com",
+            "url": "https://solutionshub.epam.com/solution/epam-delivery-platform"
+          },
+          {
+            "name": "sergk",
+            "url": "https://github.com/SergK"
+          }
+        ],
+        "sources": [
+          "https://github.com/epam/edp-nexus-operator"
+        ]
+      }
+    }
+  },
+  "serviceAccountData": [
+    {
+      "serviceAccountName": "nexus",
+      "namespace": "default",
+      "automountToken": false,
+      "secrets": null,
+      "imagePullSecrets": null
+    },
+    {
+      "serviceAccountName": "edp-nexus-operator",
+      "namespace": "default",
+      "automountToken": false,
+      "secrets": null,
+      "imagePullSecrets": null
+    }
+  ],
+  "serviceAccountPermissions": [],
+  "serviceAccountWorkloads": [
+    {
+      "serviceAccountName": "edp-nexus-operator",
+      "namespace": "default",
+      "workloadType": "Deployment",
+      "workloadName": "nexus-operator",
+      "containerName": "nexus-operator",
+      "image": "epamedp/nexus-operator:2.12.0"
+    },
+    {
+      "serviceAccountName": "nexus",
+      "namespace": "default",
+      "workloadType": "Deployment",
+      "workloadName": "nexus",
+      "containerName": "nexus",
+      "image": "sonatype/nexus3:3.41.0"
+    }
+  ]
+}

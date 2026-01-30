@@ -1,0 +1,116 @@
+{
+  "metadata": {
+    "version": "1.0.17",
+    "name": "compliance-operator-full-stack",
+    "source": "charts/openshift-bootstraps__compliance-operator-full-stack__1.0.17/",
+    "timestamp": 1769794168,
+    "extra": {
+      "helm": {
+        "description": "Master chart to deploy and configure the Compliance Operator",
+        "home": "https://github.com/tjungbauer/helm-charts/tree/main/charts/compliance-operator-full-stack",
+        "icon": "https://github.com/tjungbauer/helm-charts/raw/gh-pages/images/compliance-operator.png",
+        "keywords": null,
+        "kubeVersion": "",
+        "maintainers": [
+          {
+            "name": "tjungbauer",
+            "email": "tjungbau@redhat.com"
+          }
+        ],
+        "sources": [
+          "https://github.com/tjungbauer/helm-charts"
+        ]
+      }
+    }
+  },
+  "serviceAccountData": [
+    {
+      "serviceAccountName": "sa-compliance",
+      "namespace": "openshift-compliance",
+      "automountToken": false,
+      "secrets": null,
+      "imagePullSecrets": null
+    }
+  ],
+  "serviceAccountPermissions": [
+    {
+      "serviceAccountName": "sa-compliance",
+      "namespace": "openshift-compliance",
+      "roleType": "ClusterRole",
+      "roleName": "sa-compliance-clusterrole",
+      "apiGroup": "operators.coreos.com",
+      "resource": "clusterserviceversions",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "patch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "sa-compliance",
+      "namespace": "openshift-compliance",
+      "roleType": "ClusterRole",
+      "roleName": "sa-compliance-clusterrole",
+      "apiGroup": "operators.coreos.com",
+      "resource": "installplans",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "patch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "sa-compliance",
+      "namespace": "openshift-compliance",
+      "roleType": "ClusterRole",
+      "roleName": "sa-compliance-clusterrole",
+      "apiGroup": "operators.coreos.com",
+      "resource": "subscription",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "patch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    }
+  ],
+  "serviceAccountWorkloads": [
+    {
+      "serviceAccountName": "sa-compliance",
+      "namespace": "openshift-compliance",
+      "workloadType": "Job",
+      "workloadName": "check-operator-status-jgddd",
+      "containerName": "check-operator",
+      "image": "registry.redhat.io/openshift4/ose-cli"
+    }
+  ]
+}

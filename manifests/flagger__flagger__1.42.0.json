@@ -3,7 +3,7 @@
     "version": "1.42.0",
     "name": "flagger",
     "source": "charts/flagger__flagger__1.42.0/",
-    "timestamp": 1769479919,
+    "timestamp": 1769793481,
     "extra": {
       "helm": {
         "description": "Flagger is a progressive delivery operator for Kubernetes",
@@ -52,8 +52,8 @@
       "namespace": "default",
       "roleType": "ClusterRole",
       "roleName": "flagger",
-      "apiGroup": "",
-      "resource": "services/finalizers",
+      "apiGroup": "networking.istio.io",
+      "resource": "virtualservices",
       "resourceName": "",
       "verbs": [
         "create",
@@ -79,8 +79,8 @@
       "namespace": "default",
       "roleType": "ClusterRole",
       "roleName": "flagger",
-      "apiGroup": "",
-      "resource": "events",
+      "apiGroup": "networking.istio.io",
+      "resource": "virtualservices/finalizers",
       "resourceName": "",
       "verbs": [
         "create",
@@ -91,18 +91,9 @@
         "update",
         "watch"
       ],
-      "riskLevel": "Medium",
-      "tags": [
-        "OperationalData",
-        "InformationDisclosure",
-        "Reconnaissance"
-      ],
+      "riskLevel": "Low",
+      "tags": [],
       "matchedRiskRules": [
-        {
-          "id": 1070,
-          "name": "Read events cluster-wide",
-          "link": "https://rbac-atlas.github.io/rules/1070/"
-        },
         {
           "id": 9996,
           "name": "Base Risk Level - Low",
@@ -115,8 +106,8 @@
       "namespace": "default",
       "roleType": "ClusterRole",
       "roleName": "flagger",
-      "apiGroup": "",
-      "resource": "configmaps",
+      "apiGroup": "networking.istio.io",
+      "resource": "destinationrules",
       "resourceName": "",
       "verbs": [
         "create",
@@ -127,35 +118,9 @@
         "update",
         "watch"
       ],
-      "riskLevel": "Critical",
-      "tags": [
-        "Tampering",
-        "ConfigMapAccess",
-        "PotentialPrivilegeEscalation",
-        "InformationDisclosure",
-        "DataExposure"
-      ],
+      "riskLevel": "Low",
+      "tags": [],
       "matchedRiskRules": [
-        {
-          "id": 1024,
-          "name": "Modify ConfigMaps cluster-wide",
-          "link": "https://rbac-atlas.github.io/rules/1024/"
-        },
-        {
-          "id": 1022,
-          "name": "Read ConfigMaps cluster-wide",
-          "link": "https://rbac-atlas.github.io/rules/1022/"
-        },
-        {
-          "id": 1025,
-          "name": "Modify ConfigMaps in a namespace",
-          "link": "https://rbac-atlas.github.io/rules/1025/"
-        },
-        {
-          "id": 1023,
-          "name": "Read ConfigMaps in a namespace",
-          "link": "https://rbac-atlas.github.io/rules/1023/"
-        },
         {
           "id": 9996,
           "name": "Base Risk Level - Low",
@@ -168,8 +133,305 @@
       "namespace": "default",
       "roleType": "ClusterRole",
       "roleName": "flagger",
-      "apiGroup": "",
-      "resource": "configmaps/finalizers",
+      "apiGroup": "networking.istio.io",
+      "resource": "destinationrules/finalizers",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "flagger",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "flagger",
+      "apiGroup": "gateway.solo.io",
+      "resource": "routetables",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "flagger",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "flagger",
+      "apiGroup": "gateway.solo.io",
+      "resource": "routetables/finalizers",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "flagger",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "flagger",
+      "apiGroup": "projectcontour.io",
+      "resource": "httpproxies",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "flagger",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "flagger",
+      "apiGroup": "projectcontour.io",
+      "resource": "httpproxies/finalizers",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "flagger",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "flagger",
+      "apiGroup": "kuma.io",
+      "resource": "trafficroutes",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "flagger",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "flagger",
+      "apiGroup": "kuma.io",
+      "resource": "trafficroutes/finalizers",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "flagger",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "flagger",
+      "apiGroup": "gateway.networking.k8s.io",
+      "resource": "httproutes",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "flagger",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "flagger",
+      "apiGroup": "gateway.networking.k8s.io",
+      "resource": "httproutes/finalizers",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "flagger",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "flagger",
+      "apiGroup": "keda.sh",
+      "resource": "scaledobjects",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "flagger",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "flagger",
+      "apiGroup": "keda.sh",
+      "resource": "scaledobjects/finalizers",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "flagger",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "flagger",
+      "apiGroup": "apisix.apache.org",
+      "resource": "apisixroutes",
       "resourceName": "",
       "verbs": [
         "create",
@@ -209,15 +471,15 @@
       ],
       "riskLevel": "Critical",
       "tags": [
+        "DataExposure",
         "InformationDisclosure",
-        "PrivilegeEscalation",
-        "PotentialPrivilegeEscalation",
-        "ClusterWideSecretAccess",
         "SecretAccess",
         "Tampering",
+        "PrivilegeEscalation",
         "Persistence",
-        "CredentialAccess",
-        "DataExposure"
+        "ClusterWideSecretAccess",
+        "PotentialPrivilegeEscalation",
+        "CredentialAccess"
       ],
       "matchedRiskRules": [
         {
@@ -321,8 +583,8 @@
       "namespace": "default",
       "roleType": "ClusterRole",
       "roleName": "flagger",
-      "apiGroup": "appmesh.k8s.aws",
-      "resource": "virtualrouters",
+      "apiGroup": "",
+      "resource": "services/finalizers",
       "resourceName": "",
       "verbs": [
         "create",
@@ -348,8 +610,8 @@
       "namespace": "default",
       "roleType": "ClusterRole",
       "roleName": "flagger",
-      "apiGroup": "appmesh.k8s.aws",
-      "resource": "virtualrouters/finalizers",
+      "apiGroup": "",
+      "resource": "events",
       "resourceName": "",
       "verbs": [
         "create",
@@ -360,369 +622,17 @@
         "update",
         "watch"
       ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "flagger",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "flagger",
-      "apiGroup": "appmesh.k8s.aws",
-      "resource": "virtualservices",
-      "resourceName": "",
-      "verbs": [
-        "create",
-        "delete",
-        "get",
-        "list",
-        "patch",
-        "update",
-        "watch"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "flagger",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "flagger",
-      "apiGroup": "appmesh.k8s.aws",
-      "resource": "virtualservices/finalizers",
-      "resourceName": "",
-      "verbs": [
-        "create",
-        "delete",
-        "get",
-        "list",
-        "patch",
-        "update",
-        "watch"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "flagger",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "flagger",
-      "apiGroup": "appmesh.k8s.aws",
-      "resource": "virtualnodes",
-      "resourceName": "",
-      "verbs": [
-        "create",
-        "delete",
-        "get",
-        "list",
-        "patch",
-        "update",
-        "watch"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "flagger",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "flagger",
-      "apiGroup": "appmesh.k8s.aws",
-      "resource": "virtualnodes/finalizers",
-      "resourceName": "",
-      "verbs": [
-        "create",
-        "delete",
-        "get",
-        "list",
-        "patch",
-        "update",
-        "watch"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "flagger",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "flagger",
-      "apiGroup": "gloo.solo.io",
-      "resource": "upstreams/finalizers",
-      "resourceName": "",
-      "verbs": [
-        "create",
-        "delete",
-        "get",
-        "list",
-        "patch",
-        "update",
-        "watch"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "flagger",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "flagger",
-      "apiGroup": "gloo.solo.io",
-      "resource": "upstreams",
-      "resourceName": "",
-      "verbs": [
-        "create",
-        "delete",
-        "get",
-        "list",
-        "patch",
-        "update",
-        "watch"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "flagger",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "flagger",
-      "apiGroup": "keda.sh",
-      "resource": "scaledobjects/finalizers",
-      "resourceName": "",
-      "verbs": [
-        "create",
-        "delete",
-        "get",
-        "list",
-        "patch",
-        "update",
-        "watch"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "flagger",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "flagger",
-      "apiGroup": "keda.sh",
-      "resource": "scaledobjects",
-      "resourceName": "",
-      "verbs": [
-        "create",
-        "delete",
-        "get",
-        "list",
-        "patch",
-        "update",
-        "watch"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "flagger",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "flagger",
-      "apiGroup": "metrics.keptn.sh",
-      "resource": "keptnmetrics",
-      "resourceName": "",
-      "verbs": [
-        "create",
-        "delete",
-        "get",
-        "list",
-        "patch",
-        "update",
-        "watch"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "flagger",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "flagger",
-      "apiGroup": "metrics.keptn.sh",
-      "resource": "analyses",
-      "resourceName": "",
-      "verbs": [
-        "create",
-        "delete",
-        "get",
-        "list",
-        "patch",
-        "update",
-        "watch"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "flagger",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "flagger",
-      "apiGroup": "autoscaling",
-      "resource": "horizontalpodautoscalers",
-      "resourceName": "",
-      "verbs": [
-        "create",
-        "delete",
-        "get",
-        "list",
-        "patch",
-        "update",
-        "watch"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "flagger",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "flagger",
-      "apiGroup": "autoscaling",
-      "resource": "horizontalpodautoscalers/finalizers",
-      "resourceName": "",
-      "verbs": [
-        "create",
-        "delete",
-        "get",
-        "list",
-        "patch",
-        "update",
-        "watch"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "flagger",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "flagger",
-      "apiGroup": "networking.k8s.io",
-      "resource": "ingresses",
-      "resourceName": "",
-      "verbs": [
-        "create",
-        "delete",
-        "get",
-        "list",
-        "patch",
-        "update",
-        "watch"
-      ],
-      "riskLevel": "High",
+      "riskLevel": "Medium",
       "tags": [
-        "NetworkManipulation",
-        "ServiceExposure",
-        "Tampering",
-        "DenialOfService"
+        "InformationDisclosure",
+        "Reconnaissance",
+        "OperationalData"
       ],
       "matchedRiskRules": [
         {
-          "id": 1091,
-          "name": "Manage Ingresses (Namespace Service Exposure/Traffic Redirection)",
-          "link": "https://rbac-atlas.github.io/rules/1091/"
+          "id": 1070,
+          "name": "Read events cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1070/"
         },
         {
           "id": 9996,
@@ -736,8 +646,61 @@
       "namespace": "default",
       "roleType": "ClusterRole",
       "roleName": "flagger",
-      "apiGroup": "networking.k8s.io",
-      "resource": "ingresses/finalizers",
+      "apiGroup": "",
+      "resource": "configmaps",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "InformationDisclosure",
+        "DataExposure",
+        "Tampering",
+        "ConfigMapAccess",
+        "PotentialPrivilegeEscalation"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1024,
+          "name": "Modify ConfigMaps cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1024/"
+        },
+        {
+          "id": 1022,
+          "name": "Read ConfigMaps cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1022/"
+        },
+        {
+          "id": 1025,
+          "name": "Modify ConfigMaps in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1025/"
+        },
+        {
+          "id": 1023,
+          "name": "Read ConfigMaps in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1023/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "flagger",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "flagger",
+      "apiGroup": "",
+      "resource": "configmaps/finalizers",
       "resourceName": "",
       "verbs": [
         "create",
@@ -763,8 +726,8 @@
       "namespace": "default",
       "roleType": "ClusterRole",
       "roleName": "flagger",
-      "apiGroup": "split.smi-spec.io",
-      "resource": "trafficsplits",
+      "apiGroup": "apps",
+      "resource": "daemonsets/finalizers",
       "resourceName": "",
       "verbs": [
         "create",
@@ -790,8 +753,51 @@
       "namespace": "default",
       "roleType": "ClusterRole",
       "roleName": "flagger",
-      "apiGroup": "split.smi-spec.io",
-      "resource": "trafficsplits/finalizers",
+      "apiGroup": "apps",
+      "resource": "deployments",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "Persistence",
+        "Tampering",
+        "PotentialPrivilegeEscalation",
+        "WorkloadLifecycle",
+        "PrivilegeEscalation"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1033,
+          "name": "Manage Deployments cluster-wide (potential for privileged pod execution)",
+          "link": "https://rbac-atlas.github.io/rules/1033/"
+        },
+        {
+          "id": 1034,
+          "name": "Manage Deployments in a namespace (potential for privileged pod execution)",
+          "link": "https://rbac-atlas.github.io/rules/1034/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "flagger",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "flagger",
+      "apiGroup": "apps",
+      "resource": "deployments/finalizers",
       "resourceName": "",
       "verbs": [
         "create",
@@ -817,8 +823,8 @@
       "namespace": "default",
       "roleType": "ClusterRole",
       "roleName": "flagger",
-      "apiGroup": "specs.smi-spec.io",
-      "resource": "httproutegroups",
+      "apiGroup": "apps",
+      "resource": "daemonsets",
       "resourceName": "",
       "verbs": [
         "create",
@@ -829,9 +835,25 @@
         "update",
         "watch"
       ],
-      "riskLevel": "Low",
-      "tags": [],
+      "riskLevel": "Critical",
+      "tags": [
+        "NodeAccess",
+        "Tampering",
+        "WorkloadLifecycle",
+        "PrivilegeEscalation",
+        "Persistence"
+      ],
       "matchedRiskRules": [
+        {
+          "id": 1035,
+          "name": "Manage DaemonSets cluster-wide (runs on all nodes, high impact)",
+          "link": "https://rbac-atlas.github.io/rules/1035/"
+        },
+        {
+          "id": 1036,
+          "name": "Manage DaemonSets in a namespace (runs on nodes, high impact)",
+          "link": "https://rbac-atlas.github.io/rules/1036/"
+        },
         {
           "id": 9996,
           "name": "Base Risk Level - Low",
@@ -844,170 +866,8 @@
       "namespace": "default",
       "roleType": "ClusterRole",
       "roleName": "flagger",
-      "apiGroup": "specs.smi-spec.io",
-      "resource": "httproutegroups/finalizers",
-      "resourceName": "",
-      "verbs": [
-        "create",
-        "delete",
-        "get",
-        "list",
-        "patch",
-        "update",
-        "watch"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "flagger",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "flagger",
-      "apiGroup": "gateway.solo.io",
-      "resource": "routetables",
-      "resourceName": "",
-      "verbs": [
-        "create",
-        "delete",
-        "get",
-        "list",
-        "patch",
-        "update",
-        "watch"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "flagger",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "flagger",
-      "apiGroup": "gateway.solo.io",
-      "resource": "routetables/finalizers",
-      "resourceName": "",
-      "verbs": [
-        "create",
-        "delete",
-        "get",
-        "list",
-        "patch",
-        "update",
-        "watch"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "flagger",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "flagger",
-      "apiGroup": "kuma.io",
-      "resource": "trafficroutes/finalizers",
-      "resourceName": "",
-      "verbs": [
-        "create",
-        "delete",
-        "get",
-        "list",
-        "patch",
-        "update",
-        "watch"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "flagger",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "flagger",
-      "apiGroup": "kuma.io",
-      "resource": "trafficroutes",
-      "resourceName": "",
-      "verbs": [
-        "create",
-        "delete",
-        "get",
-        "list",
-        "patch",
-        "update",
-        "watch"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "flagger",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "flagger",
-      "apiGroup": "extensions",
-      "resource": "ingresses",
-      "resourceName": "",
-      "verbs": [
-        "create",
-        "delete",
-        "get",
-        "list",
-        "patch",
-        "update",
-        "watch"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "flagger",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "flagger",
-      "apiGroup": "extensions",
-      "resource": "ingresses/finalizers",
+      "apiGroup": "flagger.app",
+      "resource": "metrictemplates",
       "resourceName": "",
       "verbs": [
         "create",
@@ -1195,8 +1055,8 @@
       "namespace": "default",
       "roleType": "ClusterRole",
       "roleName": "flagger",
-      "apiGroup": "flagger.app",
-      "resource": "metrictemplates",
+      "apiGroup": "appmesh.k8s.aws",
+      "resource": "virtualnodes",
       "resourceName": "",
       "verbs": [
         "create",
@@ -1222,8 +1082,8 @@
       "namespace": "default",
       "roleType": "ClusterRole",
       "roleName": "flagger",
-      "apiGroup": "gateway.networking.k8s.io",
-      "resource": "httproutes",
+      "apiGroup": "appmesh.k8s.aws",
+      "resource": "virtualnodes/finalizers",
       "resourceName": "",
       "verbs": [
         "create",
@@ -1249,8 +1109,8 @@
       "namespace": "default",
       "roleType": "ClusterRole",
       "roleName": "flagger",
-      "apiGroup": "gateway.networking.k8s.io",
-      "resource": "httproutes/finalizers",
+      "apiGroup": "appmesh.k8s.aws",
+      "resource": "virtualrouters",
       "resourceName": "",
       "verbs": [
         "create",
@@ -1276,8 +1136,170 @@
       "namespace": "default",
       "roleType": "ClusterRole",
       "roleName": "flagger",
-      "apiGroup": "apisix.apache.org",
-      "resource": "apisixroutes",
+      "apiGroup": "appmesh.k8s.aws",
+      "resource": "virtualrouters/finalizers",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "flagger",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "flagger",
+      "apiGroup": "appmesh.k8s.aws",
+      "resource": "virtualservices",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "flagger",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "flagger",
+      "apiGroup": "appmesh.k8s.aws",
+      "resource": "virtualservices/finalizers",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "flagger",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "flagger",
+      "apiGroup": "split.smi-spec.io",
+      "resource": "trafficsplits",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "flagger",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "flagger",
+      "apiGroup": "split.smi-spec.io",
+      "resource": "trafficsplits/finalizers",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "flagger",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "flagger",
+      "apiGroup": "specs.smi-spec.io",
+      "resource": "httproutegroups/finalizers",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "flagger",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "flagger",
+      "apiGroup": "specs.smi-spec.io",
+      "resource": "httproutegroups",
       "resourceName": "",
       "verbs": [
         "create",
@@ -1346,8 +1368,8 @@
       "namespace": "default",
       "roleType": "ClusterRole",
       "roleName": "flagger",
-      "apiGroup": "projectcontour.io",
-      "resource": "httpproxies",
+      "apiGroup": "autoscaling",
+      "resource": "horizontalpodautoscalers",
       "resourceName": "",
       "verbs": [
         "create",
@@ -1373,8 +1395,234 @@
       "namespace": "default",
       "roleType": "ClusterRole",
       "roleName": "flagger",
-      "apiGroup": "projectcontour.io",
-      "resource": "httpproxies/finalizers",
+      "apiGroup": "autoscaling",
+      "resource": "horizontalpodautoscalers/finalizers",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "flagger",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "flagger",
+      "apiGroup": "extensions",
+      "resource": "ingresses",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "flagger",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "flagger",
+      "apiGroup": "extensions",
+      "resource": "ingresses/finalizers",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "flagger",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "flagger",
+      "apiGroup": "networking.k8s.io",
+      "resource": "ingresses",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "NetworkManipulation",
+        "ServiceExposure",
+        "Tampering",
+        "DenialOfService"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1091,
+          "name": "Manage Ingresses (Namespace Service Exposure/Traffic Redirection)",
+          "link": "https://rbac-atlas.github.io/rules/1091/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "flagger",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "flagger",
+      "apiGroup": "networking.k8s.io",
+      "resource": "ingresses/finalizers",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "flagger",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "flagger",
+      "apiGroup": "gloo.solo.io",
+      "resource": "upstreams",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "flagger",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "flagger",
+      "apiGroup": "gloo.solo.io",
+      "resource": "upstreams/finalizers",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "flagger",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "flagger",
+      "apiGroup": "metrics.keptn.sh",
+      "resource": "keptnmetrics",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "flagger",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "flagger",
+      "apiGroup": "metrics.keptn.sh",
+      "resource": "analyses",
       "resourceName": "",
       "verbs": [
         "create",
@@ -1414,11 +1662,11 @@
       ],
       "riskLevel": "Critical",
       "tags": [
+        "Tampering",
+        "DenialOfService",
         "ControlPlaneDisruption",
         "LeaderElectionAbuse",
-        "CriticalNamespace",
-        "Tampering",
-        "DenialOfService"
+        "CriticalNamespace"
       ],
       "matchedRiskRules": [
         {
@@ -1431,254 +1679,6 @@
           "name": "Manage Leases in kube-system or kube-node-lease namespace",
           "link": "https://rbac-atlas.github.io/rules/1081/"
         },
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "flagger",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "flagger",
-      "apiGroup": "apps",
-      "resource": "daemonsets",
-      "resourceName": "",
-      "verbs": [
-        "create",
-        "delete",
-        "get",
-        "list",
-        "patch",
-        "update",
-        "watch"
-      ],
-      "riskLevel": "Critical",
-      "tags": [
-        "WorkloadLifecycle",
-        "PrivilegeEscalation",
-        "Persistence",
-        "NodeAccess",
-        "Tampering"
-      ],
-      "matchedRiskRules": [
-        {
-          "id": 1035,
-          "name": "Manage DaemonSets cluster-wide (runs on all nodes, high impact)",
-          "link": "https://rbac-atlas.github.io/rules/1035/"
-        },
-        {
-          "id": 1036,
-          "name": "Manage DaemonSets in a namespace (runs on nodes, high impact)",
-          "link": "https://rbac-atlas.github.io/rules/1036/"
-        },
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "flagger",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "flagger",
-      "apiGroup": "apps",
-      "resource": "daemonsets/finalizers",
-      "resourceName": "",
-      "verbs": [
-        "create",
-        "delete",
-        "get",
-        "list",
-        "patch",
-        "update",
-        "watch"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "flagger",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "flagger",
-      "apiGroup": "apps",
-      "resource": "deployments",
-      "resourceName": "",
-      "verbs": [
-        "create",
-        "delete",
-        "get",
-        "list",
-        "patch",
-        "update",
-        "watch"
-      ],
-      "riskLevel": "Critical",
-      "tags": [
-        "WorkloadLifecycle",
-        "PrivilegeEscalation",
-        "Persistence",
-        "Tampering",
-        "PotentialPrivilegeEscalation"
-      ],
-      "matchedRiskRules": [
-        {
-          "id": 1033,
-          "name": "Manage Deployments cluster-wide (potential for privileged pod execution)",
-          "link": "https://rbac-atlas.github.io/rules/1033/"
-        },
-        {
-          "id": 1034,
-          "name": "Manage Deployments in a namespace (potential for privileged pod execution)",
-          "link": "https://rbac-atlas.github.io/rules/1034/"
-        },
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "flagger",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "flagger",
-      "apiGroup": "apps",
-      "resource": "deployments/finalizers",
-      "resourceName": "",
-      "verbs": [
-        "create",
-        "delete",
-        "get",
-        "list",
-        "patch",
-        "update",
-        "watch"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "flagger",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "flagger",
-      "apiGroup": "networking.istio.io",
-      "resource": "virtualservices",
-      "resourceName": "",
-      "verbs": [
-        "create",
-        "delete",
-        "get",
-        "list",
-        "patch",
-        "update",
-        "watch"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "flagger",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "flagger",
-      "apiGroup": "networking.istio.io",
-      "resource": "virtualservices/finalizers",
-      "resourceName": "",
-      "verbs": [
-        "create",
-        "delete",
-        "get",
-        "list",
-        "patch",
-        "update",
-        "watch"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "flagger",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "flagger",
-      "apiGroup": "networking.istio.io",
-      "resource": "destinationrules",
-      "resourceName": "",
-      "verbs": [
-        "create",
-        "delete",
-        "get",
-        "list",
-        "patch",
-        "update",
-        "watch"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "flagger",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "flagger",
-      "apiGroup": "networking.istio.io",
-      "resource": "destinationrules/finalizers",
-      "resourceName": "",
-      "verbs": [
-        "create",
-        "delete",
-        "get",
-        "list",
-        "patch",
-        "update",
-        "watch"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
         {
           "id": 9996,
           "name": "Base Risk Level - Low",

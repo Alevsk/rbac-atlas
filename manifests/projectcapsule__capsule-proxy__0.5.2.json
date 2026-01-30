@@ -1,0 +1,63 @@
+{
+  "metadata": {
+    "version": "0.5.2",
+    "name": "capsule-proxy",
+    "source": "charts/projectcapsule__capsule-proxy__0.5.2/",
+    "timestamp": 1769798273,
+    "extra": {
+      "helm": {
+        "description": "Helm Chart for Capsule Proxy, addon for Capsule, the multi-tenant Operator",
+        "home": "https://github.com/projectcapsule/capsule-proxy",
+        "icon": "https://github.com/projectcapsule/capsule/raw/main/assets/logo/capsule_small.png",
+        "keywords": [
+          "kubernetes",
+          "operator",
+          "multi-tenancy",
+          "multi-tenant",
+          "multitenancy",
+          "multitenant",
+          "namespace",
+          "proxy"
+        ],
+        "kubeVersion": "",
+        "maintainers": [
+          {
+            "name": "capsule-maintainers",
+            "email": "cncf-capsule-maintainers@lists.cncf.io"
+          }
+        ],
+        "sources": [
+          "https://capsule.clastix.io/docs/general/proxy"
+        ]
+      }
+    }
+  },
+  "serviceAccountData": [
+    {
+      "serviceAccountName": "capsule-proxy",
+      "namespace": "default",
+      "automountToken": false,
+      "secrets": null,
+      "imagePullSecrets": null
+    }
+  ],
+  "serviceAccountPermissions": [],
+  "serviceAccountWorkloads": [
+    {
+      "serviceAccountName": "capsule-proxy",
+      "namespace": "default",
+      "workloadType": "Deployment",
+      "workloadName": "capsule-proxy",
+      "containerName": "capsule-proxy",
+      "image": "ghcr.io/projectcapsule/capsule-proxy:v0.4.8"
+    },
+    {
+      "serviceAccountName": "capsule-proxy",
+      "namespace": "default",
+      "workloadType": "Job",
+      "workloadName": "capsule-proxy-certgen",
+      "containerName": "post-install-job",
+      "image": "docker.io/jettech/kube-webhook-certgen:v1.3.0"
+    }
+  ]
+}

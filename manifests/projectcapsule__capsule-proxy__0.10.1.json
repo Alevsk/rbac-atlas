@@ -3,7 +3,7 @@
     "version": "0.10.1",
     "name": "capsule-proxy",
     "source": "charts/projectcapsule__capsule-proxy__0.10.1/",
-    "timestamp": 1769133305,
+    "timestamp": 1769794187,
     "extra": {
       "helm": {
         "description": "Helm Chart for Capsule Proxy, addon for Capsule, the multi-tenant Operator",
@@ -98,12 +98,12 @@
   ],
   "serviceAccountWorkloads": [
     {
-      "serviceAccountName": "capsule-proxy",
+      "serviceAccountName": "capsule-proxy-crds",
       "namespace": "default",
       "workloadType": "Job",
-      "workloadName": "capsule-proxy-certgen",
-      "containerName": "post-install-job",
-      "image": "registry.k8s.io/ingress-nginx/kube-webhook-certgen:v1.6.5"
+      "workloadName": "capsule-proxy-crds",
+      "containerName": "crds-hook",
+      "image": "docker.io/clastix/kubectl:v1.20"
     },
     {
       "serviceAccountName": "capsule-proxy",
@@ -114,12 +114,12 @@
       "image": "ghcr.io/projectcapsule/capsule-proxy:v0.10.1"
     },
     {
-      "serviceAccountName": "capsule-proxy-crds",
+      "serviceAccountName": "capsule-proxy",
       "namespace": "default",
       "workloadType": "Job",
-      "workloadName": "capsule-proxy-crds",
-      "containerName": "crds-hook",
-      "image": "docker.io/clastix/kubectl:v1.20"
+      "workloadName": "capsule-proxy-certgen",
+      "containerName": "post-install-job",
+      "image": "registry.k8s.io/ingress-nginx/kube-webhook-certgen:v1.6.5"
     }
   ]
 }
