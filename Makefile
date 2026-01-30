@@ -52,6 +52,8 @@ PLAYWRIGHT_REPORT := playwright-report
 # Use variables for flags to centralize logic.
 # HUGO_ARGS can be overridden from the command line, e.g., `make build HUGO_ARGS="..."`
 HUGO_ARGS      ?=
+FORCE          ?= false
+VERBOSE        ?= false
 
 # Parameter for forcing regeneration of pages. Usage: `make generate-pages FORCE=true`
 J2H_SCRIPT     := json2hugo.py
@@ -154,7 +156,7 @@ get-manifests: ##@ Analyze Helm charts to generate JSON manifests (use FORCE=tru
 	@echo "INFO: Fetching and analyzing manifests from Helm charts..."
 	@# Complex shell logic is moved to an external script for clarity.
 	@# This makes the Makefile cleaner and the script more maintainable and testable.
-	@FORCE=$(FORCE) scripts/get_manifests.sh
+	@FORCE=$(FORCE) VERBOSE=$(VERBOSE) scripts/get_manifests.sh
 
 check-manifests: ##@ Report charts with missing or invalid JSON manifests
 	@$(UV) run check_manifests.py --charts-dir charts --manifests-dir $(MANIFESTS_DIR)

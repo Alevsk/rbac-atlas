@@ -1,86 +1,75 @@
 {
   "metadata": {
-    "version": "2026.1.4",
-    "name": "linkerd-viz",
-    "source": "charts/linkerd-edge__linkerd-viz__2026.1.4/",
-    "timestamp": 1769740156,
+    "version": "v1.20.0-alpha.1",
+    "name": "cert-manager",
+    "source": "charts/cert-manager__cert-manager__v1.20.0-alpha.1/",
+    "timestamp": 1769812199,
     "extra": {
       "helm": {
-        "description": "The Linkerd-Viz extension contains observability and visualization components for Linkerd. ",
-        "home": "https://linkerd.io",
-        "icon": "https://linkerd.io/images/logo-only-200h.png",
+        "description": "A Helm chart for cert-manager",
+        "home": "https://cert-manager.io",
+        "icon": "https://raw.githubusercontent.com/cert-manager/community/4d35a69437d21b76322157e6284be4cd64e6d2b7/logo/logo-small.png",
         "keywords": [
-          "service-mesh"
+          "cert-manager",
+          "kube-lego",
+          "letsencrypt",
+          "tls"
         ],
-        "kubeVersion": "\u003e=1.23.0-0",
+        "kubeVersion": "\u003e= 1.22.0-0",
         "maintainers": [
           {
-            "name": "Linkerd authors",
-            "email": "cncf-linkerd-dev@lists.cncf.io",
-            "url": "https://linkerd.io/"
+            "name": "cert-manager-maintainers",
+            "email": "cert-manager-maintainers@googlegroups.com",
+            "url": "https://cert-manager.io"
           }
         ],
         "sources": [
-          "https://github.com/linkerd/linkerd2/"
+          "https://github.com/cert-manager/cert-manager"
         ]
       }
     }
   },
   "serviceAccountData": [
     {
-      "serviceAccountName": "tap-injector",
+      "serviceAccountName": "cert-manager-cainjector",
       "namespace": "default",
-      "automountToken": false,
+      "automountToken": true,
       "secrets": null,
       "imagePullSecrets": null
     },
     {
-      "serviceAccountName": "metrics-api",
+      "serviceAccountName": "cert-manager-startupapicheck",
       "namespace": "default",
-      "automountToken": false,
+      "automountToken": true,
       "secrets": null,
       "imagePullSecrets": null
     },
     {
-      "serviceAccountName": "web",
+      "serviceAccountName": "cert-manager-webhook",
       "namespace": "default",
-      "automountToken": false,
+      "automountToken": true,
       "secrets": null,
       "imagePullSecrets": null
     },
     {
-      "serviceAccountName": "prometheus",
+      "serviceAccountName": "cert-manager",
       "namespace": "default",
-      "automountToken": false,
-      "secrets": null,
-      "imagePullSecrets": null
-    },
-    {
-      "serviceAccountName": "namespace-metadata",
-      "namespace": "default",
-      "automountToken": false,
-      "secrets": null,
-      "imagePullSecrets": null
-    },
-    {
-      "serviceAccountName": "tap",
-      "namespace": "default",
-      "automountToken": false,
+      "automountToken": true,
       "secrets": null,
       "imagePullSecrets": null
     }
   ],
   "serviceAccountPermissions": [
     {
-      "serviceAccountName": "web",
+      "serviceAccountName": "cert-manager-startupapicheck",
       "namespace": "default",
       "roleType": "Role",
-      "roleName": "web",
-      "apiGroup": "",
-      "resource": "configmaps",
+      "roleName": "cert-manager-startupapicheck:create-cert",
+      "apiGroup": "cert-manager.io",
+      "resource": "certificaterequests",
       "resourceName": "",
       "verbs": [
-        "get"
+        "create"
       ],
       "riskLevel": "Low",
       "tags": [],
@@ -93,15 +82,123 @@
       ]
     },
     {
-      "serviceAccountName": "web",
+      "serviceAccountName": "cert-manager-webhook",
       "namespace": "default",
       "roleType": "Role",
-      "roleName": "web",
+      "roleName": "cert-manager-webhook:dynamic-serving",
       "apiGroup": "",
-      "resource": "configmaps",
-      "resourceName": "linkerd-config",
+      "resource": "secrets",
+      "resourceName": "cert-manager-webhook-ca",
       "verbs": [
-        "get"
+        "get",
+        "list",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [
+        "SecretAccess",
+        "CredentialAccess",
+        "DataExposure",
+        "InformationDisclosure",
+        "ResourceNameRestricted"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1011,
+          "name": "Read secrets in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1011/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "cert-manager-webhook",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "cert-manager-webhook:dynamic-serving",
+      "apiGroup": "",
+      "resource": "secrets",
+      "resourceName": "",
+      "verbs": [
+        "create"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "cert-manager-webhook",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "cert-manager-webhook:subjectaccessreviews",
+      "apiGroup": "authorization.k8s.io",
+      "resource": "subjectaccessreviews",
+      "resourceName": "",
+      "verbs": [
+        "create"
+      ],
+      "riskLevel": "Medium",
+      "tags": [
+        "InformationDisclosure",
+        "RBACQuery"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1050,
+          "name": "Create SubjectAccessReviews (check arbitrary permissions)",
+          "link": "https://rbac-atlas.github.io/rules/1050/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "cert-manager",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "cert-manager:leaderelection",
+      "apiGroup": "coordination.k8s.io",
+      "resource": "leases",
+      "resourceName": "",
+      "verbs": [
+        "create"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "cert-manager",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "cert-manager:leaderelection",
+      "apiGroup": "coordination.k8s.io",
+      "resource": "leases",
+      "resourceName": "cert-manager-controller",
+      "verbs": [
+        "get",
+        "patch",
+        "update"
       ],
       "riskLevel": "Low",
       "tags": [
@@ -116,18 +213,20 @@
       ]
     },
     {
-      "serviceAccountName": "web",
+      "serviceAccountName": "cert-manager",
       "namespace": "default",
       "roleType": "Role",
-      "roleName": "web",
+      "roleName": "cert-manager-tokenrequest",
       "apiGroup": "",
-      "resource": "namespaces",
-      "resourceName": "",
+      "resource": "serviceaccounts/token",
+      "resourceName": "cert-manager",
       "verbs": [
-        "get"
+        "create"
       ],
       "riskLevel": "Low",
-      "tags": [],
+      "tags": [
+        "ResourceNameRestricted"
+      ],
       "matchedRiskRules": [
         {
           "id": 9996,
@@ -137,333 +236,41 @@
       ]
     },
     {
-      "serviceAccountName": "web",
-      "namespace": "default",
-      "roleType": "Role",
-      "roleName": "web",
-      "apiGroup": "",
-      "resource": "serviceaccounts",
-      "resourceName": "",
-      "verbs": [
-        "list"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "web",
-      "namespace": "default",
-      "roleType": "Role",
-      "roleName": "web",
-      "apiGroup": "",
-      "resource": "pods",
-      "resourceName": "",
-      "verbs": [
-        "list"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "web",
-      "namespace": "default",
-      "roleType": "Role",
-      "roleName": "web",
-      "apiGroup": "apps",
-      "resource": "replicasets",
-      "resourceName": "",
-      "verbs": [
-        "list"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "web",
+      "serviceAccountName": "cert-manager",
       "namespace": "default",
       "roleType": "ClusterRole",
-      "roleName": "linkerd-default-web-check",
-      "apiGroup": "apiregistration.k8s.io",
-      "resource": "apiservices",
+      "roleName": "cert-manager-controller-issuers",
+      "apiGroup": "cert-manager.io",
+      "resource": "issuers",
       "resourceName": "",
       "verbs": [
-        "get"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "web",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "linkerd-default-web-check",
-      "apiGroup": "rbac.authorization.k8s.io",
-      "resource": "clusterrolebindings",
-      "resourceName": "",
-      "verbs": [
-        "list"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "web",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "linkerd-default-web-check",
-      "apiGroup": "rbac.authorization.k8s.io",
-      "resource": "clusterroles",
-      "resourceName": "",
-      "verbs": [
-        "list"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "web",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "linkerd-default-web-check",
-      "apiGroup": "apiextensions.k8s.io",
-      "resource": "customresourcedefinitions",
-      "resourceName": "",
-      "verbs": [
-        "list"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "web",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "linkerd-default-web-check",
-      "apiGroup": "admissionregistration.k8s.io",
-      "resource": "mutatingwebhookconfigurations",
-      "resourceName": "",
-      "verbs": [
-        "list"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "web",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "linkerd-default-web-check",
-      "apiGroup": "admissionregistration.k8s.io",
-      "resource": "validatingwebhookconfigurations",
-      "resourceName": "",
-      "verbs": [
-        "list"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "web",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "linkerd-default-web-check",
-      "apiGroup": "linkerd.io",
-      "resource": "serviceprofiles",
-      "resourceName": "",
-      "verbs": [
-        "list"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "web",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "linkerd-default-web-check",
-      "apiGroup": "",
-      "resource": "nodes",
-      "resourceName": "",
-      "verbs": [
-        "list"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "web",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "linkerd-default-web-check",
-      "apiGroup": "",
-      "resource": "pods",
-      "resourceName": "",
-      "verbs": [
-        "list"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "web",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "linkerd-default-web-check",
-      "apiGroup": "",
-      "resource": "services",
-      "resourceName": "",
-      "verbs": [
-        "list"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "web",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "linkerd-default-tap-admin",
-      "apiGroup": "",
-      "resource": "namespaces",
-      "resourceName": "",
-      "verbs": [
-        "list"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "web",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "linkerd-default-tap-admin",
-      "apiGroup": "tap.linkerd.io",
-      "resource": "*",
-      "resourceName": "",
-      "verbs": [
+        "get",
+        "list",
+        "patch",
+        "update",
         "watch"
       ],
-      "riskLevel": "High",
-      "tags": [
-        "ClusterWideAccess",
-        "WildcardPermission"
-      ],
+      "riskLevel": "Low",
+      "tags": [],
       "matchedRiskRules": [
         {
-          "id": 9998,
-          "name": "Base Risk Level - High",
-          "link": "https://rbac-atlas.github.io/rules/9998/"
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
         }
       ]
     },
     {
-      "serviceAccountName": "web",
+      "serviceAccountName": "cert-manager",
       "namespace": "default",
       "roleType": "ClusterRole",
-      "roleName": "linkerd-default-web-api",
-      "apiGroup": "",
-      "resource": "namespaces",
+      "roleName": "cert-manager-controller-issuers",
+      "apiGroup": "cert-manager.io",
+      "resource": "issuers/status",
       "resourceName": "",
       "verbs": [
-        "list"
+        "patch",
+        "update"
       ],
       "riskLevel": "Low",
       "tags": [],
@@ -476,12 +283,519 @@
       ]
     },
     {
-      "serviceAccountName": "prometheus",
+      "serviceAccountName": "cert-manager",
       "namespace": "default",
       "roleType": "ClusterRole",
-      "roleName": "linkerd-default-prometheus",
+      "roleName": "cert-manager-controller-issuers",
       "apiGroup": "",
-      "resource": "nodes/proxy",
+      "resource": "secrets",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "CredentialAccess",
+        "DataExposure",
+        "InformationDisclosure",
+        "SecretAccess",
+        "ClusterWideSecretAccess"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1010,
+          "name": "Read secrets cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1010/"
+        },
+        {
+          "id": 1011,
+          "name": "Read secrets in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1011/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "cert-manager",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "cert-manager-controller-issuers",
+      "apiGroup": "",
+      "resource": "events",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "patch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "cert-manager",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "cert-manager-controller-clusterissuers",
+      "apiGroup": "cert-manager.io",
+      "resource": "clusterissuers",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "cert-manager",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "cert-manager-controller-clusterissuers",
+      "apiGroup": "cert-manager.io",
+      "resource": "clusterissuers/status",
+      "resourceName": "",
+      "verbs": [
+        "patch",
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "cert-manager",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "cert-manager-controller-clusterissuers",
+      "apiGroup": "",
+      "resource": "secrets",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "CredentialAccess",
+        "DataExposure",
+        "InformationDisclosure",
+        "SecretAccess",
+        "ClusterWideSecretAccess"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1010,
+          "name": "Read secrets cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1010/"
+        },
+        {
+          "id": 1011,
+          "name": "Read secrets in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1011/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "cert-manager",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "cert-manager-controller-clusterissuers",
+      "apiGroup": "",
+      "resource": "events",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "patch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "cert-manager",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "cert-manager-controller-certificates",
+      "apiGroup": "cert-manager.io",
+      "resource": "certificaterequests",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "cert-manager",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "cert-manager-controller-certificates",
+      "apiGroup": "cert-manager.io",
+      "resource": "certificaterequests/status",
+      "resourceName": "",
+      "verbs": [
+        "patch",
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "cert-manager",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "cert-manager-controller-certificates",
+      "apiGroup": "cert-manager.io",
+      "resource": "clusterissuers",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "cert-manager",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "cert-manager-controller-certificates",
+      "apiGroup": "cert-manager.io",
+      "resource": "issuers",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "cert-manager",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "cert-manager-controller-certificates",
+      "apiGroup": "cert-manager.io",
+      "resource": "certificates/finalizers",
+      "resourceName": "",
+      "verbs": [
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "cert-manager",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "cert-manager-controller-certificates",
+      "apiGroup": "cert-manager.io",
+      "resource": "certificaterequests/finalizers",
+      "resourceName": "",
+      "verbs": [
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "cert-manager",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "cert-manager-controller-certificates",
+      "apiGroup": "cert-manager.io",
+      "resource": "certificates",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "cert-manager",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "cert-manager-controller-certificates",
+      "apiGroup": "cert-manager.io",
+      "resource": "certificates/status",
+      "resourceName": "",
+      "verbs": [
+        "patch",
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "cert-manager",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "cert-manager-controller-certificates",
+      "apiGroup": "acme.cert-manager.io",
+      "resource": "orders",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "cert-manager",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "cert-manager-controller-certificates",
+      "apiGroup": "",
+      "resource": "secrets",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "Persistence",
+        "ClusterWideSecretAccess",
+        "CredentialAccess",
+        "InformationDisclosure",
+        "SecretAccess",
+        "Tampering",
+        "PotentialPrivilegeEscalation",
+        "DataExposure",
+        "PrivilegeEscalation"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1010,
+          "name": "Read secrets cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1010/"
+        },
+        {
+          "id": 1011,
+          "name": "Read secrets in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1011/"
+        },
+        {
+          "id": 1012,
+          "name": "Modify secrets cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1012/"
+        },
+        {
+          "id": 1013,
+          "name": "Modify secrets in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1013/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "cert-manager",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "cert-manager-controller-certificates",
+      "apiGroup": "",
+      "resource": "events",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "patch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "cert-manager",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "cert-manager-controller-orders",
+      "apiGroup": "cert-manager.io",
+      "resource": "clusterissuers",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "cert-manager",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "cert-manager-controller-orders",
+      "apiGroup": "cert-manager.io",
+      "resource": "issuers",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "cert-manager",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "cert-manager-controller-orders",
+      "apiGroup": "",
+      "resource": "secrets",
       "resourceName": "",
       "verbs": [
         "get",
@@ -490,18 +804,22 @@
       ],
       "riskLevel": "Critical",
       "tags": [
-        "ClusterAdminAccess",
-        "CodeExecution",
-        "LateralMovement",
-        "ElevationOfPrivilege",
-        "AuthorizationBypass",
-        "NodeAccess"
+        "ClusterWideSecretAccess",
+        "CredentialAccess",
+        "DataExposure",
+        "InformationDisclosure",
+        "SecretAccess"
       ],
       "matchedRiskRules": [
         {
-          "id": 1104,
-          "name": "Node proxy GET RCE via WebSocket",
-          "link": "https://rbac-atlas.github.io/rules/1104/"
+          "id": 1010,
+          "name": "Read secrets cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1010/"
+        },
+        {
+          "id": 1011,
+          "name": "Read secrets in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1011/"
         },
         {
           "id": 9996,
@@ -511,14 +829,368 @@
       ]
     },
     {
-      "serviceAccountName": "prometheus",
+      "serviceAccountName": "cert-manager",
       "namespace": "default",
       "roleType": "ClusterRole",
-      "roleName": "linkerd-default-prometheus",
+      "roleName": "cert-manager-controller-orders",
+      "apiGroup": "",
+      "resource": "events",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "patch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "cert-manager",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "cert-manager-controller-orders",
+      "apiGroup": "acme.cert-manager.io",
+      "resource": "orders",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "cert-manager",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "cert-manager-controller-orders",
+      "apiGroup": "acme.cert-manager.io",
+      "resource": "orders/status",
+      "resourceName": "",
+      "verbs": [
+        "patch",
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "cert-manager",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "cert-manager-controller-orders",
+      "apiGroup": "acme.cert-manager.io",
+      "resource": "challenges",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "cert-manager",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "cert-manager-controller-orders",
+      "apiGroup": "acme.cert-manager.io",
+      "resource": "orders/finalizers",
+      "resourceName": "",
+      "verbs": [
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "cert-manager",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "cert-manager-controller-challenges",
+      "apiGroup": "route.openshift.io",
+      "resource": "routes/custom-host",
+      "resourceName": "",
+      "verbs": [
+        "create"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "cert-manager",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "cert-manager-controller-challenges",
+      "apiGroup": "acme.cert-manager.io",
+      "resource": "challenges/finalizers",
+      "resourceName": "",
+      "verbs": [
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "cert-manager",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "cert-manager-controller-challenges",
+      "apiGroup": "acme.cert-manager.io",
+      "resource": "challenges",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "cert-manager",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "cert-manager-controller-challenges",
+      "apiGroup": "acme.cert-manager.io",
+      "resource": "challenges/status",
+      "resourceName": "",
+      "verbs": [
+        "patch",
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "cert-manager",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "cert-manager-controller-challenges",
+      "apiGroup": "cert-manager.io",
+      "resource": "issuers",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "cert-manager",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "cert-manager-controller-challenges",
+      "apiGroup": "cert-manager.io",
+      "resource": "clusterissuers",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "cert-manager",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "cert-manager-controller-challenges",
+      "apiGroup": "",
+      "resource": "secrets",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "DataExposure",
+        "InformationDisclosure",
+        "SecretAccess",
+        "ClusterWideSecretAccess",
+        "CredentialAccess"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1010,
+          "name": "Read secrets cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1010/"
+        },
+        {
+          "id": 1011,
+          "name": "Read secrets in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1011/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "cert-manager",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "cert-manager-controller-challenges",
+      "apiGroup": "",
+      "resource": "events",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "patch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "cert-manager",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "cert-manager-controller-challenges",
       "apiGroup": "",
       "resource": "pods",
       "resourceName": "",
       "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "WorkloadExecution",
+        "PrivilegeEscalation",
+        "LateralMovement",
+        "Persistence",
+        "PotentialPrivilegeEscalation"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1006,
+          "name": "Create pods cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1006/"
+        },
+        {
+          "id": 1007,
+          "name": "Create pods in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1007/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "cert-manager",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "cert-manager-controller-challenges",
+      "apiGroup": "",
+      "resource": "services",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
         "get",
         "list",
         "watch"
@@ -534,12 +1206,116 @@
       ]
     },
     {
-      "serviceAccountName": "prometheus",
+      "serviceAccountName": "cert-manager",
       "namespace": "default",
       "roleType": "ClusterRole",
-      "roleName": "linkerd-default-prometheus",
-      "apiGroup": "",
-      "resource": "nodes",
+      "roleName": "cert-manager-controller-challenges",
+      "apiGroup": "networking.k8s.io",
+      "resource": "ingresses",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "cert-manager",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "cert-manager-controller-challenges",
+      "apiGroup": "gateway.networking.k8s.io",
+      "resource": "httproutes",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "cert-manager",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "cert-manager-controller-ingress-shim",
+      "apiGroup": "cert-manager.io",
+      "resource": "certificates",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "cert-manager",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "cert-manager-controller-ingress-shim",
+      "apiGroup": "cert-manager.io",
+      "resource": "certificaterequests",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "cert-manager",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "cert-manager-controller-ingress-shim",
+      "apiGroup": "cert-manager.io",
+      "resource": "issuers",
       "resourceName": "",
       "verbs": [
         "get",
@@ -557,16 +1333,442 @@
       ]
     },
     {
-      "serviceAccountName": "namespace-metadata",
+      "serviceAccountName": "cert-manager",
       "namespace": "default",
-      "roleType": "Role",
-      "roleName": "namespace-metadata",
-      "apiGroup": "",
-      "resource": "namespaces",
-      "resourceName": "default",
+      "roleType": "ClusterRole",
+      "roleName": "cert-manager-controller-ingress-shim",
+      "apiGroup": "cert-manager.io",
+      "resource": "clusterissuers",
+      "resourceName": "",
       "verbs": [
         "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "cert-manager",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "cert-manager-controller-ingress-shim",
+      "apiGroup": "networking.k8s.io",
+      "resource": "ingresses/finalizers",
+      "resourceName": "",
+      "verbs": [
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "cert-manager",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "cert-manager-controller-ingress-shim",
+      "apiGroup": "networking.k8s.io",
+      "resource": "ingresses",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "cert-manager",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "cert-manager-controller-ingress-shim",
+      "apiGroup": "gateway.networking.k8s.io",
+      "resource": "gateways",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "cert-manager",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "cert-manager-controller-ingress-shim",
+      "apiGroup": "gateway.networking.k8s.io",
+      "resource": "httproutes",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "cert-manager",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "cert-manager-controller-ingress-shim",
+      "apiGroup": "gateway.networking.k8s.io",
+      "resource": "gateways/finalizers",
+      "resourceName": "",
+      "verbs": [
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "cert-manager",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "cert-manager-controller-ingress-shim",
+      "apiGroup": "gateway.networking.k8s.io",
+      "resource": "httproutes/finalizers",
+      "resourceName": "",
+      "verbs": [
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "cert-manager",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "cert-manager-controller-ingress-shim",
+      "apiGroup": "gateway.networking.x-k8s.io",
+      "resource": "xlistenersets",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "cert-manager",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "cert-manager-controller-ingress-shim",
+      "apiGroup": "gateway.networking.x-k8s.io",
+      "resource": "xlistenersets/finalizers",
+      "resourceName": "",
+      "verbs": [
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "cert-manager",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "cert-manager-controller-ingress-shim",
+      "apiGroup": "",
+      "resource": "events",
+      "resourceName": "",
+      "verbs": [
+        "create",
         "patch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "cert-manager-cainjector",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "cert-manager-cainjector",
+      "apiGroup": "cert-manager.io",
+      "resource": "certificates",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "cert-manager-cainjector",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "cert-manager-cainjector",
+      "apiGroup": "",
+      "resource": "secrets",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "ClusterWideSecretAccess",
+        "CredentialAccess",
+        "DataExposure",
+        "InformationDisclosure",
+        "SecretAccess"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1010,
+          "name": "Read secrets cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1010/"
+        },
+        {
+          "id": 1011,
+          "name": "Read secrets in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1011/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "cert-manager-cainjector",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "cert-manager-cainjector",
+      "apiGroup": "",
+      "resource": "events",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "get",
+        "patch",
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "cert-manager-cainjector",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "cert-manager-cainjector",
+      "apiGroup": "admissionregistration.k8s.io",
+      "resource": "validatingwebhookconfigurations",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Medium",
+      "tags": [
+        "Reconnaissance",
+        "InformationDisclosure",
+        "WebhookReconnaissance"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1083,
+          "name": "List ValidatingWebhookConfigurations (Reconnaissance)",
+          "link": "https://rbac-atlas.github.io/rules/1083/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "cert-manager-cainjector",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "cert-manager-cainjector",
+      "apiGroup": "admissionregistration.k8s.io",
+      "resource": "mutatingwebhookconfigurations",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Medium",
+      "tags": [
+        "InformationDisclosure",
+        "WebhookReconnaissance",
+        "Reconnaissance"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1084,
+          "name": "List MutatingWebhookConfigurations (Reconnaissance)",
+          "link": "https://rbac-atlas.github.io/rules/1084/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "cert-manager-cainjector",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "cert-manager-cainjector",
+      "apiGroup": "apiregistration.k8s.io",
+      "resource": "apiservices",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "cert-manager-cainjector",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "cert-manager-cainjector",
+      "apiGroup": "apiextensions.k8s.io",
+      "resource": "customresourcedefinitions",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "cert-manager-cainjector",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "cert-manager-cainjector:leaderelection",
+      "apiGroup": "coordination.k8s.io",
+      "resource": "leases",
+      "resourceName": "cert-manager-cainjector-leader-election",
+      "verbs": [
+        "get",
+        "patch",
+        "update"
       ],
       "riskLevel": "Low",
       "tags": [
@@ -581,145 +1783,23 @@
       ]
     },
     {
-      "serviceAccountName": "tap",
+      "serviceAccountName": "cert-manager-cainjector",
       "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "linkerd-default-tap",
-      "apiGroup": "batch",
-      "resource": "cronjobs",
-      "resourceName": "",
+      "roleType": "Role",
+      "roleName": "cert-manager-cainjector:leaderelection",
+      "apiGroup": "coordination.k8s.io",
+      "resource": "leases",
+      "resourceName": "cert-manager-cainjector-leader-election-core",
       "verbs": [
         "get",
-        "list",
-        "watch"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "tap",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "linkerd-default-tap",
-      "apiGroup": "batch",
-      "resource": "jobs",
-      "resourceName": "",
-      "verbs": [
-        "get",
-        "list",
-        "watch"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "tap",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "linkerd-default-tap",
-      "apiGroup": "",
-      "resource": "pods",
-      "resourceName": "",
-      "verbs": [
-        "get",
-        "list",
-        "watch"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "tap",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "linkerd-default-tap",
-      "apiGroup": "",
-      "resource": "services",
-      "resourceName": "",
-      "verbs": [
-        "get",
-        "list",
-        "watch"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "tap",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "linkerd-default-tap",
-      "apiGroup": "",
-      "resource": "replicationcontrollers",
-      "resourceName": "",
-      "verbs": [
-        "get",
-        "list",
-        "watch"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "tap",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "linkerd-default-tap",
-      "apiGroup": "",
-      "resource": "namespaces",
-      "resourceName": "",
-      "verbs": [
-        "get",
-        "list",
-        "watch"
+        "patch",
+        "update"
       ],
       "riskLevel": "Low",
       "tags": [
-        "InformationDisclosure",
-        "Reconnaissance",
-        "ClusterStructure"
+        "ResourceNameRestricted"
       ],
       "matchedRiskRules": [
-        {
-          "id": 1082,
-          "name": "List Namespaces (Cluster Reconnaissance)",
-          "link": "https://rbac-atlas.github.io/rules/1082/"
-        },
         {
           "id": 9996,
           "name": "Base Risk Level - Low",
@@ -728,794 +1808,19 @@
       ]
     },
     {
-      "serviceAccountName": "tap",
+      "serviceAccountName": "cert-manager-cainjector",
       "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "linkerd-default-tap",
-      "apiGroup": "",
-      "resource": "nodes",
+      "roleType": "Role",
+      "roleName": "cert-manager-cainjector:leaderelection",
+      "apiGroup": "coordination.k8s.io",
+      "resource": "leases",
       "resourceName": "",
       "verbs": [
-        "get",
-        "list",
-        "watch"
+        "create"
       ],
       "riskLevel": "Low",
       "tags": [],
       "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "tap",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "linkerd-default-tap",
-      "apiGroup": "extensions",
-      "resource": "statefulsets",
-      "resourceName": "",
-      "verbs": [
-        "get",
-        "list",
-        "watch"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "tap",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "linkerd-default-tap",
-      "apiGroup": "extensions",
-      "resource": "cronjobs",
-      "resourceName": "",
-      "verbs": [
-        "get",
-        "list",
-        "watch"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "tap",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "linkerd-default-tap",
-      "apiGroup": "extensions",
-      "resource": "jobs",
-      "resourceName": "",
-      "verbs": [
-        "get",
-        "list",
-        "watch"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "tap",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "linkerd-default-tap",
-      "apiGroup": "extensions",
-      "resource": "daemonsets",
-      "resourceName": "",
-      "verbs": [
-        "get",
-        "list",
-        "watch"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "tap",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "linkerd-default-tap",
-      "apiGroup": "extensions",
-      "resource": "deployments",
-      "resourceName": "",
-      "verbs": [
-        "get",
-        "list",
-        "watch"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "tap",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "linkerd-default-tap",
-      "apiGroup": "extensions",
-      "resource": "replicasets",
-      "resourceName": "",
-      "verbs": [
-        "get",
-        "list",
-        "watch"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "tap",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "linkerd-default-tap",
-      "apiGroup": "apps",
-      "resource": "daemonsets",
-      "resourceName": "",
-      "verbs": [
-        "get",
-        "list",
-        "watch"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "tap",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "linkerd-default-tap",
-      "apiGroup": "apps",
-      "resource": "deployments",
-      "resourceName": "",
-      "verbs": [
-        "get",
-        "list",
-        "watch"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "tap",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "linkerd-default-tap",
-      "apiGroup": "apps",
-      "resource": "replicasets",
-      "resourceName": "",
-      "verbs": [
-        "get",
-        "list",
-        "watch"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "tap",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "linkerd-default-tap",
-      "apiGroup": "apps",
-      "resource": "statefulsets",
-      "resourceName": "",
-      "verbs": [
-        "get",
-        "list",
-        "watch"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "tap-injector",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "linkerd-tap-injector",
-      "apiGroup": "",
-      "resource": "namespaces",
-      "resourceName": "",
-      "verbs": [
-        "get",
-        "list",
-        "watch"
-      ],
-      "riskLevel": "Low",
-      "tags": [
-        "InformationDisclosure",
-        "Reconnaissance",
-        "ClusterStructure"
-      ],
-      "matchedRiskRules": [
-        {
-          "id": 1082,
-          "name": "List Namespaces (Cluster Reconnaissance)",
-          "link": "https://rbac-atlas.github.io/rules/1082/"
-        },
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "metrics-api",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "linkerd-default-metrics-api",
-      "apiGroup": "linkerd.io",
-      "resource": "serviceprofiles",
-      "resourceName": "",
-      "verbs": [
-        "get",
-        "list",
-        "watch"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "metrics-api",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "linkerd-default-metrics-api",
-      "apiGroup": "policy.linkerd.io",
-      "resource": "servers",
-      "resourceName": "",
-      "verbs": [
-        "get",
-        "list"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "metrics-api",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "linkerd-default-metrics-api",
-      "apiGroup": "policy.linkerd.io",
-      "resource": "serverauthorizations",
-      "resourceName": "",
-      "verbs": [
-        "get",
-        "list"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "metrics-api",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "linkerd-default-metrics-api",
-      "apiGroup": "policy.linkerd.io",
-      "resource": "authorizationpolicies",
-      "resourceName": "",
-      "verbs": [
-        "get",
-        "list"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "metrics-api",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "linkerd-default-metrics-api",
-      "apiGroup": "policy.linkerd.io",
-      "resource": "httproutes",
-      "resourceName": "",
-      "verbs": [
-        "get",
-        "list"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "metrics-api",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "linkerd-default-metrics-api",
-      "apiGroup": "extensions",
-      "resource": "replicasets",
-      "resourceName": "",
-      "verbs": [
-        "get",
-        "list",
-        "watch"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "metrics-api",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "linkerd-default-metrics-api",
-      "apiGroup": "extensions",
-      "resource": "statefulsets",
-      "resourceName": "",
-      "verbs": [
-        "get",
-        "list",
-        "watch"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "metrics-api",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "linkerd-default-metrics-api",
-      "apiGroup": "extensions",
-      "resource": "cronjobs",
-      "resourceName": "",
-      "verbs": [
-        "get",
-        "list",
-        "watch"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "metrics-api",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "linkerd-default-metrics-api",
-      "apiGroup": "extensions",
-      "resource": "jobs",
-      "resourceName": "",
-      "verbs": [
-        "get",
-        "list",
-        "watch"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "metrics-api",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "linkerd-default-metrics-api",
-      "apiGroup": "extensions",
-      "resource": "daemonsets",
-      "resourceName": "",
-      "verbs": [
-        "get",
-        "list",
-        "watch"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "metrics-api",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "linkerd-default-metrics-api",
-      "apiGroup": "extensions",
-      "resource": "deployments",
-      "resourceName": "",
-      "verbs": [
-        "get",
-        "list",
-        "watch"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "metrics-api",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "linkerd-default-metrics-api",
-      "apiGroup": "apps",
-      "resource": "daemonsets",
-      "resourceName": "",
-      "verbs": [
-        "get",
-        "list",
-        "watch"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "metrics-api",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "linkerd-default-metrics-api",
-      "apiGroup": "apps",
-      "resource": "deployments",
-      "resourceName": "",
-      "verbs": [
-        "get",
-        "list",
-        "watch"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "metrics-api",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "linkerd-default-metrics-api",
-      "apiGroup": "apps",
-      "resource": "replicasets",
-      "resourceName": "",
-      "verbs": [
-        "get",
-        "list",
-        "watch"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "metrics-api",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "linkerd-default-metrics-api",
-      "apiGroup": "apps",
-      "resource": "statefulsets",
-      "resourceName": "",
-      "verbs": [
-        "get",
-        "list",
-        "watch"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "metrics-api",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "linkerd-default-metrics-api",
-      "apiGroup": "batch",
-      "resource": "cronjobs",
-      "resourceName": "",
-      "verbs": [
-        "get",
-        "list",
-        "watch"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "metrics-api",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "linkerd-default-metrics-api",
-      "apiGroup": "batch",
-      "resource": "jobs",
-      "resourceName": "",
-      "verbs": [
-        "get",
-        "list",
-        "watch"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "metrics-api",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "linkerd-default-metrics-api",
-      "apiGroup": "",
-      "resource": "pods",
-      "resourceName": "",
-      "verbs": [
-        "get",
-        "list",
-        "watch"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "metrics-api",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "linkerd-default-metrics-api",
-      "apiGroup": "",
-      "resource": "endpoints",
-      "resourceName": "",
-      "verbs": [
-        "get",
-        "list",
-        "watch"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "metrics-api",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "linkerd-default-metrics-api",
-      "apiGroup": "",
-      "resource": "services",
-      "resourceName": "",
-      "verbs": [
-        "get",
-        "list",
-        "watch"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "metrics-api",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "linkerd-default-metrics-api",
-      "apiGroup": "",
-      "resource": "replicationcontrollers",
-      "resourceName": "",
-      "verbs": [
-        "get",
-        "list",
-        "watch"
-      ],
-      "riskLevel": "Low",
-      "tags": [],
-      "matchedRiskRules": [
-        {
-          "id": 9996,
-          "name": "Base Risk Level - Low",
-          "link": "https://rbac-atlas.github.io/rules/9996/"
-        }
-      ]
-    },
-    {
-      "serviceAccountName": "metrics-api",
-      "namespace": "default",
-      "roleType": "ClusterRole",
-      "roleName": "linkerd-default-metrics-api",
-      "apiGroup": "",
-      "resource": "namespaces",
-      "resourceName": "",
-      "verbs": [
-        "get",
-        "list",
-        "watch"
-      ],
-      "riskLevel": "Low",
-      "tags": [
-        "ClusterStructure",
-        "InformationDisclosure",
-        "Reconnaissance"
-      ],
-      "matchedRiskRules": [
-        {
-          "id": 1082,
-          "name": "List Namespaces (Cluster Reconnaissance)",
-          "link": "https://rbac-atlas.github.io/rules/1082/"
-        },
         {
           "id": 9996,
           "name": "Base Risk Level - Low",
@@ -1526,52 +1831,36 @@
   ],
   "serviceAccountWorkloads": [
     {
-      "serviceAccountName": "metrics-api",
+      "serviceAccountName": "cert-manager-cainjector",
       "namespace": "default",
       "workloadType": "Deployment",
-      "workloadName": "metrics-api",
-      "containerName": "metrics-api",
-      "image": "cr.l5d.io/linkerd/metrics-api:edge-26.1.4"
+      "workloadName": "cert-manager-cainjector",
+      "containerName": "cert-manager-cainjector",
+      "image": "quay.io/jetstack/cert-manager-cainjector:v1.20.0-alpha.1"
     },
     {
-      "serviceAccountName": "prometheus",
+      "serviceAccountName": "cert-manager",
       "namespace": "default",
       "workloadType": "Deployment",
-      "workloadName": "prometheus",
-      "containerName": "prometheus",
-      "image": "prom/prometheus:v2.55.1"
+      "workloadName": "cert-manager",
+      "containerName": "cert-manager-controller",
+      "image": "quay.io/jetstack/cert-manager-controller:v1.20.0-alpha.1"
     },
     {
-      "serviceAccountName": "web",
-      "namespace": "default",
-      "workloadType": "Deployment",
-      "workloadName": "web",
-      "containerName": "web",
-      "image": "cr.l5d.io/linkerd/web:edge-26.1.4"
-    },
-    {
-      "serviceAccountName": "tap-injector",
-      "namespace": "default",
-      "workloadType": "Deployment",
-      "workloadName": "tap-injector",
-      "containerName": "tap-injector",
-      "image": "cr.l5d.io/linkerd/tap:edge-26.1.4"
-    },
-    {
-      "serviceAccountName": "namespace-metadata",
+      "serviceAccountName": "cert-manager-startupapicheck",
       "namespace": "default",
       "workloadType": "Job",
-      "workloadName": "namespace-metadata",
-      "containerName": "namespace-metadata",
-      "image": "cr.l5d.io/linkerd/extension-init:v0.1.7"
+      "workloadName": "cert-manager-startupapicheck",
+      "containerName": "cert-manager-startupapicheck",
+      "image": "quay.io/jetstack/cert-manager-startupapicheck:v1.20.0-alpha.1"
     },
     {
-      "serviceAccountName": "tap",
+      "serviceAccountName": "cert-manager-webhook",
       "namespace": "default",
       "workloadType": "Deployment",
-      "workloadName": "tap",
-      "containerName": "tap",
-      "image": "cr.l5d.io/linkerd/tap:edge-26.1.4"
+      "workloadName": "cert-manager-webhook",
+      "containerName": "cert-manager-webhook",
+      "image": "quay.io/jetstack/cert-manager-webhook:v1.20.0-alpha.1"
     }
   ]
 }

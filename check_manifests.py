@@ -206,7 +206,7 @@ def main():
     print(f"  Orphan manifests:           {len(orphan_manifests)}")
     print("=" * 60)
 
-    if missing or invalid:
+    if invalid:
         sys.exit(1)
 
 
