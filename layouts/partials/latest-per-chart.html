@@ -1,0 +1,15 @@
+{{/* Returns a slice of the latest page per chart, walking the section tree once.
+     Use with partialCached and a stable key like "global" for maximum caching. */}}
+{{ $chartsSection := site.GetPage "/charts" }}
+{{ $groupedPages := slice }}
+{{ with $chartsSection }}
+{{ range .Sections }}
+{{ range .Sections }}
+{{ $sortedPages := sort .Pages "Params.version_order" "desc" }}
+{{ with index $sortedPages 0 }}
+{{ $groupedPages = $groupedPages | append . }}
+{{ end }}
+{{ end }}
+{{ end }}
+{{ end }}
+{{ return $groupedPages }}

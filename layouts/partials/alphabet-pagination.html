@@ -1,22 +1,21 @@
 {{/* Create alphabet pagination */}}
+{{/* Build a set of letters that have projects in one pass */}}
+{{ $activeLetters := dict }}
+{{ range $.GroupedPages }}
+{{ range .Params.tags }}
+{{ if hasPrefix . "letter-" }}
+{{ $activeLetters = merge $activeLetters (dict . true) }}
+{{ end }}
+{{ end }}
+{{ end }}
+
 <div class="alphabet-pagination">
   <a href="/"
      class="letter-link {{ if eq $.RelPermalink "/" }}active{{ end }}">All</a>
   {{ $alphabet := split "ABCDEFGHIJKLMNOPQRSTUVWXYZ" "" }}
   {{ range $letter := $alphabet }}
-  {{ $hasProjects := false }}
-  {{ range $.GroupedPages }}
-  {{ if .Params }}
-  {{ if .Params.tags }}
-  {{ range .Params.tags }}
-  {{ if eq . (printf "letter-%s" $letter) }}
-  {{ $hasProjects = true }}
-  {{ end }}
-  {{ end }}
-  {{ end }}
-  {{ end }}
-  {{ end }}
-  {{ if $hasProjects }}
+  {{ $tagKey := printf "letter-%s" $letter }}
+  {{ if index $activeLetters $tagKey }}
   <a href="/tags/letter-{{ lower $letter }}/" class="letter-link">{{ $letter }}</a>
 {{ else }}
   <span class="letter-link disabled">{{ $letter }}</span>

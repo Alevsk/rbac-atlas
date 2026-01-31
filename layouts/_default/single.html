@@ -5,12 +5,7 @@
       <h1 class="post-title">
         <a href="{{ .Permalink }}">{{ .Title | markdownify }}</a>
       </h1>
-      {{ $currentPath := .File.Dir }}
-      {{ $pathParts := split .File.Dir "/" }}
-      {{ $repoName := index $pathParts 1 }}
-      {{ $chartName := index $pathParts 2 }}
-      {{ $projectPages := where .Site.RegularPages "File.Dir" (printf "charts/%s/%s/" $repoName $chartName) }}
-      {{ $sortedVersions := sort $projectPages "Params.version_order" "desc" }}
+      {{ $sortedVersions := sort .CurrentSection.Pages "Params.version_order" "desc" }}
       {{ if gt (len $sortedVersions) 1 }}
       <div class="version-selector">
         <select class="version-select" onchange="window.location.href=this.value">

@@ -4,43 +4,12 @@
 {{ end }}
 <h2>Versions</h2>
 <div class="posts">
-  {{ $isntDefault := not (or (eq (trim $.Site.Params.contentTypeName " ") "posts") (eq (trim $.Site.Params.contentTypeName " ") "")) }}
-  {{ $contentTypeName := cond $isntDefault (string $.Site.Params.contentTypeName) "posts" }}
+{{/* Use the current section's pages directly — no need to scan all site pages */}}
+{{ $allPages := .RegularPages }}
+{{ $sortedPages := sort $allPages "Params.version_order" "desc" }}
 
-  {{ $PageContext := . }}
-  {{ if .IsHome }}
-  {{ $PageContext = .Site }}
-  {{ end }}
-
-{{/* Group and sort pages by project name */}}
-{{ $allPages := where $PageContext.RegularPages "Type" $contentTypeName }}
-
-{{/* First, get unique repo/chart combinations */}}
-{{ $projects := slice }}
-{{ range $allPages }}
-{{ $pathParts := split .File.Dir "/" }}
-{{ if ge (len $pathParts) 3 }}
-{{ $repoName := index $pathParts 1 }}
-{{ $chartName := index $pathParts 2 }}
-{{ $projects = $projects | append (printf "%s/%s" $repoName $chartName) }}
-{{ end }}
-{{ end }}
-{{ $projects = uniq (sort $projects) }}
-
-{{/* For each repo/chart, get all versions sorted */}}
-{{ $groupedProjects := slice }}
-{{ range $projects }}
-{{ $pathParts := split . "/" }}
-{{ $repoName := index $pathParts 0 }}
-{{ $chartName := index $pathParts 1 }}
-{{ $projectPages := where $allPages "File.Dir" (printf "charts/%s/%s/" $repoName $chartName) }}
-{{ $sortedPages := sort $projectPages "Params.version_order" "desc" }}
-{{ $groupedProjects = $groupedProjects | append (dict "name" (printf "%s/%s" $repoName $chartName) "pages" $sortedPages) }}
-{{ end }}
-
-{{/* Display projects and their versions */}}
-{{ range $groupedProjects }}
-{{ range .pages }}
+{{/* Display all versions */}}
+{{ range $sortedPages }}
 {{ $page := . }}
 <article class="post on-list">
   <div class="title-card-wrapper">
@@ -114,7 +83,6 @@
   </div>
   {{ end }}
 </article>
-{{ end }}
 {{ end }}
 {{ partial "pagination.html" . }}
 </div>

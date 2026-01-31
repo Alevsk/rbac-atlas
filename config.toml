@@ -3,10 +3,27 @@ languageCode = "en-us"
 title = "RBAC Atlas"
 theme = 'terminal'
 
+# Increase items per page to reduce the number of paginator pages generated
+[pagination]
+  pagerSize = 50
+
 # Replace this with your Google Analytics ID
 googleAnalytics = "G-J1HDNEGQJ7" # For GA4
 
+# Disable unused features to speed up builds
+enableRobotsTXT = true
+disableKinds = ["RSS", "sitemap"]
+
+# Remove RSS output format from all page kinds to avoid render-table.rss.xml overhead
+[outputs]
+  home = ["HTML"]
+  section = ["HTML"]
+  taxonomy = ["HTML"]
+  term = ["HTML"]
+
 [markup]
+  [markup.goldmark.parser]
+    autoHeadingID = false
   [markup.highlight]
     codeFences = true
     guessSyntax = false
