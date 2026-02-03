@@ -9,5 +9,4 @@ WordPress is the world's most popular blogging and content management platform. 
 
 ## Sources
 
-- https://github.com/bitnami/bitnami-docker-wordpress
-- https://wordpress.org/
+- https://github.com/bitnami/charts/tree/main/bitnami/wordpress
