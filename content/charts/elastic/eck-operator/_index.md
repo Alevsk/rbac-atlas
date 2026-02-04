@@ -1,8 +1,8 @@
 ---
 title: "eck-operator"
-description: "A Helm chart for deploying the Elastic Cloud on Kubernetes (ECK) operator: the official Kubernetes operator for orchestrating Elasticsearch, Kibana, APM Server, Enterprise Search, and Beats."
+description: "Elastic Cloud on Kubernetes (ECK) operator"
 ---
 
 ## eck-operator
 
-A Helm chart for deploying the Elastic Cloud on Kubernetes (ECK) operator: the official Kubernetes operator for orchestrating Elasticsearch, Kibana, APM Server, Enterprise Search, and Beats.
+Elastic Cloud on Kubernetes (ECK) operator

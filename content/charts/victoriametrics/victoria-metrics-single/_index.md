@@ -1,11 +1,11 @@
 ---
 title: "victoria-metrics-single"
-description: "Victoria Metrics Single version - high-performance, cost-effective and scalable TSDB, long-term remote storage for Prometheus"
+description: "VictoriaMetrics Single version - high-performance, cost-effective and scalable TSDB, long-term remote storage for Prometheus"
 ---
 
 ## victoria-metrics-single
 
-Victoria Metrics Single version - high-performance, cost-effective and scalable TSDB, long-term remote storage for Prometheus
+VictoriaMetrics Single version - high-performance, cost-effective and scalable TSDB, long-term remote storage for Prometheus
 
 ## Sources
 
