@@ -1,11 +1,11 @@
 ---
 title: "keycloak-operator"
-description: "A Helm chart for EDP Keycloak Operator"
+description: "A Helm chart for KubeRocketCI Keycloak Operator"
 ---
 
 ## keycloak-operator
 
-A Helm chart for EDP Keycloak Operator
+A Helm chart for KubeRocketCI Keycloak Operator
 
 ## Sources
 
