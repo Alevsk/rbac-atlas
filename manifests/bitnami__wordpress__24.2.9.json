@@ -1,0 +1,84 @@
+{
+  "metadata": {
+    "version": "24.2.9",
+    "name": "wordpress",
+    "source": "charts/bitnami__wordpress__24.2.9/",
+    "timestamp": 1770678389,
+    "extra": {
+      "helm": {
+        "description": "WordPress is the world's most popular blogging and content management platform. Powerful yet simple, everyone from students to global corporations use it to build beautiful, functional websites.",
+        "home": "https://bitnami.com",
+        "icon": "https://dyltqmyl993wv.cloudfront.net/assets/stacks/wordpress/img/wordpress-stack-220x234.png",
+        "keywords": [
+          "application",
+          "blog",
+          "cms",
+          "http",
+          "php",
+          "web",
+          "wordpress"
+        ],
+        "kubeVersion": "",
+        "maintainers": [
+          {
+            "name": "Broadcom, Inc. All Rights Reserved.",
+            "url": "https://github.com/bitnami/charts"
+          }
+        ],
+        "sources": [
+          "https://github.com/bitnami/charts/tree/main/bitnami/wordpress"
+        ]
+      }
+    }
+  },
+  "serviceAccountData": [
+    {
+      "serviceAccountName": "wordpress-mariadb",
+      "namespace": "default",
+      "automountToken": false,
+      "secrets": null,
+      "imagePullSecrets": null
+    },
+    {
+      "serviceAccountName": "wordpress",
+      "namespace": "default",
+      "automountToken": false,
+      "secrets": null,
+      "imagePullSecrets": null
+    },
+    {
+      "serviceAccountName": "wordpress-memcached",
+      "namespace": "default",
+      "automountToken": false,
+      "secrets": null,
+      "imagePullSecrets": null
+    }
+  ],
+  "serviceAccountPermissions": [],
+  "serviceAccountWorkloads": [
+    {
+      "serviceAccountName": "wordpress",
+      "namespace": "default",
+      "workloadType": "Deployment",
+      "workloadName": "wordpress",
+      "containerName": "wordpress",
+      "image": "docker.io/bitnami/wordpress:6.8.1-debian-12-r5"
+    },
+    {
+      "serviceAccountName": "wordpress-memcached",
+      "namespace": "default",
+      "workloadType": "Deployment",
+      "workloadName": "wordpress-memcached",
+      "containerName": "memcached",
+      "image": "docker.io/bitnami/memcached:1.6.38-debian-12-r4"
+    },
+    {
+      "serviceAccountName": "wordpress-mariadb",
+      "namespace": "default",
+      "workloadType": "StatefulSet",
+      "workloadName": "wordpress-mariadb",
+      "containerName": "mariadb",
+      "image": "docker.io/bitnami/mariadb:11.4.5-debian-12-r12"
+    }
+  ]
+}
