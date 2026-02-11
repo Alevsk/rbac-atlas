@@ -1,8 +1,8 @@
 ---
 title: "k10"
-description: "Kasten’s K10 data lifecycle management system"
+description: "Kasten’s K10 Data Management Platform"
 ---
 
 ## k10
 
-Kasten’s K10 data lifecycle management system
+Kasten’s K10 Data Management Platform
