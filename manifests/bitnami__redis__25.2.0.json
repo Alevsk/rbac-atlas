@@ -1,0 +1,65 @@
+{
+  "metadata": {
+    "version": "25.2.0",
+    "name": "redis",
+    "source": "charts/bitnami__redis__25.2.0/",
+    "timestamp": 1770949896,
+    "extra": {
+      "helm": {
+        "description": "Redis(R) is an open source, advanced key-value store. It is often referred to as a data structure server since keys can contain strings, hashes, lists, sets and sorted sets.",
+        "home": "https://bitnami.com",
+        "icon": "https://dyltqmyl993wv.cloudfront.net/assets/stacks/redis/img/redis-stack-220x234.png",
+        "keywords": [
+          "redis",
+          "keyvalue",
+          "database"
+        ],
+        "kubeVersion": "",
+        "maintainers": [
+          {
+            "name": "Broadcom, Inc. All Rights Reserved.",
+            "url": "https://github.com/bitnami/charts"
+          }
+        ],
+        "sources": [
+          "https://github.com/bitnami/charts/tree/main/bitnami/redis"
+        ]
+      }
+    }
+  },
+  "serviceAccountData": [
+    {
+      "serviceAccountName": "redis-master",
+      "namespace": "default",
+      "automountToken": false,
+      "secrets": null,
+      "imagePullSecrets": null
+    },
+    {
+      "serviceAccountName": "redis-replica",
+      "namespace": "default",
+      "automountToken": false,
+      "secrets": null,
+      "imagePullSecrets": null
+    }
+  ],
+  "serviceAccountPermissions": [],
+  "serviceAccountWorkloads": [
+    {
+      "serviceAccountName": "redis-master",
+      "namespace": "default",
+      "workloadType": "StatefulSet",
+      "workloadName": "redis-master",
+      "containerName": "redis",
+      "image": "registry-1.docker.io/bitnami/redis:latest"
+    },
+    {
+      "serviceAccountName": "redis-replica",
+      "namespace": "default",
+      "workloadType": "StatefulSet",
+      "workloadName": "redis-replicas",
+      "containerName": "redis",
+      "image": "registry-1.docker.io/bitnami/redis:latest"
+    }
+  ]
+}
