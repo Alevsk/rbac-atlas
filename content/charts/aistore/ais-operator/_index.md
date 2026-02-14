@@ -1,8 +1,8 @@
 ---
 title: "ais-operator"
-description: "A Helm chart for Kubernetes"
+description: "Helm Chart for AIStore K8s Operator"
 ---
 
 ## ais-operator
 
-A Helm chart for Kubernetes
+Helm Chart for AIStore K8s Operator
