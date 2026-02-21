@@ -9,5 +9,6 @@ GitLab Runner
 
 ## Sources
 
-- https://hub.docker.com/r/gitlab/gitlab-runner/
+- https://gitlab.com/gitlab-org/charts/gitlab-runner
+- https://gitlab.com/gitlab-org/gitlab-runner
 - https://docs.gitlab.com/runner/
