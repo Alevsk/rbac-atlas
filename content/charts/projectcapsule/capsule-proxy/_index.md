@@ -9,4 +9,4 @@ Helm Chart for Capsule Proxy, addon for Capsule, the multi-tenant Operator
 
 ## Sources
 
-- https://projectcapsule.dev/integrations/addons/capsule-proxy/
+- https://github.com/projectcapsule/capsule-proxy
