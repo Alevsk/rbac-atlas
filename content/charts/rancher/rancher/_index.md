@@ -10,4 +10,3 @@ Install Rancher Server to manage Kubernetes clusters across providers.
 ## Sources
 
 - https://github.com/rancher/rancher
-- https://github.com/rancher/server-chart
