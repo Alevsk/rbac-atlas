@@ -3,13 +3,14 @@
 RBAC Atlas Report Generator
 
 Reads JSON manifests from ../manifests/, produces:
-  1. rbac_report.csv   – one row per manifest (flat)
-  2. rbac_report.json  – aggregated insights (top risks, riskiest projects, summary stats)
+  1. rbac_report.csv            – one row per manifest (flat), in report/
+  2. reports/YYYY-MM-DD.json    – dated aggregated snapshot (accumulates daily)
 
 Usage:
-    uv run report.py                        # defaults: ../manifests -> ./rbac_report.*
-    uv run report.py --manifests /path      # custom manifests dir
-    uv run report.py --output-dir /path     # custom output directory
+    uv run report/report.py                          # defaults
+    uv run report/report.py --manifests /path        # custom manifests dir
+    uv run report/report.py --reports-dir /path      # custom reports output dir
+    uv run report/report.py --date 2026-01-15        # override snapshot date
 """
 
 from __future__ import annotations
@@ -18,6 +19,7 @@ import argparse
 import json
 import sys
 from collections import Counter
+from datetime import date
 from pathlib import Path
 from typing import Any
 
@@ -133,7 +135,17 @@ def write_csv(records: list[dict[str, Any]], output: Path) -> None:
 # 3. Aggregation & JSON report
 # ---------------------------------------------------------------------------
 
-def aggregate(records: list[dict[str, Any]]) -> dict[str, Any]:
+def risk_score(rec: dict[str, Any]) -> int:
+    """Weighted risk score: critical*10 + high*5 + medium*2 + low*1."""
+    return (
+        rec["risk_critical"] * 10
+        + rec["risk_high"] * 5
+        + rec["risk_medium"] * 2
+        + rec["risk_low"]
+    )
+
+
+def aggregate(records: list[dict[str, Any]], snapshot_date: str) -> dict[str, Any]:
     """Build aggregated insights from parsed records."""
     n = len(records)
     if n == 0:
@@ -147,7 +159,7 @@ def aggregate(records: list[dict[str, Any]]) -> dict[str, Any]:
             latest[name] = rec
     latest_records = list(latest.values())
 
-    report: dict[str, Any] = {}
+    report: dict[str, Any] = {"date": snapshot_date}
 
     # -- Top 10 RBAC risk tags (latest version per project only) --
     tag_counter: Counter[str] = Counter()
@@ -166,14 +178,6 @@ def aggregate(records: list[dict[str, Any]]) -> dict[str, Any]:
     }
 
     # -- Top 10 riskiest projects (latest version only, scored) --
-    def risk_score(rec: dict[str, Any]) -> int:
-        return (
-            rec["risk_critical"] * 10
-            + rec["risk_high"] * 5
-            + rec["risk_medium"] * 2
-            + rec["risk_low"]
-        )
-
     ranked = sorted(latest_records, key=risk_score, reverse=True)[:10]
     report["top_10_riskiest_projects"] = {
         rec["project_name"]: {
@@ -241,12 +245,6 @@ def aggregate(records: list[dict[str, Any]]) -> dict[str, Any]:
     return report
 
 
-def write_json(report: dict[str, Any], output: Path) -> None:
-    """Write aggregated JSON report."""
-    output.write_text(json.dumps(report, indent=2) + "\n")
-    print(f"JSON report written to {output}")
-
-
 # ---------------------------------------------------------------------------
 # 4. Main
 # ---------------------------------------------------------------------------
@@ -260,10 +258,22 @@ def main() -> None:
         help="Path to manifests directory (default: ../manifests)",
     )
     parser.add_argument(
-        "--output-dir",
+        "--reports-dir",
+        type=Path,
+        default=Path(__file__).resolve().parent.parent / "reports",
+        help="Directory for dated JSON snapshots (default: ../reports)",
+    )
+    parser.add_argument(
+        "--csv-dir",
         type=Path,
         default=Path(__file__).resolve().parent,
-        help="Directory for output files (default: same as this script)",
+        help="Directory for CSV output (default: report/)",
+    )
+    parser.add_argument(
+        "--date",
+        type=str,
+        default=date.today().isoformat(),
+        help="Snapshot date for the JSON filename (default: today)",
     )
     args = parser.parse_args()
 
@@ -271,23 +281,26 @@ def main() -> None:
         print(f"ERROR: manifests directory not found: {args.manifests}", file=sys.stderr)
         sys.exit(1)
 
-    args.output_dir.mkdir(parents=True, exist_ok=True)
+    args.reports_dir.mkdir(parents=True, exist_ok=True)
+    args.csv_dir.mkdir(parents=True, exist_ok=True)
 
     records = load_manifests(args.manifests)
     if not records:
         print("No records found, exiting.", file=sys.stderr)
         sys.exit(1)
 
-    # CSV
-    write_csv(records, args.output_dir / "rbac_report.csv")
+    # CSV (local to report/)
+    write_csv(records, args.csv_dir / "rbac_report.csv")
 
-    # JSON aggregation
-    report = aggregate(records)
-    write_json(report, args.output_dir / "rbac_report.json")
+    # Dated JSON snapshot → reports/YYYY-MM-DD.json
+    report = aggregate(records, args.date)
+    json_path = args.reports_dir / f"{args.date}.json"
+    json_path.write_text(json.dumps(report, indent=2) + "\n")
+    print(f"JSON snapshot written to {json_path}")
 
     # Print a quick summary to stdout
     s = report.get("summary", {})
-    print(f"\n--- Summary ---")
+    print(f"\n--- Summary ({args.date}) ---")
     print(f"  Unique projects:      {s.get('unique_projects')}")
     print(f"  Total versions:       {s.get('total_manifest_versions')}")
     print(f"  Avg service accounts: {s.get('avg_service_accounts')}")

@@ -82,9 +82,13 @@ build-prod: ##@ Build the static site for production
 	@echo "INFO: Building site for production..."
 	$(MAKE) build HUGO_ARGS="--config config.toml,config.production.toml"
 
-serve: ##@ Start the Hugo development server with live reload
+serve: ##@ Start the Hugo development server with live reload (builds all pages)
 	@echo "INFO: Starting Hugo server on http://localhost:$(HUGO_PORT)"
 	$(HUGO) server -D --bind 0.0.0.0 -p $(HUGO_PORT)
+
+serve-dev: ##@ Start Hugo server rendering only pages and rules (fast, for local dev)
+	@echo "INFO: Starting Hugo dev server on http://localhost:$(HUGO_PORT) (pages + rules only)"
+	$(HUGO) server -D --bind 0.0.0.0 -p $(HUGO_PORT) --config config.toml,config.development.toml --renderSegments dev
 
 
 # ==============================================================================
@@ -144,9 +148,9 @@ cover: ##@ Run tests and generate an HTML coverage report
 #
 # These targets manage fetching Helm charts and generating content from them.
 # ==============================================================================
-.PHONY: update pull-projects get-manifests generate-pages check-manifests
+.PHONY: update pull-projects get-manifests generate-pages generate-report check-manifests
 
-update: pull-projects get-manifests generate-pages ##@ Full data pipeline: pull projects, analyze manifests, generate pages
+update: pull-projects get-manifests generate-pages generate-report ##@ Full data pipeline: pull projects, analyze manifests, generate pages and report
 
 pull-projects: ##@ Pull remote project sources defined in projects.yaml
 	@echo "INFO: Pulling project sources..."
@@ -169,6 +173,12 @@ generate-pages: json-to-markdown fmt lint ##@ Generate Hugo content from JSON ma
 json-to-markdown:
 	@echo "INFO: Generating Hugo content pages from JSON manifests..."
 	@$(UV) run python $(J2H_SCRIPT) $(J2H_FLAGS)
+
+generate-report: ##@ Generate dated report snapshot and threat landscape page
+	@echo "INFO: Generating report snapshot..."
+	@$(UV) run python report/report.py
+	@echo "INFO: Generating threat landscape Hugo page..."
+	@$(UV) run python report2hugo.py -f reports/ -o $(CONTENT_DIR)/
 
 
 # ==============================================================================

@@ -1,88 +1,76 @@
 # RBAC Atlas Report
 
-Generates aggregated security insights from RBAC Atlas manifest data.
+Generates aggregated security insights from RBAC Atlas manifest data and publishes them as a Hugo page on the RBAC Atlas website.
+
+## How It Works
+
+```
+manifests/*.json
+       │
+       ▼
+  report/report.py ──► report/rbac_report.csv   (flat per-manifest data)
+       │
+       ▼
+  reports/YYYY-MM-DD.json   (dated snapshot, accumulates daily)
+       │
+       ▼
+  report2hugo.py ──► content/pages/threat-landscape.md   (Hugo page)
+```
+
+The daily GitHub Actions workflow runs `make generate-report`, which:
+1. Parses all manifests and writes a dated JSON snapshot to `reports/`
+2. Converts the latest snapshot into a Hugo Markdown page
+
+Over time, `reports/` accumulates daily snapshots for time-series analysis.
 
 ## Quick Start
 
 ```bash
-# From the report/ directory
-uv run report.py
+# From the project root
+make generate-report
+
+# Or run the steps manually
+uv run python report/report.py                    # generates CSV + dated JSON
+uv run python report2hugo.py -f reports/ -o content/  # generates Hugo page
 ```
-
-This reads all JSON manifests from `../manifests/` and produces two files:
-
-| File | Description |
-|------|-------------|
-| `rbac_report.csv` | One row per manifest version — flat table of metadata + risk counts |
-| `rbac_report.json` | Aggregated insights: top risks, riskiest projects, summary stats |
 
 ## CLI Options
 
+### report.py
+
 ```bash
-uv run report.py --manifests /path/to/manifests   # custom input directory
-uv run report.py --output-dir /path/to/output      # custom output directory
+uv run python report/report.py --manifests /path    # custom manifests dir
+uv run python report/report.py --reports-dir /path   # custom reports output dir
+uv run python report/report.py --csv-dir /path       # custom CSV output dir
+uv run python report/report.py --date 2026-01-15     # override snapshot date
 ```
 
-## JSON Report Structure
+### report2hugo.py
 
-### `top_10_risk_tags`
-
-Most frequently observed risk tags across all scanned manifest versions (e.g. `InformationDisclosure`, `PrivilegeEscalation`, `SecretAccess`).
-
-```json
-{ "tag_name": occurrence_count }
+```bash
+uv run python report2hugo.py -f reports/ -o content/  # default
+uv run python report2hugo.py -f /path/to/reports      # custom reports dir
 ```
 
-### `top_10_risk_rules`
+## Output Files
 
-Most frequently triggered `rbac-scope` detection rules.
+| File | Location | Description |
+|------|----------|-------------|
+| `rbac_report.csv` | `report/` | One row per manifest version (flat) |
+| `YYYY-MM-DD.json` | `reports/` | Dated aggregation snapshot (git-tracked, accumulates) |
+| `threat-landscape.md` | `content/pages/` | Hugo page generated from the latest snapshot |
 
-```json
-{ "rule_name": occurrence_count }
-```
+## JSON Snapshot Structure
 
-### `top_10_riskiest_projects`
+Each `reports/YYYY-MM-DD.json` contains:
 
-Projects ranked by a weighted risk score (`critical*10 + high*5 + medium*2 + low*1`), using only the latest version of each project.
-
-```json
-{
-  "project_name": {
-    "version": "x.y.z",
-    "critical": N,
-    "high": N,
-    "medium": N,
-    "low": N,
-    "risk_score": N
-  }
-}
-```
-
-### `top_10_most_permissions`
-
-Projects with the highest number of RBAC permission entries (latest version).
-
-```json
-{ "project_name": permission_count }
-```
-
-### `summary`
-
-Averages computed across the latest version of each unique project:
-
-- `total_manifest_versions` — total JSON files processed
-- `unique_projects` — distinct project names
-- `avg_service_accounts` — average service accounts per project
-- `avg_permissions` — average permission bindings per project
-- `avg_workloads` — average workloads per project
-- `avg_critical_risks` / `avg_high_risks` / `avg_medium_risks` / `avg_low_risks`
-
-### `risk_distribution`
-
-Total and percentage breakdown of risk levels across all unique projects (latest version).
-
-### Other Fields
-
+- `date` — snapshot date
+- `top_10_risk_tags` — most observed risk tags (latest version per project)
+- `top_10_risk_rules` — most triggered detection rules
+- `top_10_riskiest_projects` — ranked by weighted score (`critical×10 + high×5 + medium×2 + low×1`)
+- `top_10_most_permissions` — projects with most RBAC permission entries
+- `summary` — averages across all unique projects (service accounts, permissions, workloads, risk levels)
+- `risk_distribution` — total and percentage breakdown by risk level
 - `projects_with_no_permissions` — count of projects with zero RBAC permissions
 - `projects_with_critical_risks` — count of projects with at least one critical risk
 
@@ -106,4 +94,4 @@ Total and percentage breakdown of risk levels across all unique projects (latest
 
 ## Adding New Metrics
 
-The report is built in layers — extend `aggregate()` in `report.py` to add new insights. The function receives fully parsed records with access to raw `_tags` and `_rule_names` lists, so you can compute any aggregation without re-reading the manifests.
+Extend `aggregate()` in `report/report.py` to add new insights. The function receives fully parsed records with access to raw `_tags` and `_rule_names` lists. Then update `build_markdown()` in `report2hugo.py` to render the new data on the Hugo page.
