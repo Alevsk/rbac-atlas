@@ -18,6 +18,7 @@
           </option>
           {{ end }}
         </select>
+        <a href="{{ .CurrentSection.RelPermalink }}" class="all-versions-link">All Versions</a>
       </div>
     {{ else }}
       <div class="version-subtitle">{{ .Params.version }}</div>
@@ -106,6 +107,52 @@
 
   {{ end }}
   {{ partial "cover.html" . }}
+
+  {{/* --- Trend Indicators (compare current version vs previous) --- */}}
+  {{ $allVersions := sort .CurrentSection.Pages "Params.version_order" "asc" }}
+  {{ if gt (len $allVersions) 1 }}
+    <div id="trend-indicators"></div>
+    <script>
+    (function() {
+      var versions = [
+        {{ range $allVersions }}
+        {
+          version: "{{ .Params.version }}",
+          critical: {{ int (.Params.critical_findings | default 0) }},
+          high: {{ int (.Params.high_findings | default 0) }},
+          medium: {{ int (.Params.medium_findings | default 0) }},
+          low: {{ int (.Params.low_findings | default 0) }},
+          bindings: {{ int (.Params.bindings | default 0) }}
+        },
+        {{ end }}
+      ];
+      var currentVersion = "{{ .Params.version }}";
+      var curIdx = versions.findIndex(function(v) { return v.version === currentVersion; });
+      if (curIdx > 0) {
+        var cur = versions[curIdx];
+        var prev = versions[curIdx - 1];
+        var diffs = [
+          { label: 'Critical', diff: cur.critical - prev.critical, risk: true },
+          { label: 'High', diff: cur.high - prev.high, risk: true },
+          { label: 'Medium', diff: cur.medium - prev.medium, risk: true },
+          { label: 'Low', diff: cur.low - prev.low, risk: true },
+          { label: 'Bindings', diff: cur.bindings - prev.bindings, risk: false }
+        ];
+        var changed = diffs.filter(function(d) { return d.diff !== 0; });
+        if (changed.length > 0) {
+          var html = '<div class="trend-summary"><span class="trend-label">vs ' + prev.version + ':</span>';
+          changed.forEach(function(d) {
+            var cls = d.diff > 0 ? (d.risk ? 'trend-worse' : 'trend-neutral-up') : (d.risk ? 'trend-better' : 'trend-neutral-down');
+            var arrow = d.diff > 0 ? '\u2191' : '\u2193';
+            html += '<span class="trend-badge ' + cls + '">' + d.label + ' ' + arrow + Math.abs(d.diff) + '</span>';
+          });
+          html += '</div>';
+          document.getElementById('trend-indicators').innerHTML = html;
+        }
+      }
+    })();
+    </script>
+  {{ end }}
 
   {{ if (.Params.Toc | default .Site.Params.Toc) }}
   <div class="table-of-contents">

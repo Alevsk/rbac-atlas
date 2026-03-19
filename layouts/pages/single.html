@@ -12,6 +12,152 @@
     {{- end -}}
   </div>
 
+  {{/* --- Time-series charts (rendered from data/timeseries.json) --- */}}
+  {{ $ts := .Site.Data.timeseries }}
+  {{ if and $ts $ts.series (gt (len $ts.series) 0) }}
+  <div class="chart-section">
+    <h2>Risk Trend Over Time</h2>
+    {{ if lt (len $ts.series) 2 }}
+    <p class="chart-note">
+      <i class="fas fa-info-circle"></i>
+      Only {{ len $ts.series }} data point available. More daily snapshots are needed to show trends.
+    </p>
+    {{ end }}
+    <div class="chart-container">
+      <h3>Risk Distribution Over Time</h3>
+      <canvas id="risk-trend-chart"></canvas>
+    </div>
+    <div class="chart-container" style="margin-top: 1.5rem;">
+      <h3>Key Metrics Over Time</h3>
+      <canvas id="metrics-trend-chart"></canvas>
+    </div>
+  </div>
+  <script>
+  (function() {
+    var allSeries = {{ $ts.series | jsonify | safeJS }};
+
+    /* Show last 12 data points for readability */
+    var MAX_POINTS = 12;
+    var series = allSeries.length > MAX_POINTS ? allSeries.slice(-MAX_POINTS) : allSeries;
+
+    /* Format dates as "Mon DD" (e.g. "Jan 31") */
+    var monthNames = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+    var labels = series.map(function(s) {
+      var parts = s.date.split('-');
+      return monthNames[parseInt(parts[1], 10) - 1] + ' ' + parseInt(parts[2], 10);
+    });
+
+    var chartColors = {
+      critical: '#dc3545',
+      high:     '#e76f51',
+      medium:   '#f4a261',
+      low:      '#6b9080'
+    };
+    var textColor = getComputedStyle(document.documentElement).getPropertyValue('--foreground').trim() || '#45372b';
+    var gridColor = 'rgba(69, 55, 43, 0.08)';
+
+    var defaultOpts = {
+      responsive: true,
+      maintainAspectRatio: true,
+      plugins: {
+        legend: { position: 'top', labels: { color: textColor, usePointStyle: true, padding: 16 } }
+      },
+      scales: {
+        x: { ticks: { color: textColor, maxRotation: 0 }, grid: { color: gridColor } },
+        y: { ticks: { color: textColor }, grid: { color: gridColor }, beginAtZero: true }
+      }
+    };
+
+    var ctx1 = document.getElementById('risk-trend-chart');
+    if (ctx1) {
+      new Chart(ctx1, {
+        type: 'line',
+        data: {
+          labels: labels,
+          datasets: [
+            {
+              label: 'Critical',
+              data: series.map(function(s) { return (s.risk_distribution || {}).critical || 0; }),
+              borderColor: chartColors.critical,
+              backgroundColor: chartColors.critical,
+              fill: false, tension: 0.3, pointRadius: 3, borderWidth: 2.5
+            },
+            {
+              label: 'High',
+              data: series.map(function(s) { return (s.risk_distribution || {}).high || 0; }),
+              borderColor: chartColors.high,
+              backgroundColor: chartColors.high,
+              fill: false, tension: 0.3, pointRadius: 3, borderWidth: 2.5
+            },
+            {
+              label: 'Medium',
+              data: series.map(function(s) { return (s.risk_distribution || {}).medium || 0; }),
+              borderColor: chartColors.medium,
+              backgroundColor: chartColors.medium,
+              fill: false, tension: 0.3, pointRadius: 3, borderWidth: 2.5
+            },
+            {
+              label: 'Low',
+              data: series.map(function(s) { return (s.risk_distribution || {}).low || 0; }),
+              borderColor: chartColors.low,
+              backgroundColor: chartColors.low,
+              fill: false, tension: 0.3, pointRadius: 3, borderWidth: 2.5
+            }
+          ]
+        },
+        options: defaultOpts
+      });
+    }
+
+    var ctx2 = document.getElementById('metrics-trend-chart');
+    if (ctx2) {
+      new Chart(ctx2, {
+        type: 'line',
+        data: {
+          labels: labels,
+          datasets: [
+            {
+              label: 'Unique Projects',
+              data: series.map(function(s) { return (s.summary || {}).unique_projects || 0; }),
+              borderColor: '#45372b',
+              backgroundColor: '#45372b',
+              fill: false, tension: 0.3, pointRadius: 3, borderWidth: 2.5
+            },
+            {
+              label: 'Projects with Critical Risks',
+              data: series.map(function(s) { return s.projects_with_critical_risks || 0; }),
+              borderColor: chartColors.critical,
+              backgroundColor: chartColors.critical,
+              fill: false, tension: 0.3, pointRadius: 3, borderWidth: 2.5
+            },
+            {
+              label: 'Total Permissions Analyzed',
+              data: series.map(function(s) { return (s.risk_distribution || {}).total_permissions_analyzed || 0; }),
+              borderColor: chartColors.medium,
+              backgroundColor: chartColors.medium,
+              fill: false, tension: 0.3, pointRadius: 3, borderWidth: 2.5,
+              yAxisID: 'y1'
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: true,
+          plugins: {
+            legend: { position: 'top', labels: { color: textColor, usePointStyle: true, padding: 16 } }
+          },
+          scales: {
+            x: { ticks: { color: textColor, maxRotation: 0 }, grid: { color: gridColor } },
+            y: { position: 'left', ticks: { color: textColor }, grid: { color: gridColor }, beginAtZero: true },
+            y1: { position: 'right', ticks: { color: textColor }, grid: { drawOnChartArea: false }, beginAtZero: true }
+          }
+        }
+      });
+    }
+  })();
+  </script>
+  {{ end }}
+
   {{ if (.Params.Toc | default .Site.Params.Toc) }}
   <div class="table-of-contents">
     <h2>{{ (.Params.TocTitle | default .Site.Params.TocTitle) | default "Table of Contents" }}</h2>

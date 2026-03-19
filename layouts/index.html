@@ -11,38 +11,118 @@
     <p>RBAC Atlas is a collaborative project created by <a href="https://www.linkedin.com/in/alevsk/">Lenin Alevski</a>, and contributions of additional RBAC rules are welcome. Check out the source on GitHub: <a href="https://github.com/alevsk/rbac-scope" target="_blank" rel="noopener noreferrer">rbac-scope</a> (the CLI tool) and <a href="https://github.com/alevsk/rbac-atlas" target="_blank" rel="noopener noreferrer">rbac-atlas</a> (this website).</p>
   </div>
 
+  <div class="index-two-col">
+    <div class="index-col">
+      <h2 class="post-title">🚀 Top Risks</h2>
+      <div class="tags-list">
+        <p>
+        {{ range $taxonomy := first 10 .Site.Taxonomies.tags.ByCount }}
+          {{ if not (hasPrefix $taxonomy.Name "letter-") }}
+          <a href="{{ "/tags/" | relLangURL }}{{ $taxonomy.Name | urlize }}">
+            {{ $taxonomy.Name }}
+          </a>
+          {{ end }}
+        {{ end }}
+        <a class="see-all" href="{{ "/tags/" | relLangURL }}">See All →</a>
+        </p>
+      </div>
+    </div>
+    <div class="index-col">
+      <h2 class="post-title">📦 Top Categories</h2>
+      <div class="categories-list">
+        <p>
+        {{ range $taxonomy := first 20 .Site.Taxonomies.categories.ByCount }}
+          <a href="{{ "/categories/" | relLangURL }}{{ $taxonomy.Name | urlize }}">
+            {{ $taxonomy.Name }}
+          </a>
+        {{ end }}
+        <a class="see-all" href="{{ "/categories/" | relLangURL }}">See All →</a>
+        </p>
+      </div>
+    </div>
+  </div>
+
   <h2 class="post-title">📊 <a href="/pages/threat-landscape/">Cloud-Native Threat Landscape</a></h2>
   <div class="index-content">
     <p>Daily RBAC risk analysis across hundreds of Kubernetes open-source projects. <a href="/pages/threat-landscape/">View the latest report →</a></p>
   </div>
 
-  <h2 class="post-title">🚀 Top Risks</h2>
-
-  <div class="tags-list">
-    <p>
-    {{ range $taxonomy := first 10 .Site.Taxonomies.tags.ByCount }}
-      {{ if not (hasPrefix $taxonomy.Name "letter-") }}
-      <a href="{{ "/tags/" | relLangURL }}{{ $taxonomy.Name | urlize }}">
-        {{ $taxonomy.Name }}
-      </a>
-      {{ end }}
-    {{ end }}
-    <a class="see-all" href="{{ "/tags/" | relLangURL }}">See All →</a>
-    </p>
+  {{/* --- Risk Distribution chart on the index page --- */}}
+  {{ $ts := .Site.Data.timeseries }}
+  {{ if and $ts $ts.series (gt (len $ts.series) 0) }}
+  <div class="chart-section">
+    <div class="chart-container">
+      <h3>Risk Distribution Over Time</h3>
+      <canvas id="index-risk-chart"></canvas>
+    </div>
   </div>
+  <script>
+  (function() {
+    var allSeries = {{ $ts.series | jsonify | safeJS }};
+    var MAX_POINTS = 12;
+    var series = allSeries.length > MAX_POINTS ? allSeries.slice(-MAX_POINTS) : allSeries;
+    var monthNames = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+    var labels = series.map(function(s) {
+      var parts = s.date.split('-');
+      return monthNames[parseInt(parts[1], 10) - 1] + ' ' + parseInt(parts[2], 10);
+    });
+    var chartColors = { critical: '#dc3545', high: '#e76f51', medium: '#f4a261', low: '#6b9080' };
+    var textColor = getComputedStyle(document.documentElement).getPropertyValue('--foreground').trim() || '#45372b';
+    var gridColor = 'rgba(69, 55, 43, 0.08)';
 
-  <h2 class="post-title">📦 Top Categories</h2>
-
-  <div class="categories-list">
-    <p>
-    {{ range $taxonomy := first 20 .Site.Taxonomies.categories.ByCount }}
-      <a href="{{ "/categories/" | relLangURL }}{{ $taxonomy.Name | urlize }}">
-        {{ $taxonomy.Name }}
-      </a>
-    {{ end }}
-    <a class="see-all" href="{{ "/categories/" | relLangURL }}">See All →</a>
-    </p>
-  </div>
+    var ctx = document.getElementById('index-risk-chart');
+    if (ctx) {
+      new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels: labels,
+          datasets: [
+            {
+              label: 'Critical',
+              data: series.map(function(s) { return (s.risk_distribution || {}).critical || 0; }),
+              borderColor: chartColors.critical,
+              backgroundColor: chartColors.critical,
+              fill: false, tension: 0.3, pointRadius: 3, borderWidth: 2.5
+            },
+            {
+              label: 'High',
+              data: series.map(function(s) { return (s.risk_distribution || {}).high || 0; }),
+              borderColor: chartColors.high,
+              backgroundColor: chartColors.high,
+              fill: false, tension: 0.3, pointRadius: 3, borderWidth: 2.5
+            },
+            {
+              label: 'Medium',
+              data: series.map(function(s) { return (s.risk_distribution || {}).medium || 0; }),
+              borderColor: chartColors.medium,
+              backgroundColor: chartColors.medium,
+              fill: false, tension: 0.3, pointRadius: 3, borderWidth: 2.5
+            },
+            {
+              label: 'Low',
+              data: series.map(function(s) { return (s.risk_distribution || {}).low || 0; }),
+              borderColor: chartColors.low,
+              backgroundColor: chartColors.low,
+              fill: false, tension: 0.3, pointRadius: 3, borderWidth: 2.5
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: true,
+          plugins: {
+            legend: { position: 'top', labels: { color: textColor, usePointStyle: true, padding: 16 } }
+          },
+          scales: {
+            x: { ticks: { color: textColor, maxRotation: 0 }, grid: { color: gridColor } },
+            y: { ticks: { color: textColor }, grid: { color: gridColor }, beginAtZero: true }
+          }
+        }
+      });
+    }
+  })();
+  </script>
+  {{ end }}
 
   <h2 class="post-title">📜 All Projects</h2>
 

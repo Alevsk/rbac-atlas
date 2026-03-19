@@ -6,11 +6,17 @@ Reads JSON manifests from ../manifests/, produces:
   1. rbac_report.csv            – one row per manifest (flat), in report/
   2. reports/YYYY-MM-DD.json    – dated aggregated snapshot (accumulates daily)
 
+Modes:
+  --mode day     (default) Generate daily CSV + JSON snapshot
+  --mode week    Aggregate last 7 days of snapshots into time-series
+  --mode month   Aggregate last 30 days of snapshots into time-series
+  --mode range   Aggregate snapshots in --start to --end date range
+
 Usage:
-    uv run report/report.py                          # defaults
-    uv run report/report.py --manifests /path        # custom manifests dir
-    uv run report/report.py --reports-dir /path      # custom reports output dir
-    uv run report/report.py --date 2026-01-15        # override snapshot date
+    uv run report/report.py                          # daily report (default)
+    uv run report/report.py --mode week              # weekly time-series
+    uv run report/report.py --mode month             # monthly time-series
+    uv run report/report.py --mode range --start 2026-01-01 --end 2026-03-18
 """
 
 from __future__ import annotations
@@ -19,7 +25,7 @@ import argparse
 import json
 import sys
 from collections import Counter
-from datetime import date
+from datetime import date, timedelta
 from pathlib import Path
 from typing import Any
 
@@ -246,7 +252,26 @@ def aggregate(records: list[dict[str, Any]], snapshot_date: str) -> dict[str, An
 
 
 # ---------------------------------------------------------------------------
-# 4. Main
+# 4. Time-series aggregation
+# ---------------------------------------------------------------------------
+
+def load_timeseries(reports_dir: Path, start: date, end: date) -> list[dict[str, Any]]:
+    """Load daily JSON snapshots within a date range and return as a series."""
+    series = []
+    for json_file in sorted(reports_dir.glob("*.json")):
+        stem = json_file.stem
+        try:
+            file_date = date.fromisoformat(stem)
+        except ValueError:
+            continue  # skip non-date files
+        if start <= file_date <= end:
+            data = json.loads(json_file.read_text())
+            series.append(data)
+    return series
+
+
+# ---------------------------------------------------------------------------
+# 5. Main
 # ---------------------------------------------------------------------------
 
 def main() -> None:
@@ -275,38 +300,106 @@ def main() -> None:
         default=date.today().isoformat(),
         help="Snapshot date for the JSON filename (default: today)",
     )
+    parser.add_argument(
+        "--mode",
+        choices=["day", "week", "month", "range"],
+        default="day",
+        help="Report mode: day (default), week, month, or range",
+    )
+    parser.add_argument(
+        "--start",
+        type=str,
+        help="Start date (YYYY-MM-DD) for range mode",
+    )
+    parser.add_argument(
+        "--end",
+        type=str,
+        help="End date (YYYY-MM-DD) for range mode",
+    )
+    parser.add_argument(
+        "--hugo-data-dir",
+        type=Path,
+        default=Path(__file__).resolve().parent.parent / "data",
+        help="Hugo data directory for time-series output (default: ../data)",
+    )
     args = parser.parse_args()
 
-    if not args.manifests.is_dir():
-        print(f"ERROR: manifests directory not found: {args.manifests}", file=sys.stderr)
-        sys.exit(1)
+    if args.mode == "day":
+        # --- Daily mode: generate CSV + dated JSON snapshot ---
+        if not args.manifests.is_dir():
+            print(f"ERROR: manifests directory not found: {args.manifests}", file=sys.stderr)
+            sys.exit(1)
 
-    args.reports_dir.mkdir(parents=True, exist_ok=True)
-    args.csv_dir.mkdir(parents=True, exist_ok=True)
+        args.reports_dir.mkdir(parents=True, exist_ok=True)
+        args.csv_dir.mkdir(parents=True, exist_ok=True)
 
-    records = load_manifests(args.manifests)
-    if not records:
-        print("No records found, exiting.", file=sys.stderr)
-        sys.exit(1)
+        records = load_manifests(args.manifests)
+        if not records:
+            print("No records found, exiting.", file=sys.stderr)
+            sys.exit(1)
 
-    # CSV (local to report/)
-    write_csv(records, args.csv_dir / "rbac_report.csv")
+        # CSV (local to report/)
+        write_csv(records, args.csv_dir / "rbac_report.csv")
 
-    # Dated JSON snapshot → reports/YYYY-MM-DD.json
-    report = aggregate(records, args.date)
-    json_path = args.reports_dir / f"{args.date}.json"
-    json_path.write_text(json.dumps(report, indent=2) + "\n")
-    print(f"JSON snapshot written to {json_path}")
+        # Dated JSON snapshot → reports/YYYY-MM-DD.json
+        report = aggregate(records, args.date)
+        json_path = args.reports_dir / f"{args.date}.json"
+        json_path.write_text(json.dumps(report, indent=2) + "\n")
+        print(f"JSON snapshot written to {json_path}")
 
-    # Print a quick summary to stdout
-    s = report.get("summary", {})
-    print(f"\n--- Summary ({args.date}) ---")
-    print(f"  Unique projects:      {s.get('unique_projects')}")
-    print(f"  Total versions:       {s.get('total_manifest_versions')}")
-    print(f"  Avg service accounts: {s.get('avg_service_accounts')}")
-    print(f"  Avg permissions:      {s.get('avg_permissions')}")
-    print(f"  Avg critical risks:   {s.get('avg_critical_risks')}")
-    print(f"  Projects with critical risks: {report.get('projects_with_critical_risks')}")
+        # Print a quick summary to stdout
+        s = report.get("summary", {})
+        print(f"\n--- Summary ({args.date}) ---")
+        print(f"  Unique projects:      {s.get('unique_projects')}")
+        print(f"  Total versions:       {s.get('total_manifest_versions')}")
+        print(f"  Avg service accounts: {s.get('avg_service_accounts')}")
+        print(f"  Avg permissions:      {s.get('avg_permissions')}")
+        print(f"  Avg critical risks:   {s.get('avg_critical_risks')}")
+        print(f"  Projects with critical risks: {report.get('projects_with_critical_risks')}")
+
+    else:
+        # --- Time-series mode: aggregate existing daily snapshots ---
+        today = date.fromisoformat(args.date)
+        if args.mode == "week":
+            end_date = today
+            start_date = today - timedelta(days=6)
+        elif args.mode == "month":
+            end_date = today
+            start_date = today - timedelta(days=29)
+        else:  # range
+            if not args.start or not args.end:
+                parser.error("--start and --end are required for range mode")
+            start_date = date.fromisoformat(args.start)
+            end_date = date.fromisoformat(args.end)
+
+        if not args.reports_dir.is_dir():
+            print(f"ERROR: reports directory not found: {args.reports_dir}", file=sys.stderr)
+            sys.exit(1)
+
+        series = load_timeseries(args.reports_dir, start_date, end_date)
+        if not series:
+            print(
+                f"No snapshots found in {args.reports_dir} "
+                f"for {start_date} to {end_date}",
+                file=sys.stderr,
+            )
+            sys.exit(1)
+
+        output = {
+            "range": {
+                "start": start_date.isoformat(),
+                "end": end_date.isoformat(),
+            },
+            "series": series,
+        }
+
+        args.hugo_data_dir.mkdir(parents=True, exist_ok=True)
+        ts_path = args.hugo_data_dir / "timeseries.json"
+        ts_path.write_text(json.dumps(output, indent=2) + "\n")
+        print(
+            f"Time-series ({len(series)} snapshots, "
+            f"{start_date} to {end_date}) written to {ts_path}"
+        )
 
 
 if __name__ == "__main__":

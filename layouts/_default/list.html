@@ -2,6 +2,104 @@
 {{ with .Content }}
 <div class="index-content">{{ . }}</div>
 {{ end }}
+
+{{/* --- Risk Trend Across Versions Chart --- */}}
+{{ $allVersions := sort .RegularPages "Params.version_order" "asc" }}
+{{ if gt (len $allVersions) 1 }}
+  {{ $chartVersions := $allVersions }}
+  {{ if gt (len $allVersions) 30 }}
+    {{ $chartVersions = after (sub (len $allVersions) 30) $allVersions }}
+  {{ end }}
+  <div class="chart-section">
+    <h2>Risk Trend Across Versions</h2>
+    <div class="chart-container">
+      <canvas id="version-risk-chart"></canvas>
+    </div>
+  </div>
+  <script>
+  (function() {
+    var versions = [
+      {{ range $chartVersions }}
+      {
+        version: "{{ .Params.version }}",
+        critical: {{ int (.Params.critical_findings | default 0) }},
+        high: {{ int (.Params.high_findings | default 0) }},
+        medium: {{ int (.Params.medium_findings | default 0) }},
+        low: {{ int (.Params.low_findings | default 0) }},
+        bindings: {{ int (.Params.bindings | default 0) }}
+      },
+      {{ end }}
+    ];
+    var textColor = getComputedStyle(document.documentElement).getPropertyValue('--foreground').trim() || '#45372b';
+    var gridColor = 'rgba(69, 55, 43, 0.08)';
+    var labels = versions.map(function(v) { return v.version; });
+
+    var ctx = document.getElementById('version-risk-chart');
+    if (ctx) {
+      new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels: labels,
+          datasets: [
+            {
+              label: 'Critical',
+              data: versions.map(function(v) { return v.critical; }),
+              borderColor: '#dc3545',
+              backgroundColor: '#dc3545',
+              fill: false, tension: 0.3, pointRadius: 3, borderWidth: 2.5
+            },
+            {
+              label: 'High',
+              data: versions.map(function(v) { return v.high; }),
+              borderColor: '#e76f51',
+              backgroundColor: '#e76f51',
+              fill: false, tension: 0.3, pointRadius: 3, borderWidth: 2.5
+            },
+            {
+              label: 'Medium',
+              data: versions.map(function(v) { return v.medium; }),
+              borderColor: '#f4a261',
+              backgroundColor: '#f4a261',
+              fill: false, tension: 0.3, pointRadius: 3, borderWidth: 2.5
+            },
+            {
+              label: 'Low',
+              data: versions.map(function(v) { return v.low; }),
+              borderColor: '#6b9080',
+              backgroundColor: '#6b9080',
+              fill: false, tension: 0.3, pointRadius: 3, borderWidth: 2.5
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: true,
+          plugins: {
+            legend: { position: 'top', labels: { color: textColor, usePointStyle: true, padding: 16 } },
+            tooltip: {
+              callbacks: {
+                title: function(items) { return 'Version ' + items[0].label; }
+              }
+            }
+          },
+          scales: {
+            x: {
+              ticks: { color: textColor, maxRotation: 45, autoSkip: true, maxTicksLimit: 15 },
+              grid: { color: gridColor }
+            },
+            y: {
+              ticks: { color: textColor },
+              grid: { color: gridColor },
+              beginAtZero: true
+            }
+          }
+        }
+      });
+    }
+  })();
+  </script>
+{{ end }}
+
 <h2>Versions</h2>
 <div class="posts">
 {{/* Use the current section's pages directly — no need to scan all site pages */}}

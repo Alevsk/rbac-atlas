@@ -174,9 +174,11 @@ json-to-markdown:
 	@echo "INFO: Generating Hugo content pages from JSON manifests..."
 	@$(UV) run python $(J2H_SCRIPT) $(J2H_FLAGS)
 
-generate-report: ##@ Generate dated report snapshot and threat landscape page
-	@echo "INFO: Generating report snapshot..."
+generate-report: ##@ Generate dated report snapshot, time-series data, and threat landscape page
+	@echo "INFO: Generating daily report snapshot..."
 	@$(UV) run python report/report.py
+	@echo "INFO: Generating time-series data for Hugo..."
+	@$(UV) run python report/report.py --mode range --start 2025-06-01 --end $$(date +%Y-%m-%d)
 	@echo "INFO: Generating threat landscape Hugo page..."
 	@$(UV) run python report2hugo.py -f reports/ -o $(CONTENT_DIR)/
 

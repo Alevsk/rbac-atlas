@@ -68,29 +68,29 @@ Ranked by weighted risk score (`critical×10 + high×5 + medium×2 + low×1`), u
 
 | Project | Version | Critical | High | Medium | Low | Score |
 |---------|---------|----------|------|--------|-----|-------|
-| [openebs](/charts/openebs/) | 3.9.0 | 90 | 73 | 30 | 170 | **1495** |
-| [victoria-metrics-distributed](/charts/victoria-metrics-distributed/) | 0.9.0 | 13 | 117 | 5 | 39 | **764** |
-| [longhorn](/charts/longhorn/) | 1.9.2 | 20 | 56 | 3 | 7 | **493** |
-| [gitlab](/charts/gitlab/) | 9.9.3 | 18 | 10 | 9 | 199 | **447** |
-| [eg-universal-agent-operator](/charts/eg-universal-agent-operator/) | 0.0.5 | 16 | 24 | 8 | 64 | **360** |
-| [gitlab-operator](/charts/gitlab-operator/) | 2.9.2 | 20 | 6 | 7 | 115 | **359** |
-| [kuadrant-operator](/charts/kuadrant-operator/) | 1.4.2 | 21 | 9 | 4 | 94 | **357** |
-| [flux2](/charts/flux2/) | 2.9.2 | 18 | 30 | 0 | 24 | **354** |
-| [victoria-metrics-k8s-stack](/charts/victoria-metrics-k8s-stack/) | 0.9.8 | 13 | 17 | 5 | 98 | **323** |
-| [opentelemetry-kube-stack](/charts/opentelemetry-kube-stack/) | 0.9.4 | 13 | 9 | 13 | 111 | **312** |
+| [openebs](/charts/openebs/openebs/) | 3.9.0 | 90 | 73 | 30 | 170 | **1495** |
+| [victoria-metrics-distributed](/charts/victoriametrics/victoria-metrics-distributed/) | 0.9.0 | 13 | 117 | 5 | 39 | **764** |
+| [longhorn](/charts/longhorn/longhorn/) | 1.9.2 | 20 | 56 | 3 | 7 | **493** |
+| [gitlab](/charts/gitlab/gitlab/) | 9.9.3 | 18 | 10 | 9 | 199 | **447** |
+| [eg-universal-agent-operator](/charts/eg-universal-agent-operator/eg-universal-agent-operator/) | 0.0.5 | 16 | 24 | 8 | 64 | **360** |
+| [gitlab-operator](/charts/gitlab/gitlab-operator/) | 2.9.2 | 20 | 6 | 7 | 115 | **359** |
+| [kuadrant-operator](/charts/kuadrant/kuadrant-operator/) | 1.4.2 | 21 | 9 | 4 | 94 | **357** |
+| [flux2](/charts/fluxcd/flux2/) | 2.9.2 | 18 | 30 | 0 | 24 | **354** |
+| [victoria-metrics-k8s-stack](/charts/victoriametrics/victoria-metrics-k8s-stack/) | 0.9.8 | 13 | 17 | 5 | 98 | **323** |
+| [opentelemetry-kube-stack](/charts/opentelemetry-helm/opentelemetry-kube-stack/) | 0.9.4 | 13 | 9 | 13 | 111 | **312** |
 
 ## Top 10 Projects by Permission Count
 
 | Project | Permissions |
 |---------|-------------|
-| [openebs](/charts/openebs/) | 363 |
-| [gitlab](/charts/gitlab/) | 236 |
-| [rook-ceph](/charts/rook-ceph/) | 185 |
-| [stackgres-operator](/charts/stackgres-operator/) | 181 |
-| [victoria-metrics-distributed](/charts/victoria-metrics-distributed/) | 174 |
-| [gateway-operator](/charts/gateway-operator/) | 162 |
-| [gitlab-operator](/charts/gitlab-operator/) | 148 |
-| [opentelemetry-kube-stack](/charts/opentelemetry-kube-stack/) | 146 |
-| [edp-install](/charts/edp-install/) | 142 |
-| [victoria-metrics-k8s-stack](/charts/victoria-metrics-k8s-stack/) | 133 |
+| [openebs](/charts/openebs/openebs/) | 363 |
+| [gitlab](/charts/gitlab/gitlab/) | 236 |
+| [rook-ceph](/charts/rook-release/rook-ceph/) | 185 |
+| [stackgres-operator](/charts/stackgres-charts/stackgres-operator/) | 181 |
+| [victoria-metrics-distributed](/charts/victoriametrics/victoria-metrics-distributed/) | 174 |
+| [gateway-operator](/charts/kong/gateway-operator/) | 162 |
+| [gitlab-operator](/charts/gitlab/gitlab-operator/) | 148 |
+| [opentelemetry-kube-stack](/charts/opentelemetry-helm/opentelemetry-kube-stack/) | 146 |
+| [edp-install](/charts/epmdedp-dev/edp-install/) | 142 |
+| [victoria-metrics-k8s-stack](/charts/victoriametrics/victoria-metrics-k8s-stack/) | 133 |
 

@@ -36,19 +36,19 @@ or (eq (.Param "noindex") true) (eq (.Param "noindex") "true") }}
 
 {{ $css := resources.Match "css/*.css" }} {{ range $css }} {{ $styles := . |
 minify | fingerprint }}
-<link rel="stylesheet" href="{{ $styles.Permalink }}" />
+<link rel="stylesheet" href="{{ $styles.RelPermalink }}" />
 {{ end }}
 
 <!-- Theme CSS -->
 {{ $themeCss := resources.Get "themes/terminal/assets/css/style.css" }} {{ if
 $themeCss }} {{ $styles := $themeCss | minify | fingerprint }}
-<link rel="stylesheet" href="{{ $styles.Permalink }}" />
+<link rel="stylesheet" href="{{ $styles.RelPermalink }}" />
 {{ end }}
 
 <!-- Custom CSS -->
 {{ $customCSS := resources.Get "css/custom.css" }} {{ if $customCSS }} {{
 $styles := $customCSS | minify | fingerprint }}
-<link rel="stylesheet" href="{{ $styles.Permalink }}" />
+<link rel="stylesheet" href="{{ $styles.RelPermalink }}" />
 {{ end }}
 
 <!-- Custom Terminal.css styles -->
@@ -60,6 +60,9 @@ $styles := $customCSS | minify | fingerprint }}
 {{ if (fileExists "static/style.css") -}}
 <link rel="stylesheet" href="{{ "style.css" | absURL }}">
 {{- end }}
+
+<!-- Chart.js for time-series and version history charts -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4/dist/chart.umd.min.js"></script>
 
 <!-- Tags toggle functionality -->
 <script>

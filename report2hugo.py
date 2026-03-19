@@ -29,8 +29,26 @@ def load_latest_report(reports_dir: Path) -> dict[str, Any] | None:
     return json.loads(latest.read_text())
 
 
-def build_markdown(report: dict[str, Any]) -> str:
+def build_chart_url_map(content_dir: Path) -> dict[str, str]:
+    """Build {chart_name: /charts/org/chart/} mapping from the content directory."""
+    charts_dir = content_dir / "charts"
+    url_map: dict[str, str] = {}
+    if not charts_dir.is_dir():
+        return url_map
+    for org_dir in sorted(charts_dir.iterdir()):
+        if not org_dir.is_dir():
+            continue
+        for chart_dir in sorted(org_dir.iterdir()):
+            if not chart_dir.is_dir():
+                continue
+            url_map[chart_dir.name] = f"/charts/{org_dir.name}/{chart_dir.name}/"
+    return url_map
+
+
+def build_markdown(report: dict[str, Any], chart_urls: dict[str, str] | None = None) -> str:
     """Build Hugo-ready Markdown from a report JSON snapshot."""
+    if chart_urls is None:
+        chart_urls = {}
     snapshot_date = report.get("date", "unknown")
     summary = report.get("summary", {})
     risk_dist = report.get("risk_distribution", {})
@@ -112,8 +130,9 @@ def build_markdown(report: dict[str, Any]) -> str:
     lines.append("| Project | Version | Critical | High | Medium | Low | Score |")
     lines.append("|---------|---------|----------|------|--------|-----|-------|")
     for project, data in riskiest.items():
+        url = chart_urls.get(project, f"/charts/{project}/")
         lines.append(
-            f"| [{project}](/charts/{project}/) | {data['version']} "
+            f"| [{project}]({url}) | {data['version']} "
             f"| {data['critical']} | {data['high']} "
             f"| {data['medium']} | {data['low']} "
             f"| **{data['risk_score']}** |"
@@ -125,7 +144,8 @@ def build_markdown(report: dict[str, Any]) -> str:
     lines.append("| Project | Permissions |")
     lines.append("|---------|-------------|")
     for project, count in most_perms.items():
-        lines.append(f"| [{project}](/charts/{project}/) | {count} |")
+        url = chart_urls.get(project, f"/charts/{project}/")
+        lines.append(f"| [{project}]({url}) | {count} |")
     lines.append("")
 
     return "\n".join(lines) + "\n"
@@ -156,7 +176,8 @@ def main() -> None:
     if not report:
         ap.error(f"No JSON files found in {args.reports_dir}")
 
-    markdown = build_markdown(report)
+    chart_urls = build_chart_url_map(args.output_dir)
+    markdown = build_markdown(report, chart_urls)
 
     # Write to content/pages/threat-landscape.md
     pages_dir = args.output_dir / "pages"
