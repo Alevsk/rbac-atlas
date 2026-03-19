@@ -108,11 +108,11 @@
   {{ end }}
   {{ partial "cover.html" . }}
 
-  {{/* --- Trend Indicators (compare current version vs previous) --- */}}
-  {{ $allVersions := sort .CurrentSection.Pages "Params.version_order" "asc" }}
-  {{ if gt (len $allVersions) 1 }}
-    <div id="trend-indicators"></div>
-    <script>
+{{/* --- Trend Indicators (compare current version vs previous) --- */}}
+{{ $allVersions := sort .CurrentSection.Pages "Params.version_order" "asc" }}
+{{ if gt (len $allVersions) 1 }}
+<div id="trend-indicators"></div>
+<script>
     (function() {
       var versions = [
         {{ range $allVersions }}
@@ -151,17 +151,17 @@
         }
       }
     })();
-    </script>
-  {{ end }}
+</script>
+{{ end }}
 
-  {{ if (.Params.Toc | default .Site.Params.Toc) }}
-  <div class="table-of-contents">
-    <h2>{{ (.Params.TocTitle | default .Site.Params.TocTitle) | default "Table of Contents" }}</h2>
-    {{ .TableOfContents }}
-  </div>
-  {{ end }}
+{{ if (.Params.Toc | default .Site.Params.Toc) }}
+<div class="table-of-contents">
+  <h2>{{ (.Params.TocTitle | default .Site.Params.TocTitle) | default "Table of Contents" }}</h2>
+  {{ .TableOfContents }}
+</div>
+{{ end }}
 
-  <div class="post-content">{{ .Content }}</div>
+<div class="post-content">{{ .Content }}</div>
 
 </article>
 {{ end }}

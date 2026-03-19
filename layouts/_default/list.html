@@ -6,17 +6,17 @@
 {{/* --- Risk Trend Across Versions Chart --- */}}
 {{ $allVersions := sort .RegularPages "Params.version_order" "asc" }}
 {{ if gt (len $allVersions) 1 }}
-  {{ $chartVersions := $allVersions }}
-  {{ if gt (len $allVersions) 30 }}
-    {{ $chartVersions = after (sub (len $allVersions) 30) $allVersions }}
-  {{ end }}
-  <div class="chart-section">
-    <h2>Risk Trend Across Versions</h2>
-    <div class="chart-container">
-      <canvas id="version-risk-chart"></canvas>
-    </div>
+{{ $chartVersions := $allVersions }}
+{{ if gt (len $allVersions) 30 }}
+{{ $chartVersions = after (sub (len $allVersions) 30) $allVersions }}
+{{ end }}
+<div class="chart-section">
+  <h2>Risk Trend Across Versions</h2>
+  <div class="chart-container">
+    <canvas id="version-risk-chart"></canvas>
   </div>
-  <script>
+</div>
+<script>
   (function() {
     var versions = [
       {{ range $chartVersions }}
@@ -97,7 +97,7 @@
       });
     }
   })();
-  </script>
+</script>
 {{ end }}
 
 <h2>Versions</h2>

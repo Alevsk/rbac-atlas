@@ -12,27 +12,27 @@
     {{- end -}}
   </div>
 
-  {{/* --- Time-series charts (rendered from data/timeseries.json) --- */}}
-  {{ $ts := .Site.Data.timeseries }}
-  {{ if and $ts $ts.series (gt (len $ts.series) 0) }}
-  <div class="chart-section">
-    <h2>Risk Trend Over Time</h2>
-    {{ if lt (len $ts.series) 2 }}
-    <p class="chart-note">
-      <i class="fas fa-info-circle"></i>
-      Only {{ len $ts.series }} data point available. More daily snapshots are needed to show trends.
-    </p>
-    {{ end }}
-    <div class="chart-container">
-      <h3>Risk Distribution Over Time</h3>
-      <canvas id="risk-trend-chart"></canvas>
-    </div>
-    <div class="chart-container" style="margin-top: 1.5rem;">
-      <h3>Key Metrics Over Time</h3>
-      <canvas id="metrics-trend-chart"></canvas>
-    </div>
+{{/* --- Time-series charts (rendered from data/timeseries.json) --- */}}
+{{ $ts := .Site.Data.timeseries }}
+{{ if and $ts $ts.series (gt (len $ts.series) 0) }}
+<div class="chart-section">
+  <h2>Risk Trend Over Time</h2>
+  {{ if lt (len $ts.series) 2 }}
+  <p class="chart-note">
+    <i class="fas fa-info-circle"></i>
+    Only {{ len $ts.series }} data point available. More daily snapshots are needed to show trends.
+  </p>
+  {{ end }}
+  <div class="chart-container">
+    <h3>Risk Distribution Over Time</h3>
+    <canvas id="risk-trend-chart"></canvas>
   </div>
-  <script>
+  <div class="chart-container" style="margin-top: 1.5rem;">
+    <h3>Key Metrics Over Time</h3>
+    <canvas id="metrics-trend-chart"></canvas>
+  </div>
+</div>
+<script>
   (function() {
     var allSeries = {{ $ts.series | jsonify | safeJS }};
 
@@ -155,16 +155,16 @@
       });
     }
   })();
-  </script>
-  {{ end }}
+</script>
+{{ end }}
 
-  {{ if (.Params.Toc | default .Site.Params.Toc) }}
-  <div class="table-of-contents">
-    <h2>{{ (.Params.TocTitle | default .Site.Params.TocTitle) | default "Table of Contents" }}</h2>
-    {{ .TableOfContents }}
-  </div>
-  {{ end }}
+{{ if (.Params.Toc | default .Site.Params.Toc) }}
+<div class="table-of-contents">
+  <h2>{{ (.Params.TocTitle | default .Site.Params.TocTitle) | default "Table of Contents" }}</h2>
+  {{ .TableOfContents }}
+</div>
+{{ end }}
 
-  <div class="post-content">{{ .Content }}</div>
+<div class="post-content">{{ .Content }}</div>
 </article>
 {{ end }}
