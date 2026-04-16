@@ -1,17 +1,17 @@
 ---
 title: "Cloud-Native Threat Landscape"
 description: "RBAC risk analysis across 257 Kubernetes open-source projects"
-date: "2026-04-15"
+date: "2026-04-16"
 ---
 
-This report is auto-generated from the latest RBAC Atlas scan (**2026-04-15**). It analyzes the RBAC permissions of **257** Kubernetes open-source projects across **25786** manifest versions to provide a snapshot of the current cloud-native threat landscape.
+This report is auto-generated from the latest RBAC Atlas scan (**2026-04-16**). It analyzes the RBAC permissions of **257** Kubernetes open-source projects across **25808** manifest versions to provide a snapshot of the current cloud-native threat landscape.
 
 ## At a Glance
 
 | Metric | Value |
 |--------|-------|
 | Projects analyzed | 257 |
-| Total manifest versions | 25786 |
+| Total manifest versions | 25808 |
 | Avg service accounts per project | 2.11 |
 | Avg permission bindings per project | 30.34 |
 | Avg workloads per project | 3.5 |
@@ -36,12 +36,12 @@ This report is auto-generated from the latest RBAC Atlas scan (**2026-04-15**). 
 
 | Risk Tag | Occurrences |
 |----------|-------------|
-| {{< tag "InformationDisclosure" >}} | 1113 |
+| {{< tag "InformationDisclosure" >}} | 1114 |
 | {{< tag "WildcardPermission" >}} | 938 |
 | {{< tag "Tampering" >}} | 863 |
 | {{< tag "ClusterWideAccess" >}} | 761 |
 | {{< tag "PotentialPrivilegeEscalation" >}} | 593 |
-| {{< tag "Reconnaissance" >}} | 533 |
+| {{< tag "Reconnaissance" >}} | 534 |
 | {{< tag "DataExposure" >}} | 526 |
 | {{< tag "PrivilegeEscalation" >}} | 452 |
 | {{< tag "ResourceNameRestricted" >}} | 370 |
@@ -59,7 +59,7 @@ This report is auto-generated from the latest RBAC Atlas scan (**2026-04-15**). 
 | Base Risk Level - Medium | 177 |
 | Read ConfigMaps cluster-wide | 162 |
 | Modify ConfigMaps in a namespace | 158 |
-| List Namespaces (Cluster Reconnaissance) | 145 |
+| List Namespaces (Cluster Reconnaissance) | 146 |
 | Read RBAC configuration cluster-wide | 142 |
 
 ## Top 10 Riskiest Projects
