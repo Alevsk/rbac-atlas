@@ -1,20 +1,20 @@
 ---
 title: "Cloud-Native Threat Landscape"
 description: "RBAC risk analysis across 257 Kubernetes open-source projects"
-date: "2026-05-04"
+date: "2026-05-05"
 ---
 
-This report is auto-generated from the latest RBAC Atlas scan (**2026-05-04**). It analyzes the RBAC permissions of **257** Kubernetes open-source projects across **25972** manifest versions to provide a snapshot of the current cloud-native threat landscape.
+This report is auto-generated from the latest RBAC Atlas scan (**2026-05-05**). It analyzes the RBAC permissions of **257** Kubernetes open-source projects across **25982** manifest versions to provide a snapshot of the current cloud-native threat landscape.
 
 ## At a Glance
 
 | Metric | Value |
 |--------|-------|
 | Projects analyzed | 257 |
-| Total manifest versions | 25972 |
+| Total manifest versions | 25982 |
 | Avg service accounts per project | 2.11 |
 | Avg permission bindings per project | 30.62 |
-| Avg workloads per project | 3.51 |
+| Avg workloads per project | 3.5 |
 | Avg critical risks per project | 3.53 |
 | Avg high risks per project | 3.5 |
 | Avg medium risks per project | 2.24 |
