@@ -1,24 +1,24 @@
 ---
 title: "Cloud-Native Threat Landscape"
 description: "RBAC risk analysis across 257 Kubernetes open-source projects"
-date: "2026-05-13"
+date: "2026-05-14"
 ---
 
-This report is auto-generated from the latest RBAC Atlas scan (**2026-05-13**). It analyzes the RBAC permissions of **257** Kubernetes open-source projects across **26086** manifest versions to provide a snapshot of the current cloud-native threat landscape.
+This report is auto-generated from the latest RBAC Atlas scan (**2026-05-14**). It analyzes the RBAC permissions of **257** Kubernetes open-source projects across **26110** manifest versions to provide a snapshot of the current cloud-native threat landscape.
 
 ## At a Glance
 
 | Metric | Value |
 |--------|-------|
 | Projects analyzed | 257 |
-| Total manifest versions | 26086 |
+| Total manifest versions | 26110 |
 | Avg service accounts per project | 2.11 |
-| Avg permission bindings per project | 30.65 |
-| Avg workloads per project | 3.5 |
+| Avg permission bindings per project | 30.66 |
+| Avg workloads per project | 3.49 |
 | Avg critical risks per project | 3.54 |
-| Avg high risks per project | 3.49 |
+| Avg high risks per project | 3.46 |
 | Avg medium risks per project | 2.24 |
-| Avg low risks per project | 21.38 |
+| Avg low risks per project | 21.42 |
 | Projects with critical risks | 171 |
 | Projects with no RBAC permissions | 54 |
 
@@ -26,23 +26,23 @@ This report is auto-generated from the latest RBAC Atlas scan (**2026-05-13**). 
 
 | Risk Level | Count | Percentage |
 |------------|-------|------------|
-| {{< risk "Critical" >}} | 910 | 11.55% |
-| {{< risk "High" >}} | 898 | 11.4% |
+| {{< risk "Critical" >}} | 911 | 11.56% |
+| {{< risk "High" >}} | 888 | 11.27% |
 | {{< risk "Medium" >}} | 575 | 7.3% |
-| {{< risk "Low" >}} | 5495 | 69.75% |
-| **Total** | **7878** | |
+| {{< risk "Low" >}} | 5506 | 69.87% |
+| **Total** | **7880** | |
 
 ## Top 10 RBAC Risk Tags
 
 | Risk Tag | Occurrences |
 |----------|-------------|
-| {{< tag "InformationDisclosure" >}} | 1117 |
-| {{< tag "WildcardPermission" >}} | 938 |
+| {{< tag "InformationDisclosure" >}} | 1118 |
+| {{< tag "WildcardPermission" >}} | 928 |
 | {{< tag "Tampering" >}} | 867 |
-| {{< tag "ClusterWideAccess" >}} | 761 |
+| {{< tag "ClusterWideAccess" >}} | 751 |
 | {{< tag "PotentialPrivilegeEscalation" >}} | 595 |
 | {{< tag "Reconnaissance" >}} | 536 |
-| {{< tag "DataExposure" >}} | 529 |
+| {{< tag "DataExposure" >}} | 530 |
 | {{< tag "PrivilegeEscalation" >}} | 453 |
 | {{< tag "ResourceNameRestricted" >}} | 395 |
 | {{< tag "DenialOfService" >}} | 331 |
@@ -51,10 +51,10 @@ This report is auto-generated from the latest RBAC Atlas scan (**2026-05-13**). 
 
 | Rule | Occurrences |
 |------|-------------|
-| Base Risk Level - Low | 6940 |
-| Base Risk Level - High | 758 |
+| Base Risk Level - Low | 6952 |
+| Base Risk Level - High | 748 |
 | Read ConfigMaps in a namespace | 257 |
-| Read secrets in a namespace | 239 |
+| Read secrets in a namespace | 240 |
 | Read secrets cluster-wide | 190 |
 | Base Risk Level - Medium | 177 |
 | Read ConfigMaps cluster-wide | 163 |
