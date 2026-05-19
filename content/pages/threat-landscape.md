@@ -1,24 +1,24 @@
 ---
 title: "Cloud-Native Threat Landscape"
 description: "RBAC risk analysis across 257 Kubernetes open-source projects"
-date: "2026-05-18"
+date: "2026-05-19"
 ---
 
-This report is auto-generated from the latest RBAC Atlas scan (**2026-05-18**). It analyzes the RBAC permissions of **257** Kubernetes open-source projects across **26139** manifest versions to provide a snapshot of the current cloud-native threat landscape.
+This report is auto-generated from the latest RBAC Atlas scan (**2026-05-19**). It analyzes the RBAC permissions of **257** Kubernetes open-source projects across **26158** manifest versions to provide a snapshot of the current cloud-native threat landscape.
 
 ## At a Glance
 
 | Metric | Value |
 |--------|-------|
 | Projects analyzed | 257 |
-| Total manifest versions | 26139 |
+| Total manifest versions | 26158 |
 | Avg service accounts per project | 2.11 |
-| Avg permission bindings per project | 30.66 |
+| Avg permission bindings per project | 30.67 |
 | Avg workloads per project | 3.49 |
 | Avg critical risks per project | 3.54 |
 | Avg high risks per project | 3.46 |
 | Avg medium risks per project | 2.24 |
-| Avg low risks per project | 21.42 |
+| Avg low risks per project | 21.43 |
 | Projects with critical risks | 171 |
 | Projects with no RBAC permissions | 54 |
 
@@ -29,8 +29,8 @@ This report is auto-generated from the latest RBAC Atlas scan (**2026-05-18**). 
 | {{< risk "Critical" >}} | 911 | 11.56% |
 | {{< risk "High" >}} | 888 | 11.27% |
 | {{< risk "Medium" >}} | 575 | 7.3% |
-| {{< risk "Low" >}} | 5506 | 69.87% |
-| **Total** | **7880** | |
+| {{< risk "Low" >}} | 5508 | 69.88% |
+| **Total** | **7882** | |
 
 ## Top 10 RBAC Risk Tags
 
@@ -51,7 +51,7 @@ This report is auto-generated from the latest RBAC Atlas scan (**2026-05-18**). 
 
 | Rule | Occurrences |
 |------|-------------|
-| Base Risk Level - Low | 6952 |
+| Base Risk Level - Low | 6954 |
 | Base Risk Level - High | 748 |
 | Read ConfigMaps in a namespace | 257 |
 | Read secrets in a namespace | 240 |
