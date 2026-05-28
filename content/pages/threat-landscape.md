@@ -1,24 +1,24 @@
 ---
 title: "Cloud-Native Threat Landscape"
 description: "RBAC risk analysis across 257 Kubernetes open-source projects"
-date: "2026-05-27"
+date: "2026-05-28"
 ---
 
-This report is auto-generated from the latest RBAC Atlas scan (**2026-05-27**). It analyzes the RBAC permissions of **257** Kubernetes open-source projects across **26246** manifest versions to provide a snapshot of the current cloud-native threat landscape.
+This report is auto-generated from the latest RBAC Atlas scan (**2026-05-28**). It analyzes the RBAC permissions of **257** Kubernetes open-source projects across **26252** manifest versions to provide a snapshot of the current cloud-native threat landscape.
 
 ## At a Glance
 
 | Metric | Value |
 |--------|-------|
 | Projects analyzed | 257 |
-| Total manifest versions | 26246 |
+| Total manifest versions | 26252 |
 | Avg service accounts per project | 2.11 |
-| Avg permission bindings per project | 30.7 |
-| Avg workloads per project | 3.49 |
+| Avg permission bindings per project | 30.72 |
+| Avg workloads per project | 3.47 |
 | Avg critical risks per project | 3.54 |
 | Avg high risks per project | 3.46 |
-| Avg medium risks per project | 2.24 |
-| Avg low risks per project | 21.46 |
+| Avg medium risks per project | 2.25 |
+| Avg low risks per project | 21.47 |
 | Projects with critical risks | 171 |
 | Projects with no RBAC permissions | 54 |
 
@@ -26,17 +26,17 @@ This report is auto-generated from the latest RBAC Atlas scan (**2026-05-27**). 
 
 | Risk Level | Count | Percentage |
 |------------|-------|------------|
-| {{< risk "Critical" >}} | 911 | 11.55% |
+| {{< risk "Critical" >}} | 911 | 11.54% |
 | {{< risk "High" >}} | 888 | 11.25% |
-| {{< risk "Medium" >}} | 575 | 7.29% |
-| {{< risk "Low" >}} | 5516 | 69.91% |
-| **Total** | **7890** | |
+| {{< risk "Medium" >}} | 579 | 7.33% |
+| {{< risk "Low" >}} | 5518 | 69.88% |
+| **Total** | **7896** | |
 
 ## Top 10 RBAC Risk Tags
 
 | Risk Tag | Occurrences |
 |----------|-------------|
-| {{< tag "InformationDisclosure" >}} | 1118 |
+| {{< tag "InformationDisclosure" >}} | 1122 |
 | {{< tag "WildcardPermission" >}} | 928 |
 | {{< tag "Tampering" >}} | 867 |
 | {{< tag "ClusterWideAccess" >}} | 751 |
@@ -51,7 +51,7 @@ This report is auto-generated from the latest RBAC Atlas scan (**2026-05-27**). 
 
 | Rule | Occurrences |
 |------|-------------|
-| Base Risk Level - Low | 6962 |
+| Base Risk Level - Low | 6968 |
 | Base Risk Level - High | 748 |
 | Read ConfigMaps in a namespace | 257 |
 | Read secrets in a namespace | 240 |
@@ -72,7 +72,7 @@ Ranked by weighted risk score (`critical×10 + high×5 + medium×2 + low×1`), u
 | [victoria-metrics-distributed](/charts/victoriametrics/victoria-metrics-distributed/) | 0.9.0 | 13 | 117 | 5 | 39 | **764** |
 | [longhorn](/charts/longhorn/longhorn/) | 1.9.2 | 20 | 56 | 3 | 7 | **493** |
 | [gitlab](/charts/gitlab/gitlab/) | 9.9.3 | 18 | 10 | 9 | 199 | **447** |
-| [gitlab-operator](/charts/gitlab/gitlab-operator/) | 3.0.0 | 20 | 6 | 7 | 123 | **367** |
+| [gitlab-operator](/charts/gitlab/gitlab-operator/) | 3.0.1 | 20 | 6 | 7 | 123 | **367** |
 | [eg-universal-agent-operator](/charts/eg-universal-agent-operator/eg-universal-agent-operator/) | 0.0.5 | 16 | 24 | 8 | 64 | **360** |
 | [kuadrant-operator](/charts/kuadrant/kuadrant-operator/) | 1.4.2 | 21 | 9 | 4 | 94 | **357** |
 | [flux2](/charts/fluxcd/flux2/) | 2.9.2 | 18 | 30 | 0 | 24 | **354** |
