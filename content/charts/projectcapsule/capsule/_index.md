@@ -1,11 +1,11 @@
 ---
 title: "capsule"
-description: "A Helm chart to deploy the Capsule Operator for easily implementing, managing, and maintaining mutitenancy and access control in Kubernetes."
+description: "A Helm chart to deploy the Capsule Operator for easily implementing, managing, and maintaining multitenancy and access control in Kubernetes."
 ---
 
 ## capsule
 
-A Helm chart to deploy the Capsule Operator for easily implementing, managing, and maintaining mutitenancy and access control in Kubernetes.
+A Helm chart to deploy the Capsule Operator for easily implementing, managing, and maintaining multitenancy and access control in Kubernetes.
 
 ## Sources
 
