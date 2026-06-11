@@ -1,0 +1,575 @@
+{
+  "metadata": {
+    "version": "1.6.0",
+    "name": "minkms-operator",
+    "source": "charts/minio__minkms-operator__1.6.0/",
+    "timestamp": 1781150951,
+    "extra": {
+      "helm": {
+        "description": "Helm chart for MinIO AIStor Key Manager operator",
+        "home": "https://min.io",
+        "icon": "https://helm.min.io/logo.png",
+        "keywords": [
+          "Key Management"
+        ],
+        "kubeVersion": "",
+        "maintainers": [
+          {
+            "name": "MinIO, Inc",
+            "email": "dev@minio.io"
+          }
+        ],
+        "sources": [
+          "https://min.io/product/aistor/key-management-server"
+        ]
+      }
+    }
+  },
+  "serviceAccountData": [
+    {
+      "serviceAccountName": "minkms",
+      "namespace": "default",
+      "automountToken": false,
+      "secrets": null,
+      "imagePullSecrets": null
+    }
+  ],
+  "serviceAccountPermissions": [
+    {
+      "serviceAccountName": "minkms",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "minkms-operator",
+      "apiGroup": "coordination.k8s.io",
+      "resource": "leases",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "get",
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "minkms",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "minkms-operator",
+      "apiGroup": "",
+      "resource": "secrets",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "InformationDisclosure",
+        "SecretAccess",
+        "CredentialAccess",
+        "DataExposure"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1011,
+          "name": "Read secrets in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1011/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "minkms",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "minkms-operator",
+      "apiGroup": "",
+      "resource": "pods",
+      "resourceName": "",
+      "verbs": [
+        "patch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "minkms",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "minkms-operator",
+      "apiGroup": "",
+      "resource": "configmaps",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Medium",
+      "tags": [
+        "DataExposure",
+        "InformationDisclosure",
+        "ConfigMapAccess"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1023,
+          "name": "Read ConfigMaps in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1023/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "minkms",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "minkms:minkms",
+      "apiGroup": "apps",
+      "resource": "statefulsets",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "list",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "minkms",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "minkms:minkms",
+      "apiGroup": "rbac.authorization.k8s.io",
+      "resource": "rolebindings",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "list",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Medium",
+      "tags": [
+        "InformationDisclosure",
+        "RBACQuery",
+        "Reconnaissance"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1077,
+          "name": "Read RBAC configuration cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1077/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "minkms",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "minkms:minkms",
+      "apiGroup": "rbac.authorization.k8s.io",
+      "resource": "clusterroles",
+      "resourceName": "minkms:minkms:pods",
+      "verbs": [
+        "bind"
+      ],
+      "riskLevel": "Low",
+      "tags": [
+        "RBACManipulation",
+        "ClusterAdminAccess",
+        "PrivilegeEscalation",
+        "BindingToPrivilegedRole",
+        "ResourceNameRestricted"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1032,
+          "name": "Bind ClusterRoles to identities (bind verb)",
+          "link": "https://rbac-atlas.github.io/rules/1032/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "minkms",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "minkms:minkms",
+      "apiGroup": "",
+      "resource": "secrets",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "ClusterWideSecretAccess",
+        "CredentialAccess",
+        "DataExposure",
+        "InformationDisclosure",
+        "SecretAccess"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1010,
+          "name": "Read secrets cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1010/"
+        },
+        {
+          "id": 1011,
+          "name": "Read secrets in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1011/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "minkms",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "minkms:minkms",
+      "apiGroup": "",
+      "resource": "services",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "list",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "minkms",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "minkms:minkms",
+      "apiGroup": "",
+      "resource": "serviceaccounts",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "list",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "minkms",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "minkms:minkms",
+      "apiGroup": "",
+      "resource": "events",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "patch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "minkms",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "minkms:minkms",
+      "apiGroup": "",
+      "resource": "pods",
+      "resourceName": "",
+      "verbs": [
+        "delete",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "minkms",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "minkms:minkms",
+      "apiGroup": "minkms.min.io",
+      "resource": "minkmses",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "minkms",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "minkms:minkms",
+      "apiGroup": "minkms.min.io",
+      "resource": "minkmses/status",
+      "resourceName": "",
+      "verbs": [
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "minkms",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "minkms:minkms",
+      "apiGroup": "minkms.min.io",
+      "resource": "minkmses/finalizers",
+      "resourceName": "",
+      "verbs": [
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "minkms",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "minkms:certificate-management",
+      "apiGroup": "certificates.k8s.io",
+      "resource": "certificatesigningrequests",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Medium",
+      "tags": [
+        "DenialOfService",
+        "CSRCreation",
+        "PotentialPrivilegeEscalation",
+        "Spoofing",
+        "InformationDisclosure",
+        "Tampering"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1053,
+          "name": "Create CertificateSigningRequests",
+          "link": "https://rbac-atlas.github.io/rules/1053/"
+        },
+        {
+          "id": 1054,
+          "name": "Manage (get, list, watch, delete) CertificateSigningRequests",
+          "link": "https://rbac-atlas.github.io/rules/1054/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "minkms",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "minkms:certificate-management",
+      "apiGroup": "certificates.k8s.io",
+      "resource": "certificatesigningrequests/approval",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "minkms",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "minkms:certificate-management",
+      "apiGroup": "certificates.k8s.io",
+      "resource": "certificatesigningrequests/status",
+      "resourceName": "",
+      "verbs": [
+        "get"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "minkms",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "minkms:certificate-management",
+      "apiGroup": "certificates.k8s.io",
+      "resource": "signers",
+      "resourceName": "",
+      "verbs": [
+        "approve"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "minkms",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "minkms:certificate-management",
+      "apiGroup": "",
+      "resource": "nodes",
+      "resourceName": "",
+      "verbs": [
+        "list"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    }
+  ],
+  "serviceAccountWorkloads": [
+    {
+      "serviceAccountName": "minkms",
+      "namespace": "default",
+      "workloadType": "Deployment",
+      "workloadName": "minkms-operator",
+      "containerName": "controller",
+      "image": "quay.io/minio/aistor/operator:RELEASE.2026-06-10T05-02-21Z"
+    }
+  ]
+}
