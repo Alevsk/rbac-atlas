@@ -1,24 +1,24 @@
 ---
 title: "Cloud-Native Threat Landscape"
 description: "RBAC risk analysis across 257 Kubernetes open-source projects"
-date: "2026-06-22"
+date: "2026-06-23"
 ---
 
-This report is auto-generated from the latest RBAC Atlas scan (**2026-06-22**). It analyzes the RBAC permissions of **257** Kubernetes open-source projects across **26528** manifest versions to provide a snapshot of the current cloud-native threat landscape.
+This report is auto-generated from the latest RBAC Atlas scan (**2026-06-23**). It analyzes the RBAC permissions of **257** Kubernetes open-source projects across **26550** manifest versions to provide a snapshot of the current cloud-native threat landscape.
 
 ## At a Glance
 
 | Metric | Value |
 |--------|-------|
 | Projects analyzed | 257 |
-| Total manifest versions | 26528 |
+| Total manifest versions | 26550 |
 | Avg service accounts per project | 2.11 |
-| Avg permission bindings per project | 30.71 |
+| Avg permission bindings per project | 30.72 |
 | Avg workloads per project | 3.47 |
 | Avg critical risks per project | 3.5 |
 | Avg high risks per project | 3.39 |
 | Avg medium risks per project | 2.24 |
-| Avg low risks per project | 21.58 |
+| Avg low risks per project | 21.59 |
 | Projects with critical risks | 171 |
 | Projects with no RBAC permissions | 54 |
 
@@ -27,10 +27,10 @@ This report is auto-generated from the latest RBAC Atlas scan (**2026-06-22**). 
 | Risk Level | Count | Percentage |
 |------------|-------|------------|
 | {{< risk "Critical" >}} | 900 | 11.4% |
-| {{< risk "High" >}} | 871 | 11.04% |
+| {{< risk "High" >}} | 871 | 11.03% |
 | {{< risk "Medium" >}} | 576 | 7.3% |
-| {{< risk "Low" >}} | 5545 | 70.26% |
-| **Total** | **7892** | |
+| {{< risk "Low" >}} | 5548 | 70.27% |
+| **Total** | **7895** | |
 
 ## Top 10 RBAC Risk Tags
 
@@ -51,7 +51,7 @@ This report is auto-generated from the latest RBAC Atlas scan (**2026-06-22**). 
 
 | Rule | Occurrences |
 |------|-------------|
-| Base Risk Level - Low | 6978 |
+| Base Risk Level - Low | 6981 |
 | Base Risk Level - High | 735 |
 | Read ConfigMaps in a namespace | 260 |
 | Read secrets in a namespace | 244 |
