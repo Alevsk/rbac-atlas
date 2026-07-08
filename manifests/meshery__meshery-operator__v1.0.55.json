@@ -1,0 +1,638 @@
+{
+  "metadata": {
+    "version": "v1.0.55",
+    "name": "meshery-operator",
+    "source": "charts/meshery__meshery-operator__v1.0.55/",
+    "timestamp": 1783479112,
+    "extra": {
+      "helm": {
+        "description": "Meshery Operator chart.",
+        "home": "",
+        "icon": "https://meshery.io/images/logos/meshery-logo.png",
+        "keywords": [
+          "meshery-broker",
+          "meshery-meshsync"
+        ],
+        "kubeVersion": "",
+        "maintainers": [
+          {
+            "name": "Meshery Authors",
+            "email": "developers@meshery.io"
+          },
+          {
+            "name": "aisuko",
+            "email": "urakiny@gmail.com"
+          },
+          {
+            "name": "maintainers",
+            "email": "maintainers@meshery.io"
+          }
+        ],
+        "sources": [
+          "https://github.com/meshery/meshery-operator"
+        ]
+      }
+    }
+  },
+  "serviceAccountData": [
+    {
+      "serviceAccountName": "meshery-operator-crd-update",
+      "namespace": "default",
+      "automountToken": false,
+      "secrets": null,
+      "imagePullSecrets": null
+    },
+    {
+      "serviceAccountName": "meshery-operator",
+      "namespace": "default",
+      "automountToken": false,
+      "secrets": null,
+      "imagePullSecrets": null
+    }
+  ],
+  "serviceAccountPermissions": [
+    {
+      "serviceAccountName": "meshery-operator-crd-update",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "meshery-operator-crd-update",
+      "apiGroup": "apiextensions.k8s.io",
+      "resource": "customresourcedefinitions",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "get",
+        "list",
+        "patch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "meshery-operator",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "meshery-leader-election-role",
+      "apiGroup": "",
+      "resource": "configmaps",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "PotentialPrivilegeEscalation",
+        "InformationDisclosure",
+        "DataExposure",
+        "Tampering",
+        "ConfigMapAccess"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1025,
+          "name": "Modify ConfigMaps in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1025/"
+        },
+        {
+          "id": 1023,
+          "name": "Read ConfigMaps in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1023/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "meshery-operator",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "meshery-leader-election-role",
+      "apiGroup": "",
+      "resource": "events",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "patch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "meshery-operator",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "meshery-leader-election-role",
+      "apiGroup": "coordination.k8s.io",
+      "resource": "leases",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "Tampering",
+        "DenialOfService",
+        "ControlPlaneDisruption",
+        "CriticalNamespace"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1081,
+          "name": "Manage Leases in kube-system or kube-node-lease namespace",
+          "link": "https://rbac-atlas.github.io/rules/1081/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "meshery-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "meshery-operator-role",
+      "apiGroup": "",
+      "resource": "secrets",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "ClusterWideSecretAccess",
+        "DataExposure",
+        "SecretAccess",
+        "Tampering",
+        "PrivilegeEscalation",
+        "PotentialPrivilegeEscalation",
+        "CredentialAccess",
+        "InformationDisclosure",
+        "Persistence"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1010,
+          "name": "Read secrets cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1010/"
+        },
+        {
+          "id": 1011,
+          "name": "Read secrets in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1011/"
+        },
+        {
+          "id": 1012,
+          "name": "Modify secrets cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1012/"
+        },
+        {
+          "id": 1013,
+          "name": "Modify secrets in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1013/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "meshery-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "meshery-operator-role",
+      "apiGroup": "",
+      "resource": "services",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "Tampering",
+        "NetworkManipulation",
+        "ServiceExposure",
+        "DenialOfService"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1075,
+          "name": "Manage Services cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1075/"
+        },
+        {
+          "id": 1076,
+          "name": "Manage Services in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1076/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "meshery-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "meshery-operator-role",
+      "apiGroup": "",
+      "resource": "configmaps",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "Tampering",
+        "ConfigMapAccess",
+        "PotentialPrivilegeEscalation",
+        "InformationDisclosure",
+        "DataExposure"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1024,
+          "name": "Modify ConfigMaps cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1024/"
+        },
+        {
+          "id": 1022,
+          "name": "Read ConfigMaps cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1022/"
+        },
+        {
+          "id": 1025,
+          "name": "Modify ConfigMaps in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1025/"
+        },
+        {
+          "id": 1023,
+          "name": "Read ConfigMaps in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1023/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "meshery-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "meshery-operator-role",
+      "apiGroup": "apps",
+      "resource": "deployments",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "WorkloadLifecycle",
+        "PrivilegeEscalation",
+        "Persistence",
+        "Tampering",
+        "PotentialPrivilegeEscalation"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1033,
+          "name": "Manage Deployments cluster-wide (potential for privileged pod execution)",
+          "link": "https://rbac-atlas.github.io/rules/1033/"
+        },
+        {
+          "id": 1034,
+          "name": "Manage Deployments in a namespace (potential for privileged pod execution)",
+          "link": "https://rbac-atlas.github.io/rules/1034/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "meshery-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "meshery-operator-role",
+      "apiGroup": "apps",
+      "resource": "statefulsets",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "Persistence",
+        "Tampering",
+        "PotentialPrivilegeEscalation",
+        "WorkloadLifecycle",
+        "PrivilegeEscalation"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1037,
+          "name": "Manage StatefulSets cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1037/"
+        },
+        {
+          "id": 1038,
+          "name": "Manage StatefulSets in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1038/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "meshery-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "meshery-operator-role",
+      "apiGroup": "authentication.k8s.io",
+      "resource": "tokenreviews",
+      "resourceName": "",
+      "verbs": [
+        "create"
+      ],
+      "riskLevel": "Medium",
+      "tags": [
+        "InformationDisclosure",
+        "CredentialAccess",
+        "RBACQuery"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1049,
+          "name": "Create TokenReviews (validate arbitrary tokens)",
+          "link": "https://rbac-atlas.github.io/rules/1049/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "meshery-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "meshery-operator-role",
+      "apiGroup": "authorization.k8s.io",
+      "resource": "subjectaccessreviews",
+      "resourceName": "",
+      "verbs": [
+        "create"
+      ],
+      "riskLevel": "Medium",
+      "tags": [
+        "RBACQuery",
+        "InformationDisclosure"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1050,
+          "name": "Create SubjectAccessReviews (check arbitrary permissions)",
+          "link": "https://rbac-atlas.github.io/rules/1050/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "meshery-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "meshery-operator-role",
+      "apiGroup": "meshery.io",
+      "resource": "brokers/status",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "patch",
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "meshery-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "meshery-operator-role",
+      "apiGroup": "meshery.io",
+      "resource": "meshsyncs/status",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "patch",
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "meshery-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "meshery-operator-role",
+      "apiGroup": "meshery.io",
+      "resource": "brokers",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "meshery-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "meshery-operator-role",
+      "apiGroup": "meshery.io",
+      "resource": "meshsyncs",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "meshery-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "meshery-operator-role",
+      "apiGroup": "meshery.io",
+      "resource": "brokers/finalizers",
+      "resourceName": "",
+      "verbs": [
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "meshery-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "meshery-operator-role",
+      "apiGroup": "meshery.io",
+      "resource": "meshsyncs/finalizers",
+      "resourceName": "",
+      "verbs": [
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    }
+  ],
+  "serviceAccountWorkloads": [
+    {
+      "serviceAccountName": "meshery-operator",
+      "namespace": "default",
+      "workloadType": "Deployment",
+      "workloadName": "meshery-operator",
+      "containerName": "manager",
+      "image": "meshery/meshery-operator:1.0.4"
+    },
+    {
+      "serviceAccountName": "meshery-operator-crd-update",
+      "namespace": "default",
+      "workloadType": "Job",
+      "workloadName": "meshery-operator-crd-update",
+      "containerName": "crd-update",
+      "image": "alpine/k8s:1.35.6"
+    }
+  ]
+}
