@@ -1,24 +1,24 @@
 ---
 title: "Cloud-Native Threat Landscape"
 description: "RBAC risk analysis across 257 Kubernetes open-source projects"
-date: "2026-07-08"
+date: "2026-07-09"
 ---
 
-This report is auto-generated from the latest RBAC Atlas scan (**2026-07-08**). It analyzes the RBAC permissions of **257** Kubernetes open-source projects across **26715** manifest versions to provide a snapshot of the current cloud-native threat landscape.
+This report is auto-generated from the latest RBAC Atlas scan (**2026-07-09**). It analyzes the RBAC permissions of **257** Kubernetes open-source projects across **26731** manifest versions to provide a snapshot of the current cloud-native threat landscape.
 
 ## At a Glance
 
 | Metric | Value |
 |--------|-------|
 | Projects analyzed | 257 |
-| Total manifest versions | 26715 |
+| Total manifest versions | 26731 |
 | Avg service accounts per project | 2.11 |
-| Avg permission bindings per project | 30.77 |
+| Avg permission bindings per project | 30.81 |
 | Avg workloads per project | 3.47 |
 | Avg critical risks per project | 3.5 |
 | Avg high risks per project | 3.39 |
 | Avg medium risks per project | 2.24 |
-| Avg low risks per project | 21.64 |
+| Avg low risks per project | 21.68 |
 | Projects with critical risks | 171 |
 | Projects with no RBAC permissions | 54 |
 
@@ -26,11 +26,11 @@ This report is auto-generated from the latest RBAC Atlas scan (**2026-07-08**). 
 
 | Risk Level | Count | Percentage |
 |------------|-------|------------|
-| {{< risk "Critical" >}} | 900 | 11.38% |
-| {{< risk "High" >}} | 871 | 11.01% |
-| {{< risk "Medium" >}} | 576 | 7.28% |
-| {{< risk "Low" >}} | 5562 | 70.32% |
-| **Total** | **7909** | |
+| {{< risk "Critical" >}} | 900 | 11.37% |
+| {{< risk "High" >}} | 871 | 11.0% |
+| {{< risk "Medium" >}} | 576 | 7.27% |
+| {{< risk "Low" >}} | 5571 | 70.36% |
+| **Total** | **7918** | |
 
 ## Top 10 RBAC Risk Tags
 
@@ -51,7 +51,7 @@ This report is auto-generated from the latest RBAC Atlas scan (**2026-07-08**). 
 
 | Rule | Occurrences |
 |------|-------------|
-| Base Risk Level - Low | 6995 |
+| Base Risk Level - Low | 7004 |
 | Base Risk Level - High | 735 |
 | Read ConfigMaps in a namespace | 260 |
 | Read secrets in a namespace | 244 |
@@ -73,7 +73,7 @@ Ranked by weighted risk score (`critical×10 + high×5 + medium×2 + low×1`), u
 | [longhorn](/charts/longhorn/longhorn/) | 1.9.2 | 20 | 56 | 3 | 7 | **493** |
 | [gitlab](/charts/gitlab/gitlab/) | 9.9.3 | 18 | 10 | 9 | 199 | **447** |
 | [kuadrant-operator](/charts/kuadrant/kuadrant-operator/) | 1.5.0-rc3 | 21 | 9 | 4 | 103 | **366** |
-| [gitlab-operator](/charts/gitlab/gitlab-operator/) | 3.1.1 | 20 | 5 | 7 | 124 | **363** |
+| [gitlab-operator](/charts/gitlab/gitlab-operator/) | 3.1.2 | 20 | 5 | 7 | 124 | **363** |
 | [eg-universal-agent-operator](/charts/eg-universal-agent-operator/eg-universal-agent-operator/) | 0.0.5 | 16 | 24 | 8 | 64 | **360** |
 | [flux2](/charts/fluxcd/flux2/) | 2.9.2 | 18 | 30 | 0 | 24 | **354** |
 | [victoria-metrics-k8s-stack](/charts/victoriametrics/victoria-metrics-k8s-stack/) | 0.9.8 | 13 | 17 | 5 | 98 | **323** |
