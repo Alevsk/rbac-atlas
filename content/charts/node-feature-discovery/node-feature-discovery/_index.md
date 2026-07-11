@@ -1,11 +1,11 @@
 ---
 title: "node-feature-discovery"
-description: "Detects hardware features available on each node in a Kubernetes cluster, and advertises those features using node labels. "
+description: "Node Feature Discovery (NFD) is a Kubernetes add-on for detecting hardware features and system configuration. Detected features are advertised as node labels. NFD provides flexible configuration and extension points for a wide range of vendor and application specific node labeling needs. "
 ---
 
 ## node-feature-discovery
 
-Detects hardware features available on each node in a Kubernetes cluster, and advertises those features using node labels.
+Node Feature Discovery (NFD) is a Kubernetes add-on for detecting hardware features and system configuration. Detected features are advertised as node labels. NFD provides flexible configuration and extension points for a wide range of vendor and application specific node labeling needs.
 
 ## Sources
 
