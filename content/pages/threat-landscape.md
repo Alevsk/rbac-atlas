@@ -1,17 +1,17 @@
 ---
 title: "Cloud-Native Threat Landscape"
 description: "RBAC risk analysis across 257 Kubernetes open-source projects"
-date: "2026-07-13"
+date: "2026-07-14"
 ---
 
-This report is auto-generated from the latest RBAC Atlas scan (**2026-07-13**). It analyzes the RBAC permissions of **257** Kubernetes open-source projects across **26771** manifest versions to provide a snapshot of the current cloud-native threat landscape.
+This report is auto-generated from the latest RBAC Atlas scan (**2026-07-14**). It analyzes the RBAC permissions of **257** Kubernetes open-source projects across **26787** manifest versions to provide a snapshot of the current cloud-native threat landscape.
 
 ## At a Glance
 
 | Metric | Value |
 |--------|-------|
 | Projects analyzed | 257 |
-| Total manifest versions | 26771 |
+| Total manifest versions | 26787 |
 | Avg service accounts per project | 2.11 |
 | Avg permission bindings per project | 30.82 |
 | Avg workloads per project | 3.47 |
@@ -29,8 +29,8 @@ This report is auto-generated from the latest RBAC Atlas scan (**2026-07-13**). 
 | {{< risk "Critical" >}} | 900 | 11.36% |
 | {{< risk "High" >}} | 871 | 11.0% |
 | {{< risk "Medium" >}} | 578 | 7.3% |
-| {{< risk "Low" >}} | 5571 | 70.34% |
-| **Total** | **7920** | |
+| {{< risk "Low" >}} | 5572 | 70.34% |
+| **Total** | **7921** | |
 
 ## Top 10 RBAC Risk Tags
 
@@ -51,7 +51,7 @@ This report is auto-generated from the latest RBAC Atlas scan (**2026-07-13**). 
 
 | Rule | Occurrences |
 |------|-------------|
-| Base Risk Level - Low | 7006 |
+| Base Risk Level - Low | 7007 |
 | Base Risk Level - High | 735 |
 | Read ConfigMaps in a namespace | 260 |
 | Read secrets in a namespace | 244 |
