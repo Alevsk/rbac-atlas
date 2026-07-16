@@ -1,11 +1,11 @@
 ---
 title: "loki"
-description: "Helm chart for Grafana Loki and Grafana Enterprise Logs supporting monolithic, simple scalable, and microservices modes."
+description: "Helm chart for Grafana Enterprise Logs supporting monolithic, simple scalable, and microservices modes."
 ---
 
 ## loki
 
-Helm chart for Grafana Loki and Grafana Enterprise Logs supporting monolithic, simple scalable, and microservices modes.
+Helm chart for Grafana Enterprise Logs supporting monolithic, simple scalable, and microservices modes.
 
 ## Sources
 
