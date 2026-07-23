@@ -1,0 +1,1555 @@
+{
+  "metadata": {
+    "version": "5.10.0",
+    "name": "aistor-operator",
+    "source": "charts/minio__aistor-operator__5.10.0/",
+    "timestamp": 1784775187,
+    "extra": {
+      "helm": {
+        "description": "Helm chart for MinIO AIStor operators",
+        "home": "https://min.io",
+        "icon": "https://helm.min.io/logo.png",
+        "keywords": [
+          "Enterprise Object Storage",
+          "storage",
+          "object-storage",
+          "S3"
+        ],
+        "kubeVersion": "",
+        "maintainers": [
+          {
+            "name": "MinIO, Inc",
+            "email": "dev@minio.io"
+          }
+        ],
+        "sources": [
+          "https://min.io/product/aistor-overview"
+        ]
+      }
+    }
+  },
+  "serviceAccountData": [
+    {
+      "serviceAccountName": "adminjob",
+      "namespace": "default",
+      "automountToken": false,
+      "secrets": null,
+      "imagePullSecrets": null
+    },
+    {
+      "serviceAccountName": "object-store",
+      "namespace": "default",
+      "automountToken": false,
+      "secrets": null,
+      "imagePullSecrets": null
+    },
+    {
+      "serviceAccountName": "object-store-webhook",
+      "namespace": "default",
+      "automountToken": false,
+      "secrets": null,
+      "imagePullSecrets": null
+    }
+  ],
+  "serviceAccountPermissions": [
+    {
+      "serviceAccountName": "adminjob",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "aistor-adminjob",
+      "apiGroup": "sts.min.io",
+      "resource": "policybindings",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "adminjob",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "aistor-adminjob",
+      "apiGroup": "batch",
+      "resource": "jobs",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "adminjob",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "aistor-adminjob",
+      "apiGroup": "",
+      "resource": "events",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "patch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "adminjob",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "aistor-adminjob",
+      "apiGroup": "",
+      "resource": "configmaps",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "ConfigMapAccess",
+        "DataExposure",
+        "InformationDisclosure"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1022,
+          "name": "Read ConfigMaps cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1022/"
+        },
+        {
+          "id": 1023,
+          "name": "Read ConfigMaps in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1023/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "adminjob",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "aistor-adminjob",
+      "apiGroup": "",
+      "resource": "secrets",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "DataExposure",
+        "InformationDisclosure",
+        "SecretAccess",
+        "ClusterWideSecretAccess",
+        "CredentialAccess"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1010,
+          "name": "Read secrets cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1010/"
+        },
+        {
+          "id": 1011,
+          "name": "Read secrets in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1011/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "adminjob",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "aistor-adminjob",
+      "apiGroup": "aistor.min.io",
+      "resource": "adminjobs",
+      "resourceName": "",
+      "verbs": [
+        "delete",
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "adminjob",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "aistor-adminjob",
+      "apiGroup": "aistor.min.io",
+      "resource": "adminjobs/status",
+      "resourceName": "",
+      "verbs": [
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "adminjob",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "aistor-adminjob",
+      "apiGroup": "aistor.min.io",
+      "resource": "objectstores",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "adminjob",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "adminjob-operator",
+      "apiGroup": "",
+      "resource": "pods",
+      "resourceName": "",
+      "verbs": [
+        "patch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "adminjob",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "adminjob-operator",
+      "apiGroup": "",
+      "resource": "configmaps",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Medium",
+      "tags": [
+        "InformationDisclosure",
+        "ConfigMapAccess",
+        "DataExposure"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1023,
+          "name": "Read ConfigMaps in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1023/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "adminjob",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "adminjob-operator",
+      "apiGroup": "",
+      "resource": "secrets",
+      "resourceName": "",
+      "verbs": [
+        "delete",
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "SecretAccess",
+        "CredentialAccess",
+        "DataExposure",
+        "InformationDisclosure"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1011,
+          "name": "Read secrets in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1011/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "adminjob",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "adminjob-operator",
+      "apiGroup": "coordination.k8s.io",
+      "resource": "leases",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "get",
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "object-store",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "aistor-object-store",
+      "apiGroup": "rbac.authorization.k8s.io",
+      "resource": "rolebindings",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "list",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Medium",
+      "tags": [
+        "InformationDisclosure",
+        "RBACQuery",
+        "Reconnaissance"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1077,
+          "name": "Read RBAC configuration cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1077/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "object-store",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "aistor-object-store",
+      "apiGroup": "rbac.authorization.k8s.io",
+      "resource": "clusterroles",
+      "resourceName": "aistor-object-store-pods",
+      "verbs": [
+        "bind"
+      ],
+      "riskLevel": "Low",
+      "tags": [
+        "RBACManipulation",
+        "ClusterAdminAccess",
+        "PrivilegeEscalation",
+        "BindingToPrivilegedRole",
+        "ResourceNameRestricted"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1032,
+          "name": "Bind ClusterRoles to identities (bind verb)",
+          "link": "https://rbac-atlas.github.io/rules/1032/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "object-store",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "aistor-object-store",
+      "apiGroup": "rbac.authorization.k8s.io",
+      "resource": "clusterroles",
+      "resourceName": "aistor-tokenreview",
+      "verbs": [
+        "bind"
+      ],
+      "riskLevel": "Low",
+      "tags": [
+        "RBACManipulation",
+        "ClusterAdminAccess",
+        "PrivilegeEscalation",
+        "BindingToPrivilegedRole",
+        "ResourceNameRestricted"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1032,
+          "name": "Bind ClusterRoles to identities (bind verb)",
+          "link": "https://rbac-atlas.github.io/rules/1032/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "object-store",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "aistor-object-store",
+      "apiGroup": "rbac.authorization.k8s.io",
+      "resource": "clusterrolebindings",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "object-store",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "aistor-object-store",
+      "apiGroup": "sts.min.io",
+      "resource": "policybindings",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "list",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "object-store",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "aistor-object-store",
+      "apiGroup": "",
+      "resource": "serviceaccounts",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "list",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "object-store",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "aistor-object-store",
+      "apiGroup": "",
+      "resource": "events",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "patch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "object-store",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "aistor-object-store",
+      "apiGroup": "",
+      "resource": "configmaps",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "InformationDisclosure",
+        "ConfigMapAccess",
+        "DataExposure"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1022,
+          "name": "Read ConfigMaps cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1022/"
+        },
+        {
+          "id": 1023,
+          "name": "Read ConfigMaps in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1023/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "object-store",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "aistor-object-store",
+      "apiGroup": "",
+      "resource": "secrets",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "ClusterWideSecretAccess",
+        "CredentialAccess",
+        "DataExposure",
+        "InformationDisclosure",
+        "SecretAccess"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1010,
+          "name": "Read secrets cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1010/"
+        },
+        {
+          "id": 1011,
+          "name": "Read secrets in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1011/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "object-store",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "aistor-object-store",
+      "apiGroup": "",
+      "resource": "persistentvolumeclaims",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "object-store",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "aistor-object-store",
+      "apiGroup": "",
+      "resource": "pods",
+      "resourceName": "",
+      "verbs": [
+        "delete",
+        "deletecollection",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "object-store",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "aistor-object-store",
+      "apiGroup": "",
+      "resource": "services",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "list",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "object-store",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "aistor-object-store",
+      "apiGroup": "",
+      "resource": "nodes",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "object-store",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "aistor-object-store",
+      "apiGroup": "aistor.min.io",
+      "resource": "objectstores",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "object-store",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "aistor-object-store",
+      "apiGroup": "aistor.min.io",
+      "resource": "objectstores/status",
+      "resourceName": "",
+      "verbs": [
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "object-store",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "aistor-object-store",
+      "apiGroup": "aistor.min.io",
+      "resource": "objectstores/finalizers",
+      "resourceName": "",
+      "verbs": [
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "object-store",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "aistor-object-store",
+      "apiGroup": "aistor.min.io",
+      "resource": "prompts",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "object-store",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "aistor-object-store",
+      "apiGroup": "apps",
+      "resource": "statefulsets",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "WorkloadLifecycle",
+        "PrivilegeEscalation",
+        "Persistence",
+        "Tampering",
+        "PotentialPrivilegeEscalation"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1037,
+          "name": "Manage StatefulSets cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1037/"
+        },
+        {
+          "id": 1038,
+          "name": "Manage StatefulSets in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1038/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "object-store",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "aistor-object-store",
+      "apiGroup": "apps",
+      "resource": "statefulsets/finalizers",
+      "resourceName": "",
+      "verbs": [
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "object-store",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "aistor-object-store",
+      "apiGroup": "apps",
+      "resource": "deployments",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "list",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "object-store",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "aistor-object-store",
+      "apiGroup": "monitoring.coreos.com",
+      "resource": "prometheuses",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "object-store",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "aistor-object-store",
+      "apiGroup": "policy",
+      "resource": "poddisruptionbudgets",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "list",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "object-store",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "aistor-object-store",
+      "apiGroup": "apiextensions.k8s.io",
+      "resource": "customresourcedefinitions",
+      "resourceName": "",
+      "verbs": [
+        "get"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "object-store",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "object-store-operator",
+      "apiGroup": "coordination.k8s.io",
+      "resource": "leases",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "get",
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "object-store",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "object-store-operator",
+      "apiGroup": "",
+      "resource": "pods",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "patch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "object-store",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "object-store-operator",
+      "apiGroup": "",
+      "resource": "configmaps",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Medium",
+      "tags": [
+        "InformationDisclosure",
+        "ConfigMapAccess",
+        "DataExposure"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1023,
+          "name": "Read ConfigMaps in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1023/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "object-store",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "object-store-operator",
+      "apiGroup": "",
+      "resource": "secrets",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "CredentialAccess",
+        "DataExposure",
+        "InformationDisclosure",
+        "SecretAccess"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1011,
+          "name": "Read secrets in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1011/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "object-store",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "object-store-operator",
+      "apiGroup": "apps",
+      "resource": "deployments",
+      "resourceName": "",
+      "verbs": [
+        "get"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "object-store",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "aistor-certificate-management",
+      "apiGroup": "certificates.k8s.io",
+      "resource": "certificatesigningrequests",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Medium",
+      "tags": [
+        "PotentialPrivilegeEscalation",
+        "Spoofing",
+        "InformationDisclosure",
+        "Tampering",
+        "DenialOfService",
+        "CSRCreation"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1053,
+          "name": "Create CertificateSigningRequests",
+          "link": "https://rbac-atlas.github.io/rules/1053/"
+        },
+        {
+          "id": 1054,
+          "name": "Manage (get, list, watch, delete) CertificateSigningRequests",
+          "link": "https://rbac-atlas.github.io/rules/1054/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "object-store",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "aistor-certificate-management",
+      "apiGroup": "certificates.k8s.io",
+      "resource": "certificatesigningrequests/approval",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "object-store",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "aistor-certificate-management",
+      "apiGroup": "certificates.k8s.io",
+      "resource": "certificatesigningrequests/status",
+      "resourceName": "",
+      "verbs": [
+        "get"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "object-store",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "aistor-certificate-management",
+      "apiGroup": "certificates.k8s.io",
+      "resource": "signers",
+      "resourceName": "",
+      "verbs": [
+        "approve"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "object-store",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "aistor-certificate-management",
+      "apiGroup": "",
+      "resource": "nodes",
+      "resourceName": "",
+      "verbs": [
+        "list"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "object-store-webhook",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "aistor-object-store-webhook-cluster",
+      "apiGroup": "admissionregistration.k8s.io",
+      "resource": "mutatingwebhookconfigurations",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "object-store-webhook",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "aistor-object-store-webhook-cluster",
+      "apiGroup": "",
+      "resource": "nodes",
+      "resourceName": "",
+      "verbs": [
+        "list"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "object-store-webhook",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "object-store-webhook",
+      "apiGroup": "",
+      "resource": "configmaps",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Medium",
+      "tags": [
+        "ConfigMapAccess",
+        "DataExposure",
+        "InformationDisclosure"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1023,
+          "name": "Read ConfigMaps in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1023/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "object-store-webhook",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "object-store-webhook",
+      "apiGroup": "",
+      "resource": "secrets",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "DataExposure",
+        "InformationDisclosure",
+        "SecretAccess",
+        "CredentialAccess"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1011,
+          "name": "Read secrets in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1011/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "object-store-webhook",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "object-store-webhook",
+      "apiGroup": "apps",
+      "resource": "deployments",
+      "resourceName": "",
+      "verbs": [
+        "get"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "object-store-webhook",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "aistor-certificate-management",
+      "apiGroup": "certificates.k8s.io",
+      "resource": "certificatesigningrequests/approval",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "object-store-webhook",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "aistor-certificate-management",
+      "apiGroup": "certificates.k8s.io",
+      "resource": "certificatesigningrequests/status",
+      "resourceName": "",
+      "verbs": [
+        "get"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "object-store-webhook",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "aistor-certificate-management",
+      "apiGroup": "certificates.k8s.io",
+      "resource": "signers",
+      "resourceName": "",
+      "verbs": [
+        "approve"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "object-store-webhook",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "aistor-certificate-management",
+      "apiGroup": "certificates.k8s.io",
+      "resource": "certificatesigningrequests",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Medium",
+      "tags": [
+        "PotentialPrivilegeEscalation",
+        "Spoofing",
+        "InformationDisclosure",
+        "Tampering",
+        "DenialOfService",
+        "CSRCreation"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1053,
+          "name": "Create CertificateSigningRequests",
+          "link": "https://rbac-atlas.github.io/rules/1053/"
+        },
+        {
+          "id": 1054,
+          "name": "Manage (get, list, watch, delete) CertificateSigningRequests",
+          "link": "https://rbac-atlas.github.io/rules/1054/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "object-store-webhook",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "aistor-certificate-management",
+      "apiGroup": "",
+      "resource": "nodes",
+      "resourceName": "",
+      "verbs": [
+        "list"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "object-store-webhook",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "aistor-object-store-webhook",
+      "apiGroup": "aistor.min.io",
+      "resource": "objectstores",
+      "resourceName": "",
+      "verbs": [
+        "get"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    }
+  ],
+  "serviceAccountWorkloads": [
+    {
+      "serviceAccountName": "object-store-webhook",
+      "namespace": "default",
+      "workloadType": "Deployment",
+      "workloadName": "object-store-webhook",
+      "containerName": "controller",
+      "image": "quay.io/minio/aistor/operator:RELEASE.2026-07-21T22-41-48Z"
+    },
+    {
+      "serviceAccountName": "adminjob",
+      "namespace": "default",
+      "workloadType": "Deployment",
+      "workloadName": "adminjob-operator",
+      "containerName": "controller",
+      "image": "quay.io/minio/aistor/operator:RELEASE.2026-07-21T22-41-48Z"
+    },
+    {
+      "serviceAccountName": "object-store",
+      "namespace": "default",
+      "workloadType": "Deployment",
+      "workloadName": "object-store-operator",
+      "containerName": "controller",
+      "image": "quay.io/minio/aistor/operator:RELEASE.2026-07-21T22-41-48Z"
+    }
+  ]
+}
