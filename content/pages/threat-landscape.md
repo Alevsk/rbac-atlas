@@ -1,17 +1,17 @@
 ---
 title: "Cloud-Native Threat Landscape"
 description: "RBAC risk analysis across 257 Kubernetes open-source projects"
-date: "2026-08-22"
+date: "2026-08-23"
 ---
 
-This report is auto-generated from the latest RBAC Atlas scan (**2026-08-22**). It analyzes the RBAC permissions of **257** Kubernetes open-source projects across **27263** manifest versions to provide a snapshot of the current cloud-native threat landscape.
+This report is auto-generated from the latest RBAC Atlas scan (**2026-08-23**). It analyzes the RBAC permissions of **257** Kubernetes open-source projects across **27281** manifest versions to provide a snapshot of the current cloud-native threat landscape.
 
 ## At a Glance
 
 | Metric | Value |
 |--------|-------|
 | Projects analyzed | 257 |
-| Total manifest versions | 27263 |
+| Total manifest versions | 27281 |
 | Avg service accounts per project | 2.11 |
 | Avg permission bindings per project | 31.2 |
 | Avg workloads per project | 3.47 |
@@ -28,9 +28,9 @@ This report is auto-generated from the latest RBAC Atlas scan (**2026-08-22**). 
 |------------|-------|------------|
 | {{< risk "Critical" >}} | 899 | 11.21% |
 | {{< risk "High" >}} | 1028 | 12.82% |
-| {{< risk "Medium" >}} | 572 | 7.13% |
-| {{< risk "Low" >}} | 5519 | 68.83% |
-| **Total** | **8018** | |
+| {{< risk "Medium" >}} | 573 | 7.15% |
+| {{< risk "Low" >}} | 5519 | 68.82% |
+| **Total** | **8019** | |
 
 ## Top 10 RBAC Risk Tags
 
@@ -39,19 +39,19 @@ This report is auto-generated from the latest RBAC Atlas scan (**2026-08-22**). 
 | {{< tag "InformationDisclosure" >}} | 1121 |
 | {{< tag "WildcardPermission" >}} | 1072 |
 | {{< tag "ClusterWideAccess" >}} | 902 |
-| {{< tag "Tampering" >}} | 845 |
+| {{< tag "Tampering" >}} | 846 |
 | {{< tag "PotentialPrivilegeEscalation" >}} | 580 |
 | {{< tag "DataExposure" >}} | 538 |
 | {{< tag "Reconnaissance" >}} | 523 |
 | {{< tag "PrivilegeEscalation" >}} | 436 |
 | {{< tag "ResourceNameRestricted" >}} | 385 |
-| {{< tag "DenialOfService" >}} | 325 |
+| {{< tag "DenialOfService" >}} | 326 |
 
 ## Top 10 Triggered Risk Rules
 
 | Rule | Occurrences |
 |------|-------------|
-| Base Risk Level - Low | 6946 |
+| Base Risk Level - Low | 6947 |
 | Base Risk Level - High | 900 |
 | Read ConfigMaps in a namespace | 259 |
 | Read secrets in a namespace | 244 |
@@ -69,7 +69,7 @@ Ranked by weighted risk score (`critical×10 + high×5 + medium×2 + low×1`), u
 | Project | Version | Critical | High | Medium | Low | Score |
 |---------|---------|----------|------|--------|-----|-------|
 | [openebs](/charts/openebs/openebs/) | 3.9.0 | 90 | 73 | 30 | 170 | **1495** |
-| [victoria-metrics-k8s-stack](/charts/victoriametrics/victoria-metrics-k8s-stack/) | 0.91.1 | 14 | 173 | 5 | 38 | **1053** |
+| [victoria-metrics-k8s-stack](/charts/victoriametrics/victoria-metrics-k8s-stack/) | 0.91.2 | 14 | 173 | 5 | 38 | **1053** |
 | [victoria-metrics-distributed](/charts/victoriametrics/victoria-metrics-distributed/) | 0.9.0 | 13 | 117 | 5 | 39 | **764** |
 | [longhorn](/charts/longhorn/longhorn/) | 1.9.2 | 20 | 56 | 3 | 7 | **493** |
 | [gitlab](/charts/gitlab/gitlab/) | 9.9.3 | 18 | 10 | 9 | 199 | **447** |
