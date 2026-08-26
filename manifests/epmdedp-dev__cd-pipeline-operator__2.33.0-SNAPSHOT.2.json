@@ -1,0 +1,502 @@
+{
+  "metadata": {
+    "version": "2.33.0-SNAPSHOT.2",
+    "name": "cd-pipeline-operator",
+    "source": "charts/epmdedp-dev__cd-pipeline-operator__2.33.0-SNAPSHOT.2/",
+    "timestamp": 1787707596,
+    "extra": {
+      "helm": {
+        "description": "A Helm chart for KubeRocketCI CD Pipeline Operator",
+        "home": "https://docs.kuberocketci.io/",
+        "icon": "https://docs.kuberocketci.io/img/logo.svg",
+        "keywords": [
+          "edp",
+          "operator",
+          "pipelines",
+          "cd"
+        ],
+        "kubeVersion": "",
+        "maintainers": [
+          {
+            "name": "epmd-edp",
+            "email": "SupportEPMD-EDP@epam.com",
+            "url": "https://solutionshub.epam.com/solution/kuberocketci"
+          },
+          {
+            "name": "sergk",
+            "url": "https://github.com/SergK"
+          }
+        ],
+        "sources": [
+          "https://github.com/epam/edp-cd-pipeline-operator"
+        ]
+      }
+    }
+  },
+  "serviceAccountData": [
+    {
+      "serviceAccountName": "edp-cd-pipeline-operator",
+      "namespace": "default",
+      "automountToken": false,
+      "secrets": null,
+      "imagePullSecrets": null
+    }
+  ],
+  "serviceAccountPermissions": [
+    {
+      "serviceAccountName": "edp-cd-pipeline-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "edp-cd-pipeline-operator-default-target-namespace",
+      "apiGroup": "rbac.authorization.k8s.io",
+      "resource": "rolebindings",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "get"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "edp-cd-pipeline-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "edp-cd-pipeline-operator-default-target-namespace",
+      "apiGroup": "rbac.authorization.k8s.io",
+      "resource": "clusterroles",
+      "resourceName": "admin",
+      "verbs": [
+        "bind"
+      ],
+      "riskLevel": "Low",
+      "tags": [
+        "RBACManipulation",
+        "ClusterAdminAccess",
+        "PrivilegeEscalation",
+        "BindingToPrivilegedRole",
+        "ResourceNameRestricted"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1032,
+          "name": "Bind ClusterRoles to identities (bind verb)",
+          "link": "https://rbac-atlas.github.io/rules/1032/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "edp-cd-pipeline-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "edp-cd-pipeline-operator-default",
+      "apiGroup": "",
+      "resource": "namespaces",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "NamespaceLifecycle",
+        "ResourceDeletion",
+        "DenialOfService"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1026,
+          "name": "Delete namespaces",
+          "link": "https://rbac-atlas.github.io/rules/1026/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "edp-cd-pipeline-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "edp-cd-pipeline-operator-default-validation-webhook",
+      "apiGroup": "",
+      "resource": "namespaces",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [
+        "InformationDisclosure",
+        "Reconnaissance",
+        "ClusterStructure"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1082,
+          "name": "List Namespaces (Cluster Reconnaissance)",
+          "link": "https://rbac-atlas.github.io/rules/1082/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "edp-cd-pipeline-operator",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "edp-cd-pipeline-operator",
+      "apiGroup": "argoproj.io",
+      "resource": "applicationsets",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "get",
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "edp-cd-pipeline-operator",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "edp-cd-pipeline-operator",
+      "apiGroup": "v2.edp.epam.com",
+      "resource": "codebaseimagestreams",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "get",
+        "list",
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "edp-cd-pipeline-operator",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "edp-cd-pipeline-operator",
+      "apiGroup": "v2.edp.epam.com",
+      "resource": "codebases",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "edp-cd-pipeline-operator",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "edp-cd-pipeline-operator",
+      "apiGroup": "v2.edp.epam.com",
+      "resource": "gitservers",
+      "resourceName": "",
+      "verbs": [
+        "get"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "edp-cd-pipeline-operator",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "edp-cd-pipeline-operator",
+      "apiGroup": "v2.edp.epam.com",
+      "resource": "cdpipelines",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "edp-cd-pipeline-operator",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "edp-cd-pipeline-operator",
+      "apiGroup": "v2.edp.epam.com",
+      "resource": "cdpipelines/status",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "edp-cd-pipeline-operator",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "edp-cd-pipeline-operator",
+      "apiGroup": "v2.edp.epam.com",
+      "resource": "stages/status",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "edp-cd-pipeline-operator",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "edp-cd-pipeline-operator",
+      "apiGroup": "v2.edp.epam.com",
+      "resource": "stages/finalizers",
+      "resourceName": "",
+      "verbs": [
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "edp-cd-pipeline-operator",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "edp-cd-pipeline-operator",
+      "apiGroup": "v2.edp.epam.com",
+      "resource": "stages",
+      "resourceName": "",
+      "verbs": [
+        "deletecollection",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "edp-cd-pipeline-operator",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "edp-cd-pipeline-operator",
+      "apiGroup": "v2.edp.epam.com",
+      "resource": "cdpipelines/finalizers",
+      "resourceName": "",
+      "verbs": [
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "edp-cd-pipeline-operator",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "edp-cd-pipeline-operator",
+      "apiGroup": "",
+      "resource": "configmaps",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "get"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "edp-cd-pipeline-operator",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "edp-cd-pipeline-operator",
+      "apiGroup": "",
+      "resource": "secrets",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "get",
+        "list",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "CredentialAccess",
+        "DataExposure",
+        "InformationDisclosure",
+        "SecretAccess"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1011,
+          "name": "Read secrets in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1011/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "edp-cd-pipeline-operator",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "edp-cd-pipeline-operator",
+      "apiGroup": "",
+      "resource": "events",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "patch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "edp-cd-pipeline-operator",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "edp-cd-pipeline-operator",
+      "apiGroup": "coordination.k8s.io",
+      "resource": "leases",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "get",
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    }
+  ],
+  "serviceAccountWorkloads": [
+    {
+      "serviceAccountName": "edp-cd-pipeline-operator",
+      "namespace": "default",
+      "workloadType": "Deployment",
+      "workloadName": "cd-pipeline-operator",
+      "containerName": "cd-pipeline-operator",
+      "image": "epamedp/cd-pipeline-operator:2.33.0-SNAPSHOT.2"
+    }
+  ]
+}
