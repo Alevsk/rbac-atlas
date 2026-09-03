@@ -1,0 +1,841 @@
+{
+  "metadata": {
+    "version": "2.36.0-SNAPSHOT.5",
+    "name": "codebase-operator",
+    "source": "charts/epmdedp-dev__codebase-operator__2.36.0-SNAPSHOT.5/",
+    "timestamp": 1788406033,
+    "extra": {
+      "helm": {
+        "description": "A Helm chart for KubeRocketCI Codebase Operator",
+        "home": "https://docs.kuberocketci.io/",
+        "icon": "https://docs.kuberocketci.io/img/logo.svg",
+        "keywords": [
+          "edp",
+          "codebase",
+          "operator",
+          "pipelines",
+          "jira",
+          "ci",
+          "cd",
+          "docker",
+          "image",
+          "promote",
+          "git",
+          "gerrit",
+          "github",
+          "gitlab"
+        ],
+        "kubeVersion": "",
+        "maintainers": [
+          {
+            "name": "epmd-edp",
+            "email": "SupportEPMD-EDP@epam.com",
+            "url": "https://solutionshub.epam.com/solution/kuberocketci"
+          },
+          {
+            "name": "sergk",
+            "url": "https://github.com/SergK"
+          }
+        ],
+        "sources": [
+          "https://github.com/epam/edp-codebase-operator"
+        ]
+      }
+    }
+  },
+  "serviceAccountData": [
+    {
+      "serviceAccountName": "edp-codebase-operator",
+      "namespace": "default",
+      "automountToken": false,
+      "secrets": null,
+      "imagePullSecrets": null
+    }
+  ],
+  "serviceAccountPermissions": [
+    {
+      "serviceAccountName": "edp-codebase-operator",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "edp-codebase-operator",
+      "apiGroup": "coordination.k8s.io",
+      "resource": "leases",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "get",
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "edp-codebase-operator",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "edp-codebase-operator",
+      "apiGroup": "tekton.dev",
+      "resource": "pipelineruns",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "edp-codebase-operator",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "edp-codebase-operator",
+      "apiGroup": "triggers.tekton.dev",
+      "resource": "eventlisteners",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "get",
+        "patch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "edp-codebase-operator",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "edp-codebase-operator",
+      "apiGroup": "triggers.tekton.dev",
+      "resource": "triggertemplates",
+      "resourceName": "",
+      "verbs": [
+        "get"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "edp-codebase-operator",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "edp-codebase-operator",
+      "apiGroup": "v2.edp.epam.com",
+      "resource": "stages",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "edp-codebase-operator",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "edp-codebase-operator",
+      "apiGroup": "v2.edp.epam.com",
+      "resource": "cdstagedeployments",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "edp-codebase-operator",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "edp-codebase-operator",
+      "apiGroup": "v2.edp.epam.com",
+      "resource": "jiraissuemetadatas",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "edp-codebase-operator",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "edp-codebase-operator",
+      "apiGroup": "v2.edp.epam.com",
+      "resource": "codebases/finalizers",
+      "resourceName": "",
+      "verbs": [
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "edp-codebase-operator",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "edp-codebase-operator",
+      "apiGroup": "v2.edp.epam.com",
+      "resource": "cdstagedeployments/status",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "patch",
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "edp-codebase-operator",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "edp-codebase-operator",
+      "apiGroup": "v2.edp.epam.com",
+      "resource": "codebases/status",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "patch",
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "edp-codebase-operator",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "edp-codebase-operator",
+      "apiGroup": "v2.edp.epam.com",
+      "resource": "quicklinks",
+      "resourceName": "",
+      "verbs": [
+        "get"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "edp-codebase-operator",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "edp-codebase-operator",
+      "apiGroup": "v2.edp.epam.com",
+      "resource": "cdpipelines",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "edp-codebase-operator",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "edp-codebase-operator",
+      "apiGroup": "v2.edp.epam.com",
+      "resource": "codebaseimagestreams",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "edp-codebase-operator",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "edp-codebase-operator",
+      "apiGroup": "v2.edp.epam.com",
+      "resource": "gitservers",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "edp-codebase-operator",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "edp-codebase-operator",
+      "apiGroup": "v2.edp.epam.com",
+      "resource": "jiraservers",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "edp-codebase-operator",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "edp-codebase-operator",
+      "apiGroup": "v2.edp.epam.com",
+      "resource": "codebasebranches/finalizers",
+      "resourceName": "",
+      "verbs": [
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "edp-codebase-operator",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "edp-codebase-operator",
+      "apiGroup": "v2.edp.epam.com",
+      "resource": "gitservers/finalizers",
+      "resourceName": "",
+      "verbs": [
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "edp-codebase-operator",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "edp-codebase-operator",
+      "apiGroup": "v2.edp.epam.com",
+      "resource": "jiraservers/status",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "patch",
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "edp-codebase-operator",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "edp-codebase-operator",
+      "apiGroup": "v2.edp.epam.com",
+      "resource": "codebases",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "edp-codebase-operator",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "edp-codebase-operator",
+      "apiGroup": "v2.edp.epam.com",
+      "resource": "cdstagedeployments/finalizers",
+      "resourceName": "",
+      "verbs": [
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "edp-codebase-operator",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "edp-codebase-operator",
+      "apiGroup": "v2.edp.epam.com",
+      "resource": "codebaseimagestreams/finalizers",
+      "resourceName": "",
+      "verbs": [
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "edp-codebase-operator",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "edp-codebase-operator",
+      "apiGroup": "v2.edp.epam.com",
+      "resource": "jiraissuemetadatas/finalizers",
+      "resourceName": "",
+      "verbs": [
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "edp-codebase-operator",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "edp-codebase-operator",
+      "apiGroup": "v2.edp.epam.com",
+      "resource": "gitservers/status",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "patch",
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "edp-codebase-operator",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "edp-codebase-operator",
+      "apiGroup": "v2.edp.epam.com",
+      "resource": "codebasebranches",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "edp-codebase-operator",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "edp-codebase-operator",
+      "apiGroup": "v2.edp.epam.com",
+      "resource": "jiraservers/finalizers",
+      "resourceName": "",
+      "verbs": [
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "edp-codebase-operator",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "edp-codebase-operator",
+      "apiGroup": "v2.edp.epam.com",
+      "resource": "codebasebranches/status",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "patch",
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "edp-codebase-operator",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "edp-codebase-operator",
+      "apiGroup": "v2.edp.epam.com",
+      "resource": "codebaseimagestreams/status",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "patch",
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "edp-codebase-operator",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "edp-codebase-operator",
+      "apiGroup": "v2.edp.epam.com",
+      "resource": "jiraissuemetadatas/status",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "patch",
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "edp-codebase-operator",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "edp-codebase-operator",
+      "apiGroup": "gateway.networking.k8s.io",
+      "resource": "httproutes",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "get"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "edp-codebase-operator",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "edp-codebase-operator",
+      "apiGroup": "networking.k8s.io",
+      "resource": "ingresses",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "get"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "edp-codebase-operator",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "edp-codebase-operator",
+      "apiGroup": "",
+      "resource": "events",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "patch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "edp-codebase-operator",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "edp-codebase-operator",
+      "apiGroup": "",
+      "resource": "secrets",
+      "resourceName": "",
+      "verbs": [
+        "delete",
+        "get",
+        "list",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "SecretAccess",
+        "CredentialAccess",
+        "DataExposure",
+        "InformationDisclosure"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1011,
+          "name": "Read secrets in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1011/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "edp-codebase-operator",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "edp-codebase-operator",
+      "apiGroup": "",
+      "resource": "configmaps",
+      "resourceName": "",
+      "verbs": [
+        "get"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    }
+  ],
+  "serviceAccountWorkloads": [
+    {
+      "serviceAccountName": "edp-codebase-operator",
+      "namespace": "default",
+      "workloadType": "Deployment",
+      "workloadName": "codebase-operator",
+      "containerName": "codebase-operator",
+      "image": "epamedp/codebase-operator:2.36.0-SNAPSHOT.5"
+    }
+  ]
+}
