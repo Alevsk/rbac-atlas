@@ -1,17 +1,17 @@
 ---
 title: "Cloud-Native Threat Landscape"
 description: "RBAC risk analysis across 257 Kubernetes open-source projects"
-date: "2026-09-03"
+date: "2026-09-04"
 ---
 
-This report is auto-generated from the latest RBAC Atlas scan (**2026-09-03**). It analyzes the RBAC permissions of **257** Kubernetes open-source projects across **27369** manifest versions to provide a snapshot of the current cloud-native threat landscape.
+This report is auto-generated from the latest RBAC Atlas scan (**2026-09-04**). It analyzes the RBAC permissions of **257** Kubernetes open-source projects across **27388** manifest versions to provide a snapshot of the current cloud-native threat landscape.
 
 ## At a Glance
 
 | Metric | Value |
 |--------|-------|
 | Projects analyzed | 257 |
-| Total manifest versions | 27369 |
+| Total manifest versions | 27388 |
 | Avg service accounts per project | 2.11 |
 | Avg permission bindings per project | 31.23 |
 | Avg workloads per project | 3.47 |
@@ -73,7 +73,7 @@ Ranked by weighted risk score (`critical×10 + high×5 + medium×2 + low×1`), u
 | [victoria-metrics-distributed](/charts/victoriametrics/victoria-metrics-distributed/) | 0.9.0 | 13 | 117 | 5 | 39 | **764** |
 | [longhorn](/charts/longhorn/longhorn/) | 1.9.2 | 20 | 56 | 3 | 7 | **493** |
 | [gitlab](/charts/gitlab/gitlab/) | 9.9.3 | 18 | 10 | 9 | 199 | **447** |
-| [kuadrant-operator](/charts/kuadrant/kuadrant-operator/) | 1.5.2-rc1 | 21 | 9 | 4 | 103 | **366** |
+| [kuadrant-operator](/charts/kuadrant/kuadrant-operator/) | 1.5.3 | 21 | 9 | 4 | 103 | **366** |
 | [gitlab-operator](/charts/gitlab/gitlab-operator/) | 3.3.1 | 20 | 5 | 7 | 126 | **365** |
 | [eg-universal-agent-operator](/charts/eg-universal-agent-operator/eg-universal-agent-operator/) | 0.0.5 | 16 | 24 | 8 | 64 | **360** |
 | [flux2](/charts/fluxcd/flux2/) | 2.9.2 | 18 | 30 | 0 | 24 | **354** |
