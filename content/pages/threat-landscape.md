@@ -1,24 +1,24 @@
 ---
 title: "Cloud-Native Threat Landscape"
 description: "RBAC risk analysis across 257 Kubernetes open-source projects"
-date: "2026-09-11"
+date: "2026-09-12"
 ---
 
-This report is auto-generated from the latest RBAC Atlas scan (**2026-09-11**). It analyzes the RBAC permissions of **257** Kubernetes open-source projects across **27471** manifest versions to provide a snapshot of the current cloud-native threat landscape.
+This report is auto-generated from the latest RBAC Atlas scan (**2026-09-12**). It analyzes the RBAC permissions of **257** Kubernetes open-source projects across **27485** manifest versions to provide a snapshot of the current cloud-native threat landscape.
 
 ## At a Glance
 
 | Metric | Value |
 |--------|-------|
 | Projects analyzed | 257 |
-| Total manifest versions | 27471 |
+| Total manifest versions | 27485 |
 | Avg service accounts per project | 2.11 |
-| Avg permission bindings per project | 31.23 |
+| Avg permission bindings per project | 31.24 |
 | Avg workloads per project | 3.47 |
 | Avg critical risks per project | 3.49 |
 | Avg high risks per project | 4.0 |
 | Avg medium risks per project | 2.04 |
-| Avg low risks per project | 21.7 |
+| Avg low risks per project | 21.71 |
 | Projects with critical risks | 170 |
 | Projects with no RBAC permissions | 54 |
 
@@ -26,11 +26,11 @@ This report is auto-generated from the latest RBAC Atlas scan (**2026-09-11**). 
 
 | Risk Level | Count | Percentage |
 |------------|-------|------------|
-| {{< risk "Critical" >}} | 897 | 11.18% |
+| {{< risk "Critical" >}} | 897 | 11.17% |
 | {{< risk "High" >}} | 1029 | 12.82% |
-| {{< risk "Medium" >}} | 523 | 6.52% |
-| {{< risk "Low" >}} | 5577 | 69.49% |
-| **Total** | **8026** | |
+| {{< risk "Medium" >}} | 523 | 6.51% |
+| {{< risk "Low" >}} | 5580 | 69.5% |
+| **Total** | **8029** | |
 
 ## Top 10 RBAC Risk Tags
 
@@ -51,7 +51,7 @@ This report is auto-generated from the latest RBAC Atlas scan (**2026-09-11**). 
 
 | Rule | Occurrences |
 |------|-------------|
-| Base Risk Level - Low | 7004 |
+| Base Risk Level - Low | 7007 |
 | Base Risk Level - High | 902 |
 | Read ConfigMaps in a namespace | 258 |
 | Read secrets in a namespace | 244 |
