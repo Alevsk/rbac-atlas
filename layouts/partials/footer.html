@@ -1,26 +1,16 @@
 <footer class="footer">
   <div class="footer__inner">
-    {{ if $.Site.Copyright }}
-    <div class="copyright copyright--user">
-      <span>{{ $.Site.Copyright | safeHTML }}</span>
-    {{ else }}
-      <div class="copyright">
-        <span>Made with ❤️ by <a href="https://twitter.com/alevsk"
-    target="_blank"
-    rel="noopener noreferrer">@alevsk</a></span>
-        {{ end }}
-        <div class="footer-github">
-          <a href="https://github.com/alevsk/rbac-scope"
-             target="_blank"
-             rel="noopener noreferrer">rbac-scope</a>
-          <span>&middot;</span>
-          <a href="https://github.com/alevsk/rbac-atlas"
-             target="_blank"
-             rel="noopener noreferrer">rbac-atlas</a>
-        </div>
-      </div>
+    <div class="footer__identity">
+      <strong>RBAC Atlas</strong>
+      <span>Open source Kubernetes access intelligence.</span>
     </div>
-  </footer>
+    <div class="footer__links">
+      <a href="https://github.com/alevsk/rbac-atlas" target="_blank" rel="noopener noreferrer">Website source ↗</a>
+      <a href="https://github.com/alevsk/rbac-scope" target="_blank" rel="noopener noreferrer">RBAC Scope CLI ↗</a>
+      <a href="https://www.linkedin.com/in/alevsk/" target="_blank" rel="noopener noreferrer">By Lenin Alevski ↗</a>
+    </div>
+  </div>
+</footer>
 
   {{ $menu := resources.Get "js/menu.js" | js.Build }}
   {{ $cp := resources.Get "js/code.js" | js.Build }}
@@ -28,6 +18,8 @@
   {{ $bundle := slice $menu $cp | resources.Concat "bundle.js" | resources.Minify }}
 
   <script type="text/javascript" src="{{ $bundle.RelPermalink }}"></script>
+  {{ $theme := resources.Get "js/theme.js" | minify | fingerprint }}
+  <script src="{{ $theme.RelPermalink }}"></script>
 
   <!-- Extended footer section-->
   {{ partial "extended_footer.html" . }}

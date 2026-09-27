@@ -54,7 +54,7 @@
       low:      '#6b9080'
     };
     var textColor = getComputedStyle(document.documentElement).getPropertyValue('--foreground').trim() || '#45372b';
-    var gridColor = 'rgba(69, 55, 43, 0.08)';
+    var gridColor = getComputedStyle(document.documentElement).getPropertyValue('--chart-grid').trim();
 
     var defaultOpts = {
       responsive: true,
@@ -119,8 +119,8 @@
             {
               label: 'Unique Projects',
               data: series.map(function(s) { return (s.summary || {}).unique_projects || 0; }),
-              borderColor: '#45372b',
-              backgroundColor: '#45372b',
+              borderColor: textColor,
+              backgroundColor: textColor,
               fill: false, tension: 0.3, pointRadius: 3, borderWidth: 2.5
             },
             {

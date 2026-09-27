@@ -19,12 +19,12 @@
       {{ $sortedPages := sort $pages "Params.id" }}
       {{ range $sortedPages }}
       <tr>
-        <td>
+        <td data-label="Rule ID">
           <a href="{{ .RelPermalink }}">{{ .Params.id }}</a>
         </td>
-        <td>{{ .Params.category }}</td>
-        <td>{{ .Title }}</td>
-        <td>
+        <td data-label="Category">{{ .Params.category }}</td>
+        <td data-label="Name">{{ .Title }}</td>
+        <td data-label="Risk level">
           {{ with .Params.risk_level }}
           {{ $level := replace . "RiskLevel" "" }}
           <span class="risk-{{ lower $level }}">

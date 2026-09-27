@@ -31,7 +31,7 @@
       {{ end }}
     ];
     var textColor = getComputedStyle(document.documentElement).getPropertyValue('--foreground').trim() || '#45372b';
-    var gridColor = 'rgba(69, 55, 43, 0.08)';
+    var gridColor = getComputedStyle(document.documentElement).getPropertyValue('--chart-grid').trim();
     var labels = versions.map(function(v) { return v.version; });
 
     var ctx = document.getElementById('version-risk-chart');
@@ -147,9 +147,9 @@
     </span>
     {{ end }}
 
-    <span class="stat-item"><i class="fa-solid fa-robot"></i> {{ default "0" .Params.service_accounts }}</span>
-    <span class="stat-item"><i class="fa-solid fa-cube"></i> {{ default "0" .Params.workloads }}</span>
-    <span class="stat-item"><i class="fa-solid fa-link"></i> {{ default "0" .Params.bindings }}</span>
+    <span class="stat-item"><i class="fa-solid fa-robot" aria-hidden="true"></i> {{ default "0" .Params.service_accounts }} accounts</span>
+    <span class="stat-item"><i class="fa-solid fa-cube" aria-hidden="true"></i> {{ default "0" .Params.workloads }} workloads</span>
+    <span class="stat-item"><i class="fa-solid fa-link" aria-hidden="true"></i> {{ default "0" .Params.bindings }} bindings</span>
   </div>
 
   <div class="post-content">

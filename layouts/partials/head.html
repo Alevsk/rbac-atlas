@@ -1,5 +1,17 @@
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="theme-color" content="#f6f8fb" />
+<script>
+  (function () {
+    try {
+      var saved = localStorage.getItem('rbac-atlas-theme');
+      var theme = saved === 'light' || saved === 'dark' ? saved : (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+      document.documentElement.setAttribute('data-theme', theme);
+    } catch (_) {
+      document.documentElement.setAttribute('data-theme', matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    }
+  })();
+</script>
 <meta name="description"
       content="{{ if .IsHome }}{{ $.Site.Params.Subtitle }}{{ else if .Description }}{{ .Description | plainify }}{{ else }}{{ .Summary | plainify }}{{ end }}" />
 <meta name="keywords"
@@ -34,10 +46,10 @@ or (eq (.Param "noindex") true) (eq (.Param "noindex") "true") }}
       crossorigin="anonymous"
       referrerpolicy="no-referrer" />
 
-{{ $css := resources.Match "css/*.css" }} {{ range $css }} {{ $styles := . |
+{{ $css := resources.Match "css/*.css" }} {{ range $css }} {{ if ne .Name "css/custom.css" }} {{ $styles := . |
 minify | fingerprint }}
 <link rel="stylesheet" href="{{ $styles.RelPermalink }}" />
-{{ end }}
+{{ end }} {{ end }}
 
 <!-- Theme CSS -->
 {{ $themeCss := resources.Get "themes/terminal/assets/css/style.css" }} {{ if
@@ -74,18 +86,4 @@ $styles := $customCSS | minify | fingerprint }}
     button.textContent = isExpanded ? `(+${count} more)` : 'Show less';
   }
 
-  // Add data-label attributes to table cells for responsive display
-  document.addEventListener('DOMContentLoaded', function() {
-    // Make tables responsive
-    const tables = document.querySelectorAll('table');
-    tables.forEach(table => {
-      const headerCells = table.querySelectorAll('thead th');
-      const headers = Array.from(headerCells).map(th => th.textContent.trim());
-      const bodyCells = table.querySelectorAll('tbody td');
-      bodyCells.forEach((cell, index) => {
-        const headerIndex = index % headers.length;
-        cell.setAttribute('data-label', headers[headerIndex]);
-      });
-    });
-  });
 </script>
