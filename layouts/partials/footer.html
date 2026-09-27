@@ -5,21 +5,27 @@
       <span>Open source Kubernetes access intelligence.</span>
     </div>
     <div class="footer__links">
-      <a href="https://github.com/alevsk/rbac-atlas" target="_blank" rel="noopener noreferrer">Website source ↗</a>
-      <a href="https://github.com/alevsk/rbac-scope" target="_blank" rel="noopener noreferrer">RBAC Scope CLI ↗</a>
-      <a href="https://www.linkedin.com/in/alevsk/" target="_blank" rel="noopener noreferrer">By Lenin Alevski ↗</a>
+      <a href="https://github.com/alevsk/rbac-atlas"
+         target="_blank"
+         rel="noopener noreferrer">Website source ↗</a>
+      <a href="https://github.com/alevsk/rbac-scope"
+         target="_blank"
+         rel="noopener noreferrer">RBAC Scope CLI ↗</a>
+      <a href="https://www.linkedin.com/in/alevsk/"
+         target="_blank"
+         rel="noopener noreferrer">By Lenin Alevski ↗</a>
     </div>
   </div>
 </footer>
 
-  {{ $menu := resources.Get "js/menu.js" | js.Build }}
-  {{ $cp := resources.Get "js/code.js" | js.Build }}
+{{ $menu := resources.Get "js/menu.js" | js.Build }}
+{{ $cp := resources.Get "js/code.js" | js.Build }}
 
-  {{ $bundle := slice $menu $cp | resources.Concat "bundle.js" | resources.Minify }}
+{{ $bundle := slice $menu $cp | resources.Concat "bundle.js" | resources.Minify }}
 
-  <script type="text/javascript" src="{{ $bundle.RelPermalink }}"></script>
-  {{ $theme := resources.Get "js/theme.js" | minify | fingerprint }}
-  <script src="{{ $theme.RelPermalink }}"></script>
+<script type="text/javascript" src="{{ $bundle.RelPermalink }}"></script>
+{{ $theme := resources.Get "js/theme.js" | minify | fingerprint }}
+<script src="{{ $theme.RelPermalink }}"></script>
 
-  <!-- Extended footer section-->
-  {{ partial "extended_footer.html" . }}
+<!-- Extended footer section-->
+{{ partial "extended_footer.html" . }}
