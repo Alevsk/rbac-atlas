@@ -39,13 +39,6 @@ or (eq (.Param "noindex") true) (eq (.Param "noindex") "true") }}
 
 {{ template "_internal/google_analytics.html" . }}
 
-<!-- Font Awesome -->
-<link rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
-      integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
-      crossorigin="anonymous"
-      referrerpolicy="no-referrer" />
-
 {{ $css := resources.Match "css/*.css" }} {{ range $css }} {{ if ne .Name "css/custom.css" }} {{ $styles := . |
 minify | fingerprint }}
 <link rel="stylesheet" href="{{ $styles.RelPermalink }}" />
@@ -75,6 +68,8 @@ $styles := $customCSS | minify | fingerprint }}
 
 <!-- Chart.js for time-series and version history charts -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4/dist/chart.umd.min.js"></script>
+{{ $charts := resources.Get "js/charts.js" | minify | fingerprint }}
+<script src="{{ $charts.RelPermalink }}"></script>
 
 <!-- Tags toggle functionality -->
 <script>

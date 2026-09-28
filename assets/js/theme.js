@@ -11,26 +11,7 @@
   }
 
   function updateCharts() {
-    if (!window.Chart || !Chart.instances) return;
-    var styles = getComputedStyle(root);
-    var color = styles.getPropertyValue("--foreground").trim();
-    var grid = styles.getPropertyValue("--chart-grid").trim();
-    Object.values(Chart.instances).forEach(function (chart) {
-      if (chart.options.plugins && chart.options.plugins.legend) {
-        chart.options.plugins.legend.labels.color = color;
-      }
-      Object.values(chart.options.scales || {}).forEach(function (scale) {
-        if (scale.ticks) scale.ticks.color = color;
-        if (scale.grid && scale.grid.drawOnChartArea !== false) scale.grid.color = grid;
-      });
-      chart.data.datasets.forEach(function (dataset) {
-        if (dataset.label === "Unique Projects") {
-          dataset.borderColor = color;
-          dataset.backgroundColor = color;
-        }
-      });
-      chart.update("none");
-    });
+    if (window.RBACCharts) window.RBACCharts.refreshAll();
   }
 
   updateButton();

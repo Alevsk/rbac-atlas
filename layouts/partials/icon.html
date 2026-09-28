@@ -1,0 +1,6 @@
+{{- $name := . -}}
+{{- $icon := resources.Get (printf "icons/lucide/%s.svg" $name) -}}
+{{- if not $icon -}}
+{{- errorf "Missing Lucide icon: %s" $name -}}
+{{- end -}}
+<span class="lucide-icon" aria-hidden="true">{{ $icon.Content | safeHTML }}</span>

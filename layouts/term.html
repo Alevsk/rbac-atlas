@@ -47,32 +47,32 @@
         <div class="post-stats">
           {{ if gt (int .Params.critical_findings) 0 }}
             <span class="stat-item risk-critical">
-              <i class="fas fa-skull"></i>
+              {{ partialCached "icon.html" "skull" "skull" }}
               {{ .Params.critical_findings }} Critical
             </span>
           {{ end }}
           {{ if gt (int .Params.high_findings) 0 }}
             <span class="stat-item risk-high">
-              <i class="fas fa-exclamation-triangle"></i>
+              {{ partialCached "icon.html" "triangle-alert" "triangle-alert" }}
               {{ .Params.high_findings }} High
             </span>
           {{ end }}
           {{ if gt (int .Params.medium_findings) 0 }}
             <span class="stat-item risk-medium">
-              <i class="fas fa-exclamation-circle"></i>
+              {{ partialCached "icon.html" "circle-alert" "circle-alert" }}
               {{ .Params.medium_findings }} Medium
             </span>
           {{ end }}
           {{ if gt (int .Params.low_findings) 0 }}
             <span class="stat-item risk-low">
-              <i class="fas fa-info-circle"></i>
+              {{ partialCached "icon.html" "info" "info" }}
               {{ .Params.low_findings }} Low
             </span>
           {{ end }}
 
-          <span class="stat-item"><i class="fa-solid fa-robot" aria-hidden="true"></i> {{ default "0" .Params.service_accounts }} accounts</span>
-          <span class="stat-item"><i class="fa-solid fa-cube" aria-hidden="true"></i> {{ default "0" .Params.workloads }} workloads</span>
-          <span class="stat-item"><i class="fa-solid fa-link" aria-hidden="true"></i> {{ default "0" .Params.bindings }} bindings</span>
+          <span class="stat-item">{{ partialCached "icon.html" "bot" "bot" }} {{ default "0" .Params.service_accounts }} accounts</span>
+          <span class="stat-item">{{ partialCached "icon.html" "box" "box" }} {{ default "0" .Params.workloads }} workloads</span>
+          <span class="stat-item">{{ partialCached "icon.html" "link-2" "link-2" }} {{ default "0" .Params.bindings }} bindings</span>
         </div>
 
         <div class="post-content">
@@ -108,7 +108,7 @@
 
         {{ if not .Params.showFullContent }}
           <div>
-            <a class="read-more button inline" href="{{ .RelPermalink }}">{{ $.Site.Params.ReadMore }} ›</a>
+            <a class="read-more button inline" href="{{ .RelPermalink }}">{{ $.Site.Params.ReadMore }} {{ partialCached "icon.html" "arrow-right" "arrow-right" }}</a>
           </div>
         {{ end }}
       </article>

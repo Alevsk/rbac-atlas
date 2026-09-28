@@ -12,18 +12,15 @@
       <h1 id="hero-title">Know what your <span>RBAC policies</span> can do.</h1>
       <p class="hero__description">Explore the identities and permissions behind popular Kubernetes projects. RBAC Atlas turns complex access rules into clear findings, risks, and paths to investigate.</p>
       <div class="hero__actions">
-        <a class="action action--primary" href="#projects-list">Explore projects <span aria-hidden="true">↗</span></a>
-        <a class="action action--secondary" href="/pages/threat-landscape/">View latest report <span aria-hidden="true">→</span></a>
+        <a class="action action--primary" href="#projects-list">Explore projects {{ partialCached "icon.html" "arrow-up-right" "arrow-up-right" }}</a>
+        <a class="action action--secondary" href="/pages/threat-landscape/">View latest report {{ partialCached "icon.html" "arrow-right" "arrow-right" }}</a>
       </div>
-      <p class="hero__footnote">Built by <a href="https://www.linkedin.com/in/alevsk/">Lenin Alevski</a> · Updated through automated analysis</p>
-    </div>
-    <div class="hero__visual" aria-label="RBAC Atlas coverage at a glance">
-      <div class="orbit orbit--one"></div><div class="orbit orbit--two"></div>
-      <div class="hero__visual-top"><span class="visual-kicker">THE ATLAS / LIVE INDEX</span><span class="visual-signal"><span class="status-dot"></span> Active</span></div>
-      <div class="hero__visual-center"><span class="visual-symbol" aria-hidden="true">✳</span><span>Mapping access<br>across Kubernetes</span></div>
-      <div class="hero__metrics">
-        <div><strong>{{ len $allLatest }}</strong><span>Projects indexed</span></div>
-        <div><strong>{{ len (where .Site.RegularPages "Section" "rules") }}</strong><span>Security rules</span></div>
+      <div class="hero__meta">
+        <p class="hero__footnote">Built by <a href="https://www.linkedin.com/in/alevsk/">Lenin Alevski</a> · Updated through automated analysis</p>
+        <dl class="hero__stats" aria-label="Atlas coverage">
+          <div><dt>Projects indexed</dt><dd>{{ len $allLatest }}</dd></div>
+          <div><dt>Security rules</dt><dd>{{ len (where .Site.RegularPages "Section" "rules") }}</dd></div>
+        </dl>
       </div>
     </div>
   </section>
@@ -32,7 +29,7 @@
 
   <div class="index-two-col discovery-grid">
     <section class="index-col discovery-card">
-      <div class="discovery-card__head"><span class="discovery-card__icon" aria-hidden="true">◈</span><span class="eyebrow">01 / EXPLORE</span></div>
+      <div class="discovery-card__head"><span class="discovery-card__icon">{{ partialCached "icon.html" "shield-alert" "shield-alert" }}</span><span class="eyebrow">01 / EXPLORE</span></div>
       <h3>Popular risks</h3>
       <p>See the permissions and behaviors that appear most often.</p>
       <div class="tags-list">
@@ -43,11 +40,11 @@
           </a>
           {{ end }}
         {{ end }}
-        <a class="see-all" href="{{ "/tags/" | relLangURL }}">Browse all risks →</a>
+        <a class="see-all" href="{{ "/tags/" | relLangURL }}">Browse all risks {{ partialCached "icon.html" "arrow-right" "arrow-right" }}</a>
       </div>
     </section>
     <section class="index-col discovery-card">
-      <div class="discovery-card__head"><span class="discovery-card__icon" aria-hidden="true">▦</span><span class="eyebrow">02 / DISCOVER</span></div>
+      <div class="discovery-card__head"><span class="discovery-card__icon">{{ partialCached "icon.html" "layout-grid" "layout-grid" }}</span><span class="eyebrow">02 / DISCOVER</span></div>
       <h3>Project categories</h3>
       <p>Browse policies by the tools and workloads they protect.</p>
       <div class="categories-list">
@@ -56,25 +53,45 @@
             {{ $taxonomy.Name }}
           </a>
         {{ end }}
-        <a class="see-all" href="{{ "/categories/" | relLangURL }}">Browse categories →</a>
+        <a class="see-all" href="{{ "/categories/" | relLangURL }}">Browse categories {{ partialCached "icon.html" "arrow-right" "arrow-right" }}</a>
       </div>
     </section>
   </div>
 
-  <div class="section-heading"><div><p class="eyebrow">THE BIGGER PICTURE</p><h2>Threat landscape</h2></div><a class="section-link" href="/pages/threat-landscape/">Read the daily report <span aria-hidden="true">↗</span></a></div>
+  <div class="section-heading"><div><p class="eyebrow">THE BIGGER PICTURE</p><h2>Threat landscape</h2></div><a class="section-link" href="/pages/threat-landscape/">Read the daily report {{ partialCached "icon.html" "arrow-up-right" "arrow-up-right" }}</a></div>
   <p class="section-description">A running view of RBAC risk across the open source Kubernetes ecosystem.</p>
 
   {{/* --- Risk Distribution chart on the index page --- */}}
   {{ $ts := .Site.Data.timeseries }}
   {{ if and $ts $ts.series (gt (len $ts.series) 0) }}
+  {{ $latest := index $ts.series (sub (len $ts.series) 1) }}
   <div class="chart-section">
-    <div class="chart-container">
-      <div class="chart-container__heading"><div><span class="eyebrow">RISK INTELLIGENCE</span><h3>Risk distribution over time</h3></div><span class="chart-period">Recent snapshots</span></div>
-      <canvas id="index-risk-chart"></canvas>
+    <div class="chart-container chart-container--risk">
+      <div class="chart-container__heading">
+        <div class="chart-heading">
+          <span class="chart-heading__icon">{{ partialCached "icon.html" "activity" "activity" }}</span>
+          <div><span class="eyebrow">RISK INTELLIGENCE</span><h3>Risk distribution over time</h3></div>
+        </div>
+        <span class="chart-period">Recent snapshots</span>
+      </div>
+      <div class="risk-trend-grid">
+        {{ range $level := slice "critical" "high" "medium" "low" }}
+          <div class="risk-trend-card risk-trend-card--{{ $level }}">
+            <div class="risk-trend-card__header">
+              <span class="risk-trend-card__label">{{ title $level }}</span>
+              <strong>{{ index $latest.risk_distribution $level }}</strong>
+            </div>
+            <div class="risk-trend-card__plot">
+              <canvas id="risk-spark-{{ $level }}" role="img" aria-label="{{ title $level }} risk count over recent snapshots">{{ title $level }} risk trend</canvas>
+            </div>
+          </div>
+        {{ end }}
+      </div>
     </div>
   </div>
   <script>
   (function() {
+    if (!window.Chart || !window.RBACCharts) return;
     var allSeries = {{ $ts.series | jsonify | safeJS }};
     var MAX_POINTS = 12;
     var series = allSeries.length > MAX_POINTS ? allSeries.slice(-MAX_POINTS) : allSeries;
@@ -83,60 +100,22 @@
       var parts = s.date.split('-');
       return monthNames[parseInt(parts[1], 10) - 1] + ' ' + parseInt(parts[2], 10);
     });
-    var chartColors = { critical: '#dc3545', high: '#e76f51', medium: '#f4a261', low: '#6b9080' };
-    var textColor = getComputedStyle(document.documentElement).getPropertyValue('--foreground').trim() || '#45372b';
-    var gridColor = getComputedStyle(document.documentElement).getPropertyValue('--chart-grid').trim();
 
-    var ctx = document.getElementById('index-risk-chart');
-    if (ctx) {
-      new Chart(ctx, {
+    ['critical', 'high', 'medium', 'low'].forEach(function(level) {
+      var canvas = document.getElementById('risk-spark-' + level);
+      if (!canvas) return;
+      var label = level.charAt(0).toUpperCase() + level.slice(1);
+      new Chart(canvas, {
         type: 'line',
         data: {
           labels: labels,
-          datasets: [
-            {
-              label: 'Critical',
-              data: series.map(function(s) { return (s.risk_distribution || {}).critical || 0; }),
-              borderColor: chartColors.critical,
-              backgroundColor: chartColors.critical,
-              fill: false, tension: 0.3, pointRadius: 3, borderWidth: 2.5
-            },
-            {
-              label: 'High',
-              data: series.map(function(s) { return (s.risk_distribution || {}).high || 0; }),
-              borderColor: chartColors.high,
-              backgroundColor: chartColors.high,
-              fill: false, tension: 0.3, pointRadius: 3, borderWidth: 2.5
-            },
-            {
-              label: 'Medium',
-              data: series.map(function(s) { return (s.risk_distribution || {}).medium || 0; }),
-              borderColor: chartColors.medium,
-              backgroundColor: chartColors.medium,
-              fill: false, tension: 0.3, pointRadius: 3, borderWidth: 2.5
-            },
-            {
-              label: 'Low',
-              data: series.map(function(s) { return (s.risk_distribution || {}).low || 0; }),
-              borderColor: chartColors.low,
-              backgroundColor: chartColors.low,
-              fill: false, tension: 0.3, pointRadius: 3, borderWidth: 2.5
-            }
-          ]
+          datasets: [RBACCharts.dataset(label, series.map(function(s) {
+            return (s.risk_distribution || {})[level] || 0;
+          }), level)]
         },
-        options: {
-          responsive: true,
-          maintainAspectRatio: true,
-          plugins: {
-            legend: { position: 'top', labels: { color: textColor, usePointStyle: true, padding: 16 } }
-          },
-          scales: {
-            x: { ticks: { color: textColor, maxRotation: 0 }, grid: { color: gridColor } },
-            y: { ticks: { color: textColor }, grid: { color: gridColor }, beginAtZero: true }
-          }
-        }
+        options: RBACCharts.sparklineOptions()
       });
-    }
+    });
   })();
   </script>
   {{ end }}
@@ -171,32 +150,32 @@
         <div class="post-stats">
           {{ if gt (int .Params.critical_findings) 0 }}
             <span class="stat-item risk-critical">
-              <i class="fas fa-skull"></i>
+              {{ partialCached "icon.html" "skull" "skull" }}
               {{ .Params.critical_findings }} Critical
             </span>
           {{ end }}
           {{ if gt (int .Params.high_findings) 0 }}
             <span class="stat-item risk-high">
-              <i class="fas fa-exclamation-triangle"></i>
+              {{ partialCached "icon.html" "triangle-alert" "triangle-alert" }}
               {{ .Params.high_findings }} High
             </span>
           {{ end }}
           {{ if gt (int .Params.medium_findings) 0 }}
             <span class="stat-item risk-medium">
-              <i class="fas fa-exclamation-circle"></i>
+              {{ partialCached "icon.html" "circle-alert" "circle-alert" }}
               {{ .Params.medium_findings }} Medium
             </span>
           {{ end }}
           {{ if gt (int .Params.low_findings) 0 }}
             <span class="stat-item risk-low">
-              <i class="fas fa-info-circle"></i>
+              {{ partialCached "icon.html" "info" "info" }}
               {{ .Params.low_findings }} Low
             </span>
           {{ end }}
 
-          <span class="stat-item"><i class="fa-solid fa-robot" aria-hidden="true"></i> {{ default "0" .Params.service_accounts }} accounts</span>
-          <span class="stat-item"><i class="fa-solid fa-cube" aria-hidden="true"></i> {{ default "0" .Params.workloads }} workloads</span>
-          <span class="stat-item"><i class="fa-solid fa-link" aria-hidden="true"></i> {{ default "0" .Params.bindings }} bindings</span>
+          <span class="stat-item">{{ partialCached "icon.html" "bot" "bot" }} {{ default "0" .Params.service_accounts }} accounts</span>
+          <span class="stat-item">{{ partialCached "icon.html" "box" "box" }} {{ default "0" .Params.workloads }} workloads</span>
+          <span class="stat-item">{{ partialCached "icon.html" "link-2" "link-2" }} {{ default "0" .Params.bindings }} bindings</span>
         </div>
 
         <div class="post-content">
@@ -232,7 +211,7 @@
 
         {{ if not .Params.showFullContent }}
           <div>
-            <a class="read-more button inline" href="{{ .RelPermalink }}">{{ $.Site.Params.ReadMore }} ›</a>
+            <a class="read-more button inline" href="{{ .RelPermalink }}">{{ $.Site.Params.ReadMore }} {{ partialCached "icon.html" "arrow-right" "arrow-right" }}</a>
           </div>
         {{ end }}
       </article>

@@ -13,11 +13,16 @@
 <div class="chart-section">
   <h2>Risk Trend Across Versions</h2>
   <div class="chart-container">
-    <canvas id="version-risk-chart"></canvas>
+    <div class="chart-plot">
+      <canvas id="version-risk-chart"
+              role="img"
+              aria-label="Critical, high, medium, and low risk counts across versions">Risk trend across versions</canvas>
+    </div>
   </div>
 </div>
 <script>
   (function() {
+    if (!window.Chart || !window.RBACCharts) return;
     var versions = [
       {{ range $chartVersions }}
       {
@@ -30,72 +35,24 @@
       },
       {{ end }}
     ];
-    var textColor = getComputedStyle(document.documentElement).getPropertyValue('--foreground').trim() || '#45372b';
-    var gridColor = getComputedStyle(document.documentElement).getPropertyValue('--chart-grid').trim();
     var labels = versions.map(function(v) { return v.version; });
-
-    var ctx = document.getElementById('version-risk-chart');
-    if (ctx) {
-      new Chart(ctx, {
-        type: 'line',
-        data: {
-          labels: labels,
-          datasets: [
-            {
-              label: 'Critical',
-              data: versions.map(function(v) { return v.critical; }),
-              borderColor: '#dc3545',
-              backgroundColor: '#dc3545',
-              fill: false, tension: 0.3, pointRadius: 3, borderWidth: 2.5
-            },
-            {
-              label: 'High',
-              data: versions.map(function(v) { return v.high; }),
-              borderColor: '#e76f51',
-              backgroundColor: '#e76f51',
-              fill: false, tension: 0.3, pointRadius: 3, borderWidth: 2.5
-            },
-            {
-              label: 'Medium',
-              data: versions.map(function(v) { return v.medium; }),
-              borderColor: '#f4a261',
-              backgroundColor: '#f4a261',
-              fill: false, tension: 0.3, pointRadius: 3, borderWidth: 2.5
-            },
-            {
-              label: 'Low',
-              data: versions.map(function(v) { return v.low; }),
-              borderColor: '#6b9080',
-              backgroundColor: '#6b9080',
-              fill: false, tension: 0.3, pointRadius: 3, borderWidth: 2.5
-            }
-          ]
-        },
-        options: {
-          responsive: true,
-          maintainAspectRatio: true,
-          plugins: {
-            legend: { position: 'top', labels: { color: textColor, usePointStyle: true, padding: 16 } },
-            tooltip: {
-              callbacks: {
-                title: function(items) { return 'Version ' + items[0].label; }
-              }
-            }
-          },
-          scales: {
-            x: {
-              ticks: { color: textColor, maxRotation: 45, autoSkip: true, maxTicksLimit: 15 },
-              grid: { color: gridColor }
-            },
-            y: {
-              ticks: { color: textColor },
-              grid: { color: gridColor },
-              beginAtZero: true
-            }
-          }
-        }
-      });
-    }
+    var canvas = document.getElementById('version-risk-chart');
+    if (!canvas) return;
+    new Chart(canvas, {
+      type: 'line',
+      data: {
+        labels: labels,
+        datasets: ['critical', 'high', 'medium', 'low'].map(function(level) {
+          return RBACCharts.dataset(level.charAt(0).toUpperCase() + level.slice(1), versions.map(function(v) {
+            return v[level];
+          }), level);
+        })
+      },
+      options: RBACCharts.lineOptions({
+        xTickLimit: 10,
+        tooltipTitle: function(items) { return 'Version ' + items[0].label; }
+      })
+    });
   })();
 </script>
 {{ end }}
@@ -124,32 +81,32 @@
   <div class="post-stats">
     {{ if gt (int .Params.critical_findings) 0 }}
     <span class="stat-item risk-critical">
-      <i class="fas fa-skull"></i>
+      {{ partialCached "icon.html" "skull" "skull" }}
       {{ .Params.critical_findings }} Critical
     </span>
     {{ end }}
     {{ if gt (int .Params.high_findings) 0 }}
     <span class="stat-item risk-high">
-      <i class="fas fa-exclamation-triangle"></i>
+      {{ partialCached "icon.html" "triangle-alert" "triangle-alert" }}
       {{ .Params.high_findings }} High
     </span>
     {{ end }}
     {{ if gt (int .Params.medium_findings) 0 }}
     <span class="stat-item risk-medium">
-      <i class="fas fa-exclamation-circle"></i>
+      {{ partialCached "icon.html" "circle-alert" "circle-alert" }}
       {{ .Params.medium_findings }} Medium
     </span>
     {{ end }}
     {{ if gt (int .Params.low_findings) 0 }}
     <span class="stat-item risk-low">
-      <i class="fas fa-info-circle"></i>
+      {{ partialCached "icon.html" "info" "info" }}
       {{ .Params.low_findings }} Low
     </span>
     {{ end }}
 
-    <span class="stat-item"><i class="fa-solid fa-robot" aria-hidden="true"></i> {{ default "0" .Params.service_accounts }} accounts</span>
-    <span class="stat-item"><i class="fa-solid fa-cube" aria-hidden="true"></i> {{ default "0" .Params.workloads }} workloads</span>
-    <span class="stat-item"><i class="fa-solid fa-link" aria-hidden="true"></i> {{ default "0" .Params.bindings }} bindings</span>
+    <span class="stat-item">{{ partialCached "icon.html" "bot" "bot" }} {{ default "0" .Params.service_accounts }} accounts</span>
+    <span class="stat-item">{{ partialCached "icon.html" "box" "box" }} {{ default "0" .Params.workloads }} workloads</span>
+    <span class="stat-item">{{ partialCached "icon.html" "link-2" "link-2" }} {{ default "0" .Params.bindings }} bindings</span>
   </div>
 
   <div class="post-content">
@@ -177,7 +134,7 @@
 
   {{ if not .Params.showFullContent }}
   <div>
-    <a class="read-more button inline" href="{{ .RelPermalink }}">{{ $.Site.Params.ReadMore }} ›</a>
+    <a class="read-more button inline" href="{{ .RelPermalink }}">{{ $.Site.Params.ReadMore }} {{ partialCached "icon.html" "arrow-right" "arrow-right" }}</a>
   </div>
   {{ end }}
 </article>
