@@ -1,22 +1,22 @@
 ---
 title: "Cloud-Native Threat Landscape"
 description: "RBAC risk analysis across 257 Kubernetes open-source projects"
-date: "2026-09-28"
+date: "2026-09-29"
 ---
 
-This report is auto-generated from the latest RBAC Atlas scan (**2026-09-28**). It analyzes the RBAC permissions of **257** Kubernetes open-source projects across **27649** manifest versions to provide a snapshot of the current cloud-native threat landscape.
+This report is auto-generated from the latest RBAC Atlas scan (**2026-09-29**). It analyzes the RBAC permissions of **257** Kubernetes open-source projects across **27662** manifest versions to provide a snapshot of the current cloud-native threat landscape.
 
 ## At a Glance
 
 | Metric | Value |
 |--------|-------|
 | Projects analyzed | 257 |
-| Total manifest versions | 27649 |
-| Avg service accounts per project | 2.09 |
-| Avg permission bindings per project | 31.12 |
+| Total manifest versions | 27662 |
+| Avg service accounts per project | 2.1 |
+| Avg permission bindings per project | 31.14 |
 | Avg workloads per project | 3.48 |
 | Avg critical risks per project | 3.44 |
-| Avg high risks per project | 3.99 |
+| Avg high risks per project | 4.01 |
 | Avg medium risks per project | 2.03 |
 | Avg low risks per project | 21.67 |
 | Projects with critical risks | 170 |
@@ -26,19 +26,19 @@ This report is auto-generated from the latest RBAC Atlas scan (**2026-09-28**). 
 
 | Risk Level | Count | Percentage |
 |------------|-------|------------|
-| {{< risk "Critical" >}} | 883 | 11.04% |
-| {{< risk "High" >}} | 1025 | 12.82% |
+| {{< risk "Critical" >}} | 883 | 11.03% |
+| {{< risk "High" >}} | 1031 | 12.88% |
 | {{< risk "Medium" >}} | 521 | 6.51% |
-| {{< risk "Low" >}} | 5569 | 69.63% |
-| **Total** | **7998** | |
+| {{< risk "Low" >}} | 5569 | 69.58% |
+| **Total** | **8004** | |
 
 ## Top 10 RBAC Risk Tags
 
 | Risk Tag | Occurrences |
 |----------|-------------|
 | {{< tag "InformationDisclosure" >}} | 1107 |
-| {{< tag "WildcardPermission" >}} | 1022 |
-| {{< tag "ClusterWideAccess" >}} | 904 |
+| {{< tag "WildcardPermission" >}} | 1028 |
+| {{< tag "ClusterWideAccess" >}} | 910 |
 | {{< tag "Tampering" >}} | 826 |
 | {{< tag "PotentialPrivilegeEscalation" >}} | 568 |
 | {{< tag "DataExposure" >}} | 528 |
@@ -52,7 +52,7 @@ This report is auto-generated from the latest RBAC Atlas scan (**2026-09-28**). 
 | Rule | Occurrences |
 |------|-------------|
 | Base Risk Level - Low | 6976 |
-| Base Risk Level - High | 902 |
+| Base Risk Level - High | 908 |
 | Read ConfigMaps in a namespace | 252 |
 | Read secrets in a namespace | 240 |
 | Read secrets cluster-wide | 186 |
@@ -69,7 +69,7 @@ Ranked by weighted risk score (`critical×10 + high×5 + medium×2 + low×1`), u
 | Project | Version | Critical | High | Medium | Low | Score |
 |---------|---------|----------|------|--------|-----|-------|
 | [openebs](/charts/openebs/openebs/) | 3.9.0 | 90 | 73 | 30 | 170 | **1495** |
-| [victoria-metrics-k8s-stack](/charts/victoriametrics/victoria-metrics-k8s-stack/) | 0.93.0 | 14 | 173 | 5 | 38 | **1053** |
+| [victoria-metrics-k8s-stack](/charts/victoriametrics/victoria-metrics-k8s-stack/) | 0.95.0 | 14 | 179 | 5 | 38 | **1083** |
 | [victoria-metrics-distributed](/charts/victoriametrics/victoria-metrics-distributed/) | 0.9.0 | 13 | 117 | 5 | 39 | **764** |
 | [longhorn](/charts/longhorn/longhorn/) | 1.9.2 | 20 | 56 | 3 | 7 | **493** |
 | [gitlab](/charts/gitlab/gitlab/) | 9.9.3 | 18 | 10 | 9 | 199 | **447** |
@@ -85,7 +85,7 @@ Ranked by weighted risk score (`critical×10 + high×5 + medium×2 + low×1`), u
 |---------|-------------|
 | [openebs](/charts/openebs/openebs/) | 363 |
 | [gitlab](/charts/gitlab/gitlab/) | 236 |
-| [victoria-metrics-k8s-stack](/charts/victoriametrics/victoria-metrics-k8s-stack/) | 230 |
+| [victoria-metrics-k8s-stack](/charts/victoriametrics/victoria-metrics-k8s-stack/) | 236 |
 | [rook-ceph](/charts/rook-release/rook-ceph/) | 185 |
 | [stackgres-operator](/charts/stackgres-charts/stackgres-operator/) | 181 |
 | [victoria-metrics-distributed](/charts/victoriametrics/victoria-metrics-distributed/) | 174 |
