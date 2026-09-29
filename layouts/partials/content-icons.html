@@ -1,0 +1,16 @@
+{{- $html := . -}}
+{{- $identity := printf `<span class="content-icon content-icon--identity">%s</span>` (partialCached "icon.html" "bot" "bot") -}}
+{{- $permissions := printf `<span class="content-icon content-icon--permissions">%s</span>` (partialCached "icon.html" "key-round" "key-round") -}}
+{{- $warning := printf `<span class="content-icon content-icon--warning">%s</span>` (partialCached "icon.html" "triangle-alert" "triangle-alert") -}}
+{{- $workloads := printf `<span class="content-icon content-icon--workloads">%s</span>` (partialCached "icon.html" "box" "box") -}}
+{{- $enabled := printf `<span class="boolean-status boolean-status--yes"
+      role="img"
+      aria-label="Yes">%s</span>` (partialCached "icon.html" "circle-check" "circle-check") -}}
+{{- $disabled := printf `<span class="boolean-status boolean-status--no" role="img" aria-label="No">%s</span>` (partialCached "icon.html" "circle-x" "circle-x") -}}
+{{- $html = replace $html "🤖" $identity -}}
+{{- $html = replace $html "🔑" $permissions -}}
+{{- $html = replace $html "⚠️" $warning -}}
+{{- $html = replace $html "📦" $workloads -}}
+{{- $html = replace $html "✅" $enabled -}}
+{{- $html = replace $html "❌" $disabled -}}
+{{- $html | safeHTML -}}

@@ -157,11 +157,13 @@
 {{ if (.Params.Toc | default .Site.Params.Toc) }}
 <div class="table-of-contents">
   <h2>{{ (.Params.TocTitle | default .Site.Params.TocTitle) | default "Table of Contents" }}</h2>
-  {{ .TableOfContents }}
+{{ if eq .Section "charts" }}{{ partial "content-icons.html" .TableOfContents }}{{ else }}{{ .TableOfContents }}{{ end }}
 </div>
 {{ end }}
 
-<div class="post-content">{{ .Content }}</div>
+<div class="post-content">
+{{ if eq .Section "charts" }}{{ partial "content-icons.html" .Content }}{{ else }}{{ .Content }}{{ end }}
+</div>
 
 </article>
 {{ end }}

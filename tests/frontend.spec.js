@@ -31,3 +31,16 @@ test("mobile navigation opens and the page has no horizontal overflow", async ({
   await expect(page.getByRole("navigation", { name: /mobile/i })).toBeVisible();
   expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(390);
 });
+
+test("generated project details use Lucide icons and labeled automount states", async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto(new URL("/charts/openebs/openebs/3.10.0/", site).toString(), {
+    waitUntil: "domcontentloaded",
+  });
+
+  const content = page.locator(".post-content");
+  await expect(content.locator(".content-icon svg").first()).toBeVisible();
+  await expect(content.locator('.boolean-status[aria-label="No"]').first()).toBeVisible();
+  expect(await content.innerText()).not.toMatch(/[🔑❌✅🤖⚠📦]/u);
+  expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(390);
+});
