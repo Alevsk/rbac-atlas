@@ -1,24 +1,24 @@
 ---
 title: "Cloud-Native Threat Landscape"
 description: "RBAC risk analysis across 257 Kubernetes open-source projects"
-date: "2026-10-01"
+date: "2026-10-02"
 ---
 
-This report is auto-generated from the latest RBAC Atlas scan (**2026-10-01**). It analyzes the RBAC permissions of **257** Kubernetes open-source projects across **27687** manifest versions to provide a snapshot of the current cloud-native threat landscape.
+This report is auto-generated from the latest RBAC Atlas scan (**2026-10-02**). It analyzes the RBAC permissions of **257** Kubernetes open-source projects across **27703** manifest versions to provide a snapshot of the current cloud-native threat landscape.
 
 ## At a Glance
 
 | Metric | Value |
 |--------|-------|
 | Projects analyzed | 257 |
-| Total manifest versions | 27687 |
+| Total manifest versions | 27703 |
 | Avg service accounts per project | 2.1 |
-| Avg permission bindings per project | 31.16 |
+| Avg permission bindings per project | 31.18 |
 | Avg workloads per project | 3.48 |
 | Avg critical risks per project | 3.44 |
 | Avg high risks per project | 4.01 |
 | Avg medium risks per project | 2.03 |
-| Avg low risks per project | 21.68 |
+| Avg low risks per project | 21.7 |
 | Projects with critical risks | 170 |
 | Projects with no RBAC permissions | 54 |
 
@@ -26,11 +26,11 @@ This report is auto-generated from the latest RBAC Atlas scan (**2026-10-01**). 
 
 | Risk Level | Count | Percentage |
 |------------|-------|------------|
-| {{< risk "Critical" >}} | 883 | 11.03% |
+| {{< risk "Critical" >}} | 883 | 11.02% |
 | {{< risk "High" >}} | 1031 | 12.87% |
-| {{< risk "Medium" >}} | 521 | 6.51% |
-| {{< risk "Low" >}} | 5573 | 69.59% |
-| **Total** | **8008** | |
+| {{< risk "Medium" >}} | 521 | 6.5% |
+| {{< risk "Low" >}} | 5578 | 69.61% |
+| **Total** | **8013** | |
 
 ## Top 10 RBAC Risk Tags
 
@@ -44,14 +44,14 @@ This report is auto-generated from the latest RBAC Atlas scan (**2026-10-01**). 
 | {{< tag "DataExposure" >}} | 528 |
 | {{< tag "Reconnaissance" >}} | 519 |
 | {{< tag "PrivilegeEscalation" >}} | 445 |
-| {{< tag "ResourceNameRestricted" >}} | 417 |
+| {{< tag "ResourceNameRestricted" >}} | 419 |
 | {{< tag "DenialOfService" >}} | 319 |
 
 ## Top 10 Triggered Risk Rules
 
 | Rule | Occurrences |
 |------|-------------|
-| Base Risk Level - Low | 6980 |
+| Base Risk Level - Low | 6985 |
 | Base Risk Level - High | 908 |
 | Read ConfigMaps in a namespace | 252 |
 | Read secrets in a namespace | 240 |
@@ -88,8 +88,8 @@ Ranked by weighted risk score (`critical×10 + high×5 + medium×2 + low×1`), u
 | [victoria-metrics-k8s-stack](/charts/victoriametrics/victoria-metrics-k8s-stack/) | 236 |
 | [rook-ceph](/charts/rook-release/rook-ceph/) | 185 |
 | [stackgres-operator](/charts/stackgres-charts/stackgres-operator/) | 181 |
+| [tigera-operator](/charts/stevehipwell/tigera-operator/) | 174 |
 | [victoria-metrics-distributed](/charts/victoriametrics/victoria-metrics-distributed/) | 174 |
-| [tigera-operator](/charts/stevehipwell/tigera-operator/) | 169 |
 | [gateway-operator](/charts/kong/gateway-operator/) | 162 |
 | [gitlab-operator](/charts/gitlab/gitlab-operator/) | 158 |
 | [opentelemetry-kube-stack](/charts/opentelemetry-helm/opentelemetry-kube-stack/) | 146 |
