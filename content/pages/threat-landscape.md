@@ -1,10 +1,10 @@
 ---
 title: "Cloud-Native Threat Landscape"
 description: "RBAC risk analysis across 257 Kubernetes open-source projects"
-date: "2026-10-10"
+date: "2026-10-11"
 ---
 
-This report is auto-generated from the latest RBAC Atlas scan (**2026-10-10**). It analyzes the RBAC permissions of **257** Kubernetes open-source projects across **27766** manifest versions to provide a snapshot of the current cloud-native threat landscape.
+This report is auto-generated from the latest RBAC Atlas scan (**2026-10-11**). It analyzes the RBAC permissions of **257** Kubernetes open-source projects across **27766** manifest versions to provide a snapshot of the current cloud-native threat landscape.
 
 ## At a Glance
 
