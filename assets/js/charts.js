@@ -1,4 +1,36 @@
 (function () {
+  var MONTH_NAMES = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+
+  // Collapse daily snapshots into one point per month. Snapshot values are
+  // point-in-time totals, so each month uses its latest snapshot rather than a sum.
+  function monthlySeries(series, maxMonths) {
+    var byMonth = {};
+    (series || []).forEach(function (snapshot) {
+      if (!snapshot || typeof snapshot.date !== "string") return;
+      var key = snapshot.date.slice(0, 7);
+      if (!byMonth[key] || snapshot.date > byMonth[key].date) byMonth[key] = snapshot;
+    });
+    var months = Object.keys(byMonth)
+      .sort()
+      .map(function (key) {
+        var snapshot = byMonth[key];
+        var parts = snapshot.date.split("-");
+        var month = MONTH_NAMES[parseInt(parts[1], 10) - 1];
+        return Object.assign({}, snapshot, {
+          label: month + " " + parts[0],
+          asOf: month + " " + parseInt(parts[2], 10) + ", " + parts[0],
+        });
+      });
+    return maxMonths && months.length > maxMonths ? months.slice(-maxMonths) : months;
+  }
+
+  function monthlyTooltipTitle(months) {
+    return function (items) {
+      var point = items.length ? months[items[0].dataIndex] : null;
+      return point ? point.label + " (as of " + point.asOf + ")" : "";
+    };
+  }
+
   function palette() {
     var styles = getComputedStyle(document.documentElement);
     function read(name, fallback) {
@@ -136,8 +168,8 @@
     return options;
   }
 
-  function sparklineOptions() {
-    var options = lineOptions({ hideLegend: true });
+  function sparklineOptions(settings) {
+    var options = lineOptions(Object.assign({}, settings, { hideLegend: true }));
     options.layout.padding = { top: 8, right: 4, bottom: 2, left: 4 };
     options.scales = { x: { display: false }, y: { display: false } };
     return options;
@@ -175,6 +207,8 @@
     dataset: dataset,
     lineOptions: lineOptions,
     sparklineOptions: sparklineOptions,
+    monthlySeries: monthlySeries,
+    monthlyTooltipTitle: monthlyTooltipTitle,
     refreshAll: refreshAll,
   };
 })();

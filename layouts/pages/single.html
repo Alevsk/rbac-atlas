@@ -16,41 +16,43 @@
 {{ $ts := .Site.Data.timeseries }}
 {{ if and $ts $ts.series (gt (len $ts.series) 0) }}
 <div class="chart-section">
-  <h2>Risk Trend Over Time</h2>
-  {{ if lt (len $ts.series) 2 }}
+  <h2>Risk Trend by Month</h2>
+  {{ $months := dict }}
+  {{ range $ts.series }}{{ $months = merge $months (dict (substr .date 0 7) true) }}{{ end }}
+  {{ if lt (len $months) 2 }}
   <p class="chart-note">
     {{ partialCached "icon.html" "info" "info" }}
-    Only {{ len $ts.series }} data point available. More daily snapshots are needed to show trends.
+    Only {{ len $months }} month of data available. Trends will appear once daily snapshots span at least two months.
+  </p>
+  {{ else }}
+  <p class="chart-note">
+    {{ partialCached "icon.html" "info" "info" }}
+    Showing up to the last 12 months; each point is the latest daily snapshot recorded in that month.
   </p>
   {{ end }}
   <div class="chart-container">
-    <h3>Risk Distribution Over Time</h3>
+    <h3>Risk Distribution by Month</h3>
     <div class="chart-plot">
       <canvas id="risk-trend-chart"
               role="img"
-              aria-label="Critical, high, medium, and low risk counts over time">Risk distribution over time</canvas>
+              aria-label="Critical, high, medium, and low risk counts by month">Risk distribution by month</canvas>
     </div>
   </div>
   <div class="chart-container" style="margin-top: 1.5rem;">
-    <h3>Key Metrics Over Time</h3>
+    <h3>Key Metrics by Month</h3>
     <div class="chart-plot">
       <canvas id="metrics-trend-chart"
               role="img"
-              aria-label="Project and permission counts over time">Key metrics over time</canvas>
+              aria-label="Project and permission counts by month">Key metrics by month</canvas>
     </div>
   </div>
 </div>
 <script>
   (function() {
     if (!window.Chart || !window.RBACCharts) return;
-    var allSeries = {{ $ts.series | jsonify | safeJS }};
-    var MAX_POINTS = 12;
-    var series = allSeries.length > MAX_POINTS ? allSeries.slice(-MAX_POINTS) : allSeries;
-    var monthNames = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-    var labels = series.map(function(s) {
-      var parts = s.date.split('-');
-      return monthNames[parseInt(parts[1], 10) - 1] + ' ' + parseInt(parts[2], 10);
-    });
+    var series = RBACCharts.monthlySeries({{ $ts.series | jsonify | safeJS }}, 12);
+    var labels = series.map(function(s) { return s.label; });
+    var tooltipTitle = RBACCharts.monthlyTooltipTitle(series);
 
     var riskChart = document.getElementById('risk-trend-chart');
     if (riskChart) {
@@ -64,7 +66,7 @@
             }), level);
           })
         },
-        options: RBACCharts.lineOptions()
+        options: RBACCharts.lineOptions({ tooltipTitle: tooltipTitle })
       });
     }
 
@@ -80,7 +82,7 @@
             RBACCharts.dataset('Total Permissions Analyzed', series.map(function(s) { return (s.risk_distribution || {}).total_permissions_analyzed || 0; }), 'medium', { yAxisID: 'y1' })
           ]
         },
-        options: RBACCharts.lineOptions({ secondaryAxis: true })
+        options: RBACCharts.lineOptions({ secondaryAxis: true, tooltipTitle: tooltipTitle })
       });
     }
   })();
