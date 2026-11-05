@@ -8,6 +8,7 @@ import tempfile
 import unittest
 from contextlib import redirect_stdout
 from pathlib import Path
+from unittest import mock
 
 from vulnscan import inventory as inv
 
@@ -176,6 +177,102 @@ def _manifest(version: str, image: str) -> dict:
             "serviceAccountWorkloads": [{"serviceAccountName": "sa", "namespace": "ns", "workloadType": "Deployment",
                                          "workloadName": "w", "containerName": "c", "image": image}],
             "serviceAccountPermissions": [{"serviceAccountName": "sa", "namespace": "ns", "riskLevel": "Critical"}]}
+
+
+class ForwardScopeTest(unittest.TestCase):
+    SINCE = inv.parse_since("2026-11-01")
+    CUTOFF = 1793491200  # 2026-11-01T00:00:00Z
+
+    def build(self, versions: dict[str, int | None], **kw: str) -> dict:
+        """Inventory (scope forward) of chart o/c with {version: metadata.timestamp or None}."""
+        with tempfile.TemporaryDirectory() as tmp:
+            d = Path(tmp) / "manifests"
+            d.mkdir()
+            for version, ts in versions.items():
+                m = _manifest(version, f"x/c:{version}")
+                if ts is not None:
+                    m["metadata"]["timestamp"] = ts
+                (d / f"o__c__{version}.json").write_text(json.dumps(m))
+            for name, ts in kw.items():  # other single-version charts
+                m = _manifest("1.0.0", f"x/{name}:1")
+                if ts != "none":
+                    m["metadata"]["timestamp"] = int(ts)
+                (d / f"o__{name}__1.0.0.json").write_text(json.dumps(m))
+            return inv.build_inventory(d, "forward", self.SINCE)
+
+    def test_cutoff_boundary_and_missing_timestamp(self) -> None:
+        doc = self.build({
+            "1.0.0": self.CUTOFF - 86400 * 300,   # bulk-regenerated long ago: out
+            "2.0.0": self.CUTOFF,                 # exactly at the cutoff: in
+            "2.1.0": self.CUTOFF - 1,             # one second before: out
+            "2.2.0": None,                        # no timestamp, not latest: out
+            "2.3.0": self.CUTOFF + 3600,          # in
+            "3.0.0": self.CUTOFF - 86400 * 400,   # latest, however old: in
+        }, old="1700000000", nots="none")
+        self.assertEqual((doc["scope"], doc["since"]), ("forward", "2026-11-01"))
+        keys = {c["key"]: c["latest"] for c in doc["charts"]}
+        self.assertEqual(keys, {"o/c/3.0.0": True, "o/c/2.3.0": False, "o/c/2.0.0": False,
+                                "o/old/1.0.0": True, "o/nots/1.0.0": True})
+        images = doc["images"]
+        self.assertEqual(images["docker.io/x/c:3.0.0"]["priority"], 0)
+        self.assertEqual(images["docker.io/x/c:2.3.0"]["priority"], 1)  # newest selected non-latest first
+        self.assertEqual(images["docker.io/x/c:2.0.0"]["priority"], 2)
+        self.assertNotIn("docker.io/x/c:2.1.0", images)
+        s = doc["stats"]
+        self.assertEqual((s["versions"], s["versions_since"], s["versions_before_since"],
+                          s["versions_without_timestamp"], s["since_only_images"], s["latest_images"]),
+                         (5, 2, 2, 1, 2, 3))
+
+    def test_latest_at_cutoff_stays_after_being_superseded(self) -> None:
+        old = self.CUTOFF - 86400 * 30
+        doc = self.build({"0.9.0": old - 86400, "1.0.0": old})
+        self.assertEqual([c["key"] for c in doc["charts"]], ["o/c/1.0.0"])
+        # 1.1.0 is released after the cutoff: 1.0.0 (latest at the cutoff) must stay in scope so its
+        # published record is not pruned; 0.9.0 (never latest on/after the cutoff) stays out
+        doc = self.build({"0.9.0": old - 86400, "1.0.0": old, "1.1.0": self.CUTOFF + 86400})
+        self.assertEqual({c["key"]: c["latest"] for c in doc["charts"]}, {"o/c/1.1.0": True, "o/c/1.0.0": False})
+        self.assertEqual(doc["images"]["docker.io/x/c:1.0.0"]["priority"], 1)
+        s = doc["stats"]
+        self.assertEqual((s["versions_since"], s["versions_latest_at_since"], s["versions_before_since"]), (0, 1, 1))
+        # and again after 1.2.0: 1.1.0 is kept by its timestamp, 1.0.0 as the latest at the cutoff
+        doc = self.build({"0.9.0": old - 86400, "1.0.0": old, "1.1.0": self.CUTOFF + 86400,
+                          "1.2.0": self.CUTOFF + 2 * 86400})
+        self.assertEqual(sorted(c["key"] for c in doc["charts"]), ["o/c/1.0.0", "o/c/1.1.0", "o/c/1.2.0"])
+        # a prerelease first seen before the cutoff is not the latest at the cutoff when a stable one exists
+        doc = self.build({"1.0.0": old, "2.0.0-rc1": old + 1, "2.0.0": self.CUTOFF + 86400})
+        self.assertEqual(sorted(c["key"] for c in doc["charts"]), ["o/c/1.0.0", "o/c/2.0.0"])
+        # no version first seen before the cutoff (or none with a timestamp): no extra version
+        doc = self.build({"1.0.0": None, "1.1.0": self.CUTOFF + 86400})
+        self.assertEqual([c["key"] for c in doc["charts"]], ["o/c/1.1.0"])
+
+    def test_other_scopes_have_no_since(self) -> None:
+        self.assertIsNone(inv.build_inventory(FIXTURES, "all")["since"])
+        self.assertNotIn("versions_since", inv.build_inventory(FIXTURES, "latest")["stats"])
+        with self.assertRaises(ValueError):
+            inv.build_inventory(FIXTURES, "forward")
+
+    def test_timestamp_parsing(self) -> None:
+        self.assertEqual(inv.manifest_timestamp({"metadata": {"timestamp": 1769792962}}), 1769792962.0)
+        self.assertEqual(inv.manifest_timestamp({"metadata": {"timestamp": "1769792962"}}), 1769792962.0)
+        for bad in (None, "", "soon", True, 0, -5, [1]):
+            self.assertIsNone(inv.manifest_timestamp({"metadata": {"timestamp": bad}}), bad)
+        self.assertIsNone(inv.manifest_timestamp({}))
+
+    def test_cli_since_validation(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            out = Path(tmp) / "inventory.json"
+            for args in (["--scope", "forward"], ["--scope", "forward", "--since", "2026-13-01"],
+                         ["--scope", "forward", "--since", "2026-11-1"], ["--scope", "forward", "--since", "x; rm"]):
+                with redirect_stdout(io.StringIO()), self.assertRaises(SystemExit), \
+                        mock.patch("sys.stderr", io.StringIO()):
+                    inv.main(["--manifests", str(FIXTURES), "--output", str(out), *args])
+            self.assertFalse(out.exists())
+            with redirect_stdout(io.StringIO()) as buf:
+                rc = inv.main(["--manifests", str(FIXTURES), "--scope", "forward", "--since", "2026-11-01",
+                               "--output", str(out)])
+            self.assertEqual(rc, 0)
+            self.assertIn("forward since 2026-11-01", buf.getvalue())
+            self.assertEqual(json.loads(out.read_text())["since"], "2026-11-01")
 
 
 class AllScopeTest(unittest.TestCase):

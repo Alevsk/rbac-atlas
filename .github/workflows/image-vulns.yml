@@ -1,10 +1,11 @@
 name: Image Vulnerability Scan
 
-# Inventories the container images of every chart version (or only the latest versions),
-# scans them with Trivy (SBOM-per-digest cache), enriches IDs with cve.now and writes a
-# report (job "scan", read-only, outputs to the workflow artifact and caches to
-# actions/cache). Job "publish" turns that artifact into Hugo data under data/vulns/ and
-# commits it to master with DAILY_UPDATE_TOKEN so the push triggers deploy-to-pages.
+# Inventories the container images of every chart version that was the latest on/after the
+# "since" date plus every version first seen on/after it (scope forward, the default; scope all
+# backfills every version, scope latest only the latest ones), scans them with Trivy (SBOM-per-digest cache),
+# enriches IDs with cve.now and writes a report (job "scan", read-only, outputs to the workflow
+# artifact and caches to actions/cache). Job "publish" turns that artifact into Hugo data under
+# data/vulns/ and commits it to master with DAILY_UPDATE_TOKEN so the push triggers deploy-to-pages.
 # See docs/image-vulns.md.
 on:
   schedule:
@@ -14,24 +15,27 @@ on:
       scope:
         description: "Chart versions to inventory"
         type: choice
-        options: ["all", "latest"]
-        default: "all"
+        options: ["forward", "latest", "all"]
+        default: "forward"
+      since:
+        description: "Scope forward: also scan versions whose manifest was first generated on/after this date (YYYY-MM-DD, UTC)"
+        default: "2026-11-01"
       limit:
         description: "Only scan the first N images (empty = all)"
         default: ""
       max_new_sboms:
         description: "Maximum new SBOMs generated this run"
-        default: "2500"
+        default: "1000"
       cvenow_budget:
         description: "Maximum cve.now HTTP requests this run"
         default: "5000"
       publish:
-        description: "Publish data/vulns to master after a successful scan (master only; requires scope all and no limit)"
+        description: "Publish data/vulns to master after a successful scan (master only; requires scope forward or all and no limit)"
         type: choice
         options: ["true", "false"]
         default: "true"
       allow_drop:
-        description: "Publish even if scanned images/versions drop >20% vs the published data/vulns/meta.json"
+        description: "Publish even if scanned images/versions drop >20% vs the published data/vulns (needed once to go back to scope forward after an 'all' backfill)"
         type: choice
         options: ["false", "true"]
         default: "false"
@@ -172,25 +176,40 @@ jobs:
       - name: Run image vulnerability pipeline
         env:
           INPUT_SCOPE: ${{ inputs.scope }}
+          INPUT_SINCE: ${{ inputs.since }}
           INPUT_LIMIT: ${{ inputs.limit }}
           INPUT_MAX_NEW_SBOMS: ${{ inputs.max_new_sboms }}
           INPUT_CVENOW_BUDGET: ${{ inputs.cvenow_budget }}
         run: |
           set -euo pipefail
           # Inputs are empty on scheduled runs; validate them as plain integers before use.
-          scope="${INPUT_SCOPE:-all}"
+          scope="${INPUT_SCOPE:-forward}"
+          since="${INPUT_SINCE:-2026-11-01}"
           limit="${INPUT_LIMIT:-}"
-          max_new_sboms="${INPUT_MAX_NEW_SBOMS:-2500}"
+          max_new_sboms="${INPUT_MAX_NEW_SBOMS:-1000}"
           cvenow_budget="${INPUT_CVENOW_BUDGET:-5000}"
-          [[ "$scope" == "all" || "$scope" == "latest" ]] || { echo "::error::invalid scope: $scope"; exit 1; }
+          [[ "$scope" == "forward" || "$scope" == "all" || "$scope" == "latest" ]] || { echo "::error::invalid scope: $scope"; exit 1; }
+          # vulnscan.inventory also rejects impossible dates such as 2026-13-01
+          [[ "$since" =~ ^[0-9]{4}-[0-9]{2}-[0-9]{2}$ ]] || { echo "::error::invalid since date: $since"; exit 1; }
           for v in "$max_new_sboms" "$cvenow_budget" ${limit:+"$limit"}; do
             [[ "$v" =~ ^[0-9]+$ ]] || { echo "::error::invalid numeric input: $v"; exit 1; }
           done
-          # The scan stage stops starting new SBOMs/rematches after SCAN_BUDGET_MIN so cve.now, the
-          # report and the uploads still fit in the job timeout (300 min; cve.now at 1 rps with a
-          # 5000-request budget alone takes ~85 min, and in-flight SBOMs may run 11 min past it).
-          make vulns VULN_SCOPE="$scope" VULN_LIMIT="$limit" MAX_NEW_SBOMS="$max_new_sboms" CVENOW_BUDGET="$cvenow_budget" \
-            SCAN_BUDGET_MIN=165
+          # Everything below must fit in the job timeout (300 min) with room for the setup steps
+          # above and the uploads after, or publish never runs. The scan stage works in batches
+          # (resolve -> SBOM -> rematch) and starts no new batch, crane call or SBOM after
+          # SCAN_BUDGET_MIN; it can overrun by an in-flight SBOM (11 min) plus a 15-min rematch grace.
+          # cve.now (1 rps; a 5000-request budget alone takes ~85 min, a slow or flaky server longer)
+          # gets the wall-clock time left until STEP_BUDGET_MIN, minus REPORT_MARGIN_MIN for the report.
+          step_start=$(date +%s)
+          vars=(VULN_SCOPE="$scope" VULN_SINCE="$since" VULN_LIMIT="$limit")
+          make image-inventory scan-images "${vars[@]}" MAX_NEW_SBOMS="$max_new_sboms" SCAN_BUDGET_MIN=165
+          STEP_BUDGET_MIN=250
+          REPORT_MARGIN_MIN=15
+          elapsed_min=$(( ($(date +%s) - step_start) / 60 ))
+          cvenow_min=$(( STEP_BUDGET_MIN - REPORT_MARGIN_MIN - elapsed_min ))
+          if [ "$cvenow_min" -lt 5 ]; then cvenow_min=5; fi
+          echo "scan took ${elapsed_min} min; cve.now time budget ${cvenow_min} min"
+          make enrich-vulns vuln-report "${vars[@]}" CVENOW_BUDGET="$cvenow_budget" CVENOW_BUDGET_MIN="$cvenow_min"
 
       - name: Save vulnscan cache
         if: always() && steps.vulns-cache.outcome == 'success'
@@ -237,10 +256,15 @@ jobs:
   #   exposed to the final commit/push step, never to `make publish-vulns`.
   # - Only data/vulns is staged. Runs only for master (a dispatch from another branch scans
   #   with that branch's code and must not publish).
-  # - Only full runs publish: publish rewrites every version shard and removes the ones it no
-  #   longer produces, so a scope=latest or limit=N dispatch would wipe the data of every other
-  #   version page (inputs are empty on scheduled runs). vulnscan.publish also refuses to write
-  #   when scanned images/versions drop >20% vs the committed meta.json (allow_drop overrides).
+  # - Only scope forward/all runs without a limit publish: publish rewrites every version shard and
+  #   removes the ones it no longer produces, so a scope=latest or limit=N dispatch would wipe the
+  #   data of every other version page (inputs are empty on scheduled runs, i.e. scope forward).
+  # - vulnscan.publish refuses to write (nothing written or pruned, job fails, no commit) when no
+  #   image was scanned, no version has data, or <60% of latest-version images were scanned —
+  #   always, also on the first publish and with allow_drop. It also refuses when scanned images,
+  #   versions with data or scanned latest-version images drop >20% vs the committed data/vulns,
+  #   also across a scope change (so a scheduled forward run never silently deletes a published
+  #   scope=all backfill); allow_drop overrides only this relative guard.
   publish:
     needs: scan
     if: >-
@@ -302,7 +326,10 @@ jobs:
           set -euo pipefail
           allow=""
           if [ "${INPUT_ALLOW_DROP:-false}" = "true" ]; then allow=1; fi
-          make publish-vulns VULNS_DIR=vulns VULN_ALLOW_DROP="$allow"
+          if ! make publish-vulns VULNS_DIR=vulns VULN_ALLOW_DROP="$allow"; then
+            echo "::error::vulnscan.publish refused to publish (see the errors above); data/vulns was not changed or committed"
+            exit 1
+          fi
 
       - name: Validate Hugo data
         run: |

@@ -578,12 +578,15 @@ def build_summary(inventory: dict[str, Any], scan: dict[str, Any], enrichment: d
     return {
         "generated_at": utcnow(),
         "scope": scope,
+        "since": inventory.get("since"),
         "weights_version": WEIGHTS_VERSION,
         "weights": {k: list(v) for k, v in WEIGHTS.items()},
         "provenance": {
             "trivy": scan.get("trivy"),
             "scan_generated_at": scan.get("generated_at"),
             "inventory_generated_at": inventory.get("generated_at"),
+            "inventory_scope": scope,
+            "inventory_since": inventory.get("since"),
             "cvenow": {
                 "requests": enrichment.get("requests", 0),
                 "stopped_reason": enrichment.get("stopped_reason"),
@@ -646,7 +649,9 @@ def render_report(summary: dict[str, Any], top: int = 15, max_combos: int = 25) 
 
     out = ["# Image vulnerability report", ""]
     out.append(f"Generated {summary.get('generated_at')} - weights v{summary.get('weights_version')} - "
-               f"inventory scope {summary.get('scope') or 'latest'}.")
+               f"inventory scope {summary.get('scope') or 'latest'}"
+               + (f" (versions latest on/after or first seen since {summary['since']})" if summary.get("since") else "")
+               + ".")
     out += ["", "## Provenance", ""]
     out.append(_table(["Source", "Detail"], [
         ["Trivy", f"{trivy.get('version') or '?'} (DB {trivy.get('db_version') or '?'}, "
@@ -667,7 +672,12 @@ def render_report(summary: dict[str, Any], top: int = 15, max_combos: int = 25) 
         ["All images", stats.get("images", 0), stats.get("images_ok", 0),
          f"{stats.get('images_pending', 0)} pending"],
     ]))
-    limit = (stats.get("scan_stats") or {}).get("limit")
+    scan_stats = stats.get("scan_stats") or {}
+    if scan_stats.get("time_budget_exceeded"):
+        out.append(f"Note: the scan time budget ran out after {scan_stats.get('batches_done', '?')} of "
+                   f"{scan_stats.get('batches', '?')} batches; {scan_stats.get('images_not_processed', '?')} images "
+                   f"were not processed ({scan_stats.get('not_processed_reused', 0)} of them reuse an earlier match).\n")
+    limit = scan_stats.get("limit")
     if limit:
         out.append(f"Note: the scan was limited to the first {limit} images; the rest are Unknown "
                    "(`not_scanned`), so chart levels are incomplete.\n")
@@ -716,9 +726,9 @@ def render_report(summary: dict[str, Any], top: int = 15, max_combos: int = 25) 
     ) if ranked_c else "No scored charts.\n")
 
     out += ["## Runtime", ""]
-    scan_stats = stats.get("scan_stats") or {}
     rows = [["report seconds", stats.get("seconds")]]
-    for key in ("images", "ok", "new_sboms", "rematched", "seconds"):
+    for key in ("images", "ok", "new_sboms", "rematched", "batches_done", "batches", "images_not_processed",
+                "not_processed_reused", "time_budget_exceeded", "seconds"):
         if key in scan_stats:
             rows.append([f"scan {key}", scan_stats[key]])
     for key, value in sorted((stats.get("enrichment_stats") or {}).items()):

@@ -13,12 +13,21 @@ report and cvenow read one digest at a time.
                'skipped' with reason 'sbom_quota'). Failures are remembered in SBOM_FAILURES_FILE and
                permanent-looking ones (timeout, no_amd64, unauthorized, not_found) back off exponentially.
   3. rematch   `trivy sbom` on cached SBOMs against the current DB, summarized and stored per digest in
-               MATCH_DIR (vulnscan.match format; older formats are re-derived or treated as missing). Digests used by a latest chart version are rematched every run; the
-               others when their cached match is missing or older than --rematch-max-age-hours, at most
-               --max-rematch per run (missing first, then oldest); the rest reuse their cached match.
+               MATCH_DIR (vulnscan.match format; older formats are re-derived or treated as missing). Digests
+               used by a latest chart version are rematched every run; the others when their cached match is
+               missing or older than --rematch-max-age-hours, at most --max-rematch per run (within a batch:
+               missing first, then oldest); the rest reuse their cached match.
 
---time-budget-minutes stops starting new SBOMs/rematches once exceeded (cached matches are still used), so
-the run always finishes and writes its outputs.
+Images are processed in priority order in batches of --batch-size: each batch runs resolve → sbom → rematch
+to completion before the next one starts, so only the images processed in this run are resolved and every
+finished batch has results. --time-budget-minutes is checked between batches: once exceeded no new batch
+starts, and the remaining images reuse the cached match of their last known digest (no crane call) or are
+'skipped' with reason 'time_budget'. Inside a batch that started before the deadline it is checked before
+each crane call, new SBOM and rematch: past it, tags use their last known digest (stale_resolve), no new
+SBOM is generated, digests with a cached match reuse it instead of being rematched, and digests without
+one (e.g. SBOMs generated in this batch) are still rematched for REMATCH_GRACE_SECONDS (15 min). A batch
+thus overruns the budget by at most the calls in flight (one SBOM is up to 11 min) plus that grace. The
+run always writes its outputs.
 
 The Trivy DB (and Java DB) must already be downloaded by the caller; every Trivy call uses
 --skip-db-update/--skip-java-db-update. Binaries come from $TRIVY and $CRANE; this module never installs them.
@@ -39,7 +48,7 @@ import tempfile
 import threading
 import time
 from concurrent.futures import ThreadPoolExecutor
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Any, Callable
 
@@ -64,6 +73,9 @@ DOCKER_MIRROR = "mirror.gcr.io"
 CRANE_TIMEOUT = 90.0
 SBOM_TIMEOUT = 660.0  # trivy's own --timeout is 10m; this is the hard stop around it
 REMATCH_TIMEOUT = 600.0
+# Past the time budget, a digest without any cached match (e.g. an SBOM generated in this batch) is still
+# rematched for this long, so a finished SBOM yields a result; nothing is rematched after it.
+REMATCH_GRACE_SECONDS = 900.0
 RESOLVE_WORKERS = 6
 DIGEST_RE = re.compile(r"^sha256:[0-9a-f]{64}$")
 # Within one CVSS source, preferred vector families in order: (score key, vector key, default version).
@@ -260,6 +272,7 @@ class Scanner:
         max_rematch: int | None = None,
         rematch_max_age_hours: float = 168.0,
         time_budget_seconds: float | None = None,
+        batch_size: int = 100,
         now: Callable[[], str] = utcnow,
         clock: Callable[[], float] = time.monotonic,
     ) -> None:
@@ -276,6 +289,7 @@ class Scanner:
         self.max_rematch = max_rematch
         self.rematch_max_age_hours = rematch_max_age_hours
         self.time_budget_seconds = time_budget_seconds
+        self.batch_size = max(1, batch_size)
         self.now = now
         self.clock = clock
         self._deadline: float | None = None
@@ -291,8 +305,8 @@ class Scanner:
         except (TypeError, ValueError, AttributeError):
             return None
 
-    def _out_of_time(self) -> bool:
-        return self._deadline is not None and self.clock() >= self._deadline
+    def _out_of_time(self, grace: float = 0.0) -> bool:
+        return self._deadline is not None and self.clock() >= self._deadline + grace
 
     # ── resolve ──
     def _fresh(self, entry: dict[str, Any], max_age_hours: float | None = None) -> bool:
@@ -310,6 +324,14 @@ class Scanner:
         if entry.get("status") == "ok" and entry.get("digest") and self._fresh(entry, max_age):
             return {"digest": entry["digest"], "pulled_from": entry.get("pulled_from"),
                     "stale_resolve": False, "reason": None}
+        if self._out_of_time():
+            # Over the time budget (in a batch that already started): no crane call; use the last
+            # known digest so the batch still finishes quickly.
+            last = entry.get("digest")
+            if isinstance(last, str) and DIGEST_RE.match(last):
+                return {"digest": last, "pulled_from": entry.get("pulled_from"), "stale_resolve": True,
+                        "reason": None}
+            return {"digest": None, "pulled_from": None, "stale_resolve": False, "reason": "time_budget"}
         tag = info.get("tag") or "latest"
         reason = "error"
         for source in image_sources(info):
@@ -426,148 +448,84 @@ class Scanner:
     def scan(self, images: dict[str, dict[str, Any]]) -> tuple[dict[str, Any], dict[str, Any]]:
         """Scan inventory images ({canonical: info}); return (scan.json 'images', stats).
 
+        Images are processed in scan_order in batches of batch_size: each batch is resolved, its missing
+        SBOMs generated and its digests rematched (or their cached match reused) before the next one
+        starts, so every image of a finished batch has a result even when the time budget runs out. The
+        budget is checked between batches (and, inside a batch, before each crane call, new SBOM and
+        rematch, which then fall back to the last known digest / previous match); images of batches that
+        never start are not resolved: they reuse a cached match of their last known digest when there is one, else
+        they are 'skipped' with reason 'time_budget'.
+
         Also sets self.ids: {vulnerability ID: worst severity} over every 'ok' digest (scan.json 'ids')."""
         started = time.monotonic()
         if self.time_budget_seconds is not None:
             self._deadline = self.clock() + self.time_budget_seconds
         canonicals = scan_order(images)
-
-        def _resolve(c: str) -> dict[str, Any]:
-            try:
-                return self.resolve(c, images[c])
-            except Exception as exc:  # one image must never abort the run
-                log(f"  resolve {c}: unexpected {exc!r}")
-                return {"digest": None, "pulled_from": None, "stale_resolve": False, "reason": "error"}
-
-        log(f"resolve: {len(canonicals)} images")
-        with ThreadPoolExecutor(RESOLVE_WORKERS) as pool:
-            resolved = dict(zip(canonicals, pool.map(_resolve, canonicals)))
-
-        # SBOM work is per unique digest, in scan_order (so the quota goes to the highest priority).
-        by_digest: dict[str, list[str]] = {}
-        for c in scan_order(images):
-            if resolved[c]["digest"]:
-                by_digest.setdefault(resolved[c]["digest"], []).append(c)
-        cached = {d for d in by_digest if self.sbom_path(d).is_file()}
-        # Failing digests in backoff are not retried and do not use the new-SBOM quota.
-        backoff = {d: r for d in by_digest if d not in cached and (r := self.in_backoff(d))}
-        missing = [d for d in by_digest if d not in cached and d not in backoff]
-        to_generate, over_quota = missing[: self.max_new_sboms], set(missing[self.max_new_sboms:])
-
-        sbom_failed: dict[str, str] = dict(backoff)
-        pulled: dict[str, str] = {}
-        out_of_time: set[str] = set()
-
-        def _generate(digest: str) -> None:
+        batches = [canonicals[i:i + self.batch_size] for i in range(0, len(canonicals), self.batch_size)]
+        st = _RunState(new_sbom_quota=self.max_new_sboms, rematch_quota=self.max_rematch)
+        log(f"scan: {len(canonicals)} images in {len(batches)} batches of {self.batch_size}")
+        done = 0
+        for n, batch in enumerate(batches, 1):
             if self._out_of_time():
-                with self._lock:
-                    out_of_time.add(digest)
-                return
-            first = by_digest[digest][0]
-            sources = image_sources(images[first])
-            hint = resolved[first]["pulled_from"]
-            if hint in sources:
-                sources = [hint] + [s for s in sources if s != hint]
-            try:
-                ok, reason, source = self.generate_sbom(digest, sources)
-            except Exception as exc:
-                log(f"  sbom {first}: unexpected {exc!r}")
-                ok, reason, source = False, "error", None
-            if ok:
-                pulled[digest] = source
-            else:
-                sbom_failed[digest] = reason or "error"
-            self._record_sbom(digest, None if ok else (reason or "error"))
+                log(f"scan: time budget exceeded before batch {n}/{len(batches)}; "
+                    f"{len(canonicals) - sum(len(b) for b in batches[:n - 1])} images not processed")
+                break
+            self._scan_batch(batch, images, st)
+            done += 1
+            log(f"batch {n}/{len(batches)}: {len(st.matched)} digests matched, {len(st.pulled)} new SBOMs, "
+                f"{st.rematched} rematched, {round(time.monotonic() - started)}s")
 
-        log(f"sbom: {len(cached)} cached, {len(to_generate)} to generate, {len(over_quota)} over quota, "
-            f"{len(backoff)} in failure backoff")
-        with ThreadPoolExecutor(self.workers) as pool:
-            list(pool.map(_generate, to_generate))
-
-        have_sbom = [d for d in by_digest if d not in over_quota and d not in sbom_failed and d not in out_of_time]
-        # Digest priority: best (lowest) inventory priority of the images that resolve to it.
-        digest_priority = {d: min((images[c].get("priority") or 0) for c in cs) for d, cs in by_digest.items()}
-        # Only matched_at is kept per digest: match documents are read one at a time (memory stays flat).
-        previous = {d: m["matched_at"] for d in have_sbom if (m := self.cached_match(d))}
-        always, due = [], []
-        for d in have_sbom:
-            if digest_priority[d] == 0 or self.max_rematch is None:
-                always.append(d)
+        # Images of batches that never started: no crane call; reuse what is already known.
+        unprocessed: dict[str, str | None] = {}  # canonical -> last known digest (None if never resolved)
+        for c in canonicals:
+            if c in st.resolved:
                 continue
-            age = self._age_hours(previous[d]) if d in previous else None
-            if age is None or age >= self.rematch_max_age_hours:
-                due.append(d)
-        # missing matches first, then the oldest ones
-        due.sort(key=lambda d: (d in previous, previous.get(d, ""), d))
-        rematch_digests = always + due[: max(0, self.max_rematch or 0)] if self.max_rematch is not None else always
-
-        def _rematch(digest: str) -> str | None:
-            """Rematch and store one digest; None on success, else the error reason."""
-            if self._out_of_time():
-                return "time_budget"
-            try:
-                result = self.rematch(digest)
-            except Exception as exc:
-                log(f"  rematch {digest[:19]}: unexpected {exc!r}")
-                return "rematch_failed"
-            if "error" in result:
-                return result["error"]
-            try:
-                match.store(self.match_dir, digest, match.compact(result, self.now()))
-            except OSError as exc:
-                log(f"  rematch {digest[:19]}: cannot cache match ({exc})")
-                return "rematch_failed"
-            return None
-
-        log(f"rematch: {len(rematch_digests)} SBOMs ({len(always)} every run, {len(due)} due), "
-            f"{len(previous)} cached matches")
-        with ThreadPoolExecutor(self.rematch_workers) as pool:
-            fresh = dict(zip(rematch_digests, pool.map(_rematch, rematch_digests)))
-        # matched[d]: {os, counts, matched_at, go_modules} of the match now in the cache — this run's
-        # rematch, else the previous one (also when this run's rematch failed or ran out of time) — or
-        # {'error': reason}. Each document is read once, folded into the global 'ids' map and dropped.
-        matched: dict[str, dict[str, Any]] = {}
-        ids: dict[str, int] = {}
-        reused = 0
-        for d in have_sbom:
-            error = fresh.get(d, "rematch_quota")
-            doc = self.cached_match(d) if error is None or d in previous else None
-            if doc is None:
-                matched[d] = {"error": error or "rematch_failed"}
-                continue
-            reused += error is not None
-            matched[d] = {"os": doc.get("os"), "counts": doc["counts"], "matched_at": doc["matched_at"],
-                          "go_modules": len(doc.get("go") or [])}
-            for vid, rank in match.vuln_ids(doc).items():
-                ids[vid] = min(rank, ids.get(vid, rank))
-        self.ids = {vid: SEVERITIES[rank] for vid, rank in sorted(ids.items())}
+            digest = self._known_digest(c, images[c])
+            unprocessed[c] = digest
+            if digest and digest not in st.matched and digest not in st.leftover:
+                doc = self.cached_match(digest)
+                st.leftover[digest] = self._fold(doc, st) if doc else None
+        self.ids = {vid: SEVERITIES[rank] for vid, rank in sorted(st.ids.items())}
 
         out: dict[str, Any] = {}
+        leftover_reused = 0
         for c in sorted(canonicals):
-            r = resolved[c]
-            digest = r["digest"]
             rec: dict[str, Any] = {
-                "status": "ok", "reason": None, "digest": digest,
-                "pulled_from": (pulled.get(digest) or r["pulled_from"]) if digest else None,
-                "stale_resolve": r["stale_resolve"], "os": None,
-                "sbom_cached": bool(digest) and digest in cached, "scanned_at": None,
-                "go_modules": 0, "counts": {s: 0 for s in SEVERITIES},
-                "priority": images[c].get("priority") or 0,
+                "status": "ok", "reason": None, "digest": None, "pulled_from": None, "stale_resolve": False,
+                "os": None, "sbom_cached": False, "scanned_at": None, "go_modules": 0,
+                "counts": {s: 0 for s in SEVERITIES}, "priority": images[c].get("priority") or 0,
             }
+            if c in unprocessed:
+                digest = unprocessed[c]
+                m = (st.matched.get(digest) or st.leftover.get(digest)) if digest else None
+                entry = self.resolve_cache.get(c) or {}
+                rec.update(digest=digest, pulled_from=entry.get("pulled_from") if digest else None,
+                           sbom_cached=bool(digest) and self.sbom_path(digest).is_file())
+                if m and "error" not in m:
+                    leftover_reused += 1
+                    rec.update(os=m["os"], counts=m["counts"], go_modules=m["go_modules"], scanned_at=m["matched_at"])
+                else:
+                    rec.update(status="skipped", reason="time_budget")
+                out[c] = rec
+                continue
+            r = st.resolved[c]
+            digest = r["digest"]
+            rec.update(digest=digest, pulled_from=(st.pulled.get(digest) or r["pulled_from"]) if digest else None,
+                       stale_resolve=r["stale_resolve"], sbom_cached=bool(digest) and digest in st.cached)
             if not digest:
-                rec.update(status="unavailable", reason=r["reason"])
-            elif digest in over_quota:
+                rec.update(status="skipped" if r["reason"] == "time_budget" else "unavailable", reason=r["reason"])
+            elif digest in st.over_quota:
                 rec.update(status="skipped", reason="sbom_quota")
-            elif digest in out_of_time:
+            elif digest in st.out_of_time:
                 rec.update(status="skipped", reason="time_budget")
-            elif digest in sbom_failed:
-                rec.update(status="unavailable", reason=sbom_failed[digest])
-            elif "error" in matched[digest]:
-                reason = matched[digest]["error"]
+            elif digest in st.sbom_failed:
+                rec.update(status="unavailable", reason=st.sbom_failed[digest])
+            elif "error" in st.matched[digest]:
+                reason = st.matched[digest]["error"]
                 status = "skipped" if reason in ("time_budget", "rematch_quota") else "unavailable"
                 rec.update(status=status, reason=reason)
             else:
-                m = matched[digest]
+                m = st.matched[digest]
                 rec.update(os=m["os"], counts=m["counts"], go_modules=m["go_modules"], scanned_at=m["matched_at"])
             if rec["status"] != "ok" and r["reason"] and rec["reason"] != r["reason"]:
                 rec["resolve_reason"] = r["reason"]
@@ -583,17 +541,175 @@ class Scanner:
             "skipped": sum(1 for r in out.values() if r["status"] == "skipped"),
             "unavailable_by_reason": dict(sorted(unavailable.items())),
             "stale_resolve": sum(1 for r in out.values() if r["stale_resolve"]),
-            "unique_digests": len(by_digest),
-            "sbom_cached": len(cached),
-            "new_sboms": len(pulled),
-            "sbom_attempts": len(to_generate) - len(out_of_time),
-            "sbom_backoff": len(backoff),
-            "rematched": sum(1 for e in fresh.values() if e is None),
-            "match_reused": reused,
+            "unique_digests": len(st.by_digest),
+            "sbom_cached": len(st.cached),
+            "new_sboms": len(st.pulled),
+            "sbom_attempts": st.sbom_attempts,
+            "sbom_backoff": len(st.backoff),
+            "rematched": st.rematched,
+            "match_reused": st.reused + leftover_reused,
+            "batch_size": self.batch_size,
+            "batches": len(batches),
+            "batches_done": done,
+            "images_processed": len(st.resolved),
+            "images_not_processed": len(unprocessed),
+            "not_processed_reused": leftover_reused,
             "time_budget_exceeded": self._out_of_time(),
             "seconds": round(time.monotonic() - started, 1),
         }
         return out, stats
+
+    def _known_digest(self, canonical: str, info: dict[str, Any]) -> str | None:
+        """Digest of an image without resolving it: the pinned one, else the last one in the resolve cache."""
+        if info.get("digest"):
+            return info["digest"]
+        digest = (self.resolve_cache.get(canonical) or {}).get("digest")
+        return digest if isinstance(digest, str) and DIGEST_RE.match(digest) else None
+
+    def _fold(self, doc: dict[str, Any], st: _RunState) -> dict[str, Any]:
+        """Fold a match document into the run's global 'ids' map; return its per-image summary."""
+        for vid, rank in match.vuln_ids(doc).items():
+            st.ids[vid] = min(rank, st.ids.get(vid, rank))
+        return {"os": doc.get("os"), "counts": doc["counts"], "matched_at": doc["matched_at"],
+                "go_modules": len(doc.get("go") or [])}
+
+    def _scan_batch(self, batch: list[str], images: dict[str, dict[str, Any]], st: _RunState) -> None:
+        """resolve → SBOM → rematch for one batch of canonicals (in scan_order), updating st."""
+        def _resolve(c: str) -> dict[str, Any]:
+            try:
+                return self.resolve(c, images[c])
+            except Exception as exc:  # one image must never abort the run
+                log(f"  resolve {c}: unexpected {exc!r}")
+                return {"digest": None, "pulled_from": None, "stale_resolve": False, "reason": "error"}
+
+        with ThreadPoolExecutor(RESOLVE_WORKERS) as pool:
+            st.resolved.update(zip(batch, pool.map(_resolve, batch)))
+
+        # SBOM work is per unique digest, in scan_order (so the quota goes to the highest priority). A digest
+        # already handled by an earlier batch keeps that outcome.
+        new: list[str] = []
+        for c in batch:
+            d = st.resolved[c]["digest"]
+            if not d:
+                continue
+            if d not in st.by_digest:
+                new.append(d)
+            st.by_digest.setdefault(d, []).append(c)
+        st.cached.update(d for d in new if self.sbom_path(d).is_file())
+        # Failing digests in backoff are not retried and do not use the new-SBOM quota.
+        backoff = {d: r for d in new if d not in st.cached and (r := self.in_backoff(d))}
+        st.backoff.update(backoff)
+        st.sbom_failed.update(backoff)
+        missing = [d for d in new if d not in st.cached and d not in backoff]
+        take = max(0, st.new_sbom_quota)
+        to_generate = missing[:take]
+        st.over_quota.update(missing[take:])
+        st.new_sbom_quota -= len(to_generate)
+
+        def _generate(digest: str) -> None:
+            if self._out_of_time():
+                with self._lock:
+                    st.out_of_time.add(digest)
+                return
+            with self._lock:
+                st.sbom_attempts += 1
+            first = st.by_digest[digest][0]
+            sources = image_sources(images[first])
+            hint = st.resolved[first]["pulled_from"]
+            if hint in sources:
+                sources = [hint] + [s for s in sources if s != hint]
+            try:
+                ok, reason, source = self.generate_sbom(digest, sources)
+            except Exception as exc:
+                log(f"  sbom {first}: unexpected {exc!r}")
+                ok, reason, source = False, "error", None
+            with self._lock:
+                if ok:
+                    st.pulled[digest] = source
+                else:
+                    st.sbom_failed[digest] = reason or "error"
+            self._record_sbom(digest, None if ok else (reason or "error"))
+
+        if to_generate:
+            with ThreadPoolExecutor(self.workers) as pool:
+                list(pool.map(_generate, to_generate))
+
+        have_sbom = [d for d in new if d not in st.over_quota and d not in st.sbom_failed and d not in st.out_of_time]
+        # Digest priority: best (lowest) inventory priority of its images; scan_order puts that one first.
+        digest_priority = {d: images[st.by_digest[d][0]].get("priority") or 0 for d in have_sbom}
+        # Only matched_at is kept per digest: match documents are read one at a time (memory stays flat).
+        previous = {d: m["matched_at"] for d in have_sbom if (m := self.cached_match(d))}
+        always, due = [], []
+        for d in have_sbom:
+            if digest_priority[d] == 0 or st.rematch_quota is None:
+                always.append(d)
+                continue
+            age = self._age_hours(previous[d]) if d in previous else None
+            if age is None or age >= self.rematch_max_age_hours:
+                due.append(d)
+        # missing matches first, then the oldest ones (within the batch; batches follow scan_order)
+        due.sort(key=lambda d: (d in previous, previous.get(d, ""), d))
+        if st.rematch_quota is not None:
+            due = due[: max(0, st.rematch_quota)]
+            st.rematch_quota -= len(due)
+        rematch_digests = always + due
+
+        def _rematch(digest: str) -> str | None:
+            """Rematch and store one digest; None on success, else the error reason. Over the time budget
+            a digest with a previous cached match is not rematched ('time_budget'; that match is reused),
+            one without is still rematched until REMATCH_GRACE_SECONDS past the budget."""
+            if self._out_of_time() and (digest in previous or self._out_of_time(REMATCH_GRACE_SECONDS)):
+                return "time_budget"
+            try:
+                result = self.rematch(digest)
+            except Exception as exc:
+                log(f"  rematch {digest[:19]}: unexpected {exc!r}")
+                return "rematch_failed"
+            if "error" in result:
+                return result["error"]
+            try:
+                match.store(self.match_dir, digest, match.compact(result, self.now()))
+            except OSError as exc:
+                log(f"  rematch {digest[:19]}: cannot cache match ({exc})")
+                return "rematch_failed"
+            return None
+
+        with ThreadPoolExecutor(self.rematch_workers) as pool:
+            fresh = dict(zip(rematch_digests, pool.map(_rematch, rematch_digests)))
+        st.rematched += sum(1 for e in fresh.values() if e is None)
+        # matched[d]: {os, counts, matched_at, go_modules} of the match now in the cache — this run's
+        # rematch, else the previous one (also when this run's rematch failed) — or {'error': reason}.
+        # Each document is read once, folded into the global 'ids' map and dropped.
+        for d in have_sbom:
+            error = fresh.get(d, "rematch_quota")
+            doc = self.cached_match(d) if error is None or d in previous else None
+            if doc is None:
+                st.matched[d] = {"error": error or "rematch_failed"}
+                continue
+            st.reused += error is not None
+            st.matched[d] = self._fold(doc, st)
+
+
+@dataclass
+class _RunState:
+    """Accumulated per-run scan state shared across batches (digest-keyed unless noted)."""
+
+    new_sbom_quota: int
+    rematch_quota: int | None
+    resolved: dict[str, dict[str, Any]] = field(default_factory=dict)  # canonical -> resolve() result
+    by_digest: dict[str, list[str]] = field(default_factory=dict)  # digest -> canonicals (scan_order)
+    cached: set[str] = field(default_factory=set)  # SBOM already cached when its batch ran
+    backoff: dict[str, str] = field(default_factory=dict)
+    over_quota: set[str] = field(default_factory=set)
+    sbom_failed: dict[str, str] = field(default_factory=dict)
+    out_of_time: set[str] = field(default_factory=set)
+    pulled: dict[str, str] = field(default_factory=dict)
+    matched: dict[str, dict[str, Any]] = field(default_factory=dict)
+    leftover: dict[str, dict[str, Any] | None] = field(default_factory=dict)  # unprocessed batches' digests
+    ids: dict[str, int] = field(default_factory=dict)
+    sbom_attempts: int = 0
+    rematched: int = 0
+    reused: int = 0
 
 
 def build_scan(inventory: dict[str, Any], scanner: Scanner, *, limit: int | None = None) -> dict[str, Any]:
@@ -647,7 +763,9 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--rematch-max-age-hours", type=float, default=168.0,
                         help="rematch digests not used by a latest chart version once their match is older than this")
     parser.add_argument("--time-budget-minutes", type=float, default=None,
-                        help="stop starting new SBOMs/rematches after this many minutes (outputs are still written)")
+                        help="start no new batch/SBOM after this many minutes (outputs are still written)")
+    parser.add_argument("--batch-size", type=int, default=100,
+                        help="images per resolve → sbom → rematch batch (the time budget is checked between batches)")
     parser.add_argument("--limit", type=int, default=None, help="only scan the first N images in priority order (testing)")
     args = parser.parse_args(argv)
 
@@ -676,6 +794,7 @@ def main(argv: list[str] | None = None) -> int:
         max_rematch=None if args.max_rematch < 0 else args.max_rematch,
         rematch_max_age_hours=args.rematch_max_age_hours,
         time_budget_seconds=None if args.time_budget_minutes is None else args.time_budget_minutes * 60,
+        batch_size=args.batch_size,
     )
     try:
         doc = build_scan(inventory, scanner, limit=args.limit)
@@ -686,7 +805,7 @@ def main(argv: list[str] | None = None) -> int:
     s = doc["stats"]
     log(f"scan: {s['ok']}/{s['images']} ok, {s['skipped']} skipped, unavailable {s['unavailable_by_reason']}, "
         f"{s['new_sboms']} new SBOMs, {s['rematched']} rematched, {s['match_reused']} cached matches reused, "
-        f"{s['sbom_backoff']} in SBOM backoff in {s['seconds']}s → {args.output}")
+        f"{s['sbom_backoff']} in SBOM backoff, {s['batches_done']}/{s['batches']} batches in {s['seconds']}s → {args.output}")
     return 0
 
 

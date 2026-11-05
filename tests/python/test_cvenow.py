@@ -268,6 +268,44 @@ class TestClient(Base):
         self.assertEqual(c.stopped_reason, "budget")
         self.assertEqual(c.requests, 2)
 
+    def test_time_budget_bounds_a_flaky_server(self) -> None:
+        # every other request fails with 503: never 3 failures in a row, so only the clock stops it
+        clock = [0.0]
+        answers = iter([(503, b""), (200, b"{}")] * 1000)
+
+        def handler(m: str, p: str, b: Any) -> tuple[int, Any]:
+            clock[0] += 2.0  # slow server
+            return next(answers)
+
+        def sleep(seconds: float) -> None:
+            self.sleeps.append(seconds)
+            clock[0] += seconds
+
+        c = cvenow.Client(FakeTransport(handler), budget=5000, rps=0, sleep=sleep, monotonic=lambda: clock[0],
+                          time_budget_seconds=100.0)
+        results = [c.request("GET", f"/api/v1/entries/CVE-{i}") for i in range(50)]
+        self.assertEqual(c.stopped_reason, "time_budget")
+        self.assertIsNone(results[-1])
+        self.assertLessEqual(clock[0], 100.0 + 2.0)  # at most one request past the deadline
+        self.assertLessEqual(max(self.sleeps), 30)
+        self.assertLess(c.requests, 10)
+        calls = c.requests
+        self.assertIsNone(c.request("GET", "/x"))
+        self.assertEqual(c.requests, calls)
+
+    def test_backoff_sleep_cut_at_deadline(self) -> None:
+        clock = [0.0]
+
+        def sleep(seconds: float) -> None:
+            self.sleeps.append(seconds)
+            clock[0] += seconds
+
+        c = cvenow.Client(FakeTransport(lambda m, p, b: (403, b"")), rps=0, sleep=sleep,
+                          monotonic=lambda: clock[0], time_budget_seconds=40.0)
+        self.assertIsNone(c.request("GET", "/x"))
+        self.assertEqual(self.sleeps, [30, 10])
+        self.assertEqual((c.stopped_reason, c.requests), ("time_budget", 2))
+
     def test_pacing_sleeps_between_requests(self) -> None:
         t = FakeTransport(lambda m, p, b: (200, b"{}"))
         c = cvenow.Client(t, rps=2.0, sleep=self.sleeps.append, monotonic=lambda: 10.0)

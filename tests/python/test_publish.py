@@ -191,7 +191,7 @@ class BuildTests(unittest.TestCase):
         self.assertEqual(docs["images"]["docker.io/acme/web:1.0"], {"lvl": "Unknown", "st": "pending", "rs": "sbom_quota"})
         self.assertEqual(docs["images"]["quay.io/acme/sidecar:1.0"]["st"], "unavailable")
         self.assertEqual(docs["meta"], {
-            "generated_at": "2026-11-05T07:00:00Z", "weights_version": 2,
+            "generated_at": "2026-11-05T07:00:00Z", "scope": "all", "since": None, "weights_version": 2,
             "trivy": {"version": "0.76.1", "db_updated_at": "2026-11-05T01:00:00Z"},
             "cvenow": {"coverage_pct": 42.5, "requests": 120},
             "images_total": 4, "images_scanned": 2, "images_pending": 1,
@@ -271,9 +271,10 @@ class WriteTests(unittest.TestCase):
 
 
 class CliTests(unittest.TestCase):
-    def run_main(self, *extra: str, summary: Path | None = None, out: Path | None = None) -> tuple[int, Path, str]:
+    def run_main(self, *extra: str, summary: Path | None = None, out: Path | None = None,
+                 inventory: Path | None = None) -> tuple[int, Path, str]:
         out = out or Path(tempfile.mkdtemp()) / "data" / "vulns"
-        args = ["--inventory", str(FIXTURES / "inventory.json"), "--summary", str(summary or FIXTURES / "summary.json"),
+        args = ["--inventory", str(inventory or FIXTURES / "inventory.json"), "--summary", str(summary or FIXTURES / "summary.json"),
                 "--scan", str(FIXTURES / "scan.json"), "--enrichment", str(FIXTURES / "enrichment.json"),
                 "--output", str(out), *extra]
         err = io.StringIO()
@@ -322,6 +323,113 @@ class CliTests(unittest.TestCase):
                                          meta, 0.2)
         self.assertEqual(len(errs), 1)
         self.assertIn("versions_total", errs[0])
+
+    def write_summary(self, **statuses: str) -> Path:
+        """Fixture summary.json with some images' status replaced ({canonical: status}), in a temp file."""
+        summary = load("summary")
+        for canonical, status in statuses.items():
+            summary["images"][canonical].update(status=status, reason="time_budget" if status == "skipped" else None)
+        path = Path(tempfile.mkdtemp()) / "summary.json"
+        path.write_text(json.dumps(summary))
+        return path
+
+    def test_floor_refuses_zero_scanned_on_first_publish(self) -> None:
+        # the 2026-11-05 incident: no previous meta.json and nothing scanned
+        path = self.write_summary(**{"docker.io/acme/web:2.0": "skipped", "docker.io/beta/api:0.1": "skipped"})
+        for extra in ((), ("--allow-drop",)):
+            out = Path(tempfile.mkdtemp()) / "data" / "vulns"
+            rc, _, err = self.run_main(*extra, summary=path, out=out)
+            self.assertEqual(rc, 1)
+            self.assertIn("no image was scanned (0 of 4)", err)
+            self.assertIn("no chart version has data", err)
+            self.assertIn("only 0 of 3 latest-version images were scanned", err)
+            self.assertFalse(out.exists())  # nothing written
+
+    def test_floor_refuses_low_latest_coverage_and_keeps_existing_data(self) -> None:
+        path = self.write_summary(**{"docker.io/beta/api:0.1": "skipped"})  # 1 of 3 latest images scanned
+        out = Path(tempfile.mkdtemp()) / "data" / "vulns"
+        out.mkdir(parents=True)
+        previous = {"images_scanned": 1, "versions_with_data": 1, "versions_total": 4}
+        (out / "meta.json").write_text(json.dumps(previous))
+        stale = out / "versions" / "zz.json"
+        stale.parent.mkdir()
+        stale.write_text("{}")
+        for extra in ((), ("--allow-drop",)):
+            rc, _, err = self.run_main(*extra, summary=path, out=out)
+            self.assertEqual(rc, 1)
+            self.assertIn("only 1 of 3 latest-version images were scanned (33%, minimum 60%)", err)
+            self.assertTrue(stale.exists())  # nothing pruned
+            self.assertEqual(json.loads((out / "meta.json").read_text()), previous)
+        rc, _, _ = self.run_main("--min-latest-coverage", "0.3", summary=path, out=out)
+        self.assertEqual(rc, 0)
+        self.assertFalse(stale.exists())
+
+    def test_floor_errors(self) -> None:
+        docs = build_fixture()
+        self.assertEqual(publish.floor_errors(docs, 0.6), [])
+        self.assertEqual(len(publish.floor_errors(docs, 0.7)), 1)  # 2 of 3 latest images
+        docs["meta"]["versions_with_data"] = 0
+        self.assertEqual(publish.floor_errors(docs, 0.6), ["no chart version has data (0 of 4)"])
+        docs["landscape"]["coverage"].update(images=0, images_scanned=0)  # no latest images: no ratio
+        self.assertEqual(len(publish.floor_errors(docs, 0.6)), 1)
+
+    def test_scope_change_skips_only_versions_total(self) -> None:
+        out = Path(tempfile.mkdtemp()) / "data" / "vulns"
+        out.mkdir(parents=True)
+        # e.g. the all-pending scope 'all' meta.json of the 2026-11-05 incident (no scope recorded)
+        (out / "meta.json").write_text(json.dumps({"images_scanned": 0, "versions_with_data": 0,
+                                                   "versions_total": 28000}))
+        rc, _, err = self.run_main(out=out)  # the fixture inventory is scope 'all' with since None
+        self.assertEqual(rc, 1)  # same scope: versions_total is compared
+        self.assertIn("versions_total would drop from 28000", err)
+        (out / "meta.json").write_text(json.dumps({"images_scanned": 0, "versions_with_data": 0,
+                                                   "versions_total": 28000, "scope": "forward",
+                                                   "since": "2026-11-01"}))
+        rc, _, _ = self.run_main(out=out)
+        self.assertEqual(rc, 0)
+        meta = json.loads((out / "meta.json").read_text())
+        self.assertEqual((meta["scope"], meta["since"]), ("all", None))
+        self.assertTrue(publish.comparable({"images_scanned": 1}, {"scope": "all", "since": None}))
+        self.assertFalse(publish.comparable({"scope": "all"}, {"scope": "forward", "since": "2026-11-01"}))
+        self.assertFalse(publish.comparable({"scope": "forward", "since": "2026-10-01"},
+                                            {"scope": "forward", "since": "2026-11-01"}))
+
+    def test_forward_over_backfill_needs_allow_drop(self) -> None:
+        # a scope 'all' backfill was published; a nightly forward run would delete its version records
+        out = Path(tempfile.mkdtemp()) / "data" / "vulns"
+        out.mkdir(parents=True)
+        previous = {"images_scanned": 5000, "versions_with_data": 9000, "versions_total": 28000, "scope": "all"}
+        (out / "meta.json").write_text(json.dumps(previous))
+        stale = out / "versions" / "zz.json"
+        stale.parent.mkdir()
+        stale.write_text("{}")
+        inventory = load("inventory")
+        inventory.update(scope="forward", since="2026-11-01")
+        inv = Path(tempfile.mkdtemp()) / "inventory.json"
+        inv.write_text(json.dumps(inventory))
+        rc, _, err = self.run_main(inventory=inv, out=out)
+        self.assertEqual(rc, 1)
+        self.assertIn("images_scanned would drop from 5000", err)
+        self.assertIn("versions_with_data would drop from 9000", err)
+        self.assertNotIn("versions_total", err)  # different scope: not compared
+        self.assertTrue(stale.exists())
+        self.assertEqual(json.loads((out / "meta.json").read_text()), previous)
+        rc, _, _ = self.run_main("--allow-drop", inventory=inv, out=out)
+        self.assertEqual(rc, 0)
+        self.assertFalse(stale.exists())
+
+    def test_latest_coverage_drop_is_guarded_across_scopes(self) -> None:
+        docs = build_fixture()
+        meta, landscape = docs["meta"], docs["landscape"]
+        scanned = landscape["coverage"]["images_scanned"]
+        previous = dict(meta, scope="forward", since="2026-11-01")
+        prev_landscape = {"coverage": {"images_scanned": scanned * 2}}
+        errs = publish.regression_errors(previous, meta, 0.2, prev_landscape, landscape)
+        self.assertEqual(errs, [f"latest-version images_scanned would drop from {scanned * 2} to {scanned} "
+                                "(more than 20%)"])
+        self.assertEqual(publish.regression_errors(previous, meta, 0.2, {"coverage": {"images_scanned": scanned}},
+                                                   landscape), [])
+        self.assertEqual(publish.regression_errors(previous, meta, 0.2, None, landscape), [])
 
     def test_missing_summary(self) -> None:
         rc, _, err = self.run_main(summary=FIXTURES / "nope.json")

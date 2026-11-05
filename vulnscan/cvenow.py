@@ -1,6 +1,7 @@
 """Stage 3: enrich scan.json vulnerability IDs with cve.now data (writes enrichment.json).
 
-Work order within the request budget (every HTTP attempt counts, retries included):
+Work order within the request budget (every HTTP attempt counts, retries included) and the optional
+wall-clock --time-budget-minutes (a slow or flaky cve.now must not keep the job from publishing):
 
   1. the kev and critical feeds (2 requests; also act as the reachability probe),
   2. uncached IDs, CRITICAL/HIGH first,
@@ -91,7 +92,9 @@ class Client:
     """Budgeted, paced cve.now client with backoff and stop conditions.
 
     request() returns (status, body) for any final response (200, 404, other 4xx) or None
-    when the client has stopped (stopped_reason is then "budget", "blocked" or "unreachable").
+    when the client has stopped (stopped_reason is then "budget", "time_budget", "blocked" or
+    "unreachable"). With time_budget_seconds no request starts after that many seconds and backoff
+    sleeps are cut short at the deadline, so the overrun is at most one request timeout.
     """
 
     def __init__(
@@ -103,6 +106,7 @@ class Client:
         base_url: str = BASE_URL,
         sleep: Callable[[float], None] | None = None,
         monotonic: Callable[[], float] | None = None,
+        time_budget_seconds: float | None = None,
     ) -> None:
         self.transport = transport
         self.budget = budget
@@ -116,6 +120,14 @@ class Client:
         self.connection_errors = 0
         self.stopped_reason: str | None = None
         self._last: float | None = None
+        self._deadline = None if time_budget_seconds is None else self.monotonic() + time_budget_seconds
+
+    def _remaining(self) -> float | None:
+        return None if self._deadline is None else self._deadline - self.monotonic()
+
+    def _backoff(self, seconds: float) -> None:
+        remaining = self._remaining()
+        self.sleep(seconds if remaining is None else max(0.0, min(seconds, remaining)))
 
     def _pace(self) -> None:
         if self._last is not None and self.interval:
@@ -134,6 +146,11 @@ class Client:
             if self.requests >= self.budget:
                 self.stopped_reason = "budget"
                 return None
+            remaining = self._remaining()
+            if remaining is not None and remaining <= 0:
+                self.stopped_reason = "time_budget"
+                log(f"cve.now: time budget exhausted after {self.requests} requests")
+                return None
             self._pace()
             self.requests += 1
             try:
@@ -146,7 +163,7 @@ class Client:
                     self.stopped_reason = "unreachable"
                     return None
                 # Never reached the server yet: stop fast instead of backing off for minutes.
-                self.sleep(2.0 if self.responses == 0 else BACKOFF_SECONDS[failures - 1])
+                self._backoff(2.0 if self.responses == 0 else BACKOFF_SECONDS[failures - 1])
                 continue
             self.responses += 1
             if status in BLOCKED_STATUSES or status >= 500:
@@ -156,7 +173,7 @@ class Client:
                 if failures >= MAX_CONSECUTIVE_FAILURES:
                     self.stopped_reason = "blocked"
                     return None
-                self.sleep(BACKOFF_SECONDS[failures - 1])
+                self._backoff(BACKOFF_SECONDS[failures - 1])
                 continue
             return status, data
 
@@ -468,6 +485,8 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--rps", type=float, default=1.0, help="max requests per second")
     parser.add_argument("--max-age-days", type=float, default=7.0, help="refresh cached entries older than this")
     parser.add_argument("--timeout", type=float, default=20.0, help="per-request timeout in seconds")
+    parser.add_argument("--time-budget-minutes", type=float, default=None,
+                        help="start no request after this many minutes (enrichment.json is still written)")
     args = parser.parse_args(argv)
 
     scan = read_json(args.scan)
@@ -477,7 +496,8 @@ def main(argv: list[str] | None = None) -> int:
     if err := match.scan_format_error(scan, args.scan):
         log(f"cve.now: {err}")
         return 1
-    client = Client(UrllibTransport(args.timeout), budget=args.budget, rps=args.rps)
+    client = Client(UrllibTransport(args.timeout), budget=args.budget, rps=args.rps,
+                    time_budget_seconds=None if args.time_budget_minutes is None else args.time_budget_minutes * 60)
     result = run(scan, client, match_dir=args.match_dir, max_age_days=args.max_age_days)
     write_json(args.output, result)
     s = result["stats"]

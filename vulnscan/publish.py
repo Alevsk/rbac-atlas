@@ -4,7 +4,7 @@ Reads inventory.json and summary.json (required). Per-image top-CVE lists and KE
 from summary.json; scan.json and enrichment.json are only read when an (older) summary lacks them.
 Writes:
 
-  data/vulns/meta.json        {generated_at, weights_version, trivy{version,db_updated_at},
+  data/vulns/meta.json        {generated_at, scope, since, weights_version, trivy{version,db_updated_at},
                                cvenow{coverage_pct,requests}, images_total, images_scanned,
                                images_pending, versions_total, versions_with_data}
                               versions_total counts inventoried version pages; versions_with_data those
@@ -41,12 +41,20 @@ Per-version rollups and combinations are taken from summary.json when it provide
 Output is deterministic (sorted keys, one record per line), written atomically, stale shard files are
 removed, and the run fails when data/vulns grows beyond --max-mb.
 
-Regression guard: when data/vulns/meta.json already exists, nothing is written if images_scanned,
-versions_with_data or versions_total would drop by more than --max-drop (default 20%) compared with it,
-e.g. a scope 'latest' or --limit run, or a night where every rematch failed; --allow-drop overrides.
+Guards (nothing is written or pruned when one trips; the exit status is 1):
+  absolute  always, also on the first publish: images_scanned is 0, no version has data, or fewer than
+            --min-latest-coverage (default 60%) of the images used by latest chart versions were scanned
+            (invalid refs have no canonical image and are not counted). --allow-drop does not bypass it.
+  relative  when data/vulns/meta.json exists: images_scanned, versions_with_data or the number of scanned
+            latest-version images (landscape.json coverage.images_scanned) would drop by more than --max-drop
+            (default 20%), e.g. a --limit run, a night where every rematch failed, or a scope 'forward' run
+            over published scope 'all' (backfill) data, which would delete the backfilled version records.
+            versions_total is only compared when the published data has the same inventory scope and since
+            date (a missing scope is 'all'). --allow-drop overrides the relative guard.
 
 Usage: python -m vulnscan.publish [--inventory P] [--summary P] [--scan P] [--enrichment P]
                                   [--output data/vulns] [--max-mb 80] [--max-drop 0.2] [--allow-drop]
+                                  [--min-latest-coverage 0.6]
 """
 
 from __future__ import annotations
@@ -69,7 +77,10 @@ from vulnscan.inventory import is_prerelease, version_key
 OUTPUT_DIR = Path("data/vulns")
 DEFAULT_MAX_MB = 80.0  # full "all" coverage (~29k images) measured ~44 MB
 DEFAULT_MAX_DROP = 0.2
-GUARDED_META = ("images_scanned", "versions_with_data", "versions_total")
+DEFAULT_MIN_LATEST_COVERAGE = 0.6
+# Compared with the published meta.json whatever its scope; SCOPED_GUARDED_META only for the same scope/since.
+GUARDED_META = ("images_scanned", "versions_with_data")
+SCOPED_GUARDED_META = ("versions_total",)
 TOP_CVES = 8
 MAX_IDS = 5
 VERSION_COMBOS = 20
@@ -453,6 +464,9 @@ def build(inventory: dict[str, Any], summary: dict[str, Any], scan: dict[str, An
     }
     meta = {
         "generated_at": generated_at,
+        # 'all' for older inventories without a scope: only full runs were ever published
+        "scope": str(inventory.get("scope") or "all"),
+        "since": inventory.get("since"),
         "weights_version": summary.get("weights_version"),
         "trivy": {"version": trivy.get("version"), "db_updated_at": trivy.get("db_updated_at")},
         "cvenow": {"coverage_pct": cvenow.get("coverage_pct"), "requests": cvenow.get("requests")},
@@ -535,16 +549,44 @@ def size_report(out_dir: Path) -> dict[str, Any]:
     return {"total_bytes": total, "groups": {k: {"files": n, "bytes": b} for k, (n, b) in sorted(sizes.items())}}
 
 
-def regression_errors(previous: Any, meta: dict[str, Any], max_drop: float) -> list[str]:
-    """Reasons the new meta is a sharp regression from the published one (empty when fine or no previous)."""
+def floor_errors(docs: dict[str, Any], min_latest_coverage: float) -> list[str]:
+    """Reasons the new data must never be published, whatever was published before (empty when fine)."""
+    meta, cov = docs["meta"], docs["landscape"]["coverage"]
+    errors = []
+    if _int(meta.get("images_scanned")) == 0:
+        errors.append(f"no image was scanned (0 of {_int(meta.get('images_total'))})")
+    if _int(meta.get("versions_with_data")) == 0:
+        errors.append(f"no chart version has data (0 of {_int(meta.get('versions_total'))})")
+    latest, scanned = _int(cov.get("images")), _int(cov.get("images_scanned"))
+    if latest and scanned < latest * min_latest_coverage:
+        errors.append(f"only {scanned} of {latest} latest-version images were scanned "
+                      f"({scanned / latest:.0%}, minimum {min_latest_coverage:.0%})")
+    return errors
+
+
+def comparable(previous: dict[str, Any], meta: dict[str, Any]) -> bool:
+    """True when both metas come from the same inventory scope and since date (a missing scope is 'all')."""
+    return ((previous.get("scope") or "all"), previous.get("since")) == ((meta.get("scope") or "all"), meta.get("since"))
+
+
+def regression_errors(previous: Any, meta: dict[str, Any], max_drop: float,
+                      previous_landscape: Any = None, landscape: dict[str, Any] | None = None) -> list[str]:
+    """Reasons the new data is a sharp regression from the published one (empty when fine or no previous).
+
+    Scanned images, versions with data and scanned latest-version images are compared across scope and
+    since changes (e.g. scope 'forward' over published 'all' backfill data); versions_total only when the
+    previous meta has the same scope and since date."""
     if not isinstance(previous, dict):
         return []
-    errors = []
-    for field in GUARDED_META:
-        old, new = _int(previous.get(field)), _int(meta.get(field))
-        if old > 0 and new < old * (1 - max_drop):
-            errors.append(f"{field} would drop from {old} to {new} (more than {max_drop:.0%})")
-    return errors
+    pairs = [(f, _int(previous.get(f)), _int(meta.get(f))) for f in GUARDED_META]
+    if comparable(previous, meta):
+        pairs += [(f, _int(previous.get(f)), _int(meta.get(f))) for f in SCOPED_GUARDED_META]
+    if isinstance(previous_landscape, dict) and isinstance(landscape, dict):
+        old_cov, new_cov = previous_landscape.get("coverage") or {}, landscape.get("coverage") or {}
+        pairs.append(("latest-version images_scanned", _int(old_cov.get("images_scanned")),
+                      _int(new_cov.get("images_scanned"))))
+    return [f"{field} would drop from {old} to {new} (more than {max_drop:.0%})"
+            for field, old, new in pairs if old > 0 and new < old * (1 - max_drop)]
 
 
 # ───────────────────────────── CLI ──────────────────────────────
@@ -557,8 +599,12 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--output", type=Path, default=OUTPUT_DIR)
     parser.add_argument("--max-mb", type=float, default=DEFAULT_MAX_MB, help="fail when the output exceeds this size")
     parser.add_argument("--max-drop", type=float, default=DEFAULT_MAX_DROP,
-                        help="refuse to write when scanned images/versions drop by more than this fraction")
-    parser.add_argument("--allow-drop", action="store_true", help="write even when the regression guard trips")
+                        help="refuse to write when scanned images/versions (also across a scope change) drop by more than "
+                             "this fraction")
+    parser.add_argument("--allow-drop", action="store_true",
+                        help="write even when the relative regression guard trips (never bypasses the absolute one)")
+    parser.add_argument("--min-latest-coverage", type=float, default=DEFAULT_MIN_LATEST_COVERAGE,
+                        help="refuse to write when fewer than this fraction of latest-version images were scanned")
     args = parser.parse_args(argv)
 
     inventory, summary = read_json(args.inventory), read_json(args.summary)
@@ -576,7 +622,18 @@ def main(argv: list[str] | None = None) -> int:
             log(f"publish: warning: no scan data at {args.scan}; top-CVE lists will be empty")
 
     docs = build(inventory, summary, scan, enrichment)
-    errors = regression_errors(read_json(args.output / "meta.json"), docs["meta"], args.max_drop)
+    floor = floor_errors(docs, args.min_latest_coverage)
+    if floor:
+        for msg in floor:
+            print(f"error: {msg}; not publishing", file=sys.stderr)
+        return 1
+    previous = read_json(args.output / "meta.json")
+    if isinstance(previous, dict) and not comparable(previous, docs["meta"]):
+        log(f"publish: note: published data is from scope {previous.get('scope') or 'all'} "
+            f"(since {previous.get('since')}), now {docs['meta']['scope']} (since {docs['meta']['since']}); "
+            "versions_total is not compared")
+    errors = regression_errors(previous, docs["meta"], args.max_drop,
+                               read_json(args.output / "landscape.json"), docs["landscape"])
     if errors and not args.allow_drop:
         for msg in errors:
             print(f"error: {msg}; not publishing (use --allow-drop to override)", file=sys.stderr)

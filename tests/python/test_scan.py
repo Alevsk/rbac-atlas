@@ -590,6 +590,175 @@ class BoundedWorkTest(ScannerTestBase):
         self.assertTrue(doc["stats"]["time_budget_exceeded"])
 
 
+class TimedRunner(FakeRunner):
+    """FakeRunner with a simulated clock: each crane call costs 1 s, each SBOM `cost` s, each rematch 2 s."""
+
+    def __init__(self, *a: Any, cost: float = 10.0, **kw: Any) -> None:
+        super().__init__(*a, **kw)
+        self.t, self.cost = 0.0, cost
+
+    def __call__(self, cmd: list[str], timeout: float) -> Proc:
+        with self._lock:
+            self.t += {"digest": 1.0, "image": self.cost, "sbom": 2.0}.get(cmd[1], 0.0)
+        return super().__call__(cmd, timeout)
+
+
+def digest(i: int) -> str:
+    return "sha256:" + f"{i:064x}"
+
+
+class BatchTest(ScannerTestBase):
+    """Batched resolve → SBOM → rematch: a time budget never leaves finished batches without results."""
+
+    def inventory(self, n: int, latest: int = 0) -> tuple[dict, dict]:
+        """n tag-only images (o/img-NN:1, priority 0 for the first `latest`, then 1, 2, ...) and their digests."""
+        images, digests = {}, {}
+        for i in range(n):
+            c = f"ghcr.io/o/img-{i:02d}:1"
+            images[c] = dict(img("ghcr.io", f"o/img-{i:02d}", "1"), priority=0 if i < latest else i)
+            digests[f"ghcr.io/o/img-{i:02d}:1"] = digest(i + 1)
+        return images, digests
+
+    def test_budget_expiring_mid_run_keeps_earlier_batches(self) -> None:
+        images, digests = self.inventory(16, latest=4)
+        runner = TimedRunner(digests, cost=10.0)
+        s = self.scanner(runner, batch_size=4, workers=1, rematch_workers=1, time_budget_seconds=110,
+                         clock=lambda: runner.t)
+        doc = build_scan({"images": images}, s)
+        st = {c: (r["status"], r["reason"]) for c, r in doc["images"].items()}
+        order = scan_order(images)
+        # batches 1-2 (t = 0..~100) finish; batch 3 starts before the deadline, generates SBOMs until it
+        # passes and still rematches them; batch 4 never starts and is never resolved.
+        self.assertEqual([st[c] for c in order[:8]], [("ok", None)] * 8)
+        self.assertEqual([st[c][0] for c in order[8:12]].count("ok"), 1)
+        self.assertEqual([st[c] for c in order[9:12]], [("skipped", "time_budget")] * 3)
+        self.assertEqual([st[c] for c in order[12:]], [("skipped", "time_budget")] * 4)
+        resolved = [c[4] for c in runner.calls if c[:2] == ["crane", "digest"]]
+        self.assertEqual(sorted(resolved), sorted(order[:12]))
+        self.assertEqual(runner.count("trivy", "sbom"), 9)  # every generated SBOM was rematched
+        stats = doc["stats"]
+        self.assertEqual((stats["ok"], stats["batches"], stats["batches_done"], stats["images_processed"],
+                          stats["images_not_processed"], stats["new_sboms"], stats["rematched"]),
+                         (9, 4, 3, 12, 4, 9, 9))
+        self.assertTrue(stats["time_budget_exceeded"])
+        self.assertTrue(doc["ids"])
+        for c in order[12:]:
+            self.assertIsNone(doc["images"][c]["digest"])
+
+    def test_incident_shape_scope_all(self) -> None:
+        # 2026-11-05: many images, a small SBOM quota and a budget that runs out long before the end.
+        # The old single-phase scan ended with ok=0 and rematched=0; batches keep everything finished.
+        images, digests = self.inventory(60, latest=6)
+        runner = TimedRunner(digests, cost=5.0)
+        s = self.scanner(runner, batch_size=10, workers=1, rematch_workers=1, max_new_sboms=25,
+                         time_budget_seconds=150, clock=lambda: runner.t)
+        stats = build_scan({"images": images}, s)["stats"]
+        self.assertGreater(stats["ok"], 0)
+        self.assertEqual(stats["ok"], stats["rematched"])
+        self.assertEqual(stats["ok"], stats["new_sboms"])
+        self.assertTrue(stats["time_budget_exceeded"])
+        self.assertLess(stats["images_processed"], 60)  # the tail was never resolved
+        self.assertEqual(stats["images_processed"] + stats["images_not_processed"], 60)
+        self.assertEqual(stats["ok"] + stats["skipped"], 60)
+
+    def test_unprocessed_images_reuse_cached_matches_without_crane(self) -> None:
+        images, digests = self.inventory(6, latest=2)
+        cache: dict = {}
+        first = build_scan({"images": images}, self.scanner(FakeRunner(digests), cache, batch_size=2))
+        self.assertEqual(first["stats"]["ok"], 6)
+        images["ghcr.io/o/new:1"] = dict(img("ghcr.io", "o/new", "1"), priority=99)
+
+        # next day the budget is gone before the first batch: nothing is resolved or scanned, but every
+        # image with a known digest and a cached match keeps its (dated) result; the new one waits
+        first_clock, self.clock = self.clock, "2026-11-05T12:00:00Z"
+        ticks = iter([0.0] + [10_000.0] * 50)
+        runner = FakeRunner(digests)
+        doc = build_scan({"images": images}, self.scanner(runner, cache, batch_size=2, time_budget_seconds=60,
+                                                           clock=lambda: next(ticks)))
+        self.assertEqual(runner.calls, [["trivy", "version", "-f", "json"]])
+        for c in list(images)[:6]:
+            rec = doc["images"][c]
+            self.assertEqual((rec["status"], rec["scanned_at"], rec["sbom_cached"]), ("ok", first_clock, True))
+        self.assertEqual((doc["images"]["ghcr.io/o/new:1"]["status"], doc["images"]["ghcr.io/o/new:1"]["reason"]),
+                         ("skipped", "time_budget"))
+        self.assertEqual(doc["ids"], first["ids"])
+        self.assertEqual((doc["stats"]["batches_done"], doc["stats"]["not_processed_reused"]), (0, 6))
+
+    def test_priority_order_and_quota_across_batches(self) -> None:
+        images, digests = self.inventory(5, latest=1)
+        images = dict(reversed(list(images.items())))  # inventory order must not matter
+        runner = FakeRunner(digests)
+        doc = build_scan({"images": images}, self.scanner(runner, batch_size=2, workers=1, max_new_sboms=3))
+        order = scan_order(images)
+        self.assertEqual(order[0], "ghcr.io/o/img-00:1")
+        self.assertEqual([c[4] for c in runner.calls if c[:2] == ["crane", "digest"]][:2], sorted(order[:2]))
+        self.assertEqual([c[-1] for c in runner.calls if c[:2] == ["trivy", "image"]],
+                         [f"ghcr.io/o/img-{i:02d}@{digest(i + 1)}" for i in range(3)])
+        self.assertEqual([doc["images"][c]["reason"] for c in order], [None, None, None, "sbom_quota", "sbom_quota"])
+
+    def test_resolve_past_budget_uses_last_digest_without_crane(self) -> None:
+        cache = {"quay.io/a/b:1": {"digest": D1, "resolved_at": "2026-11-01T00:00:00Z", "status": "ok",
+                                   "pulled_from": "quay.io/a/b"}}
+        runner = FakeRunner({"quay.io/a/b:1": D2, "quay.io/a/new:1": D2})
+        s = self.scanner(runner, cache, clock=lambda: 100.0)
+        s._deadline = 50.0
+        self.assertEqual(s.resolve("quay.io/a/b:1", img("quay.io", "a/b", "1")),
+                         {"digest": D1, "pulled_from": "quay.io/a/b", "stale_resolve": True, "reason": None})
+        self.assertEqual(s.resolve("quay.io/a/new:1", img("quay.io", "a/new", "1")),
+                         {"digest": None, "pulled_from": None, "stale_resolve": False, "reason": "time_budget"})
+        self.assertEqual(runner.calls, [])
+        self.assertEqual(cache["quay.io/a/b:1"]["resolved_at"], "2026-11-01T00:00:00Z")  # not marked checked
+
+    def test_budget_expiring_inside_a_batch_bounds_resolve_and_rematch(self) -> None:
+        images, digests = self.inventory(4, latest=4)
+        cache: dict = {}
+        first = build_scan({"images": images}, self.scanner(FakeRunner(digests), cache, batch_size=4))
+        self.assertEqual(first["stats"]["ok"], 4)
+        # one digest lost its cached match (its SBOM is still cached); a new image has no SBOM yet
+        match_dir = Path(self._tmp.name) / "match"
+        no_match = digest(2)
+        match.path(match_dir, no_match).unlink()
+        images["ghcr.io/o/new:1"] = dict(img("ghcr.io", "o/new", "1"), priority=0)
+        digests["ghcr.io/o/new:1"] = digest(99)
+        cache["ghcr.io/o/new:1"] = {"digest": digest(99), "resolved_at": "2026-11-01T00:00:00Z", "status": "ok"}
+
+        # next day (every resolve entry stale): the deadline passes right after the batch starts
+        first_clock, self.clock = self.clock, "2026-11-05T12:00:00Z"
+        for now, rematched in ((100.0, 1), (100.0 + scan.REMATCH_GRACE_SECONDS, 0)):
+            ticks = iter([0.0, 0.0])
+            runner = FakeRunner(digests)
+            s = self.scanner(runner, cache, batch_size=10, time_budget_seconds=60,
+                             clock=lambda: next(ticks, now))
+            doc = build_scan({"images": images}, s)
+            self.assertEqual(runner.count("crane"), 0)  # stale cached digests, no crane call
+            self.assertEqual(runner.count("trivy", "image"), 0)  # no new SBOM past the budget
+            # only the digest without any cached match is rematched, and only within the grace period
+            self.assertEqual(runner.count("trivy", "sbom"), rematched)
+            recs = doc["images"]
+            self.assertEqual((recs["ghcr.io/o/new:1"]["status"], recs["ghcr.io/o/new:1"]["reason"]),
+                             ("skipped", "time_budget"))
+            for i in (0, 2, 3):
+                rec = recs[f"ghcr.io/o/img-{i:02d}:1"]
+                self.assertEqual((rec["status"], rec["stale_resolve"], rec["scanned_at"]), ("ok", True, first_clock))
+            rec = recs["ghcr.io/o/img-01:1"]
+            if rematched:
+                self.assertEqual((rec["status"], rec["scanned_at"]), ("ok", self.clock))
+            else:
+                self.assertEqual((rec["status"], rec["reason"]), ("skipped", "time_budget"))
+            self.assertEqual(doc["stats"]["batches_done"], 1)
+            match.path(match_dir, no_match).unlink(missing_ok=True)
+
+    def test_shared_digest_across_batches_scanned_once(self) -> None:
+        images, digests = self.inventory(4, latest=4)
+        digests["ghcr.io/o/img-03:1"] = digests["ghcr.io/o/img-00:1"]
+        runner = FakeRunner(digests)
+        doc = build_scan({"images": images}, self.scanner(runner, batch_size=1))
+        self.assertEqual(runner.count("trivy", "image"), 3)
+        self.assertEqual(runner.count("trivy", "sbom"), 3)
+        self.assertEqual(doc["images"]["ghcr.io/o/img-03:1"]["counts"], doc["images"]["ghcr.io/o/img-00:1"]["counts"])
+        self.assertEqual(doc["stats"]["unique_digests"], 3)
+
+
 class MainTest(unittest.TestCase):
     def test_cli_writes_scan_and_resolve_cache(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:

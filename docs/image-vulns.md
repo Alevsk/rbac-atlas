@@ -29,8 +29,11 @@ Python (3.10 or later).
 | 4. Report | `vulnscan.report` | all three + `.cache/match/` | `out/summary.json`, `out/report.md` |
 | 5. Publish | `vulnscan.publish` | `out/*.json` | `data/vulns/**` (Hugo data) |
 
-1. **Inventory.** With `--scope all` (the default) it inventories every chart version in
-   `manifests/`; with `--scope latest` only the latest version of every chart. The latest
+1. **Inventory.** With `--scope forward --since YYYY-MM-DD` (the Make and workflow
+   default) it inventories every chart version that was the latest on or after that date
+   plus every version first seen on or after it; with `--scope all` every chart version in `manifests/` (backfill);
+   with `--scope latest` only the latest version of every chart (see
+   [Scope and backfill](#scope-and-backfill)). The latest
    version is the highest semver version, skipping prereleases unless a chart has only
    prereleases, and is flagged `latest: true`. Every image gets a `priority`: 0 when a
    latest version uses it, otherwise its rank by newest version, and images are listed in
@@ -42,7 +45,10 @@ Python (3.10 or later).
    RBAC risk of the service account that runs it: the most severe risk of that service
    account's permissions in the workload's namespace, or, when it has none there, across all
    namespaces, matching the per-ServiceAccount risk shown on the version page.
-2. **Scan.** Resolves each tag to its linux/amd64 digest with `crane digest`. Docker Hub
+2. **Scan.** Works through the images in priority order in batches of `--batch-size`
+   (100): each batch is resolved, its missing SBOMs generated and its digests re-matched
+   before the next batch starts, and only the images of batches that run are resolved.
+   Resolves each tag to its linux/amd64 digest with `crane digest`. Docker Hub
    images are looked up on `mirror.gcr.io` first. Results are cached for 20 hours for
    images used by a latest version and for 7 days for the others. Trivy then generates one
    CycloneDX SBOM per digest, which is cached, with at most `--max-new-sboms` new SBOMs per
@@ -51,21 +57,32 @@ Python (3.10 or later).
    they wait. Cached SBOMs are re-matched against the current Trivy DB with `trivy sbom` and
    each result is cached per digest: digests used by a latest version are re-matched every
    night, the others once their cached match is older than 7 days, at most
-   `--max-rematch` per night (never-matched first, then oldest); the rest reuse their cached
+   `--max-rematch` per night (in batch order; within a batch never-matched first, then
+   oldest); the rest reuse their cached
    match, and `scanned_at` says when it was made. If a re-match fails, the cached match is
    used. The per-vulnerability detail of each digest lives only in that match cache
    (`.cache/match/`); `scan.json` itself only holds per-image metadata and counts plus one
    global map of vulnerability IDs (see [Memory and size](#memory-and-size)). An image that
    fails is marked `unavailable` with a reason (`not_found`, `no_amd64`, `unauthorized`,
    `rate_limited`, `timeout`, `error`), and the rest of the run
-   continues. With `--time-budget-minutes` the stage stops starting new SBOMs and
-   re-matches once the budget is spent (those images are `skipped`, reason `time_budget`)
-   and still writes its outputs.
+   continues. With `--time-budget-minutes` the budget is checked between batches: once it
+   is spent no new batch starts, so every image of a finished batch has a result. Inside the
+   batch in flight it is also checked before each `crane` call, new SBOM and re-match: past
+   it, tags use their last known digest (`stale_resolve`), SBOMs not started are `skipped`
+   (`time_budget`), digests with a cached match reuse it instead of being re-matched, and
+   digests without one (such as SBOMs this batch just generated) are still re-matched for a
+   15-minute grace. The stage therefore overruns the budget by at most one in-flight SBOM
+   (11 minutes) plus that grace. Images of batches that never started are not resolved:
+   they reuse the cached match of their last known digest when there is one, otherwise they
+   are `skipped` (`time_budget`). The stage always writes its outputs.
 3. **Enrich.** Looks up CVE-, GHSA- and GO- IDs on [cve.now](https://cve.now) to get KEV
    status, the date EPSS first reached 10%, public exploits, SSVC, and fixed versions. For
    images used by a latest version that contain Go binaries it also sends their module lists
    to `POST /api/v1/check`.
-   All responses are cached, and `enrichment.json` is always rebuilt from the cache.
+   All responses are cached, and `enrichment.json` is always rebuilt from the cache. With
+   `--time-budget-minutes` no request starts after that wall-clock time (`stopped_reason`
+   `time_budget`) and backoff sleeps are cut short at it, so a slow or flaky cve.now cannot
+   push the job past its timeout; the report tolerates partial enrichment.
 4. **Report.** Assigns each image, and each chart version, a risk level and a 0-100 score
    (see [Methodology](#methodology), `weights_version` 2) and lists the riskiest
    combinations per workload. Rollups and combinations are computed for every inventoried
@@ -74,9 +91,8 @@ Python (3.10 or later).
    (`match_missing`). `report.md` is appended to the workflow job summary.
 5. **Publish.** Writes the compact Hugo data files described in
    [Published data](#published-data). It fails if `data/vulns/` would exceed `--max-mb`,
-   and it writes nothing if the scanned images, versions with data or versions would drop
-   by more than `--max-drop` (20%) compared with the existing `data/vulns/meta.json`, unless
-   `--allow-drop` is given.
+   and it refuses to write anything when one of the guards in
+   [Publish guards](#publish-guards) trips.
 
 ## Files
 
@@ -124,17 +140,21 @@ Use `TRIVY=/path/to/trivy CRANE=/path/to/crane` to point at binaries that are no
 
 | Make variable / workflow input | CLI flag | Default | Meaning |
 |---|---|---|---|
-| `VULN_SCOPE` / `scope` | `inventory --scope` | all | `all` chart versions or only the `latest` ones |
+| `VULN_SCOPE` / `scope` | `inventory --scope` | forward | `forward` (every version that was the latest on/after `VULN_SINCE` + versions first seen since then), `all` (backfill) or `latest` |
+| `VULN_SINCE` / `since` | `inventory --since` | 2026-11-01 | Cutoff date (UTC) for `forward`, compared with the manifest's `metadata.timestamp`; may be empty for other scopes |
 | `VULN_LIMIT` / `limit` | `scan --limit` | all | Scan only the first N images (in priority order) |
-| `MAX_NEW_SBOMS` / `max_new_sboms` | `scan --max-new-sboms` | 200 (make), 2500 (workflow) | New SBOMs per run; the rest are `skipped` (`sbom_quota`) |
+| `MAX_NEW_SBOMS` / `max_new_sboms` | `scan --max-new-sboms` | 200 (make), 1000 (workflow) | New SBOMs per run; the rest are `skipped` (`sbom_quota`) |
 | `SCAN_WORKERS` | `scan --workers` | 3 | Parallel SBOM generations |
 | `MAX_REMATCH` | `scan --max-rematch` | 4000 | Re-matches per run of digests not used by a latest version (`-1` = no limit) |
-| `SCAN_BUDGET_MIN` | `scan --time-budget-minutes` | none (make), 165 (workflow) | Stop starting new SBOMs/re-matches after this many minutes |
+| `SCAN_BUDGET_MIN` | `scan --time-budget-minutes` | none (make), 165 (workflow) | Start no new batch, `crane` call or SBOM after this many minutes |
+| - | `scan --batch-size` | 100 | Images per resolve → SBOM → re-match batch |
 | `CVENOW_BUDGET` / `cvenow_budget` | `cvenow --budget` | 3000 (make), 5000 (workflow) | Maximum cve.now HTTP requests per run, retries included |
 | `CVENOW_RPS` | `cvenow --rps` | 1.0 | Maximum cve.now requests per second |
+| `CVENOW_BUDGET_MIN` | `cvenow --time-budget-minutes` | none (make), the step's remaining time (workflow) | Start no cve.now request after this many minutes |
 | `VULN_MAX_MB` | `publish --max-mb` | 80 | Fail the publish if `data/vulns/` exceeds this size |
-| `VULN_ALLOW_DROP` / `allow_drop` | `publish --allow-drop` | off | Publish even when the regression guard (`--max-drop` 0.2) trips |
-| - / `publish` | - | true | Run the publish job after a successful full scan (master, scope `all`, no `limit`) |
+| `VULN_ALLOW_DROP` / `allow_drop` | `publish --allow-drop` | off | Publish even when the relative regression guard (`--max-drop` 0.2) trips; never bypasses the absolute guard |
+| - | `publish --min-latest-coverage` | 0.6 | Absolute guard: minimum fraction of latest-version images that must be scanned |
+| - / `publish` | - | true | Run the publish job after a successful scan (master, scope `forward` or `all`, no `limit`) |
 | - | `scan --resolve-max-age-hours` | 20 | Re-resolve tags of latest-version images older than this |
 | - | `scan --resolve-max-age-hours-old` | 168 | Re-resolve other tags older than this |
 | - | `scan --rematch-max-age-hours` | 168 | Re-match digests not used by a latest version once their match is older than this |
@@ -151,22 +171,67 @@ restored DB (with a warning) and `scan.json` records its `db_updated_at`.
 
 ## Scope and backfill
 
+The nightly run uses **scope `forward`**. It covers, per chart:
+
+- the current latest version;
+- the version that was the latest at the cutoff (the newest stable version first seen
+  before `since`), even after a newer release replaces it;
+- every version whose manifest `metadata.timestamp` is on or after `since` (2026-11-01 by
+  default, UTC).
+
+Together that is every version that was the latest at any time on or after `since`, plus
+every version first seen since then. A version therefore never drops out of scope when a
+newer one is released, so its published record is not pruned. The rule needs no state and
+adds at most one version per chart. The timestamp is set when the daily job first generates
+a version's manifest, so it is a reliable "first seen" date, except for a bulk regeneration
+in January 2026 that stamped about 23,000 older versions with that month (a `since` of
+2026-01-31 or earlier pulls them all in). Non-latest versions without a timestamp are left
+out. With the 2026-11-01 cutoff this is 382 versions (279 latest, 97 that were the latest
+on 2026-11-01 and have since been replaced, 6 other newer ones) and 791 images, 632 of
+them used by latest versions; it grows by the handful of versions published each day.
+`inventory.json`, `summary.json`, `report.md` and the published `meta.json` record the scope
+and the `since` date.
+
+Older versions are not scanned and their pages show no image risk. Backfilling them is an
+explicit opt-in, and it only accumulates if the **scheduled** runs use scope `all` too:
+publishing rewrites every version shard from the run's inventory, so the next nightly
+`forward` publish would delete every backfilled version record. To prevent that silently,
+the relative publish guard compares scanned images and versions with data across scope
+changes: after an `all` publish, the scheduled `forward` publish refuses to write (the job
+fails with `::error::`) until you choose. To backfill:
+
+1. Change the schedule's scope to `all` (the `scope="${INPUT_SCOPE:-forward}"` default in
+   `.github/workflows/image-vulns.yml`, or `VULN_SCOPE` for local runs) and dispatch or wait
+   for the nightly run. Expect it to take many nights (see below); the latest-version images
+   are always scanned first.
+2. When it is done, or to stop it, switch the default back to `forward` and dispatch once
+   with `scope: forward` and `allow_drop: true`. That publish deletes the backfilled version
+   records outside the forward scope; their SBOMs and matches stay in the cache.
+
+A single `scope: all` dispatch while the schedule stays `forward` publishes its data, but
+the next scheduled run then refuses to publish until you do step 1 or step 2. A
+`forward` run with an earlier `since` date backfills a smaller window (moving `since` later
+shrinks the scope and also needs `allow_drop`).
+
+The rest of this section describes the cost of scope `all`.
+
 `manifests/` holds about 27,900 chart versions; 27,200 of them have workloads, which
 reference about 29,300 distinct images (139,500 workload rows). The latest versions alone
 reference about 630 images.
 
-A nightly run has four costly parts, all inside the scan job's 300-minute timeout:
+A scope `all` run has four costly parts, all inside the scan job's 300-minute timeout:
 
 | Part | Rate | Nightly cost at the workflow defaults |
 |---|---|---|
 | Tag resolution | `crane digest` with 6 workers; latest-version tags after 20 h, others after 7 days | about 630 + 29,000/7 calls |
-| New SBOMs (`max_new_sboms` 2500) | about 1.5 s wall per SBOM with 3 workers | 60-70 min |
+| New SBOMs (`max_new_sboms` 1000) | the first `all` run built 1,201 SBOMs (and resolved about 25,000 tags) in 165 min with 3 workers | up to the time budget |
 | Re-match | latest-version digests every night, others weekly, at most `MAX_REMATCH` (4000) | bounded; see below |
 | cve.now (`cvenow_budget` 5000) | 1 request per second | about 85 min |
 
 Because the inventory lists images in priority order, the first night covers the latest
-versions (already mostly cached) and then the images of the newest older versions. At 2500
-new SBOMs per night the whole backlog of about 29,000 images takes **about 12 nights**,
+versions (already mostly cached) and then the images of the newest older versions. At
+about 1,000 new SBOMs per night the whole backlog of about 29,000 images takes **about a
+month**,
 assuming Docker Hub credentials are configured and few SBOMs fail (failures back off, so
 they cost one attempt per backoff period, but each `timeout` holds a worker for up to 11
 minutes).
@@ -180,8 +245,10 @@ the cache (up to about 29,000 digests) on a weekly rotation capped at `MAX_REMAT
 night, so at steady state a night re-matches roughly 630 + 29,000/7 SBOMs. Older versions'
 CVE data can therefore be up to a week behind the Trivy DB (each image shows its scan
 date). As a last resort, `SCAN_BUDGET_MIN` (165 in the workflow) stops the scan stage from
-starting new work, so the job finishes, uploads its outputs and publishes instead of
-hitting the 300-minute timeout. If `time_budget` skips show up in the report, lower
+starting new work, and cve.now gets only the wall-clock time left in the pipeline step
+(250 minutes minus the scan time and a 15-minute margin for the report, at least 5 minutes),
+so the job finishes, uploads its outputs and publishes instead of hitting the 300-minute
+timeout. If `time_budget` skips show up in the report, lower
 `max_new_sboms` or `MAX_REMATCH`. Registry rate limits mostly hit tag resolution;
 rate-limited images are `unavailable` (`rate_limited`) for that night only.
 
@@ -220,6 +287,39 @@ cve.now IDs are cached for 7 days, so the budget must also cover refreshes. With
 requests a night, roughly 35,000 IDs can be kept fresh; newly seen IDs are fetched first
 and coverage grows over the backfill period (`meta.json` reports `cvenow.coverage_pct`).
 
+## Publish guards
+
+`vulnscan.publish` writes nothing and prunes nothing, and exits with status 1, when a guard
+trips. In the workflow the publish job then fails with an `::error::` annotation and nothing
+is committed.
+
+- **Absolute guard** (always, also on the first publish when there is no `meta.json`, and
+  not bypassed by `allow_drop`): no image was scanned (`images_scanned` is 0), no version
+  has data (`versions_with_data` is 0), or fewer than `--min-latest-coverage` (60%) of the
+  images used by latest versions were scanned. Invalid references have no canonical image
+  and are not counted; `unavailable` images count as not scanned (about 9% of latest-version
+  images are `not_found`, `unauthorized` or `no_amd64`).
+- **Relative guard** (when `data/vulns/meta.json` exists): scanned images, versions with
+  data, or scanned latest-version images (`landscape.json` `coverage.images_scanned`) would
+  drop by more than `--max-drop` (20%), for example a night where every re-match failed, or
+  a `forward` publish over published `all` backfill data. These are compared across scope
+  and `since` changes; the version count (`versions_total`) only when the published
+  `meta.json` has the same scope and `since` (a `meta.json` without a scope counts as
+  `all`). The all-pending data of the incident below has 0 scanned images and versions with
+  data, so it never blocks the first `forward` publish. `allow_drop` / `--allow-drop`
+  overrides only this guard.
+
+**Incident, 2026-11-05.** The first nightly run with scope `all` (29,253 images) published
+empty data. The scan stage resolved about 25,000 tags up front, built 1,201 new SBOMs (plus
+572 cached), and the 165-minute budget ran out before the re-match phase, which ran once for
+all images at the end: 0 images were re-matched, 0 were `ok`, 22,452 were skipped for
+`sbom_quota` and 3,149 for `time_budget`. cve.now had nothing to enrich (2 requests). There
+was no previous `meta.json`, so the relative drop guard did not apply, and the publish job
+committed data in which every image was pending. The fixes: the scan works in batches so
+every finished batch has results; only processed images are resolved; the absolute publish
+guard refuses such data; the scan and cve.now stages have wall-clock bounds inside the job
+timeout; and the nightly scope became `forward`.
+
 ## Publishing
 
 The publish job:
@@ -244,10 +344,9 @@ The publish job:
 The job does not run when the scan failed, when `publish` is `false` on a manual run, when
 a manual run used `scope: latest` or a `limit` (publishing rewrites every version shard and
 deletes the rest, so a partial run would wipe the data of the other version pages), or when
-the workflow was dispatched from a branch other than `master`. `vulnscan.publish` also
-refuses to write when scanned images, versions with data or versions would drop by more
-than 20% compared with the committed `meta.json` (for example a night where every scan
-failed); set the `allow_drop` input to publish anyway.
+the workflow was dispatched from a branch other than `master`. It fails without committing
+when `vulnscan.publish` refuses to write (see [Publish guards](#publish-guards)); the
+`allow_drop` input overrides only the relative guard.
 
 ## Published data
 
@@ -258,7 +357,7 @@ writes are atomic, and shards that are no longer produced are deleted.
 
 ```
 data/vulns/
-  meta.json                 generated_at, weights_version, trivy {version, db_updated_at},
+  meta.json                 generated_at, scope, since, weights_version, trivy {version, db_updated_at},
                             cvenow {coverage_pct, requests}, images_total, images_scanned,
                             images_pending, versions_total, versions_with_data
   images/<s>.json           s = first 2 hex chars of md5(canonical image)
@@ -346,8 +445,10 @@ cve.now is a free service that needs no API key. Please use it gently:
 
 ## Limitations
 
-- **Backfill.** Until the SBOM cache covers every inventoried image (about 12 nights at
-  2500 SBOMs per night), many older versions show "pending scan".
+- **Backfill.** With the default `forward` scope, versions first seen before `since` are
+  not scanned unless they were the latest on or after it. A backfill needs the schedule
+  switched to scope `all` (see [Scope and backfill](#scope-and-backfill)). With scope `all`, until the SBOM cache covers every inventoried image (many
+  nights at the default 1000 SBOMs per night), many older versions show "pending scan".
 - **Re-match lag.** Images used only by older versions are re-matched weekly, so their
   CVE lists can be up to about a week behind the Trivy DB.
 - **linux/amd64 only.** Images with no amd64 variant (for example Windows-only images) are

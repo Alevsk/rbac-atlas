@@ -197,8 +197,9 @@ generate-report: ##@ Generate dated report snapshot, time-series data, and threa
 # ==============================================================================
 # Image Vulnerability Scan
 #
-# Inventories the container images of every chart version (VULN_SCOPE=all) or of
-# the latest version of every chart (VULN_SCOPE=latest), scans them with Trivy
+# Inventories the container images of every chart version that was the latest on/after
+# VULN_SINCE plus every version first seen on/after it (VULN_SCOPE=forward, default), of every chart
+# version (VULN_SCOPE=all, backfill) or of latest versions only (VULN_SCOPE=latest), scans them with Trivy
 # (SBOM-per-digest cache), enriches IDs with cve.now and writes a report. Outputs
 # go to $(VULNS_DIR)/out; caches to $(VULNS_DIR)/.cache. `publish-vulns` turns the
 # outputs into Hugo data under data/vulns/.
@@ -208,7 +209,8 @@ generate-report: ##@ Generate dated report snapshot, time-series data, and threa
 .PHONY: vulns image-inventory scan-images enrich-vulns vuln-report publish-vulns test-python
 
 VULNS_DIR      ?= vulns
-VULN_SCOPE     ?= all
+VULN_SCOPE     ?= forward
+VULN_SINCE     ?= 2026-11-01
 VULN_LIMIT     ?=
 MAX_NEW_SBOMS  ?= 200
 SCAN_WORKERS   ?= 3
@@ -216,6 +218,7 @@ CVENOW_BUDGET  ?= 3000
 CVENOW_RPS     ?= 1.0
 MAX_REMATCH    ?= 4000
 SCAN_BUDGET_MIN ?=
+CVENOW_BUDGET_MIN ?=
 VULN_MAX_MB    ?= 80
 VULN_ALLOW_DROP ?=
 VULN_ENV       := VULNS_DIR=$(VULNS_DIR)
@@ -226,6 +229,14 @@ endif
 ifneq ($(strip $(SCAN_BUDGET_MIN)),)
 	SCAN_FLAGS += --time-budget-minutes $(SCAN_BUDGET_MIN)
 endif
+INVENTORY_FLAGS := --scope $(VULN_SCOPE)
+ifneq ($(strip $(VULN_SINCE)),)
+	INVENTORY_FLAGS += --since $(VULN_SINCE)
+endif
+CVENOW_FLAGS   := --budget $(CVENOW_BUDGET) --rps $(CVENOW_RPS)
+ifneq ($(strip $(CVENOW_BUDGET_MIN)),)
+	CVENOW_FLAGS += --time-budget-minutes $(CVENOW_BUDGET_MIN)
+endif
 PUBLISH_FLAGS  := --max-mb $(VULN_MAX_MB)
 ifneq ($(strip $(VULN_ALLOW_DROP)),)
 	PUBLISH_FLAGS += --allow-drop
@@ -233,17 +244,17 @@ endif
 
 vulns: image-inventory scan-images enrich-vulns vuln-report ##@ Run the full image vulnerability pipeline (inventory, scan, cve.now, report)
 
-image-inventory: ##@ Inventory images of every chart version (VULN_SCOPE=all|latest)
-	@echo "INFO: Building image inventory (scope: $(VULN_SCOPE))..."
-	@$(VULN_ENV) $(PYTHON) -m vulnscan.inventory --manifests $(MANIFESTS_DIR) --scope $(VULN_SCOPE)
+image-inventory: ##@ Inventory images of chart versions (VULN_SCOPE=forward|latest|all, VULN_SINCE=YYYY-MM-DD)
+	@echo "INFO: Building image inventory (scope: $(VULN_SCOPE), since: $(VULN_SINCE))..."
+	@$(VULN_ENV) $(PYTHON) -m vulnscan.inventory --manifests $(MANIFESTS_DIR) $(INVENTORY_FLAGS)
 
 scan-images: ##@ Scan inventoried images with Trivy (VULN_LIMIT=N, MAX_NEW_SBOMS=N, MAX_REMATCH=N, SCAN_BUDGET_MIN=N)
 	@echo "INFO: Scanning images with Trivy..."
 	@$(VULN_ENV) $(PYTHON) -m vulnscan.scan $(SCAN_FLAGS)
 
-enrich-vulns: ##@ Enrich vulnerability IDs with cve.now (CVENOW_BUDGET=N, CVENOW_RPS=N)
+enrich-vulns: ##@ Enrich vulnerability IDs with cve.now (CVENOW_BUDGET=N, CVENOW_RPS=N, CVENOW_BUDGET_MIN=N)
 	@echo "INFO: Enriching vulnerabilities with cve.now..."
-	@$(VULN_ENV) $(PYTHON) -m vulnscan.cvenow --budget $(CVENOW_BUDGET) --rps $(CVENOW_RPS)
+	@$(VULN_ENV) $(PYTHON) -m vulnscan.cvenow $(CVENOW_FLAGS)
 
 vuln-report: ##@ Build summary.json and report.md from the vulnerability pipeline outputs
 	@echo "INFO: Building vulnerability calibration report..."
