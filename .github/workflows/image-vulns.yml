@@ -1,0 +1,194 @@
+name: Image Vulnerability Scan
+
+# Phase 1a (calibration, artifact-only): inventory the container images of the latest
+# version of every chart, scan them with Trivy (SBOM-per-digest cache), enrich IDs with
+# cve.now and write a report. Nothing is committed or published; outputs go to the
+# workflow artifact and caches to actions/cache. See docs/image-vulns.md.
+on:
+  schedule:
+    - cron: "30 6 * * *"
+  workflow_dispatch:
+    inputs:
+      limit:
+        description: "Only scan the first N images (empty = all)"
+        default: ""
+      max_new_sboms:
+        description: "Maximum new SBOMs generated this run"
+        default: "200"
+      cvenow_budget:
+        description: "Maximum cve.now HTTP requests this run"
+        default: "3000"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: image-vulns
+  cancel-in-progress: false
+
+env:
+  TRIVY_VERSION: "0.76.1"
+  CRANE_VERSION: "0.22.1"
+  VULNS_DIR: vulns
+
+jobs:
+  scan:
+    runs-on: ubuntu-latest
+    timeout-minutes: 300
+    env:
+      # Secrets cannot be referenced in step `if:` conditions; expose only whether they exist.
+      HAS_DOCKERHUB_READONLY: ${{ secrets.DOCKERHUB_READONLY_USERNAME != '' && secrets.DOCKERHUB_READONLY_TOKEN != '' }}
+    steps:
+      - name: Checkout rbac-atlas
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+          fetch-depth: 1
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v4
+
+      - name: Install Trivy (pinned, checksum verified)
+        run: |
+          set -euo pipefail
+          tmp="$(mktemp -d)"
+          cd "$tmp"
+          base="https://github.com/aquasecurity/trivy/releases/download/v${TRIVY_VERSION}"
+          tarball="trivy_${TRIVY_VERSION}_Linux-64bit.tar.gz"
+          curl -fsSLO "${base}/${tarball}"
+          curl -fsSLO "${base}/trivy_${TRIVY_VERSION}_checksums.txt"
+          grep " ${tarball}\$" "trivy_${TRIVY_VERSION}_checksums.txt" | sha256sum -c -
+          tar xzf "${tarball}" trivy
+          sudo install -m 0755 trivy /usr/local/bin/trivy
+          trivy --version
+
+      - name: Install crane (pinned, checksum verified)
+        run: |
+          set -euo pipefail
+          tmp="$(mktemp -d)"
+          cd "$tmp"
+          base="https://github.com/google/go-containerregistry/releases/download/v${CRANE_VERSION}"
+          tarball="go-containerregistry_Linux_x86_64.tar.gz"
+          curl -fsSLO "${base}/${tarball}"
+          curl -fsSLO "${base}/checksums.txt"
+          grep " ${tarball}\$" checksums.txt | sha256sum -c -
+          tar xzf "${tarball}" crane
+          sudo install -m 0755 crane /usr/local/bin/crane
+          crane version
+
+      - name: Compute cache keys
+        id: keys
+        run: echo "week=$(date -u +%G-%V)" >> "$GITHUB_OUTPUT"
+
+      - name: Restore Trivy DB cache
+        id: trivy-cache
+        uses: actions/cache/restore@v4
+        with:
+          path: ~/.cache/trivy
+          key: trivy-db-${{ steps.keys.outputs.week }}
+          restore-keys: trivy-db-
+
+      # Trivy refreshes the DB once its NextUpdate (~1 day) has passed, so the restored cache
+      # is mainly a fallback: if the registry fails (e.g. TOOMANYREQUESTS), scan with the
+      # restored DB instead of skipping the day. scan.json records db_updated_at either way.
+      - name: Download Trivy DBs
+        id: trivy-db
+        run: |
+          set -uo pipefail
+          db_dir="${HOME}/.cache/trivy"
+          ok=true
+          if ! trivy image --download-db-only --no-progress; then
+            if [ -f "${db_dir}/db/metadata.json" ]; then
+              echo "::warning::Trivy DB download failed; using the DB restored from cache"
+              ok=false
+            else
+              echo "::error::Trivy DB download failed and no cached DB is available"
+              exit 1
+            fi
+          fi
+          if ! trivy image --download-java-db-only --no-progress; then
+            if [ -f "${db_dir}/java-db/metadata.json" ]; then
+              echo "::warning::Trivy Java DB download failed; using the Java DB restored from cache"
+              ok=false
+            else
+              echo "::error::Trivy Java DB download failed and no cached Java DB is available"
+              exit 1
+            fi
+          fi
+          echo "fresh=${ok}" >> "$GITHUB_OUTPUT"
+          trivy version
+
+      # Saved right after the download (before any scan) so only the DBs are cached,
+      # not image layers. The weekly key keeps one entry per ISO week; a stale fallback DB
+      # is never saved under a new key.
+      - name: Save Trivy DB cache
+        if: steps.trivy-cache.outputs.cache-hit != 'true' && steps.trivy-db.outputs.fresh == 'true'
+        uses: actions/cache/save@v4
+        with:
+          path: ~/.cache/trivy
+          key: trivy-db-${{ steps.keys.outputs.week }}
+
+      # Each run saves a full snapshot under a new key (run_attempt included so a re-run does not
+      # collide with the first attempt's immutable entry). A run that restored nothing saves under
+      # the separate "vulns-cold-" prefix, which is only restored when no warm snapshot exists, so
+      # a cold snapshot (e.g. after a transient restore failure) never shadows a fuller one.
+      - name: Restore vulnscan cache
+        id: vulns-cache
+        uses: actions/cache/restore@v4
+        with:
+          path: vulns/.cache
+          key: vulns-cache-${{ github.run_id }}-${{ github.run_attempt }}
+          restore-keys: |
+            vulns-cache-
+            vulns-cold-
+
+      # Optional, read-only Docker Hub credentials raise the anonymous pull limit.
+      # Deliberately NOT the DOCKERHUB_TOKEN push secret used elsewhere.
+      - name: Docker Hub login (read-only, optional)
+        if: env.HAS_DOCKERHUB_READONLY == 'true'
+        env:
+          DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_READONLY_USERNAME }}
+          DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_READONLY_TOKEN }}
+        run: |
+          printf '%s' "$DOCKERHUB_TOKEN" | crane auth login index.docker.io -u "$DOCKERHUB_USERNAME" --password-stdin
+
+      - name: Run image vulnerability pipeline
+        env:
+          INPUT_LIMIT: ${{ inputs.limit }}
+          INPUT_MAX_NEW_SBOMS: ${{ inputs.max_new_sboms }}
+          INPUT_CVENOW_BUDGET: ${{ inputs.cvenow_budget }}
+        run: |
+          set -euo pipefail
+          # Inputs are empty on scheduled runs; validate them as plain integers before use.
+          limit="${INPUT_LIMIT:-}"
+          max_new_sboms="${INPUT_MAX_NEW_SBOMS:-200}"
+          cvenow_budget="${INPUT_CVENOW_BUDGET:-3000}"
+          for v in "$max_new_sboms" "$cvenow_budget" ${limit:+"$limit"}; do
+            [[ "$v" =~ ^[0-9]+$ ]] || { echo "::error::invalid numeric input: $v"; exit 1; }
+          done
+          make vulns VULN_LIMIT="$limit" MAX_NEW_SBOMS="$max_new_sboms" CVENOW_BUDGET="$cvenow_budget"
+
+      - name: Save vulnscan cache
+        if: always() && steps.vulns-cache.outcome == 'success'
+        uses: actions/cache/save@v4
+        with:
+          path: vulns/.cache
+          key: ${{ steps.vulns-cache.outputs.cache-matched-key != '' && 'vulns-cache-' || 'vulns-cold-' }}${{ github.run_id }}-${{ github.run_attempt }}
+
+      - name: Upload results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: image-vulns
+          path: vulns/out
+          retention-days: 30
+          if-no-files-found: warn
+
+      - name: Job summary
+        if: always()
+        run: |
+          if [ -f vulns/out/report.md ]; then
+            cat vulns/out/report.md >> "$GITHUB_STEP_SUMMARY"
+          else
+            echo "No report.md produced." >> "$GITHUB_STEP_SUMMARY"
+          fi

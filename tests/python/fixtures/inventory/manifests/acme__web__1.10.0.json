@@ -1,0 +1,79 @@
+{
+ "metadata": {
+  "name": "web",
+  "version": "1.10.0"
+ },
+ "serviceAccountData": [],
+ "serviceAccountPermissions": [
+  {
+   "serviceAccountName": "web",
+   "namespace": "default",
+   "riskLevel": "Low"
+  },
+  {
+   "serviceAccountName": "web",
+   "namespace": "default",
+   "riskLevel": "Critical"
+  },
+  {
+   "serviceAccountName": "web",
+   "namespace": "other-ns",
+   "riskLevel": "Low"
+  },
+  {
+   "serviceAccountName": "other",
+   "namespace": "kube-system",
+   "riskLevel": "High"
+  }
+ ],
+ "serviceAccountWorkloads": [
+  {
+   "serviceAccountName": "web",
+   "namespace": "default",
+   "workloadType": "Deployment",
+   "workloadName": "web",
+   "containerName": "web",
+   "image": "acme/web:1.10.0"
+  },
+  {
+   "serviceAccountName": "web",
+   "namespace": "default",
+   "workloadType": "Deployment",
+   "workloadName": "web",
+   "containerName": "sidecar",
+   "image": "/grafana/grafana:10.3.3"
+  },
+  {
+   "serviceAccountName": "",
+   "namespace": "default",
+   "workloadType": "Pod",
+   "workloadName": "web-test-connection",
+   "containerName": "wget",
+   "image": "busybox"
+  },
+  {
+   "serviceAccountName": "other",
+   "namespace": "default",
+   "workloadType": "StatefulSet",
+   "workloadName": "db",
+   "containerName": "db",
+   "image": "registry-1.docker.io/bitnami/redis:latest"
+  },
+  {
+   "serviceAccountName": "other",
+   "namespace": "default",
+   "workloadType": "Job",
+   "workloadName": "db-migrate",
+   "containerName": "migrate",
+   "image": "docker.io/bitnami/redis:latest"
+  },
+  {
+   "serviceAccountName": "web",
+   "namespace": "default",
+   "workloadType": "Deployment",
+   "workloadName": "web",
+   "containerName": "bad",
+   "image": "{{ .Values.image }}"
+  }
+ ]
+}

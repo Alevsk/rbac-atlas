@@ -1,0 +1,26 @@
+{
+  "generated_at": "2026-11-04T00:00:00Z",
+  "scope": "latest",
+  "charts": [
+    {"chart": "acme/web", "org": "acme", "name": "web", "version": "1.2.0", "manifest": "manifests/acme__web__1.2.0.json",
+     "images": [
+       {"ref": "acme/web:1.0", "canonical": "docker.io/acme/web:1.0", "role": "main",
+        "workloads": [{"serviceAccountName": "web", "namespace": "default", "workloadType": "Deployment", "workloadName": "web", "containerName": "web", "sa_rbac_risk": "Critical"}]},
+       {"ref": "busybox", "canonical": "docker.io/library/busybox:latest", "role": "test",
+        "workloads": [{"serviceAccountName": "", "namespace": "default", "workloadType": "Pod", "workloadName": "web-test-connection", "containerName": "wget", "sa_rbac_risk": null}]}
+     ]},
+    {"chart": "acme/gone", "org": "acme", "name": "gone", "version": "0.1.0", "manifest": "manifests/acme__gone__0.1.0.json",
+     "images": [
+       {"ref": "quay.io/acme/gone:0.1", "canonical": "quay.io/acme/gone:0.1", "role": "main",
+        "workloads": [{"serviceAccountName": "gone", "namespace": "default", "workloadType": "Deployment", "workloadName": "gone", "containerName": "gone", "sa_rbac_risk": "High"}]}
+     ]},
+    {"chart": "acme/crds", "org": "acme", "name": "crds", "version": "2.0.0", "manifest": "manifests/acme__crds__2.0.0.json", "images": []}
+  ],
+  "images": {
+    "docker.io/acme/web:1.0": {"registry": "docker.io", "repository": "acme/web", "tag": "1.0", "digest": null, "flags": [], "charts": ["acme/web@1.2.0"], "roles": ["main"]},
+    "docker.io/library/busybox:latest": {"registry": "docker.io", "repository": "library/busybox", "tag": "latest", "digest": null, "flags": ["implicit_latest", "mutable_tag"], "charts": ["acme/web@1.2.0"], "roles": ["test"]},
+    "quay.io/acme/gone:0.1": {"registry": "quay.io", "repository": "acme/gone", "tag": "0.1", "digest": null, "flags": [], "charts": ["acme/gone@0.1.0"], "roles": ["main"]}
+  },
+  "invalid": [],
+  "stats": {}
+}

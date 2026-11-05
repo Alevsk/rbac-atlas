@@ -195,6 +195,52 @@ generate-report: ##@ Generate dated report snapshot, time-series data, and threa
 
 
 # ==============================================================================
+# Image Vulnerability Scan (Phase 1a, artifact-only)
+#
+# Inventories the container images of the latest version of every chart, scans
+# them with Trivy (SBOM-per-digest cache), enriches IDs with cve.now and writes a
+# calibration report. Outputs go to $(VULNS_DIR)/out; caches to $(VULNS_DIR)/.cache.
+# Requires `trivy` and `crane` on PATH (or TRIVY=/path CRANE=/path) and a Trivy DB
+# downloaded beforehand (`trivy image --download-db-only`). See docs/image-vulns.md.
+# ==============================================================================
+.PHONY: vulns image-inventory scan-images enrich-vulns vuln-report test-python
+
+VULNS_DIR      ?= vulns
+VULN_LIMIT     ?=
+MAX_NEW_SBOMS  ?= 200
+SCAN_WORKERS   ?= 3
+CVENOW_BUDGET  ?= 3000
+CVENOW_RPS     ?= 1.0
+VULN_ENV       := VULNS_DIR=$(VULNS_DIR)
+SCAN_FLAGS     := --max-new-sboms $(MAX_NEW_SBOMS) --workers $(SCAN_WORKERS)
+ifneq ($(strip $(VULN_LIMIT)),)
+	SCAN_FLAGS += --limit $(VULN_LIMIT)
+endif
+
+vulns: image-inventory scan-images enrich-vulns vuln-report ##@ Run the full image vulnerability pipeline (inventory, scan, cve.now, report)
+
+image-inventory: ##@ Inventory images of the latest version of every chart
+	@echo "INFO: Building image inventory..."
+	@$(VULN_ENV) $(PYTHON) -m vulnscan.inventory --manifests $(MANIFESTS_DIR)
+
+scan-images: ##@ Scan inventoried images with Trivy (VULN_LIMIT=N, MAX_NEW_SBOMS=N)
+	@echo "INFO: Scanning images with Trivy..."
+	@$(VULN_ENV) $(PYTHON) -m vulnscan.scan $(SCAN_FLAGS)
+
+enrich-vulns: ##@ Enrich vulnerability IDs with cve.now (CVENOW_BUDGET=N, CVENOW_RPS=N)
+	@echo "INFO: Enriching vulnerabilities with cve.now..."
+	@$(VULN_ENV) $(PYTHON) -m vulnscan.cvenow --budget $(CVENOW_BUDGET) --rps $(CVENOW_RPS)
+
+vuln-report: ##@ Build summary.json and report.md from the vulnerability pipeline outputs
+	@echo "INFO: Building vulnerability calibration report..."
+	@$(VULN_ENV) $(PYTHON) -m vulnscan.report
+
+test-python: ##@ Run Python unit tests (vulnscan)
+	@echo "INFO: Running Python unit tests..."
+	@python3 -m unittest discover -s tests/python -t .
+
+
+# ==============================================================================
 # Dependency Management & Cleanup
 # ==============================================================================
 .PHONY: install clean docker
