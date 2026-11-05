@@ -1,0 +1,19 @@
+{{- /* Appends CVE summaries to the Image cells of rendered Workloads tables.
+  Context: dict "html" (rendered content) "rec" (version record) "page". The Image column is the last cell of
+  its row, so the needle is "<td>RENDERED_RAW</td></tr>" after whitespace between </td> and </tr> is normalized;
+  RENDERED_RAW is the ref rendered by the page's markdown renderer (see cell-text.html). */ -}}
+{{- $html := .html -}}
+{{- with .rec.imgs -}}
+{{- $html = replaceRE `</td>\s*</tr>` "</td></tr>" $html -}}
+{{- range $raw, $canonical := . -}}
+{{- if $raw -}}
+{{- $cellText := partialCached "vulns/cell-text.html" (dict "page" $.page "raw" $raw) $raw -}}
+{{- $needle := printf "<td>%s</td></tr>" $cellText -}}
+{{- if in $html $needle -}}
+{{- $cell := partialCached "vulns/image-cell.html" ($canonical | default "") ($canonical | default "") -}}
+{{- $html = replace $html $needle (printf "<td class=\"vuln-image-td\">%s%s</td></tr>" $cellText $cell) -}}
+{{- end -}}
+{{- end -}}
+{{- end -}}
+{{- end -}}
+{{- return $html -}}

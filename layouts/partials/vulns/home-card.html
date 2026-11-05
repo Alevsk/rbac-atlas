@@ -1,0 +1,38 @@
+{{- /* Home page "Riskiest combinations" card (data/vulns/landscape.json, latest stable chart versions only). */ -}}
+{{- with site.Data.vulns.landscape -}}
+{{- if .combos -}}
+{{- $s := .stats | default dict -}}
+<div class="chart-section vuln-home">
+  <div class="chart-container">
+    <div class="chart-container__heading">
+      <div class="chart-heading">
+        <span class="chart-heading__icon">{{ partialCached "icon.html" "skull" "skull" }}</span>
+        <div>
+          <span class="eyebrow">Image CVEs × RBAC</span>
+          <h3>Riskiest combinations</h3>
+        </div>
+      </div>
+      <span class="chart-period">As of {{ substr .generated_at 0 10 }}</span>
+    </div>
+    <p class="vuln-stats-line">
+      <strong>{{ $s.combos_total | default (len .combos) }}</strong> workloads pair Critical/High RBAC with an image carrying known-exploited (KEV) or likely-exploitable CVEs
+      {{- with $s.combos_kev }} · <strong>{{ . }}</strong> with CISA KEV CVEs{{ end -}}
+      {{- with $s.charts_with_combos }} · <strong>{{ . }}</strong> charts{{ end }}
+    </p>
+    <ol class="vuln-combos vuln-combos--ranked">
+      {{- range first 10 .combos -}}
+      {{ partial "vulns/combo-item.html" (dict "c" . "chart" true "limit" 3) }}
+      {{- end -}}
+    </ol>
+    <p class="chart-note">
+      {{ partialCached "icon.html" "info" "info" }}
+      {{ with .coverage -}}
+      CVE data covers {{ .images_scanned | default 0 }} of {{ .images | default 0 }} images{{ with .cvenow_pct }}; {{ . }}% of CVE IDs enriched by cve.now{{ end }}.
+      {{- end }}
+      Latest stable chart versions, default images only; a CVE in an image is not proof it is exploitable.
+      <a href="/pages/threat-landscape/#image-cve-rbac">Full ranking and methodology</a>
+    </p>
+  </div>
+</div>
+{{- end -}}
+{{- end -}}

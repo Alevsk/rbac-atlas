@@ -195,35 +195,49 @@ generate-report: ##@ Generate dated report snapshot, time-series data, and threa
 
 
 # ==============================================================================
-# Image Vulnerability Scan (Phase 1a, artifact-only)
+# Image Vulnerability Scan
 #
-# Inventories the container images of the latest version of every chart, scans
-# them with Trivy (SBOM-per-digest cache), enriches IDs with cve.now and writes a
-# calibration report. Outputs go to $(VULNS_DIR)/out; caches to $(VULNS_DIR)/.cache.
+# Inventories the container images of every chart version (VULN_SCOPE=all) or of
+# the latest version of every chart (VULN_SCOPE=latest), scans them with Trivy
+# (SBOM-per-digest cache), enriches IDs with cve.now and writes a report. Outputs
+# go to $(VULNS_DIR)/out; caches to $(VULNS_DIR)/.cache. `publish-vulns` turns the
+# outputs into Hugo data under data/vulns/.
 # Requires `trivy` and `crane` on PATH (or TRIVY=/path CRANE=/path) and a Trivy DB
 # downloaded beforehand (`trivy image --download-db-only`). See docs/image-vulns.md.
 # ==============================================================================
-.PHONY: vulns image-inventory scan-images enrich-vulns vuln-report test-python
+.PHONY: vulns image-inventory scan-images enrich-vulns vuln-report publish-vulns test-python
 
 VULNS_DIR      ?= vulns
+VULN_SCOPE     ?= all
 VULN_LIMIT     ?=
 MAX_NEW_SBOMS  ?= 200
 SCAN_WORKERS   ?= 3
 CVENOW_BUDGET  ?= 3000
 CVENOW_RPS     ?= 1.0
+MAX_REMATCH    ?= 4000
+SCAN_BUDGET_MIN ?=
+VULN_MAX_MB    ?= 80
+VULN_ALLOW_DROP ?=
 VULN_ENV       := VULNS_DIR=$(VULNS_DIR)
-SCAN_FLAGS     := --max-new-sboms $(MAX_NEW_SBOMS) --workers $(SCAN_WORKERS)
+SCAN_FLAGS     := --max-new-sboms $(MAX_NEW_SBOMS) --workers $(SCAN_WORKERS) --max-rematch $(MAX_REMATCH)
 ifneq ($(strip $(VULN_LIMIT)),)
 	SCAN_FLAGS += --limit $(VULN_LIMIT)
+endif
+ifneq ($(strip $(SCAN_BUDGET_MIN)),)
+	SCAN_FLAGS += --time-budget-minutes $(SCAN_BUDGET_MIN)
+endif
+PUBLISH_FLAGS  := --max-mb $(VULN_MAX_MB)
+ifneq ($(strip $(VULN_ALLOW_DROP)),)
+	PUBLISH_FLAGS += --allow-drop
 endif
 
 vulns: image-inventory scan-images enrich-vulns vuln-report ##@ Run the full image vulnerability pipeline (inventory, scan, cve.now, report)
 
-image-inventory: ##@ Inventory images of the latest version of every chart
-	@echo "INFO: Building image inventory..."
-	@$(VULN_ENV) $(PYTHON) -m vulnscan.inventory --manifests $(MANIFESTS_DIR)
+image-inventory: ##@ Inventory images of every chart version (VULN_SCOPE=all|latest)
+	@echo "INFO: Building image inventory (scope: $(VULN_SCOPE))..."
+	@$(VULN_ENV) $(PYTHON) -m vulnscan.inventory --manifests $(MANIFESTS_DIR) --scope $(VULN_SCOPE)
 
-scan-images: ##@ Scan inventoried images with Trivy (VULN_LIMIT=N, MAX_NEW_SBOMS=N)
+scan-images: ##@ Scan inventoried images with Trivy (VULN_LIMIT=N, MAX_NEW_SBOMS=N, MAX_REMATCH=N, SCAN_BUDGET_MIN=N)
 	@echo "INFO: Scanning images with Trivy..."
 	@$(VULN_ENV) $(PYTHON) -m vulnscan.scan $(SCAN_FLAGS)
 
@@ -234,6 +248,10 @@ enrich-vulns: ##@ Enrich vulnerability IDs with cve.now (CVENOW_BUDGET=N, CVENOW
 vuln-report: ##@ Build summary.json and report.md from the vulnerability pipeline outputs
 	@echo "INFO: Building vulnerability calibration report..."
 	@$(VULN_ENV) $(PYTHON) -m vulnscan.report
+
+publish-vulns: ##@ Write Hugo data to data/vulns/ from the pipeline outputs (VULN_MAX_MB=N, VULN_ALLOW_DROP=1)
+	@echo "INFO: Publishing vulnerability data to data/vulns..."
+	@$(VULN_ENV) $(PYTHON) -m vulnscan.publish $(PUBLISH_FLAGS)
 
 test-python: ##@ Run Python unit tests (vulnscan)
 	@echo "INFO: Running Python unit tests..."

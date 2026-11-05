@@ -1,0 +1,10 @@
+{{- /* Image / chart vulnerability level badge. Context: level string (Exploited, High, Elevated, Moderate, Low, Unknown, N/A, pending). */ -}}
+{{- $lvl := . | default "Unknown" -}}
+{{- $label := cond (eq $lvl "pending") "Pending scan" $lvl -}}
+{{- $titles := dict "Exploited" "Image contains a CVE listed in CISA Known Exploited Vulnerabilities (KEV)" "High" "Image contains a Critical/High CVE with an EPSS, Metasploit or Exploit-DB signal" "Elevated" "Image contains a Critical CVE" "Moderate" "Image contains a High CVE" "Unknown" "Image could not be scanned" "pending" "Image not scanned yet" -}}
+{{- with index $titles $lvl -}}
+<span class="vuln-badge vuln-lvl--{{ lower (replace $lvl "/" "") }}"
+      title="{{ . }}">{{ $label }}</span>
+{{- else -}}
+<span class="vuln-badge vuln-lvl--{{ lower (replace $lvl "/" "") }}">{{ $label }}</span>
+{{- end -}}

@@ -1,0 +1,37 @@
+{
+  "generated_at": "2026-11-05T00:00:00Z",
+  "scope": "all",
+  "charts": [
+    {"chart": "acme/web", "org": "acme", "name": "web", "version": "v2.0.0", "page_version": "2.0.0", "key": "acme/web/2.0.0",
+     "latest": true, "manifest": "manifests/acme__web__v2.0.0.json",
+     "images": [
+       {"ref": "acme/web:2.0", "canonical": "docker.io/acme/web:2.0", "role": "main",
+        "workloads": [
+          {"serviceAccountName": "web", "namespace": "default", "workloadType": "Deployment", "workloadName": "web", "containerName": "web", "role": "main", "sa_rbac_risk": "Critical"},
+          {"serviceAccountName": "web", "namespace": "default", "workloadType": "Deployment", "workloadName": "web", "containerName": "web", "role": "main", "sa_rbac_risk": "Critical"},
+          {"serviceAccountName": "web-test", "namespace": "default", "workloadType": "Pod", "workloadName": "web-test", "containerName": "test", "role": "test", "sa_rbac_risk": "Critical"}]},
+       {"ref": "quay.io/acme/sidecar:1.0", "canonical": "quay.io/acme/sidecar:1.0", "role": "main",
+        "workloads": [{"serviceAccountName": "side", "namespace": "default", "workloadType": "Deployment", "workloadName": "side", "containerName": "side", "role": "main", "sa_rbac_risk": "Low"}]},
+       {"ref": "bad image", "canonical": null, "reason": "invalid_repository", "role": "main",
+        "workloads": [{"serviceAccountName": "x", "namespace": "default", "workloadType": "Job", "workloadName": "x", "containerName": "x", "role": "main", "sa_rbac_risk": null}]}]},
+    {"chart": "acme/web", "org": "acme", "name": "web", "version": "1.0.0", "page_version": "1.0.0", "key": "acme/web/1.0.0",
+     "latest": false, "manifest": "manifests/acme__web__1.0.0.json",
+     "images": [
+       {"ref": "acme/web:1.0", "canonical": "docker.io/acme/web:1.0", "role": "main",
+        "workloads": [{"serviceAccountName": "web", "namespace": "default", "workloadType": "Deployment", "workloadName": "web", "containerName": "web", "role": "main", "sa_rbac_risk": "High"}]}]},
+    {"chart": "beta/Api", "org": "beta", "name": "Api", "version": "0.1.0", "page_version": "0.1.0", "key": "beta/Api/0.1.0",
+     "latest": true, "manifest": "manifests/beta__Api__0.1.0.json",
+     "images": [
+       {"ref": "beta/api:0.1", "canonical": "docker.io/beta/api:0.1", "role": "main",
+        "workloads": [{"serviceAccountName": "api", "namespace": "beta", "workloadType": "StatefulSet", "workloadName": "api", "containerName": "api", "role": "main", "sa_rbac_risk": "High"}]}]},
+    {"chart": "gamma/empty", "org": "gamma", "name": "empty", "version": "1.0.0", "page_version": "1.0.0", "key": "gamma/empty/1.0.0",
+     "latest": true, "manifest": "manifests/gamma__empty__1.0.0.json", "images": []}
+  ],
+  "images": {
+    "docker.io/acme/web:2.0": {"priority": 0},
+    "quay.io/acme/sidecar:1.0": {"priority": 0},
+    "docker.io/beta/api:0.1": {"priority": 0},
+    "docker.io/acme/web:1.0": {"priority": 1}
+  },
+  "invalid": [{"ref": "bad image", "reason": "invalid_repository", "chart": "acme/web@v2.0.0"}]
+}

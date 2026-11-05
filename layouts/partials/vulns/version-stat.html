@@ -1,0 +1,17 @@
+{{- /* "Image risk" stat item for a chart version page. Context: version record (non-empty).
+  A record flagged "pending" (no main image scanned yet) shows "Pending scan" rather than "Unknown". */ -}}
+{{- $lvl := .lvl | default "Unknown" -}}
+{{- if .pending -}}
+<div class="stat-item vuln-stat vuln-lvl--pending"
+     title="The chart's main workload images have not been scanned yet">
+  {{ partialCached "icon.html" "shield-alert" "shield-alert" }}
+  Image risk: Pending scan
+</div>
+{{- else if ne $lvl "N/A" -}}
+<div class="stat-item vuln-stat vuln-lvl--{{ lower $lvl }}"
+     title="Worst CVE level among the chart's main workload images{{ if .partial }} (some images not scanned yet){{ end }}">
+  {{ partialCached "icon.html" "shield-alert" "shield-alert" }}
+  Image risk: {{ $lvl }}{{ if .partial }}*{{ end }}
+  {{ with .kev }}· {{ . }} KEV{{ end }}
+</div>
+{{- end -}}

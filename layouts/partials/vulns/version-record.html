@@ -1,0 +1,18 @@
+{{- /* Returns the data/vulns version record for a chart version page, or an empty dict.
+  Key: "<org>/<chart>/<content file base name>" (json2hugo file name rule), shard: first 2 hex of md5(key).
+  Cost: two map lookups. */ -}}
+{{- $rec := dict -}}
+{{- if and (eq .Section "charts") .File -}}
+{{- with site.Data.vulns -}}
+{{- with .versions -}}
+{{- $dir := strings.TrimSuffix "/" (strings.TrimPrefix "charts/" (replace $.File.Dir "\\" "/")) -}}
+{{- $key := printf "%s/%s" $dir $.File.ContentBaseName -}}
+{{- with index . (substr (md5 $key) 0 2) -}}
+{{- with index . $key -}}
+{{- $rec = . -}}
+{{- end -}}
+{{- end -}}
+{{- end -}}
+{{- end -}}
+{{- end -}}
+{{- return $rec -}}

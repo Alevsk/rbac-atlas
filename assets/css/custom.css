@@ -1526,3 +1526,427 @@ td.risk-low {
     transition-duration: 0.01ms !important;
   }
 }
+
+/* ==========================================================================
+   Image vulnerabilities (layouts/partials/vulns/*, data/vulns/*)
+   Level palette reuses the risk tokens so light and dark themes both work.
+   ========================================================================== */
+.vuln-lvl--exploited {
+  --vuln-tone: var(--critical);
+}
+.vuln-lvl--high {
+  --vuln-tone: var(--high);
+}
+.vuln-lvl--elevated,
+.vuln-lvl--moderate {
+  --vuln-tone: var(--medium);
+}
+.vuln-lvl--low {
+  --vuln-tone: var(--low);
+}
+.vuln-lvl--unknown,
+.vuln-lvl--pending,
+.vuln-lvl--na {
+  --vuln-tone: var(--muted);
+}
+.vuln-badge {
+  display: inline-block;
+  padding: 2px 7px;
+  border: 1px solid color-mix(in srgb, var(--vuln-tone, var(--muted)) 35%, transparent);
+  border-radius: 5px;
+  color: var(--vuln-tone, var(--muted));
+  background: color-mix(in srgb, var(--vuln-tone, var(--muted)) 11%, transparent);
+  font-size: 11px;
+  font-weight: 750;
+  line-height: 1.35;
+  white-space: nowrap;
+}
+.vuln-lvl--exploited.vuln-badge {
+  border-color: var(--critical);
+}
+.vuln-lvl--moderate.vuln-badge {
+  background: transparent;
+}
+.post-stats .stat-item.vuln-stat {
+  color: var(--vuln-tone, var(--muted));
+  background: color-mix(in srgb, var(--vuln-tone, var(--muted)) 10%, transparent);
+  border-color: color-mix(in srgb, var(--vuln-tone, var(--muted)) 22%, transparent);
+}
+.vuln-chip,
+.vuln-pill {
+  display: inline-block;
+  padding: 1px 6px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  font-size: 10px;
+  font-weight: 750;
+  line-height: 1.5;
+  white-space: nowrap;
+}
+.vuln-chip {
+  color: var(--muted);
+}
+.vuln-chip--kev {
+  color: var(--critical);
+  border-color: color-mix(in srgb, var(--critical) 40%, transparent);
+  background: color-mix(in srgb, var(--critical) 10%, transparent);
+}
+.vuln-chip--likely {
+  color: var(--high);
+  border-color: color-mix(in srgb, var(--high) 35%, transparent);
+}
+.vuln-chip--eosl {
+  color: var(--medium);
+  border-color: color-mix(in srgb, var(--medium) 35%, transparent);
+}
+.vuln-pill {
+  border-radius: 5px;
+  font-size: 11px;
+}
+.vuln-counts,
+.vuln-meta,
+.vuln-more,
+.vuln-combo__container,
+.vuln-combo__version {
+  color: var(--muted);
+  font-size: 11px;
+}
+.vuln-meta {
+  margin: 8px 0 0;
+}
+
+/* Workloads table: Image cell */
+.post-content td.vuln-image-td {
+  min-width: 240px;
+  overflow-wrap: anywhere;
+}
+.vuln-cell {
+  margin-top: 6px;
+  white-space: normal;
+}
+.vuln-cell__summary {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 5px 7px;
+}
+.vuln-details {
+  margin-top: 6px;
+}
+.vuln-details > summary {
+  width: fit-content;
+  color: var(--accent);
+  font-size: 11px;
+  font-weight: 700;
+  cursor: pointer;
+}
+.post .vuln-list,
+.post-content .vuln-list {
+  display: grid;
+  gap: 6px;
+  margin: 8px 0 0;
+  padding: 0;
+  list-style: none;
+}
+.vuln-list li {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 3px 7px;
+  margin: 0;
+  padding: 6px 8px;
+  border: 1px solid var(--border);
+  border-radius: 7px;
+  background: var(--surface);
+  font-size: 11px;
+  line-height: 1.4;
+}
+.vuln-list a,
+.vuln-id {
+  font-family: "Fira Code", ui-monospace, SFMono-Regular, Consolas, monospace;
+  font-weight: 650;
+}
+.vuln-sev {
+  font-weight: 750;
+}
+.vuln-sev--critical {
+  color: var(--critical);
+}
+.vuln-sev--high {
+  color: var(--high);
+}
+.vuln-sev--medium {
+  color: var(--medium);
+}
+.vuln-sev--low {
+  color: var(--low);
+}
+.vuln-sev--unknown,
+.vuln-cvss,
+.vuln-fix {
+  color: var(--muted);
+}
+.vuln-pkg {
+  color: var(--foreground);
+  overflow-wrap: anywhere;
+}
+.vuln-fix--none {
+  font-style: italic;
+}
+
+/* Riskiest combinations: version callout and home card */
+.vuln-callout {
+  margin: 24px 0;
+  padding: clamp(16px, 2.4vw, 24px);
+  border: 1px solid color-mix(in srgb, var(--critical) 28%, var(--border));
+  border-left: 3px solid var(--critical);
+  border-radius: var(--radius);
+  background: var(--surface);
+  box-shadow: var(--shadow);
+}
+.vuln-callout__head {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+}
+.vuln-callout__head .chart-heading__icon {
+  color: var(--critical);
+}
+.vuln-callout__head h2 {
+  margin: 4px 0 0;
+  font-size: 1.25rem;
+}
+.vuln-callout__lead,
+.vuln-stats-line {
+  margin: 12px 0;
+  color: var(--muted);
+  font-size: 13px;
+}
+.vuln-stats-line strong {
+  color: var(--foreground);
+}
+.post .vuln-combos,
+.vuln-combos {
+  display: grid;
+  gap: 10px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.vuln-combo {
+  display: grid;
+  gap: 6px;
+  min-width: 0;
+  margin: 0;
+  padding: 11px 13px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--surface-soft);
+  font-size: 12px;
+}
+.vuln-combos--ranked {
+  counter-reset: vuln-rank;
+}
+.vuln-combos--ranked > .vuln-combo {
+  position: relative;
+  padding-left: 42px;
+  counter-increment: vuln-rank;
+}
+.vuln-combos--ranked > .vuln-combo::before {
+  position: absolute;
+  top: 11px;
+  left: 13px;
+  color: var(--muted);
+  content: counter(vuln-rank);
+  font:
+    700 12px/1.6 "Fira Code",
+    monospace;
+}
+.vuln-combo__title,
+.vuln-combo__facts {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px 8px;
+  min-width: 0;
+}
+.vuln-combo__chart,
+.vuln-combo__workload {
+  font-weight: 750;
+  overflow-wrap: anywhere;
+}
+.vuln-combo__workload {
+  color: var(--foreground);
+}
+.vuln-combo__x {
+  color: var(--muted);
+}
+.vuln-combo code {
+  font-size: 11px;
+  overflow-wrap: anywhere;
+}
+.vuln-ids {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px 6px;
+}
+.vuln-id {
+  font-size: 11px;
+}
+.vuln-id--kev {
+  color: var(--critical);
+}
+.vuln-provenance {
+  margin: 14px 0 0;
+  color: var(--muted);
+  font-size: 11px;
+}
+.vuln-home {
+  margin-top: 18px;
+}
+
+/* Threat landscape page */
+.vuln-landscape {
+  margin-top: 36px;
+}
+.vuln-landscape > .chart-container,
+.vuln-landscape > .chart-grid {
+  margin-top: 18px;
+}
+.vuln-kpis {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 12px;
+  margin: 18px 0 0;
+}
+.vuln-kpis div {
+  display: flex;
+  flex-direction: column-reverse;
+  gap: 4px;
+  padding: 14px 16px;
+  border: 1px solid var(--border);
+  border-radius: 11px;
+  background: var(--surface);
+}
+.vuln-kpis dt {
+  color: var(--muted);
+  font-size: 11px;
+  font-weight: 650;
+}
+.vuln-kpis dd {
+  margin: 0;
+  color: var(--foreground);
+  font-size: clamp(1.4rem, 2vw, 1.8rem);
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.04em;
+}
+.post .vuln-dist,
+.vuln-dist {
+  display: grid;
+  gap: 9px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.vuln-dist li {
+  display: grid;
+  grid-template-columns: 92px minmax(0, 1fr) 44px;
+  align-items: center;
+  gap: 10px;
+  margin: 0;
+}
+.vuln-dist .vuln-badge {
+  justify-self: start;
+}
+.vuln-dist__bar {
+  height: 8px;
+  overflow: hidden;
+  border-radius: 99px;
+  background: var(--surface-soft);
+}
+.vuln-dist__fill {
+  display: block;
+  height: 100%;
+  min-width: 2px;
+  border-radius: inherit;
+  background: var(--vuln-tone, var(--muted));
+}
+.vuln-dist__n {
+  color: var(--foreground);
+  font-size: 12px;
+  font-weight: 700;
+  text-align: right;
+}
+.vuln-table-wrap {
+  max-width: 100%;
+  overflow-x: auto;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+}
+.vuln-table {
+  width: 100%;
+  min-width: 760px;
+  margin: 0;
+  border: 0;
+  border-collapse: collapse;
+  font-size: 12px;
+}
+.vuln-table th,
+.vuln-table td {
+  padding: 9px 11px;
+  border: 0;
+  border-bottom: 1px solid var(--border);
+  text-align: left;
+  vertical-align: top;
+}
+.vuln-table th {
+  background: var(--surface-soft);
+  color: var(--muted);
+  font-size: 10px;
+  font-weight: 750;
+  letter-spacing: 0.055em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+.vuln-table tr:last-child td {
+  border-bottom: 0;
+}
+.vuln-table td:nth-child(-n + 4) {
+  white-space: nowrap;
+}
+.vuln-table td::before {
+  display: none;
+}
+.vuln-image-ref {
+  display: block;
+  max-width: 280px;
+  margin-top: 4px;
+  color: var(--muted);
+  font-size: 11px;
+  overflow-wrap: anywhere;
+}
+.vuln-method ul {
+  display: grid;
+  gap: 6px;
+  margin: 0 0 0 18px;
+  font-size: 13px;
+}
+
+@media (max-width: 680px) {
+  .post-content td.vuln-image-td {
+    min-width: 220px;
+  }
+  .vuln-combos--ranked > .vuln-combo {
+    padding-left: 34px;
+  }
+  .vuln-combos--ranked > .vuln-combo::before {
+    left: 10px;
+  }
+  .vuln-dist li {
+    grid-template-columns: 84px minmax(0, 1fr) 36px;
+    gap: 8px;
+  }
+}
+/* ======================= end image vulnerabilities ======================= */

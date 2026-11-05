@@ -1,0 +1,23 @@
+{{- /* Riskiest combinations callout for a chart version page. Context: version record (non-empty). */ -}}
+{{- with .combos -}}
+<section class="vuln-callout" aria-labelledby="vuln-combos-title">
+  <div class="vuln-callout__head">
+    <span class="chart-heading__icon">{{ partialCached "icon.html" "skull" "skull" }}</span>
+    <div>
+      <span class="eyebrow">Image CVEs × RBAC</span>
+      <h2 id="vuln-combos-title">Riskiest combinations</h2>
+    </div>
+  </div>
+  <p class="vuln-callout__lead">
+    Workloads whose ServiceAccount has Critical or High RBAC risk and whose image carries known-exploited (CISA KEV) or likely-exploitable CVEs.
+  </p>
+  <ul class="vuln-combos">
+    {{- range . -}}
+    {{ partial "vulns/combo-item.html" (dict "c" . "chart" false "limit" 5) }}
+    {{- end -}}
+  </ul>
+  {{ partialCached "vulns/provenance.html" "p" }}
+</section>
+{{- else -}}
+{{ partialCached "vulns/provenance.html" "p" }}
+{{- end -}}

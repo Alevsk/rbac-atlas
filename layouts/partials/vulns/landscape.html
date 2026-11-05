@@ -1,0 +1,145 @@
+{{- /* Threat landscape page section: image CVE × RBAC landscape (data/vulns/landscape.json + meta.json). */ -}}
+{{- with site.Data.vulns.landscape -}}
+{{- $s := .stats | default dict -}}
+{{- $meta := site.Data.vulns.meta | default dict -}}
+{{- $levels := slice "Exploited" "High" "Elevated" "Moderate" "Low" "Unknown" "N/A" -}}
+<section class="chart-section vuln-landscape" id="image-cve-rbac">
+  <h2>Image CVEs × RBAC risk</h2>
+  <p class="chart-note">
+    {{ partialCached "icon.html" "info" "info" }}
+    Latest stable version of each chart (prereleases are skipped), as of {{ substr .generated_at 0 10 }}. A combination is a main workload whose ServiceAccount has Critical or High RBAC risk running an image rated Exploited or High.
+  </p>
+  <dl class="vuln-kpis">
+    <div>
+      <dt>Risky combinations</dt>
+      <dd>
+        {{ $s.combos_total | default (len .combos) }}
+      </dd>
+    </div>
+    <div>
+      <dt>With CISA KEV CVEs</dt>
+      <dd>
+        {{ $s.combos_kev | default 0 }}
+      </dd>
+    </div>
+    <div>
+      <dt>Charts affected</dt>
+      <dd>
+        {{ $s.charts_with_combos | default 0 }}
+      </dd>
+    </div>
+    <div>
+      <dt>Exploited images</dt>
+      <dd>
+        {{ $s.images_exploited | default 0 }}
+      </dd>
+    </div>
+    {{ with $s.workloads_total }}
+    <div>
+      <dt>Workloads with Critical/High RBAC</dt>
+      <dd>
+        {{ $s.workloads_critical_or_high_rbac | default 0 }} / {{ . }}
+      </dd>
+    </div>
+    {{ end }}
+  </dl>
+  {{ with .distribution }}
+  {{ $dist0 := . }}
+  <div class="chart-grid vuln-dist-grid">
+    {{ range $scope := slice "images" "charts" }}
+    {{ with index $dist0 $scope }}
+    {{ $dist := . }}
+    {{ $total := 0 }}
+    {{ range $levels }}
+    {{ $total = add $total (index $dist . | default 0) }}
+    {{ end }}
+    <div class="chart-container">
+      <h3>{{ title $scope }} by image risk level</h3>
+      <ul class="vuln-dist">
+        {{ range $levels }}
+        {{ $v := index $dist . | default 0 }}
+        {{ if or (gt $v 0) (ne . "N/A") }}
+        <li>
+          {{ partialCached "vulns/level-badge.html" . . }}
+          <span class="vuln-dist__bar"><span class="vuln-dist__fill vuln-lvl--{{ lower (replace . "/" "") }}"
+      style="width: {{ printf "%.1f" (cond (gt $total 0) (div (mul $v 100.0) $total) 0.0) }}%"></span></span>
+          <span class="vuln-dist__n">{{ $v }}</span>
+        </li>
+        {{ end }}
+        {{ end }}
+      </ul>
+    </div>
+    {{ end }}
+    {{ end }}
+  </div>
+  {{ end }}
+  {{ with .combos }}
+  <div class="chart-container vuln-top">
+    <h3>Top {{ len (first 25 .) }} riskiest combinations</h3>
+    <div class="vuln-table-wrap">
+      <table class="vuln-table">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Chart</th>
+            <th>Workload</th>
+            <th>ServiceAccount</th>
+            <th>Image</th>
+            <th>KEV / likely CVEs</th>
+          </tr>
+        </thead>
+        <tbody>
+          {{ range $i, $c := first 25 . }}
+          <tr>
+            <td>{{ add $i 1 }}</td>
+            <td>
+              <a href="{{ $c.url | default (printf "/charts/%s/" (lower $c.key)) }}">{{ $c.chart }}</a>
+              <span class="vuln-combo__version">{{ $c.version }}</span>
+            </td>
+            <td>{{ $c.kind }}/{{ $c.workload }}</td>
+            <td>
+              <code>{{ $c.serviceAccountName }}</code>
+              {{ partialCached "vulns/rbac-pill.html" $c.sa_rbac_risk $c.sa_rbac_risk }}
+            </td>
+            <td>
+              {{ partialCached "vulns/level-badge.html" $c.image_level $c.image_level }}
+              <span class="vuln-image-ref">{{ $c.image }}</span>
+            </td>
+            <td>{{ partial "vulns/cve-ids.html" (dict "c" $c "limit" 4) }}</td>
+          </tr>
+          {{ end }}
+        </tbody>
+      </table>
+    </div>
+  </div>
+  {{ end }}
+  <div class="chart-container vuln-method">
+    <h3>Methodology and coverage</h3>
+    <ul>
+      <li>
+        Images are the ones a chart deploys with its <strong>default values</strong>, scanned with Trivy{{ with $meta.trivy }} {{ .version }}{{ with .db_updated_at }} (vulnerability DB {{ substr . 0 10 }}){{ end }}{{ end }}.
+      </li>
+      <li>
+        CVEs are enriched with <a href="https://cve.now" target="_blank" rel="noopener">cve.now</a> (CISA KEV, EPSS, Metasploit, Exploit-DB){{ with $meta.cvenow }}{{ with .coverage_pct }}; {{ . }}% of IDs enriched so far{{ end }}{{ end }}.
+      </li>
+      <li>
+        Image levels: <strong>Exploited</strong> = a CVE is in CISA KEV; <strong>High</strong> = a Critical/High CVE reached the EPSS threshold or has a Metasploit module or Exploit-DB entry; <strong>Elevated</strong> = any Critical; <strong>Moderate</strong> = any High; <strong>Low</strong> = neither; <strong>Unknown</strong> = not scanned.
+      </li>
+      <li>
+        A CVE present in an image is not proof that it is reachable or exploitable in the workload; combinations are a prioritization aid, not a finding.
+      </li>
+      {{ with .coverage }}
+      <li>
+        Latest versions: {{ .images_scanned | default 0 }} of {{ .images | default 0 }} images scanned{{ with .scanned_pct }} ({{ . }}%){{ end }}{{ with .images_pending }}, {{ . }} pending{{ end }}.
+      </li>
+      {{ end }}
+      {{ with $meta.images_total }}
+      <li>
+        All versions: {{ $meta.images_scanned | default 0 }} of {{ . }} images scanned{{ with $meta.versions_total }}, {{ $meta.versions_with_data | default 0 }} of {{ . }} chart versions with data{{ end }}; the backlog is scanned daily, newest versions first.
+      </li>
+      {{ end }}
+    </ul>
+    {{ partialCached "vulns/provenance.html" "p" }}
+  </div>
+</section>
+{{- end -}}

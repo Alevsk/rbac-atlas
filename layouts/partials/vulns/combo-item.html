@@ -1,0 +1,25 @@
+{{- /* One riskiest-combination list item. Context: dict "c" (combination record, see vulnscan/publish.py)
+  "chart" (bool: show chart link) "limit" (max CVE IDs). */ -}}
+{{- $c := .c -}}
+<li class="vuln-combo">
+  <div class="vuln-combo__title">
+    {{- if .chart -}}
+    <a class="vuln-combo__chart"
+       href="{{ $c.url | default (printf "/charts/%s/" (lower $c.key)) }}">{{ $c.chart }}</a>
+    <span class="vuln-combo__version">{{ $c.version }}</span>
+    {{- end -}}
+    <span class="vuln-combo__workload">{{ $c.kind }}/{{ $c.workload }}</span>
+    {{ with $c.container }}<span class="vuln-combo__container">container {{ . }}</span>{{ end }}
+  </div>
+  <div class="vuln-combo__facts">
+    <span>SA <code>{{ $c.serviceAccountName }}</code></span>
+    {{ partialCached "vulns/rbac-pill.html" $c.sa_rbac_risk $c.sa_rbac_risk }}
+    <span class="vuln-combo__x" aria-hidden="true">×</span>
+    <span>image</span>
+    {{ partialCached "vulns/level-badge.html" $c.image_level $c.image_level }}
+    <span class="vuln-counts">{{ $c.critical | default 0 }} critical · {{ $c.high | default 0 }} high</span>
+  </div>
+  {{- if or $c.kev_ids $c.likely_ids -}}
+  <div class="vuln-combo__ids">{{ partial "vulns/cve-ids.html" (dict "c" $c "limit" .limit) }}</div>
+  {{- end -}}
+</li>

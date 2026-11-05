@@ -6,8 +6,10 @@ Work order within the request budget (every HTTP attempt counts, retries include
   2. uncached IDs, CRITICAL/HIGH first,
   3. cached IDs that appear in this run's feed responses,
   4. stale cached entries (older than --max-age-days), oldest first,
-  5. POST /check for images with Go modules (informational cross-check only).
+  5. POST /check for images used by a latest chart version (scan priority 0) with Go modules
+     (informational cross-check only; module lists are read from the match cache one digest at a time).
 
+IDs come from scan.json's global 'ids' map, so per-image findings are never loaded.
 enrichment.json is always rebuilt from the on-disk cache, so data from earlier runs is
 used even when this run could not reach cve.now.
 """
@@ -27,10 +29,12 @@ from collections import Counter
 from pathlib import Path
 from typing import Any, Callable, Iterable
 
+from . import match
 from .common import (
     CVENOW_CHECK_DIR,
     CVENOW_ENTRIES_DIR,
     ENRICHMENT_FILE,
+    MATCH_DIR,
     SCAN_FILE,
     SEVERITIES,
     log,
@@ -173,15 +177,13 @@ def _severity_rank(severity: str | None) -> int:
 
 
 def collect_ids(scan: dict[str, Any]) -> dict[str, int]:
-    """Map every enrichable ID (finding ids + vendor_ids) to its most severe severity rank."""
+    """Map every enrichable ID in scan.json's 'ids' map ({ID: worst severity}) to its severity rank."""
     ids: dict[str, int] = {}
-    for image in (scan.get("images") or {}).values():
-        for finding in image.get("findings") or []:
-            rank = _severity_rank(finding.get("severity"))
-            for vid in [finding.get("id"), *(finding.get("vendor_ids") or [])]:
-                if isinstance(vid, str) and ID_RE.match(vid):
-                    vid = canonical_id(vid)
-                    ids[vid] = min(rank, ids.get(vid, rank))
+    for vid, severity in (scan.get("ids") or {}).items():
+        if isinstance(vid, str) and ID_RE.match(vid):
+            vid = canonical_id(vid)
+            rank = _severity_rank(severity)
+            ids[vid] = min(rank, ids.get(vid, rank))
     return ids
 
 
@@ -318,6 +320,7 @@ def run(
     *,
     entries_dir: Path = CVENOW_ENTRIES_DIR,
     check_dir: Path = CVENOW_CHECK_DIR,
+    match_dir: Path = MATCH_DIR,
     max_age_days: float = 7.0,
     now: Callable[[], _dt.datetime] = lambda: _dt.datetime.now(_dt.timezone.utc),
 ) -> dict[str, Any]:
@@ -366,7 +369,7 @@ def run(
         if client.stopped_reason:
             break
 
-    checks, check_stats = run_checks(scan, client, check_dir=check_dir, now=now)
+    checks, check_stats = run_checks(scan, client, check_dir=check_dir, match_dir=match_dir, now=now)
 
     entries = {vid: normalize_entry(vid, c) for vid, c in sorted(cache.items()) if c}
     found = sum(1 for e in entries.values() if e["found"])
@@ -403,9 +406,12 @@ def run_checks(
     client: Client,
     *,
     check_dir: Path = CVENOW_CHECK_DIR,
+    match_dir: Path = MATCH_DIR,
     now: Callable[[], _dt.datetime] = lambda: _dt.datetime.now(_dt.timezone.utc),
 ) -> tuple[dict[str, Any], dict[str, int]]:
-    """POST /check once per distinct Go package list (cached), mapped back to each image."""
+    """POST /check once per distinct Go package list (cached), mapped back to each image.
+
+    Only 'ok' images used by a latest chart version (priority 0) that have Go modules are checked."""
     stats = {"images": 0, "fetched": 0, "cached": 0, "stale": 0, "errors": 0, "not_fetched": 0}
     checks: dict[str, Any] = {}
     results: dict[str, tuple[str, str | None, list[dict[str, Any]]]] = {}
@@ -434,7 +440,9 @@ def run_checks(
         return res
 
     for canonical, image in sorted((scan.get("images") or {}).items()):
-        packages = image_packages(image.get("go_modules") or [])
+        if image.get("status") != "ok" or (image.get("priority") or 0) != 0 or not image.get("go_modules"):
+            continue
+        packages = image_packages((match.load(match_dir, image["digest"]) or {}).get("go") or [])
         if not packages:
             continue
         stats["images"] += 1
@@ -454,6 +462,7 @@ def run_checks(
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description="Enrich scan.json vulnerability IDs with cve.now.")
     parser.add_argument("--scan", type=Path, default=SCAN_FILE, help="scan.json path")
+    parser.add_argument("--match-dir", type=Path, default=MATCH_DIR, help="per-digest match cache (Go modules)")
     parser.add_argument("--output", type=Path, default=ENRICHMENT_FILE, help="enrichment.json path")
     parser.add_argument("--budget", type=int, default=3000, help="max HTTP requests this run (retries count)")
     parser.add_argument("--rps", type=float, default=1.0, help="max requests per second")
@@ -465,8 +474,11 @@ def main(argv: list[str] | None = None) -> int:
     if not isinstance(scan, dict):
         log(f"cve.now: cannot read {args.scan}")
         return 1
+    if err := match.scan_format_error(scan, args.scan):
+        log(f"cve.now: {err}")
+        return 1
     client = Client(UrllibTransport(args.timeout), budget=args.budget, rps=args.rps)
-    result = run(scan, client, max_age_days=args.max_age_days)
+    result = run(scan, client, match_dir=args.match_dir, max_age_days=args.max_age_days)
     write_json(args.output, result)
     s = result["stats"]
     log(

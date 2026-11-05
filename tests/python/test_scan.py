@@ -11,8 +11,8 @@ from unittest import mock
 from pathlib import Path
 from typing import Any
 
-from vulnscan import scan
-from vulnscan.scan import Proc, Scanner, build_scan, classify_error, pick_cvss, summarize_report
+from vulnscan import match, scan
+from vulnscan.scan import Proc, Scanner, build_scan, classify_error, pick_cvss, scan_order, summarize_report
 
 FIXTURES = Path(__file__).parent / "fixtures" / "scan"
 TRIVY_REPORT = json.loads((FIXTURES / "trivy_ingress_nginx.json").read_text())
@@ -203,6 +203,7 @@ class ScannerTestBase(unittest.TestCase):
         self._tmp.cleanup()
 
     def scanner(self, runner: FakeRunner, cache: dict | None = None, **kw: Any) -> Scanner:
+        kw.setdefault("match_dir", Path(self._tmp.name) / "match")
         return Scanner(runner=runner, sbom_dir=self.sbom_dir, resolve_cache=cache if cache is not None else {},
                        now=lambda: self.clock, **kw)
 
@@ -297,8 +298,17 @@ class ScanFlowTest(ScannerTestBase):
         self.assertEqual(redis["scanned_at"], self.clock)
         self.assertEqual(redis["os"]["family"], "alpine")
         self.assertEqual(redis["counts"]["CRITICAL"], 1)
-        self.assertTrue(redis["go_modules"])
+        self.assertEqual(redis["go_modules"], 4)  # a count; the modules themselves live in the match cache
         self.assertEqual(images["quay.io/a/alias:1"]["counts"], redis["counts"])
+        # scan.json carries no findings: the detail is in the per-digest match, plus a global ids map
+        self.assertEqual(doc["format_version"], match.FORMAT_VERSION)
+        self.assertEqual(doc["ids"], {vid: scan.SEVERITIES[r] for vid, r in sorted(match.vuln_ids(
+            match.compact(summarize_report(TRIVY_REPORT), None)).items())})
+        self.assertEqual(doc["ids"]["GO-2024-2887"], doc["ids"]["CVE-2024-24790"])  # vendor ID inherits severity
+        m = match.load(Path(self._tmp.name) / "match", D1)
+        self.assertEqual((m["format_version"], m["matched_at"], m["os"]), (2, self.clock, redis["os"]))
+        self.assertEqual(len(m["go"]), 4)
+        self.assertEqual(len({row[0] for row in m["vulns"]}), len(m["vulns"]))
         pinned = images["registry.k8s.io/ingress-nginx/controller:v1@" + D2]
         self.assertEqual((pinned["status"], pinned["pulled_from"]), ("ok", "registry.k8s.io/ingress-nginx/controller"))
         bad = images["docker.io/bitnami/redis:bad"]
@@ -309,8 +319,9 @@ class ScanFlowTest(ScannerTestBase):
         self.assertEqual((inv["status"], inv["reason"]), ("invalid", "templated"))
         for rec in images.values():
             for key in ("status", "reason", "digest", "pulled_from", "stale_resolve", "os", "sbom_cached",
-                        "scanned_at", "findings", "go_modules", "counts"):
+                        "scanned_at", "go_modules", "counts", "priority"):
                 self.assertIn(key, rec)
+            self.assertNotIn("findings", rec)
 
         image_calls = [c for c in runner.calls if c[:2] == ["trivy", "image"]]
         self.assertEqual(sorted(c[-1] for c in image_calls),
@@ -359,6 +370,19 @@ class ScanFlowTest(ScannerTestBase):
         self.assertEqual(statuses["ghcr.io/a/main:1"], ("ok", None))
         self.assertEqual(statuses["ghcr.io/b/main:1"], ("ok", None))
         self.assertEqual(doc["stats"]["skipped"], 1)
+
+    def test_quota_follows_inventory_priority(self) -> None:
+        # priority beats role and chart count: an old-version-only image waits for latest-version ones.
+        old = dict(img("ghcr.io", "a/old", "1", D1), priority=3, charts=["o/c@0.1.0", "o/d@0.1.0"])
+        test_latest = dict(img("ghcr.io", "z/test", "1", D2, roles=("test",)), priority=0)
+        main_latest = dict(img("ghcr.io", "b/main", "1", D3), priority=0)
+        images = {"ghcr.io/a/old:1": old, "ghcr.io/z/test:1": test_latest, "ghcr.io/b/main:1": main_latest}
+        self.assertEqual(scan_order(images), ["ghcr.io/b/main:1", "ghcr.io/z/test:1", "ghcr.io/a/old:1"])
+        doc = build_scan({"images": images}, self.scanner(FakeRunner(), max_new_sboms=2))
+        self.assertEqual(doc["images"]["ghcr.io/a/old:1"]["reason"], "sbom_quota")
+        self.assertEqual(doc["images"]["ghcr.io/z/test:1"]["status"], "ok")
+        limited = build_scan({"images": images}, self.scanner(FakeRunner()), limit=1)
+        self.assertEqual(list(limited["images"]), ["ghcr.io/b/main:1"])
 
     def test_sbom_failure_falls_back_and_classifies(self) -> None:
         images = {"docker.io/library/gone:1": img("docker.io", "library/gone", "1", D1),
@@ -424,6 +448,148 @@ class ScanFlowTest(ScannerTestBase):
         self.assertEqual(doc["stats"]["limit"], 2)
 
 
+class BoundedWorkTest(ScannerTestBase):
+    """Per-run work stays bounded as the cache grows (scope 'all')."""
+
+    def test_old_images_use_longer_resolve_max_age(self) -> None:
+        cache = {c: {"digest": D1, "resolved_at": "2026-11-03T00:00:00Z", "status": "ok"}
+                 for c in ("quay.io/a/new:1", "quay.io/a/old:1")}
+        runner = FakeRunner({"quay.io/a/new:1": D2, "quay.io/a/old:1": D2})
+        s = self.scanner(runner, cache, resolve_max_age_hours=20, resolve_max_age_hours_old=168)
+        self.assertEqual(s.resolve("quay.io/a/new:1", dict(img("quay.io", "a/new", "1"), priority=0))["digest"], D2)
+        self.assertEqual(s.resolve("quay.io/a/old:1", dict(img("quay.io", "a/old", "1"), priority=4))["digest"], D1)
+        self.assertEqual([c[4] for c in runner.calls], ["quay.io/a/new:1"])
+
+    def test_sbom_failures_back_off_and_do_not_use_quota(self) -> None:
+        images = {"ghcr.io/a/slow:1": dict(img("ghcr.io", "a/slow", "1", D1), priority=0),
+                  "ghcr.io/a/next:1": dict(img("ghcr.io", "a/next", "1", D2), priority=1)}
+        failures: dict = {}
+        runner = FakeRunner(trivy_errors={"ghcr.io/a/slow@" + D1: "context deadline exceeded"})
+        doc = build_scan({"images": images}, self.scanner(runner, sbom_failures=failures, max_new_sboms=1))
+        self.assertEqual(doc["images"]["ghcr.io/a/slow:1"]["reason"], "timeout")
+        self.assertEqual(doc["images"]["ghcr.io/a/next:1"]["reason"], "sbom_quota")
+        self.assertEqual(failures[D1], {"reason": "timeout", "attempted_at": self.clock, "attempts": 1})
+
+        # next day (< 1 day backoff): not retried, and the quota goes to the next image
+        self.clock = "2026-11-05T06:00:00Z"
+        runner2 = FakeRunner(trivy_errors=runner.trivy_errors)
+        doc2 = build_scan({"images": images}, self.scanner(runner2, sbom_failures=failures, max_new_sboms=1))
+        self.assertEqual([c[-1] for c in runner2.calls if c[:2] == ["trivy", "image"]], ["ghcr.io/a/next@" + D2])
+        self.assertEqual((doc2["images"]["ghcr.io/a/slow:1"]["status"], doc2["images"]["ghcr.io/a/slow:1"]["reason"]),
+                         ("unavailable", "timeout"))
+        self.assertEqual(doc2["images"]["ghcr.io/a/next:1"]["status"], "ok")
+        self.assertEqual(doc2["stats"]["sbom_backoff"], 1)
+
+        # after the backoff it is retried; a second failure doubles the wait, a success clears it
+        self.clock = "2026-11-05T13:00:00Z"
+        build_scan({"images": images}, self.scanner(FakeRunner(trivy_errors=runner.trivy_errors),
+                                                    sbom_failures=failures))
+        self.assertEqual(failures[D1]["attempts"], 2)
+        self.clock = "2026-11-06T14:00:00Z"  # 25h later: still inside the 2-day backoff
+        self.assertEqual(self.scanner(FakeRunner(), sbom_failures=failures).in_backoff(D1), "timeout")
+        self.clock = "2026-11-07T14:00:00Z"
+        build_scan({"images": images}, self.scanner(FakeRunner(), sbom_failures=failures))
+        self.assertNotIn(D1, failures)
+
+    def test_rate_limited_is_not_backed_off(self) -> None:
+        failures = {D1: {"reason": "rate_limited", "attempted_at": self.clock, "attempts": 3}}
+        self.assertIsNone(self.scanner(FakeRunner(), sbom_failures=failures).in_backoff(D1))
+
+    def test_rematch_cache_and_quota(self) -> None:
+        match_dir = Path(self._tmp.name) / "match"
+        images = {"ghcr.io/a/latest:1": dict(img("ghcr.io", "a/latest", "1", D1), priority=0),
+                  "ghcr.io/a/old:1": dict(img("ghcr.io", "a/old", "1", D2), priority=2),
+                  "ghcr.io/a/older:1": dict(img("ghcr.io", "a/older", "1", D3), priority=3)}
+        kw = {"match_dir": match_dir, "max_rematch": 1, "rematch_max_age_hours": 168}
+        doc = build_scan({"images": images}, self.scanner(FakeRunner(), **kw))
+        st = {c: (r["status"], r["reason"]) for c, r in doc["images"].items()}
+        # latest always rematched; one old digest within the quota, the other waits (pending, not an error)
+        self.assertEqual(st["ghcr.io/a/latest:1"], ("ok", None))
+        self.assertEqual(st["ghcr.io/a/old:1"], ("ok", None))
+        self.assertEqual(st["ghcr.io/a/older:1"], ("skipped", "rematch_quota"))
+        self.assertTrue((match_dir / f"{'2' * 64}.json.gz").is_file())
+
+        # next day: old's cached match is fresh → reused without trivy; older (missing) gets the quota
+        first_clock, self.clock = self.clock, "2026-11-05T12:00:00Z"
+        runner = FakeRunner()
+        doc2 = build_scan({"images": images}, self.scanner(runner, **kw))
+        self.assertEqual(runner.count("trivy", "sbom"), 2)
+        old = doc2["images"]["ghcr.io/a/old:1"]
+        self.assertEqual((old["status"], old["scanned_at"]), ("ok", first_clock))
+        self.assertEqual(old["counts"], doc2["images"]["ghcr.io/a/latest:1"]["counts"])
+        self.assertEqual(doc2["images"]["ghcr.io/a/older:1"]["scanned_at"], self.clock)
+        self.assertEqual(doc2["stats"]["match_reused"], 1)
+
+        # a week later both old matches are due; the oldest goes first
+        self.clock = "2026-11-11T13:00:00Z"
+        runner3 = FakeRunner()
+        doc3 = build_scan({"images": images}, self.scanner(runner3, **kw))
+        self.assertEqual(doc3["images"]["ghcr.io/a/old:1"]["scanned_at"], self.clock)
+        self.assertEqual(doc3["images"]["ghcr.io/a/older:1"]["scanned_at"], "2026-11-05T12:00:00Z")
+
+    def test_failed_rematch_falls_back_to_cached_match(self) -> None:
+        match_dir = Path(self._tmp.name) / "match"
+        images = {"ghcr.io/a/b:1": dict(img("ghcr.io", "a/b", "1", D1), priority=0)}
+        build_scan({"images": images}, self.scanner(FakeRunner(), match_dir=match_dir))
+
+        class Failing(FakeRunner):
+            def __call__(self, cmd: list[str], timeout: float) -> Proc:
+                if cmd[:2] == ["trivy", "sbom"]:
+                    return Proc(1, "", "FATAL boom")
+                return super().__call__(cmd, timeout)
+
+        first_clock, self.clock = self.clock, "2026-11-05T12:00:00Z"
+        rec = build_scan({"images": images}, self.scanner(Failing(), match_dir=match_dir))["images"]["ghcr.io/a/b:1"]
+        self.assertEqual((rec["status"], rec["scanned_at"]), ("ok", first_clock))
+
+    def test_old_format_match_is_migrated_not_rematched(self) -> None:
+        match_dir = Path(self._tmp.name) / "match"
+        self.sbom_dir.mkdir(parents=True)
+        (self.sbom_dir / f"{'2' * 64}.cdx.json.gz").write_bytes(gzip.compress(b'{"bomFormat": "CycloneDX"}'))
+        result = summarize_report(TRIVY_REPORT)
+        scan.write_json(match.path(match_dir, D2), {"matched_at": "2026-11-04T06:00:00Z", "result": result})
+        images = {"ghcr.io/a/old:1": dict(img("ghcr.io", "a/old", "1", D2), priority=2)}
+        runner = FakeRunner()
+        doc = build_scan({"images": images}, self.scanner(runner, max_rematch=10, match_dir=match_dir))
+        rec = doc["images"]["ghcr.io/a/old:1"]
+        self.assertEqual(runner.count("trivy", "sbom"), 0)  # fresh format-1 match: re-derived, no rematch
+        self.assertEqual((rec["status"], rec["scanned_at"], rec["counts"]), ("ok", "2026-11-04T06:00:00Z",
+                                                                             result["counts"]))
+        self.assertEqual(scan.read_json(match.path(match_dir, D2)),
+                         match.compact(result, "2026-11-04T06:00:00Z"))  # rewritten in the current format
+        self.assertIn("CVE-2024-21626", doc["ids"])
+
+        # an unknown format is never read as data: the digest counts as never matched and is rematched
+        scan.write_json(match.path(match_dir, D2), {"format_version": 99, "matched_at": "2026-11-04T06:00:00Z",
+                                                    "vulns": [["CVE-1999-1", "CRITICAL"]]})
+        runner = FakeRunner()
+        doc = build_scan({"images": images}, self.scanner(runner, max_rematch=10, match_dir=match_dir))
+        self.assertEqual(runner.count("trivy", "sbom"), 1)
+        self.assertEqual(doc["images"]["ghcr.io/a/old:1"]["scanned_at"], self.clock)
+        self.assertNotIn("CVE-1999-1", doc["ids"])
+        self.assertEqual(match.load(match_dir, D2)["format_version"], match.FORMAT_VERSION)
+
+        # a truncated gzip (e.g. an interrupted cache restore) is also missing, not fatal: rematched
+        p = match.path(match_dir, D2)
+        p.write_bytes(p.read_bytes()[:20])
+        runner = FakeRunner()
+        doc = build_scan({"images": images}, self.scanner(runner, max_rematch=10, match_dir=match_dir))
+        self.assertEqual(runner.count("trivy", "sbom"), 1)
+        self.assertEqual(doc["images"]["ghcr.io/a/old:1"]["status"], "ok")
+        self.assertIsNotNone(match.load(match_dir, D2))
+
+    def test_time_budget_stops_new_work_but_writes_results(self) -> None:
+        ticks = iter([0.0] + [10_000.0] * 50)
+        images = {"ghcr.io/a/b:1": img("ghcr.io", "a/b", "1", D1)}
+        runner = FakeRunner()
+        doc = build_scan({"images": images},
+                         self.scanner(runner, time_budget_seconds=60, clock=lambda: next(ticks)))
+        rec = doc["images"]["ghcr.io/a/b:1"]
+        self.assertEqual((rec["status"], rec["reason"]), ("skipped", "time_budget"))
+        self.assertEqual(runner.count("trivy", "image"), 0)
+        self.assertTrue(doc["stats"]["time_budget_exceeded"])
+
+
 class MainTest(unittest.TestCase):
     def test_cli_writes_scan_and_resolve_cache(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
@@ -435,11 +601,14 @@ class MainTest(unittest.TestCase):
             with mock.patch.object(scan, "run_command", runner), mock.patch.dict("os.environ", env):
                 rc = scan.main(["--inventory", str(inv), "--output", str(root / "out" / "scan.json"),
                                 "--sbom-dir", str(root / "sbom"), "--resolve-file", str(root / "resolve.json"),
-                                "--workers", "1"])
+                                "--sbom-failures-file", str(root / "failures.json"),
+                                "--match-dir", str(root / "match"), "--workers", "1"])
             self.assertEqual(rc, 0)
             out = json.loads((root / "out" / "scan.json").read_text())
             self.assertEqual(out["images"]["ghcr.io/a/b:1"]["status"], "ok")
             self.assertEqual(json.loads((root / "resolve.json").read_text())["ghcr.io/a/b:1"]["digest"], D1)
+            self.assertEqual(json.loads((root / "failures.json").read_text()), {})
+            self.assertTrue((root / "match" / f"{'1' * 64}.json.gz").is_file())
 
     def test_cli_missing_inventory(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:

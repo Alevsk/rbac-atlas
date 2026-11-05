@@ -10,7 +10,7 @@ from pathlib import Path
 from typing import Any, Callable
 from unittest import mock
 
-from vulnscan import cvenow
+from vulnscan import cvenow, match
 from vulnscan.common import read_json, write_json
 
 FIXTURES = Path(__file__).parent / "fixtures" / "cvenow"
@@ -38,14 +38,22 @@ def finding(vid: str, severity: str = "MEDIUM", vendor_ids: list[str] | None = N
     return {"id": vid, "pkg": "p", "installed": "1", "severity": severity, "vendor_ids": vendor_ids or []}
 
 
-def scan_doc(images: dict[str, list[dict[str, Any]]], go: dict[str, list[list[str]]] | None = None) -> dict:
-    go = go or {}
-    return {
-        "images": {
-            ref: {"status": "ok", "findings": findings, "go_modules": go.get(ref, [])}
-            for ref, findings in images.items()
-        }
-    }
+def scan_doc(images: dict[str, list[dict[str, Any]]], go: dict[str, list[list[str]]] | None = None,
+             match_dir: Path | None = None, priority: dict[str, int] | None = None) -> dict:
+    """New-layout scan.json: findings only feed the global 'ids' map; Go modules go to match_dir."""
+    go, priority = go or {}, priority or {}
+    out: dict[str, Any] = {"format_version": match.FORMAT_VERSION, "images": {}, "ids": {}}
+    for i, (ref, findings) in enumerate(images.items(), 1):
+        digest = f"sha256:{i:064x}"
+        doc = match.compact({"findings": findings, "go_modules": go.get(ref, [])}, "2026-11-04T00:00:00Z")
+        if match_dir is not None:
+            match.store(match_dir, digest, doc)
+        out["images"][ref] = {"status": "ok", "digest": digest, "go_modules": len(doc["go"]),
+                              "priority": priority.get(ref, 0)}
+        for vid, rank in match.vuln_ids(doc).items():
+            if vid not in out["ids"] or rank < cvenow.SEVERITIES.index(out["ids"][vid]):
+                out["ids"][vid] = cvenow.SEVERITIES[rank]
+    return out
 
 
 class FakeTransport:
@@ -103,6 +111,7 @@ class Base(unittest.TestCase):
         root = Path(self.tmp.name)
         self.entries_dir = root / "entries"
         self.check_dir = root / "check"
+        self.match_dir = root / "match"
         self.sleeps: list[float] = []
 
     def tearDown(self) -> None:
@@ -113,7 +122,8 @@ class Base(unittest.TestCase):
 
     def run_stage(self, scan: dict, client: cvenow.Client, now: _dt.datetime = NOW, **kw: Any) -> dict:
         return cvenow.run(
-            scan, client, entries_dir=self.entries_dir, check_dir=self.check_dir, now=lambda: now, **kw
+            scan, client, entries_dir=self.entries_dir, check_dir=self.check_dir, match_dir=self.match_dir,
+            now=lambda: now, **kw
         )
 
     def seed(self, vid: str, fetched_at: _dt.datetime, status: int = 200) -> None:
@@ -427,7 +437,7 @@ class TestChecks(Base):
             "b": [["stdlib", "1.21"], ["github.com/grafana/grafana", "10.3.3"]],  # same set, other order
             "c": [],
         }
-        scan = scan_doc({"a": [], "b": [], "c": []}, go=go)
+        scan = scan_doc({"a": [], "b": [], "c": []}, go=go, match_dir=self.match_dir)
         t = FakeTransport(default_handler())
         result = self.run_stage(scan, self.client(t))
         posts = [c for c in t.calls if c[0] == "POST"]
@@ -452,7 +462,7 @@ class TestChecks(Base):
         self.assertEqual(len([c for c in t3.calls if c[0] == "POST"]), 1)
 
     def test_check_uses_stale_cache_when_stopped(self) -> None:
-        scan = scan_doc({"a": []}, go={"a": [["m", "v1"]]})
+        scan = scan_doc({"a": []}, go={"a": [["m", "v1"]]}, match_dir=self.match_dir)
         self.run_stage(scan, self.client(FakeTransport(default_handler())))
         t = FakeTransport(default_handler())
         result = self.run_stage(scan, self.client(t, budget=2), now=NOW + _dt.timedelta(days=2))
@@ -461,19 +471,34 @@ class TestChecks(Base):
         self.assertEqual(len(result["checks"]["a"]["matches"]), 3)
 
     def test_check_not_fetched_when_no_budget_and_no_cache(self) -> None:
-        scan = scan_doc({"a": []}, go={"a": [["m", "v1"]]})
+        scan = scan_doc({"a": []}, go={"a": [["m", "v1"]]}, match_dir=self.match_dir)
         result = self.run_stage(scan, self.client(FakeTransport(default_handler()), budget=2))
         self.assertEqual(result["checks"]["a"]["status"], "not_fetched")
         self.assertEqual(result["checks"]["a"]["matches"], [])
         self.assertFalse(self.check_dir.exists() and any(self.check_dir.iterdir()))
 
     def test_check_batches_large_package_lists(self) -> None:
-        scan = scan_doc({"a": []}, go={"a": [[f"m{i:05d}", "v1"] for i in range(cvenow.CHECK_BATCH + 5)]})
+        scan = scan_doc({"a": []}, go={"a": [[f"m{i:05d}", "v1"] for i in range(cvenow.CHECK_BATCH + 5)]},
+                        match_dir=self.match_dir)
         t = FakeTransport(default_handler())
         result = self.run_stage(scan, self.client(t))
         sizes = [len(b["packages"]) for b in t.bodies if b]
         self.assertEqual(sizes, [cvenow.CHECK_BATCH, 5])
         self.assertEqual(len(result["checks"]["a"]["matches"]), 6)
+
+
+    def test_check_only_latest_ok_images_read_from_match_cache(self) -> None:
+        go = {name: [["m", "v1"]] for name in ("latest", "old", "failed")}
+        scan = scan_doc({"latest": [], "old": [], "failed": []}, go=go, match_dir=self.match_dir,
+                        priority={"old": 3})
+        scan["images"]["failed"]["status"] = "unavailable"
+        result = self.run_stage(scan, self.client(FakeTransport(default_handler())))
+        self.assertEqual(set(result["checks"]), {"latest"})
+        self.assertEqual(result["stats"]["checks"]["images"], 1)
+        # without its match document an image has no module list to check
+        match.path(self.match_dir, scan["images"]["latest"]["digest"]).unlink()
+        result = self.run_stage(scan, self.client(FakeTransport(default_handler())))
+        self.assertEqual(result["checks"], {})
 
 
 class TestMain(Base):
@@ -496,6 +521,17 @@ class TestMain(Base):
         self.assertEqual(out["stopped_reason"], "unreachable")
         self.assertEqual(out["source"], "https://cve.now")
         self.assertEqual(out["entries"], {})
+
+    def test_main_refuses_old_format_scan(self) -> None:
+        root = Path(self.tmp.name)
+        scan_path, out_path = root / "scan.json", root / "enrichment.json"
+        write_json(scan_path, {"images": {"img": {"status": "ok", "findings": [finding("CVE-2024-0001", "HIGH")]}}})
+        transport = mock.Mock(side_effect=AssertionError("no request expected"))
+        with mock.patch.object(cvenow.UrllibTransport, "__call__", transport), mock.patch.object(cvenow, "log") as log:
+            rc = cvenow.main(["--scan", str(scan_path), "--output", str(out_path)])
+        self.assertEqual(rc, 1)
+        self.assertIn("format_version", log.call_args[0][0])
+        self.assertFalse(out_path.exists())
 
 
 if __name__ == "__main__":

@@ -1,0 +1,64 @@
+{{- /* CVE summary injected into a Workloads table Image cell. Context: canonical image ref (cache key). */ -}}
+{{- $c := . -}}
+{{- $img := partial "vulns/image-record.html" $c -}}
+{{- $st := $img.st | default "pending" -}}
+{{- if not $c -}}
+{{- $st = "invalid" -}}
+{{- end -}}
+<div class="vuln-cell">
+  {{- if eq $st "ok" -}}
+  {{- $n := $img.n | default (slice 0 0 0 0 0) -}}
+  {{- $total := int (add (index $n 0) (index $n 1) (index $n 2) (index $n 3) (index $n 4)) -}}
+  <div class="vuln-cell__summary">
+    {{ partialCached "vulns/level-badge.html" $img.lvl $img.lvl }}
+    {{ with $img.kev }}<span class="vuln-chip vuln-chip--kev"
+      title="In CISA Known Exploited Vulnerabilities">KEV {{ . }}</span>{{ end }}
+    {{ with $img.lk }}<span class="vuln-chip vuln-chip--likely"
+      title="Critical/High with EPSS, Metasploit or Exploit-DB signal">Likely {{ . }}</span>{{ end }}
+    <span class="vuln-counts">{{ index $n 0 }} critical · {{ index $n 1 }} high</span>
+  </div>
+  {{- if $img.top -}}
+  <details class="vuln-details">
+    <summary>Top {{ len $img.top }} of {{ $total }} CVEs</summary>
+    <ul class="vuln-list">
+      {{- range $img.top -}}
+      {{- $id := index . 0 -}}
+      {{- $sev := lower (index . 1 | default "unknown") -}}
+      <li>
+        <a href="https://cve.now/{{ $id }}" target="_blank" rel="noopener">{{ $id }}</a>
+        <span class="vuln-sev vuln-sev--{{ $sev }}">{{ title $sev }}</span>
+        {{ with index . 2 }}<span class="vuln-cvss">CVSS {{ printf "%.1f" (float .) }}</span>{{ end }}
+        {{ if eq (int (index . 3)) 1 }}<span class="vuln-chip vuln-chip--kev">KEV</span>{{ end }}
+        {{ if eq (int (index . 4)) 1 }}<span class="vuln-chip vuln-chip--likely">Likely</span>{{ end }}
+        <span class="vuln-pkg">{{ index . 6 }}</span>
+        {{ with index . 5 }}
+        <span class="vuln-fix">fixed in {{ . }}</span>
+      {{ else }}
+        <span class="vuln-fix vuln-fix--none">no fix</span>
+        {{ end }}
+      </li>
+      {{- end -}}
+    </ul>
+    <p class="vuln-meta">
+      {{ with $img.os }}OS {{ . }}{{ if $img.eosl }} <span class="vuln-chip vuln-chip--eosl">end of support</span>{{ end }} ·{{ end }}
+      {{ with $img.fx }}fixable: {{ index . 0 }} critical, {{ index . 1 }} high ·{{ end }}
+      scanned {{ $img.at }} as <code>{{ $c }}</code>
+    </p>
+  </details>
+  {{- else if eq $total 0 -}}
+  <p class="vuln-meta">No known CVEs · scanned {{ $img.at }}</p>
+  {{- end -}}
+  {{- else if eq $st "unavailable" -}}
+  <div class="vuln-cell__summary">
+    <span class="vuln-badge vuln-lvl--unknown">Unavailable</span>
+    {{ with $img.rs }}<span class="vuln-meta">{{ replace . "_" " " }}</span>{{ end }}
+  </div>
+  {{- else if eq $st "invalid" -}}
+  <div class="vuln-cell__summary">
+    <span class="vuln-badge vuln-lvl--unknown">Not scannable</span>
+    {{ with $img.rs }}<span class="vuln-meta">{{ replace . "_" " " }}</span>{{ end }}
+  </div>
+  {{- else -}}
+  <div class="vuln-cell__summary">{{ partialCached "vulns/level-badge.html" "pending" "pending" }}</div>
+  {{- end -}}
+</div>

@@ -65,11 +65,34 @@ class WorkloadTest(unittest.TestCase):
         )
         self.assertEqual(inv.sa_rbac_risk(index, "a", "ns1"), "High")
         self.assertEqual(inv.sa_rbac_risk(index, "a", ""), "Critical")
-        self.assertEqual(inv.sa_rbac_risk(index, "a", "ns3"), None)
+        # no permission in the workload's namespace: fall back to the SA name (json2hugo groups by name)
+        self.assertEqual(inv.sa_rbac_risk(index, "a", "ns3"), "Critical")
         self.assertEqual(inv.sa_rbac_risk(index, "b", "anything"), "Medium")
         self.assertIsNone(inv.sa_rbac_risk(index, "c", "ns1"))
         self.assertIsNone(inv.sa_rbac_risk(index, "", "ns1"))
         self.assertIsNone(inv.sa_rbac_risk(index, "missing", "ns1"))
+
+    def test_sa_rbac_risk_falls_back_to_name_across_namespaces(self) -> None:
+        # istiod: workload rendered in 'default', all bindings in 'istio-system'
+        index = inv.sa_risk_index(
+            [
+                {"serviceAccountName": "istiod", "namespace": "istio-system", "riskLevel": "High"},
+                {"serviceAccountName": "istiod", "namespace": "istio-system", "riskLevel": "Critical"},
+                {"serviceAccountName": "istiod", "namespace": "istio-system", "riskLevel": "Low"},
+            ]
+        )
+        self.assertEqual(inv.sa_rbac_risk(index, "istiod", "default"), "Critical")
+        manifest = {
+            "serviceAccountPermissions": [
+                {"serviceAccountName": "istiod", "namespace": "istio-system", "riskLevel": "Critical"}
+            ],
+            "serviceAccountWorkloads": [
+                {"serviceAccountName": "istiod", "namespace": "default", "workloadType": "Deployment",
+                 "workloadName": "istiod", "containerName": "discovery", "image": "registry.istio.io/release/pilot:1.30.3"}
+            ],
+        }
+        (entry,) = inv.chart_images(manifest)
+        self.assertEqual(entry["workloads"][0]["sa_rbac_risk"], "Critical")
 
 
 class BuildInventoryTest(unittest.TestCase):
@@ -101,8 +124,8 @@ class BuildInventoryTest(unittest.TestCase):
         self.assertEqual(web["role"], "main")
         self.assertEqual(web["workloads"][0]["sa_rbac_risk"], "Critical")
         self.assertEqual(set(web["workloads"][0]), {"serviceAccountName", "namespace", "workloadType", "workloadName", "containerName", "role", "sa_rbac_risk"})
-        # namespace mismatch: 'other' only has permissions in kube-system
-        self.assertIsNone(images["registry-1.docker.io/bitnami/redis:latest"]["workloads"][0]["sa_rbac_risk"])
+        # namespace mismatch: 'other' only has permissions in kube-system -> falls back to the SA name
+        self.assertEqual(images["registry-1.docker.io/bitnami/redis:latest"]["workloads"][0]["sa_rbac_risk"], "High")
         self.assertIsNone(images["{{ .Values.image }}"]["canonical"])
 
     def test_images_map_merges_aliases(self) -> None:
@@ -130,6 +153,12 @@ class BuildInventoryTest(unittest.TestCase):
         self.assertEqual(stats["test_only_images"], 1)
         self.assertEqual(stats["flags"], {"digest_pinned": 1, "implicit_latest": 1, "mutable_tag": 2})
 
+    def test_latest_scope_version_fields(self) -> None:
+        web = self.charts["acme/web"]
+        self.assertEqual((web["page_version"], web["key"], web["latest"]), ("1.10.0", "acme/web/1.10.0", True))
+        self.assertEqual({img["priority"] for img in self.doc["images"].values()}, {0})
+        self.assertEqual(self.doc["stats"]["versions"], 2)
+
     def test_cli_writes_output(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             out = Path(tmp) / "out" / "inventory.json"
@@ -139,6 +168,82 @@ class BuildInventoryTest(unittest.TestCase):
             self.assertIn("2 charts", buf.getvalue())
             data = json.loads(out.read_text())
             self.assertEqual(len(data["images"]), 5)
+
+
+
+def _manifest(version: str, image: str) -> dict:
+    return {"metadata": {"version": version},
+            "serviceAccountWorkloads": [{"serviceAccountName": "sa", "namespace": "ns", "workloadType": "Deployment",
+                                         "workloadName": "w", "containerName": "c", "image": image}],
+            "serviceAccountPermissions": [{"serviceAccountName": "sa", "namespace": "ns", "riskLevel": "Critical"}]}
+
+
+class AllScopeTest(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls) -> None:
+        cls.doc = inv.build_inventory(FIXTURES, "all")
+        cls.by_key = {c["key"]: c for c in cls.doc["charts"]}
+
+    def test_every_version_with_latest_flag(self) -> None:
+        self.assertEqual(self.doc["scope"], "all")
+        self.assertEqual(sorted(self.by_key), ["acme/web/1.10.0", "acme/web/1.11.0-rc1", "acme/web/1.9.0",
+                                               "beta/tool/0.1.0-alpha.1", "beta/tool/0.1.0-alpha.2"])
+        self.assertEqual(sorted(k for k, c in self.by_key.items() if c["latest"]),
+                         ["acme/web/1.10.0", "beta/tool/0.1.0-alpha.2"])
+        stats = self.doc["stats"]
+        self.assertEqual((stats["charts"], stats["versions"], stats["unique_images"], stats["latest_images"]),
+                         (2, 5, 7, 5))
+        self.assertEqual(stats["prerelease_selected"], 1)  # counted for latest versions only
+
+    def test_priority_and_order(self) -> None:
+        images = self.doc["images"]
+        self.assertEqual(images["docker.io/acme/web:1.10.0"]["priority"], 0)
+        # 1.11.0-rc1 is newer than the latest stable 1.10.0 but not latest: rank 1; 1.9.0: rank 2
+        self.assertEqual(images["docker.io/acme/web:1.11.0-rc1"]["priority"], 1)
+        self.assertEqual(images["docker.io/acme/web:1.9.0"]["priority"], 2)
+        self.assertEqual(list(images)[-2:], ["docker.io/acme/web:1.11.0-rc1", "docker.io/acme/web:1.9.0"])
+        priorities = [img["priority"] for img in images.values()]
+        self.assertEqual(priorities, sorted(priorities))
+
+    def test_shared_image_takes_best_priority(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            d = Path(tmp) / "manifests"
+            d.mkdir()
+            for version, image in (("1.0.0", "x/shared:1"), ("2.0.0", "x/shared:1"), ("3.0.0", "x/new:3")):
+                (d / f"o__c__{version}.json").write_text(json.dumps(_manifest(version, image)))
+            doc = inv.build_inventory(d, "all")
+        self.assertEqual(doc["images"]["docker.io/x/new:3"]["priority"], 0)
+        self.assertEqual(doc["images"]["docker.io/x/shared:1"]["priority"], 1)
+        self.assertEqual(doc["images"]["docker.io/x/shared:1"]["charts"], ["o/c@1.0.0", "o/c@2.0.0"])
+
+    def test_page_version_follows_json2hugo(self) -> None:
+        self.assertEqual(inv.page_version({"metadata": {"version": "v3.18.6-1"}}, "v3.18.6"), "3.18.6-1")
+        self.assertEqual(inv.page_version({}, "v1.0"), "1.0")
+        with tempfile.TemporaryDirectory() as tmp:
+            d = Path(tmp) / "manifests"
+            d.mkdir()
+            # o__c__1.0.0 claims metadata.version 1.1.0, colliding with the real 1.1.0 page: the real one wins
+            (d / "o__c__1.0.0.json").write_text(json.dumps(_manifest("1.1.0", "x/a:1")))
+            (d / "o__c__v1.1.0.json").write_text(json.dumps(_manifest("v1.1.0", "x/b:1")))
+            (d / "o__c__0.9.0.json").write_text(json.dumps(_manifest("v0.9.0-1", "x/c:1")))
+            doc = inv.build_inventory(d, "all")
+        by_key = {c["key"]: c for c in doc["charts"]}
+        self.assertEqual(sorted(by_key), ["o/c/0.9.0-1", "o/c/1.1.0"])
+        self.assertEqual(by_key["o/c/1.1.0"]["version"], "v1.1.0")
+        self.assertEqual(doc["stats"]["page_collisions"], 1)
+
+    def test_bad_scope(self) -> None:
+        with self.assertRaises(ValueError):
+            inv.build_inventory(FIXTURES, "some")
+
+    def test_cli_scope_all(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            out = Path(tmp) / "inventory.json"
+            with redirect_stdout(io.StringIO()) as buf:
+                rc = inv.main(["--manifests", str(FIXTURES), "--scope", "all", "--output", str(out)])
+            self.assertEqual(rc, 0)
+            self.assertIn("5 versions", buf.getvalue())
+            self.assertEqual(json.loads(out.read_text())["scope"], "all")
 
 
 if __name__ == "__main__":

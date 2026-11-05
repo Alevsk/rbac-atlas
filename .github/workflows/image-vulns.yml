@@ -1,23 +1,40 @@
 name: Image Vulnerability Scan
 
-# Phase 1a (calibration, artifact-only): inventory the container images of the latest
-# version of every chart, scan them with Trivy (SBOM-per-digest cache), enrich IDs with
-# cve.now and write a report. Nothing is committed or published; outputs go to the
-# workflow artifact and caches to actions/cache. See docs/image-vulns.md.
+# Inventories the container images of every chart version (or only the latest versions),
+# scans them with Trivy (SBOM-per-digest cache), enriches IDs with cve.now and writes a
+# report (job "scan", read-only, outputs to the workflow artifact and caches to
+# actions/cache). Job "publish" turns that artifact into Hugo data under data/vulns/ and
+# commits it to master with DAILY_UPDATE_TOKEN so the push triggers deploy-to-pages.
+# See docs/image-vulns.md.
 on:
   schedule:
     - cron: "30 6 * * *"
   workflow_dispatch:
     inputs:
+      scope:
+        description: "Chart versions to inventory"
+        type: choice
+        options: ["all", "latest"]
+        default: "all"
       limit:
         description: "Only scan the first N images (empty = all)"
         default: ""
       max_new_sboms:
         description: "Maximum new SBOMs generated this run"
-        default: "200"
+        default: "2500"
       cvenow_budget:
         description: "Maximum cve.now HTTP requests this run"
-        default: "3000"
+        default: "5000"
+      publish:
+        description: "Publish data/vulns to master after a successful scan (master only; requires scope all and no limit)"
+        type: choice
+        options: ["true", "false"]
+        default: "true"
+      allow_drop:
+        description: "Publish even if scanned images/versions drop >20% vs the published data/vulns/meta.json"
+        type: choice
+        options: ["false", "true"]
+        default: "false"
 
 permissions:
   contents: read
@@ -154,19 +171,26 @@ jobs:
 
       - name: Run image vulnerability pipeline
         env:
+          INPUT_SCOPE: ${{ inputs.scope }}
           INPUT_LIMIT: ${{ inputs.limit }}
           INPUT_MAX_NEW_SBOMS: ${{ inputs.max_new_sboms }}
           INPUT_CVENOW_BUDGET: ${{ inputs.cvenow_budget }}
         run: |
           set -euo pipefail
           # Inputs are empty on scheduled runs; validate them as plain integers before use.
+          scope="${INPUT_SCOPE:-all}"
           limit="${INPUT_LIMIT:-}"
-          max_new_sboms="${INPUT_MAX_NEW_SBOMS:-200}"
-          cvenow_budget="${INPUT_CVENOW_BUDGET:-3000}"
+          max_new_sboms="${INPUT_MAX_NEW_SBOMS:-2500}"
+          cvenow_budget="${INPUT_CVENOW_BUDGET:-5000}"
+          [[ "$scope" == "all" || "$scope" == "latest" ]] || { echo "::error::invalid scope: $scope"; exit 1; }
           for v in "$max_new_sboms" "$cvenow_budget" ${limit:+"$limit"}; do
             [[ "$v" =~ ^[0-9]+$ ]] || { echo "::error::invalid numeric input: $v"; exit 1; }
           done
-          make vulns VULN_LIMIT="$limit" MAX_NEW_SBOMS="$max_new_sboms" CVENOW_BUDGET="$cvenow_budget"
+          # The scan stage stops starting new SBOMs/rematches after SCAN_BUDGET_MIN so cve.now, the
+          # report and the uploads still fit in the job timeout (300 min; cve.now at 1 rps with a
+          # 5000-request budget alone takes ~85 min, and in-flight SBOMs may run 11 min past it).
+          make vulns VULN_SCOPE="$scope" VULN_LIMIT="$limit" MAX_NEW_SBOMS="$max_new_sboms" CVENOW_BUDGET="$cvenow_budget" \
+            SCAN_BUDGET_MIN=165
 
       - name: Save vulnscan cache
         if: always() && steps.vulns-cache.outcome == 'success'
@@ -184,6 +208,18 @@ jobs:
           retention-days: 30
           if-no-files-found: warn
 
+      # The publish job only needs these two files. (scan.json is small: per-image vulnerability
+      # detail stays in vulns/.cache/match, which the cache step above persists.)
+      - name: Upload publish inputs
+        uses: actions/upload-artifact@v4
+        with:
+          name: image-vulns-publish
+          path: |
+            vulns/out/inventory.json
+            vulns/out/summary.json
+          retention-days: 7
+          if-no-files-found: error
+
       - name: Job summary
         if: always()
         run: |
@@ -192,3 +228,134 @@ jobs:
           else
             echo "No report.md produced." >> "$GITHUB_STEP_SUMMARY"
           fi
+
+  # Publishes the scan artifact as Hugo data. Security notes:
+  # - The artifact is treated as data only: it is parsed as JSON by vulnscan.publish from the
+  #   master checkout; nothing from it is executed.
+  # - GITHUB_TOKEN stays read-only. The only write credential is DAILY_UPDATE_TOKEN (a PAT, so
+  #   the push triggers deploy-to-pages); it is not persisted in .git/config and is only
+  #   exposed to the final commit/push step, never to `make publish-vulns`.
+  # - Only data/vulns is staged. Runs only for master (a dispatch from another branch scans
+  #   with that branch's code and must not publish).
+  # - Only full runs publish: publish rewrites every version shard and removes the ones it no
+  #   longer produces, so a scope=latest or limit=N dispatch would wipe the data of every other
+  #   version page (inputs are empty on scheduled runs). vulnscan.publish also refuses to write
+  #   when scanned images/versions drop >20% vs the committed meta.json (allow_drop overrides).
+  publish:
+    needs: scan
+    if: >-
+      needs.scan.result == 'success' && github.ref == 'refs/heads/master' &&
+      inputs.publish != 'false' && inputs.scope != 'latest' && inputs.limit == ''
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    permissions:
+      contents: read
+    env:
+      HAS_PUSH_TOKEN: ${{ secrets.DAILY_UPDATE_TOKEN != '' }}
+    steps:
+      - name: Require push token
+        if: env.HAS_PUSH_TOKEN != 'true'
+        run: |
+          echo "::error::secrets.DAILY_UPDATE_TOKEN is not set; cannot publish"
+          exit 1
+
+      - name: Checkout rbac-atlas (master)
+        uses: actions/checkout@v4
+        with:
+          ref: master
+          persist-credentials: false
+          fetch-depth: 1
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v4
+
+      - name: Download scan results
+        uses: actions/download-artifact@v4
+        with:
+          name: image-vulns-publish
+          path: vulns/out
+
+      - name: Validate scan results
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          import json, sys
+          from pathlib import Path
+          out = Path("vulns/out")
+          bad = []
+          for name in ("inventory.json", "summary.json"):
+              f = out / name
+              try:
+                  if not isinstance(json.loads(f.read_text(encoding="utf-8")), dict):
+                      bad.append(f"{name}: not a JSON object")
+              except (OSError, ValueError) as exc:
+                  bad.append(f"{name}: {exc}")
+          for msg in bad:
+              print(f"::error::{msg}")
+          sys.exit(1 if bad else 0)
+          PY
+
+      - name: Build Hugo data
+        env:
+          INPUT_ALLOW_DROP: ${{ inputs.allow_drop }}
+        run: |
+          set -euo pipefail
+          allow=""
+          if [ "${INPUT_ALLOW_DROP:-false}" = "true" ]; then allow=1; fi
+          make publish-vulns VULNS_DIR=vulns VULN_ALLOW_DROP="$allow"
+
+      - name: Validate Hugo data
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          import json, sys
+          from pathlib import Path
+          root = Path("data/vulns")
+          bad = [f"missing {n}" for n in ("meta.json", "landscape.json") if not (root / n).is_file()]
+          files = sorted(root.rglob("*")) if root.is_dir() else []
+          for f in files:
+              if f.is_dir():
+                  continue
+              if f.suffix != ".json":
+                  bad.append(f"unexpected file {f}")
+                  continue
+              try:
+                  json.loads(f.read_text(encoding="utf-8"))
+              except (OSError, ValueError) as exc:
+                  bad.append(f"{f}: {exc}")
+          for msg in bad:
+              print(f"::error::{msg}")
+          print(f"validated {sum(1 for f in files if f.is_file())} files under {root}")
+          sys.exit(1 if bad else 0)
+          PY
+
+      # The daily data job (daily-update.yml) also pushes to master and has no shared
+      # concurrency group, so a push can race it: rebase onto the new master and retry twice.
+      # Only data/vulns is touched here, so the rebase cannot conflict with its commits.
+      - name: Commit and push data/vulns
+        env:
+          PUSH_TOKEN: ${{ secrets.DAILY_UPDATE_TOKEN }}
+        run: |
+          set -euo pipefail
+          git add -A data/vulns
+          if git diff --cached --quiet -- data/vulns; then
+            echo "No changes in data/vulns"
+            exit 0
+          fi
+          git config user.name "GitHub Actions"
+          git config user.email "actions@github.com"
+          git commit -m "vulns update $(date -u +%Y-%m-%d)"
+          remote="https://x-access-token:${PUSH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
+          for attempt in 1 2 3; do
+            if git push "$remote" HEAD:master; then
+              echo "Pushed on attempt ${attempt}"
+              exit 0
+            fi
+            if [ "$attempt" -lt 3 ]; then
+              echo "::warning::push rejected (attempt ${attempt}); rebasing onto master"
+              sleep $((attempt * 15))
+              git pull --rebase --autostash "$remote" master
+            fi
+          done
+          echo "::error::push failed after 3 attempts"
+          exit 1
