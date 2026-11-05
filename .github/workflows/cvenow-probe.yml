@@ -1,0 +1,62 @@
+name: cve.now Coverage Probe
+
+# One-off feasibility check: scan a sample of chart images with Trivy and
+# measure cve.now coverage, latency and rate limiting for the IDs found.
+on:
+  workflow_dispatch:
+    inputs:
+      images:
+        description: "Number of images to scan"
+        default: "40"
+      max_ids:
+        description: "Maximum IDs to look up on cve.now"
+        default: "500"
+
+permissions:
+  contents: read
+
+env:
+  TRIVY_VERSION: "0.76.1"
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - name: Checkout rbac-atlas
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - name: Install Trivy (pinned, checksum verified)
+        run: |
+          base="https://github.com/aquasecurity/trivy/releases/download/v${TRIVY_VERSION}"
+          tarball="trivy_${TRIVY_VERSION}_Linux-64bit.tar.gz"
+          curl -fsSLO "${base}/${tarball}"
+          curl -fsSLO "${base}/trivy_${TRIVY_VERSION}_checksums.txt"
+          grep " ${tarball}\$" "trivy_${TRIVY_VERSION}_checksums.txt" | sha256sum -c -
+          tar xzf "${tarball}" trivy
+          sudo mv trivy /usr/local/bin/trivy
+          trivy --version
+          trivy image --download-db-only -q
+
+      - name: Run probe
+        run: |
+          python3 scripts/cvenow_probe.py \
+            --images "${{ inputs.images }}" \
+            --max-ids "${{ inputs.max_ids }}" \
+            --out probe
+          cat probe/summary.md >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Upload results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: cvenow-probe
+          path: |
+            probe/report.json
+            probe/summary.md
+            probe/status.txt
+            probe/llms.txt
+            probe/entries/
+          if-no-files-found: warn
