@@ -56,7 +56,7 @@ def scan(trivy: str, image: str, out: Path) -> dict:
     started = time.monotonic()
     proc = subprocess.run(
         [trivy, "image", "--image-src", "remote", "--platform", "linux/amd64",
-         "--scanners", "vuln", "--skip-java-db-update", "--timeout", "5m",
+         "--scanners", "vuln", "--list-all-pkgs", "--timeout", "5m",
          "-q", "-f", "json", "-o", str(out), image],
         capture_output=True, text=True, check=False,
     )
@@ -64,17 +64,28 @@ def scan(trivy: str, image: str, out: Path) -> dict:
     if not result["ok"]:
         result["error"] = proc.stderr.strip()[-500:]
         return result
-    ids, findings = set(), 0
+    ids, findings, go_ids, go_pkgs = set(), 0, set(), set()
     for res in json.loads(out.read_text()).get("Results") or []:
+        is_go = res.get("Type") == "gobinary"
+        for pkg in res.get("Packages") or []:
+            if is_go and pkg.get("Name") and pkg.get("Version"):
+                go_pkgs.add((pkg["Name"], pkg["Version"]))
         for vuln in res.get("Vulnerabilities") or []:
             findings += 1
             ids.add(vuln["VulnerabilityID"])
-    result.update(findings=findings, ids=sorted(ids))
+            if is_go:
+                go_ids.add(vuln["VulnerabilityID"])
+    result.update(findings=findings, ids=sorted(ids), go_ids=sorted(go_ids), go_pkgs=sorted(go_pkgs))
     return result
 
 
-def fetch(url: str) -> dict:
-    request = urllib.request.Request(url, headers={"User-Agent": USER_AGENT, "Accept": "application/json"})
+def fetch(url: str, payload: dict | None = None) -> dict:
+    headers = {"User-Agent": USER_AGENT, "Accept": "application/json"}
+    data = None
+    if payload is not None:
+        data = json.dumps(payload).encode()
+        headers["Content-Type"] = "application/json"
+    request = urllib.request.Request(url, data=data, headers=headers)
     started = time.monotonic()
     try:
         with urllib.request.urlopen(request, timeout=30) as resp:
@@ -115,7 +126,9 @@ def main() -> None:
     parser.add_argument("--trivy", default=os.environ.get("TRIVY", "trivy"))
     parser.add_argument("--images", type=int, default=40, help="number of images to scan")
     parser.add_argument("--max-ids", type=int, default=500, help="maximum IDs to look up on cve.now")
-    parser.add_argument("--delay", type=float, default=0.25, help="seconds between cve.now requests")
+    parser.add_argument("--delay", type=float, default=1.0, help="seconds between cve.now requests")
+    parser.add_argument("--max-403", type=int, default=20, help="stop lookups after this many consecutive 403s")
+    parser.add_argument("--check-images", type=int, default=10, help="images whose Go modules are sent to /check")
     args = parser.parse_args()
 
     scans_dir, entries_dir = args.out / "scans", args.out / "entries"
@@ -147,8 +160,12 @@ def main() -> None:
             (args.out / f"{name}.txt").write_bytes(resp.pop("body"))
         meta[name] = resp
 
-    lookups, fields = [], collections.Counter()
+    lookups, fields, streak, blocked_at = [], collections.Counter(), 0, None
     for n, vuln_id in enumerate(lookup_ids):
+        if streak >= args.max_403:
+            blocked_at = n - streak
+            print(f"{streak} consecutive 403s from request {blocked_at + 1}; stopping lookups")
+            break
         resp = fetch(f"{API}/entries/{vuln_id}")
         if resp["status"] == 429:
             wait = int(resp["headers"].get("Retry-After", "30") or 30)
@@ -157,6 +174,9 @@ def main() -> None:
             resp = fetch(f"{API}/entries/{vuln_id}")
             resp["retried_after_429"] = True
         body = resp.pop("body", None)
+        streak = streak + 1 if resp["status"] == 403 else 0
+        if resp["status"] != 200 and body:
+            resp["body_snippet"] = body[:300].decode("utf-8", "replace")
         if resp["status"] == 200 and body:
             try:
                 fields.update(field_paths(json.loads(body)))
@@ -165,6 +185,38 @@ def main() -> None:
             if len(list(entries_dir.iterdir())) < 25:
                 (entries_dir / f"{vuln_id}.json").write_bytes(body)
         lookups.append({"id": vuln_id, **resp})
+        time.sleep(args.delay)
+
+    retry_after_pause = None
+    if blocked_at is not None:
+        print("Waiting 120s, then retrying one blocked ID")
+        time.sleep(120)
+        retry = fetch(f"{API}/entries/{lookups[-1]['id']}")
+        retry.pop("body", None)
+        retry_after_pause = retry
+
+    # Batch-match Go modules with POST /api/v1/check and compare with Trivy's Go findings.
+    checks = []
+    for s in [s for s in scans if s["ok"] and s["go_pkgs"]][: args.check_images]:
+        packages = [{"ecosystem": "go", "name": name, "version": version} for name, version in s["go_pkgs"]]
+        resp = fetch(f"{API}/check", {"packages": packages[:10000]})
+        body = resp.pop("body", None)
+        entry = {"image": s["image"], "packages": len(packages), "trivy_go_ids": len(s["go_ids"]), **resp}
+        if body and resp["status"] == 200:
+            text = body.decode("utf-8", "replace")
+            if not checks:
+                (args.out / "check_sample.json").write_text(text)
+            found = set(re.findall(r"(?:CVE-\d{4}-\d{4,7}|GHSA-[\w-]{14}|GO-\d{4}-\d{4,})", text))
+            entry.update(
+                cvenow_ids=len(found),
+                both=len(found & set(s["go_ids"])),
+                only_trivy=sorted(set(s["go_ids"]) - found)[:20],
+                only_cvenow=sorted(found - set(s["go_ids"]))[:20],
+            )
+        elif body:
+            entry["body_snippet"] = body[:300].decode("utf-8", "replace")
+        checks.append(entry)
+        print(f"/check {s['image']}: {resp['status']} {entry.get('cvenow_ids')} vs trivy {len(s['go_ids'])}")
         time.sleep(args.delay)
 
     ok_scans = [s for s in scans if s["ok"]]
@@ -195,8 +247,11 @@ def main() -> None:
         "cvenow_rate_limit_headers": sorted({k for l in lookups for k in l.get("headers", {})}),
         "cvenow_meta": meta,
         "cvenow_entry_fields": {k: v for k, v in sorted(fields.items())},
-        "missing_ids": [l["id"] for l in lookups if l["status"] != 200][:200],
-        "scans": [{k: v for k, v in s.items() if k != "ids"} for s in scans],
+        "blocked_at_request": blocked_at,
+        "retry_after_pause": retry_after_pause,
+        "lookups": [{k: l.get(k) for k in ("id", "status", "ms", "body_snippet")} for l in lookups],
+        "checks": checks,
+        "scans": [{k: v for k, v in s.items() if k not in ("ids", "go_ids", "go_pkgs")} for s in scans],
     }
     (args.out / "report.json").write_text(json.dumps(report, indent=2))
 
@@ -207,6 +262,10 @@ def main() -> None:
         f"- cve.now lookups: {len(lookups)}, status codes: {dict(statuses)}",
         f"- Coverage: {report['cvenow_coverage_pct']}%, by prefix: {report['cvenow_by_prefix']}",
         f"- Latency ms: {report['cvenow_latency_ms']}",
+        f"- Blocked at request: {blocked_at}, retry after pause: {(retry_after_pause or {}).get('status')}",
+        f"- /check (Go modules): " + "; ".join(
+            f"{c['image']}: {c['status']} cve.now={c.get('cvenow_ids')} trivy={c['trivy_go_ids']} both={c.get('both')}"
+            for c in checks),
         f"- Rate-limit headers seen: {report['cvenow_rate_limit_headers'] or 'none'}",
         f"- Entry fields seen ({len(fields)}): {', '.join(sorted(fields)[:80])}",
     ]
