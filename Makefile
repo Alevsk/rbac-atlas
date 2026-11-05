@@ -165,8 +165,19 @@ get-manifests: ##@ Analyze Helm charts to generate JSON manifests (use FORCE=tru
 check-manifests: ##@ Report charts with missing or invalid JSON manifests
 	@$(UV) run check_manifests.py --charts-dir charts --manifests-dir $(MANIFESTS_DIR)
 
-generate-pages: json-to-markdown fmt lint ##@ Generate Hugo content from JSON manifests (use FORCE=true to overwrite)
+generate-pages: json-to-markdown fmt-content lint-content ##@ Generate Hugo content from JSON manifests (use FORCE=true to overwrite)
 	@echo "SUCCESS: Pages generated successfully."
+
+# Internal targets: format/lint only generated Markdown content. Layout (djlint)
+# checks run in CI via `make lint`, so template formatting can't block the data pipeline.
+.PHONY: fmt-content lint-content
+fmt-content:
+	@echo "INFO: Formatting changed Markdown files..."
+	@$(NPM) run fmt:changed --silent
+
+lint-content:
+	@echo "INFO: Linting changed Markdown files..."
+	@$(NPM) run lint:changed --silent
 
 # Internal target for generating markdown. Called by `generate-pages`.
 .PHONY: json-to-markdown
