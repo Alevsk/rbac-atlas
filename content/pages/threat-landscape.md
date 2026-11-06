@@ -1,24 +1,24 @@
 ---
 title: "Cloud-Native Threat Landscape"
 description: "RBAC risk analysis across 257 Kubernetes open-source projects"
-date: "2026-11-05"
+date: "2026-11-06"
 ---
 
-This report is auto-generated from the latest RBAC Atlas scan (**2026-11-05**). It analyzes the RBAC permissions of **257** Kubernetes open-source projects across **27946** manifest versions to provide a snapshot of the current cloud-native threat landscape.
+This report is auto-generated from the latest RBAC Atlas scan (**2026-11-06**). It analyzes the RBAC permissions of **257** Kubernetes open-source projects across **27962** manifest versions to provide a snapshot of the current cloud-native threat landscape.
 
 ## At a Glance
 
 | Metric | Value |
 |--------|-------|
 | Projects analyzed | 257 |
-| Total manifest versions | 27946 |
+| Total manifest versions | 27962 |
 | Avg service accounts per project | 2.11 |
-| Avg permission bindings per project | 31.27 |
+| Avg permission bindings per project | 31.26 |
 | Avg workloads per project | 3.49 |
 | Avg critical risks per project | 3.44 |
 | Avg high risks per project | 4.01 |
 | Avg medium risks per project | 2.03 |
-| Avg low risks per project | 21.79 |
+| Avg low risks per project | 21.78 |
 | Projects with critical risks | 170 |
 | Projects with no RBAC permissions | 54 |
 
@@ -29,8 +29,8 @@ This report is auto-generated from the latest RBAC Atlas scan (**2026-11-05**). 
 | {{< risk "Critical" >}} | 885 | 11.01% |
 | {{< risk "High" >}} | 1031 | 12.83% |
 | {{< risk "Medium" >}} | 521 | 6.48% |
-| {{< risk "Low" >}} | 5599 | 69.67% |
-| **Total** | **8036** | |
+| {{< risk "Low" >}} | 5598 | 69.67% |
+| **Total** | **8035** | |
 
 ## Top 10 RBAC Risk Tags
 
@@ -51,7 +51,7 @@ This report is auto-generated from the latest RBAC Atlas scan (**2026-11-05**). 
 
 | Rule | Occurrences |
 |------|-------------|
-| Base Risk Level - Low | 7008 |
+| Base Risk Level - Low | 7007 |
 | Base Risk Level - High | 908 |
 | Read ConfigMaps in a namespace | 252 |
 | Read secrets in a namespace | 240 |
