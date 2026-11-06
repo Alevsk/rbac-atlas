@@ -63,7 +63,17 @@ jobs:
             git config user.email "actions@github.com"
             git add .
             git commit -m "update $(date +'%Y-%m-%d')"
-            git push
+            # Other workflows (image-vulns publish, manual pushes) also push to master:
+            # rebase onto the new tip and retry instead of failing the whole update.
+            for attempt in 1 2 3; do
+              git push && exit 0
+              [ "$attempt" -lt 3 ] || break
+              echo "::warning::push rejected (attempt ${attempt}); rebasing onto origin/master"
+              sleep $((attempt * 15))
+              git pull --rebase origin master
+            done
+            echo "::error::push failed after 3 attempts"
+            exit 1
           else
             echo "No changes to commit"
           fi
