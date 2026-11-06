@@ -2,13 +2,24 @@
 
 ## Reporting a Vulnerability
 
-If you discover a security vulnerability within RBAC Atlas, please send an email to [MAINTAINER_EMAIL]. All security vulnerabilities will be promptly addressed.
+If you discover a security vulnerability in RBAC Atlas (this repository, its build and data
+pipelines, or the website), please report it privately through
+[GitHub private vulnerability reporting](https://github.com/Alevsk/rbac-atlas/security/advisories/new)
+(Security tab, "Report a vulnerability"). Please do not open a public issue for it.
 
 Please include the following information:
+
 - A description of the vulnerability
 - Steps to reproduce the issue
 - Potential impact
 - Suggestions for remediation if any
+
+Out of scope here:
+
+- RBAC risks or CVEs reported for the third-party Helm charts and images that RBAC Atlas
+  catalogs. Report those to the upstream project.
+- Bugs in the analyzer itself. Report those to
+  [rbac-scope](https://github.com/alevsk/rbac-scope).
 
 ## Response Timeline
 
@@ -18,12 +29,10 @@ Please include the following information:
 
 ## Security Updates
 
-Security updates will be released as soon as possible after a vulnerability is confirmed. Updates will be published:
-
-1. As a new release on GitHub
-2. With an advisory in the Security tab
-3. With a notification in our changelog
+RBAC Atlas has no versioned releases: fixes land on the `master` branch and the website is
+redeployed from it automatically. Confirmed vulnerabilities are disclosed through a GitHub
+security advisory.
 
 ## Supported Versions
 
-Only the latest version of RBAC Atlas receives security updates.
+Only the current `master` branch and the live website receive security fixes.

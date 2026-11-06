@@ -113,25 +113,25 @@ fmt: ##@ Format changed source files (use 'fmt-all' for everything)
 	@echo "INFO: Formatting changed Markdown files..."
 	@$(NPM) run fmt:changed --silent
 	@echo "INFO: Formatting HTML layout files..."
-	@$(DJLINT) --reformat --quiet layouts/**/*.html
+	@$(DJLINT) --reformat --quiet layouts
 
 fmt-all: ##@ Format all source files (Markdown, Go Templates, HTML)
 	@echo "INFO: Formatting all Markdown files..."
 	@$(NPM) run fmt --silent
 	@echo "INFO: Formatting HTML layout files..."
-	@$(DJLINT) --reformat layouts/**/*.html
+	@$(DJLINT) --reformat layouts
 
 lint: ##@ Lint changed source files (use 'lint-all' for everything)
 	@echo "INFO: Linting changed Markdown files..."
 	@$(NPM) run lint:changed --silent
 	@echo "INFO: Linting HTML layout files..."
-	@$(DJLINT) --check --quiet layouts/**/*.html
+	@$(DJLINT) --check --quiet layouts
 
 lint-all: ##@ Lint all source files for formatting issues
 	@echo "INFO: Linting all Markdown files..."
 	@$(NPM) run lint --silent
 	@echo "INFO: Linting HTML layout files..."
-	@$(DJLINT) --check layouts/**/*.html
+	@$(DJLINT) --check layouts
 
 test: ##@ Run Playwright end-to-end tests
 	@echo "INFO: Running Playwright tests..."

@@ -1,119 +1,113 @@
 {{ define "main" }}
-  <h1>#{{ .Title }}</h1>
-  {{ with .Content }}
-    <div class="index-content">
-      {{ . }}
+<h1>#{{ .Title }}</h1>
+{{ with .Content }}
+<div class="index-content">{{ . }}</div>
+{{ end }}
+<div class="posts">
+{{/* Get the latest page per chart (cached across all term pages) */}}
+{{ $allLatest := partialCached "latest-per-chart.html" "global" }}
+
+{{/* Build a set of page paths that belong to this taxonomy term */}}
+{{ $termPages := dict }}
+{{ range .Pages }}
+{{ $termPages = merge $termPages (dict .File.Path true) }}
+{{ end }}
+
+{{/* Filter to only charts that have this term */}}
+{{ $groupedPages := slice }}
+{{ range $allLatest }}
+{{ if index $termPages .File.Path }}
+{{ $groupedPages = $groupedPages | append . }}
+{{ end }}
+{{ end }}
+{{ $groupedPages = sort $groupedPages "Title" }}
+
+<div id="projects-list">
+  {{ $pagesSlice := $groupedPages }}
+  {{ $paginator := .Paginate $pagesSlice }}
+
+  {{ range $paginator.Pages }}
+  {{ $page := . }}
+  <article class="post on-list">
+    <div class="title-card-wrapper">
+      <h2>
+        <a href="{{ $page.Permalink }}">{{ $page.Title | markdownify }}</a>
+      </h2>
+      {{- if $page.Params.version -}}
+      <span class="post-version">{{- $page.Params.version -}}</span>
+      {{- end -}}
     </div>
+
+    {{ partial "cover.html" . }}
+
+    <div class="post-stats">
+      {{ if gt (int .Params.critical_findings) 0 }}
+      <span class="stat-item risk-critical">
+        {{ partialCached "icon.html" "skull" "skull" }}
+        {{ .Params.critical_findings }} Critical
+      </span>
+      {{ end }}
+      {{ if gt (int .Params.high_findings) 0 }}
+      <span class="stat-item risk-high">
+        {{ partialCached "icon.html" "triangle-alert" "triangle-alert" }}
+        {{ .Params.high_findings }} High
+      </span>
+      {{ end }}
+      {{ if gt (int .Params.medium_findings) 0 }}
+      <span class="stat-item risk-medium">
+        {{ partialCached "icon.html" "circle-alert" "circle-alert" }}
+        {{ .Params.medium_findings }} Medium
+      </span>
+      {{ end }}
+      {{ if gt (int .Params.low_findings) 0 }}
+      <span class="stat-item risk-low">
+        {{ partialCached "icon.html" "info" "info" }}
+        {{ .Params.low_findings }} Low
+      </span>
+      {{ end }}
+
+      <span class="stat-item">{{ partialCached "icon.html" "bot" "bot" }} {{ default "0" .Params.service_accounts }} accounts</span>
+      <span class="stat-item">{{ partialCached "icon.html" "box" "box" }} {{ default "0" .Params.workloads }} workloads</span>
+      <span class="stat-item">{{ partialCached "icon.html" "link-2" "link-2" }} {{ default "0" .Params.bindings }} bindings</span>
+    </div>
+
+    <div class="post-content">
+      {{ if .Params.showFullContent }}
+      {{ .Content }}
+      {{ else if .Description }}
+      <p>{{ .Description | markdownify }}</p>
+    {{ else }}
+      {{ .Summary }}
+      {{ end }}
+    </div>
+
+    {{ if .Params.tags }}
+    <span class="post-tags">
+      {{ $filteredTags := slice }}
+      {{ range .Params.tags }}
+      {{ if not (hasPrefix . "letter-") }}
+      {{ $filteredTags = $filteredTags | append . }}
+      {{ end }}
+      {{ end }}
+      {{ $tags := $filteredTags }}
+      {{ $tagCount := len $tags }}
+      {{ range first 3 $tags }}
+      #<a href="{{ (urlize (printf "tags/%s/" . )) | absLangURL }}">{{- . -}}</a>&nbsp;
+      {{ end }}
+      {{ if gt $tagCount 3 }}
+      (+{{ sub $tagCount 3 }} more)
+      {{ end }}
+    </span>
+    {{ end }}
+
+    {{ if not .Params.showFullContent }}
+    <div>
+      <a class="read-more button inline" href="{{ .RelPermalink }}">{{ $.Site.Params.ReadMore }} {{ partialCached "icon.html" "arrow-right" "arrow-right" }}</a>
+    </div>
+    {{ end }}
+  </article>
   {{ end }}
-  <div class="posts">
-    {{/* Get the latest page per chart (cached across all term pages) */}}
-    {{ $allLatest := partialCached "latest-per-chart.html" "global" }}
 
-    {{/* Build a set of page paths that belong to this taxonomy term */}}
-    {{ $termPages := dict }}
-    {{ range .Pages }}
-      {{ $termPages = merge $termPages (dict .File.Path true) }}
-    {{ end }}
-
-    {{/* Filter to only charts that have this term */}}
-    {{ $groupedPages := slice }}
-    {{ range $allLatest }}
-      {{ if index $termPages .File.Path }}
-        {{ $groupedPages = $groupedPages | append . }}
-      {{ end }}
-    {{ end }}
-    {{ $groupedPages = sort $groupedPages "Title" }}
-
-    <div id="projects-list">
-      {{ $pagesSlice := $groupedPages }}
-      {{ $paginator := .Paginate $pagesSlice }}
-
-    {{ range $paginator.Pages }}
-      {{ $page := . }}
-      <article class="post on-list">
-        <div class="title-card-wrapper">
-          <h2>
-            <a href="{{ $page.Permalink }}">{{ $page.Title | markdownify }}</a>
-          </h2>
-          {{- if $page.Params.version -}}
-            <span class="post-version">
-              {{- $page.Params.version -}}
-            </span>
-          {{- end -}}
-        </div>
-
-        {{ partial "cover.html" . }}
-
-        <div class="post-stats">
-          {{ if gt (int .Params.critical_findings) 0 }}
-            <span class="stat-item risk-critical">
-              {{ partialCached "icon.html" "skull" "skull" }}
-              {{ .Params.critical_findings }} Critical
-            </span>
-          {{ end }}
-          {{ if gt (int .Params.high_findings) 0 }}
-            <span class="stat-item risk-high">
-              {{ partialCached "icon.html" "triangle-alert" "triangle-alert" }}
-              {{ .Params.high_findings }} High
-            </span>
-          {{ end }}
-          {{ if gt (int .Params.medium_findings) 0 }}
-            <span class="stat-item risk-medium">
-              {{ partialCached "icon.html" "circle-alert" "circle-alert" }}
-              {{ .Params.medium_findings }} Medium
-            </span>
-          {{ end }}
-          {{ if gt (int .Params.low_findings) 0 }}
-            <span class="stat-item risk-low">
-              {{ partialCached "icon.html" "info" "info" }}
-              {{ .Params.low_findings }} Low
-            </span>
-          {{ end }}
-
-          <span class="stat-item">{{ partialCached "icon.html" "bot" "bot" }} {{ default "0" .Params.service_accounts }} accounts</span>
-          <span class="stat-item">{{ partialCached "icon.html" "box" "box" }} {{ default "0" .Params.workloads }} workloads</span>
-          <span class="stat-item">{{ partialCached "icon.html" "link-2" "link-2" }} {{ default "0" .Params.bindings }} bindings</span>
-        </div>
-
-        <div class="post-content">
-          {{ if .Params.showFullContent }}
-            {{ .Content }}
-          {{ else if .Description }}
-            <p>{{ .Description | markdownify }}</p>
-          {{ else }}
-            {{ .Summary }}
-          {{ end }}
-        </div>
-
-        {{ if .Params.tags }}
-        <span class="post-tags">
-          {{ $filteredTags := slice }}
-          {{ range .Params.tags }}
-            {{ if not (hasPrefix . "letter-") }}
-              {{ $filteredTags = $filteredTags | append . }}
-            {{ end }}
-          {{ end }}
-          {{ $tags := $filteredTags }}
-          {{ $tagCount := len $tags }}
-          {{ range first 3 $tags }}
-          #<a href="{{ (urlize (printf "tags/%s/" . )) | absLangURL }}">
-            {{- . -}}
-          </a>&nbsp;
-          {{ end }}
-          {{ if gt $tagCount 3 }}
-            (+{{ sub $tagCount 3 }} more)
-          {{ end }}
-        </span>
-      {{ end }}
-
-        {{ if not .Params.showFullContent }}
-          <div>
-            <a class="read-more button inline" href="{{ .RelPermalink }}">{{ $.Site.Params.ReadMore }} {{ partialCached "icon.html" "arrow-right" "arrow-right" }}</a>
-          </div>
-        {{ end }}
-      </article>
-    {{ end }}
-
-    {{ partial "pagination.html" . }}
-  </div>
+  {{ partial "pagination.html" . }}
+</div>
 {{ end }}

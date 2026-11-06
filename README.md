@@ -73,14 +73,17 @@ Automation keeps the catalog fresh via GitHub Actions:
 - Daily scan: a scheduled workflow runs every day at 00:00 UTC and regenerates content from the projects listed in `projects.yaml`. It:
   - Checks out this repo and the latest `rbac-scope` sources (copies `risks.yaml`).
   - Sets up Python/Node/Helm and builds the `rbac-scope` binary.
-  - Executes the pipeline: `make pull-projects`, `make get-manifests`, `make generate-pages`.
+  - Executes the pipeline: `make pull-projects`, `make get-manifests`, `make generate-pages`, `make generate-report`.
   - Commits and pushes changes back to `master` if anything changed.
   - Workflow file: `.github/workflows/daily-update.yml`.
+
+- Image vulnerability scan: a scheduled workflow scans the container images that chart versions deploy with Trivy, enriches the findings with cve.now and commits the results to `data/vulns/`. See [docs/image-vulns.md](docs/image-vulns.md).
+  - Workflow file: `.github/workflows/image-vulns.yml`.
 
 - Publish site: on push to `master`, another workflow builds the Hugo site and deploys it to the `rbac-atlas/rbac-atlas.github.io` repository (GitHub Pages).
   - Workflow file: `.github/workflows/deploy-to-pages.yml`.
 
-- CI checks: a CI workflow lints and builds on pushes and pull requests.
+- CI checks: a CI workflow lints and builds the site on pushes and pull requests.
   - Workflow file: `.github/workflows/ci.yml`.
 
 ## Contributing
