@@ -1,7 +1,7 @@
 {{- /* Locates a combination's workload row in a rendered Workloads table. Context: dict "c" (combination
   record) and optionally "page" (version page). Returns dict "id" (the row anchor: "wl-" + kind, workload and
-  container slugged like sa-anchor.html) and, with "page", "pattern": a regexp matching the row's opening
-  "<tr" (group 1) and its first three cells KIND | NAME | CONTAINER (group 2) as rendered, any whitespace
+  container slugged like sa-anchor.html) and, with "page", "pattern": a regexp matching the row's opening tag name (group 1; "<" is passed as
+  "\x3c" so djlint does not mistake the regexp for a tag) and its first three cells KIND | NAME | CONTAINER (group 2) as rendered, any whitespace
   between tags. */ -}}
 {{- $c := .c -}}
 {{- $container := $c.container | default "" -}}
@@ -12,6 +12,6 @@
 {{- $kind := replaceRE $meta `\$1` $c.kind -}}
 {{- $name := replaceRE $meta `\$1` (partialCached "vulns/cell-text.html" (dict "page" . "raw" $c.workload) $c.workload) -}}
 {{- $cont := replaceRE $meta `\$1` (partialCached "vulns/cell-text.html" (dict "page" . "raw" $container) $container) -}}
-{{- $row = merge $row (dict "pattern" (printf `(<tr)(>\s*<td>%s</td>\s*<td>%s</td>\s*<td>%s</td>)` $kind $name $cont)) -}}
+{{- $row = merge $row (dict "pattern" (printf `(%str)(%s\s*<td>%s</td>\s*<td>%s</td>\s*<td>%s</td>)` "\x3c" ">" $kind $name $cont)) -}}
 {{- end -}}
 {{- return $row -}}
