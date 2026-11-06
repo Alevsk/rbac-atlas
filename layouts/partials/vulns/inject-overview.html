@@ -1,0 +1,23 @@
+{{- /* Adds a "CVEs" column to the rendered Overview table (header Identity … Risk, json2hugo.py) with the
+  per-ServiceAccount summaries of the version record ("sas"). Context: dict "html" (rendered content) "rec".
+  Rows are matched by their "#sa-<anchor>" link (sa-anchor.html); rows without data (no main workload with a
+  valid image) get "—". Content is returned unchanged when the record has no "sas" field (data/vulns
+  published before it existed) or the page has no Overview table. */ -}}
+{{- $html := .html -}}
+{{- if isset .rec "sas" -}}
+{{- $sas := .rec.sas | default dict -}}
+{{- $re := `(?s)<table>\s*<thead>\s*<tr>\s*<th>Identity</th>\s*<th>Namespace</th>\s*<th>Automount</th>\s*<th>Secrets</th>\s*<th>Permissions</th>\s*<th>Workloads</th>\s*<th>Risk</th>\s*</tr>.*?</table>` -}}
+{{- with findRE $re $html 1 -}}
+{{- $table := index . 0 -}}
+{{- $new := replaceRE `<th>Risk</th>(\s*)</tr>` `<th>Risk</th>$1<th>CVEs</th></tr>` $table 1 -}}
+{{- $new = replaceRE `(?s)(<tr>\s*<td>(?:<a href="#(sa-[^"]*)">)?.*?</td>)(\s*</tr>)` `$1<td class="vuln-sa-td" data-sa="$2"></td>$3` $new -}}
+{{- range $name, $s := $sas -}}
+{{- $anchor := partialCached "vulns/sa-anchor.html" $name $name -}}
+{{- $cell := partialCached "vulns/sa-cell.html" $s (printf "%v" $s) -}}
+{{- $new = replace $new (printf `<td class="vuln-sa-td" data-sa="%s"></td>` $anchor) (printf `<td class="vuln-sa-td">%s</td>` $cell) -}}
+{{- end -}}
+{{- $new = replaceRE `<td class="vuln-sa-td" data-sa="[^"]*"></td>` `<td class="vuln-sa-td">—</td>` $new -}}
+{{- $html = replace $html $table $new 1 -}}
+{{- end -}}
+{{- end -}}
+{{- return $html -}}

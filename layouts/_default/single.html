@@ -163,10 +163,10 @@
 </div>
 {{ end }}
 
-{{- with $vrec }}{{ partial "vulns/version-combos.html" . }}{{ end }}
+{{- with $vrec }}{{ partial "vulns/version-combos.html" (dict "rec" . "page" $) }}{{ end }}
 
 <div class="post-content">
-{{ if eq .Section "charts" }}{{ $html := partial "content-icons.html" .Content }}{{ with $vrec }}{{ partial "vulns/inject-workloads.html" (dict "html" $html "rec" . "page" $) | safeHTML }}{{ else }}{{ $html }}{{ end }}{{ else }}{{ .Content }}{{ end }}
+{{ if eq .Section "charts" }}{{ $html := partial "content-icons.html" .Content }}{{ with $vrec }}{{ $html = partial "vulns/inject-workloads.html" (dict "html" $html "rec" . "page" $) }}{{ partial "vulns/inject-overview.html" (dict "html" $html "rec" .) | safeHTML }}{{ else }}{{ $html }}{{ end }}{{ else }}{{ .Content }}{{ end }}
 </div>
 
 </article>

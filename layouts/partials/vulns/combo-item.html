@@ -1,18 +1,29 @@
 {{- /* One riskiest-combination list item. Context: dict "c" (combination record, see vulnscan/publish.py)
-  "chart" (bool: show chart link) "limit" (max CVE IDs). */ -}}
+  "chart" (bool: show chart link; the ServiceAccount then links to its section on the version page)
+  "limit" (max CVE IDs) and, on a version page, "page" (the SA links to its section on that page when the
+  rendered content has it). */ -}}
 {{- $c := .c -}}
+{{- $chartURL := $c.url | default (printf "/charts/%s/" (lower $c.key)) -}}
+{{- $anchor := partialCached "vulns/sa-anchor.html" $c.serviceAccountName $c.serviceAccountName -}}
+{{- $saHref := "" -}}
+{{- if .chart -}}
+{{- $saHref = printf "%s#%s" $chartURL $anchor -}}
+{{- else if .page -}}
+{{- if in .page.Content (printf `id="%s"` $anchor) -}}
+{{- $saHref = printf "#%s" $anchor -}}
+{{- end -}}
+{{- end -}}
 <li class="vuln-combo">
   <div class="vuln-combo__title">
     {{- if .chart -}}
-    <a class="vuln-combo__chart"
-       href="{{ $c.url | default (printf "/charts/%s/" (lower $c.key)) }}">{{ $c.chart }}</a>
+    <a class="vuln-combo__chart" href="{{ $chartURL }}">{{ $c.chart }}</a>
     <span class="vuln-combo__version">{{ $c.version }}</span>
     {{- end -}}
     <span class="vuln-combo__workload">{{ $c.kind }}/{{ $c.workload }}</span>
     {{ with $c.container }}<span class="vuln-combo__container">container {{ . }}</span>{{ end }}
   </div>
   <div class="vuln-combo__facts">
-    <span>SA <code>{{ $c.serviceAccountName }}</code></span>
+    <span>SA {{ with $saHref -}}<a class="vuln-combo__sa" href="{{ . }}"><code>{{ $c.serviceAccountName }}</code></a>{{- else -}}<code>{{ $c.serviceAccountName }}</code>{{- end }}</span>
     {{ partialCached "vulns/rbac-pill.html" $c.sa_rbac_risk $c.sa_rbac_risk }}
     <span class="vuln-combo__x" aria-hidden="true">×</span>
     <span>image</span>

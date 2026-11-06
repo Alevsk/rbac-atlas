@@ -1,0 +1,17 @@
+{{- /* CVE summary of one ServiceAccount for the Overview table "CVEs" column. Context: per-SA record
+  {lvl, n, [partial], [pending], [kev], [crit], [high]} (see vulnscan/publish.py sa_summaries). */ -}}
+{{- $lvl := .lvl | default "Unknown" -}}
+{{- $n := int (.n | default 0) -}}
+{{- $imgs := printf "%d image%s run by this ServiceAccount's workloads" $n (cond (eq $n 1) "" "s") -}}
+{{- if .pending -}}
+<span class="vuln-sa" title="Not scanned yet: {{ $imgs }}">{{ partialCached "vulns/level-badge.html" "pending" "pending" }}</span>
+{{- else -}}
+<span class="vuln-sa"
+      title="Worst CVE level of {{ $imgs }}{{ if .partial }} (some not scanned yet){{ end }}; counts are the highest of any one image">
+  <span class="vuln-sa__line">
+    {{ partialCached "vulns/level-badge.html" $lvl $lvl }}{{ if .partial }}*{{ end }}
+    {{ with .kev }}<span class="vuln-chip vuln-chip--kev">KEV {{ . }}</span>{{ end }}
+  </span>
+  {{ if or .crit .high }}<span class="vuln-counts">{{ .crit | default 0 }} crit · {{ .high | default 0 }} high</span>{{ end }}
+</span>
+{{- end -}}

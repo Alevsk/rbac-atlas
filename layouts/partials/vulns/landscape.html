@@ -98,7 +98,8 @@
             </td>
             <td>{{ $c.kind }}/{{ $c.workload }}</td>
             <td>
-              <code>{{ $c.serviceAccountName }}</code>
+              <a class="vuln-combo__sa"
+                 href="{{ $c.url | default (printf "/charts/%s/" (lower $c.key)) }}#{{ partialCached "vulns/sa-anchor.html" $c.serviceAccountName $c.serviceAccountName }}"><code>{{ $c.serviceAccountName }}</code></a>
               {{ partialCached "vulns/rbac-pill.html" $c.sa_rbac_risk $c.sa_rbac_risk }}
             </td>
             <td>

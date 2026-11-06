@@ -19,9 +19,12 @@ Writes:
   data/vulns/versions/<s>.json  s = md5(key)[:2], key = "org/chart/<filename-version>" (json2hugo's rule:
                               metadata.version without one leading "v", i.e. the content file's base name)
                               {key: {lvl, partial, kev, crit, high, imgs: {raw_ref: canonical},
-                                     combos: [combination, <=20], [pending: true]}}
+                                     combos: [combination, <=20], [pending: true],
+                                     sas: {serviceAccountName: {lvl, n, [partial], [pending], [kev], [crit], [high]}}}}
                               Only versions with at least one valid image reference get a record;
                               "pending" is set (only) when none of its main images has been scanned yet.
+                              "sas" summarizes the distinct valid images of each ServiceAccount's main
+                              workloads (n images; kev/crit/high each the max over them, omitted when 0).
   data/vulns/landscape.json   latest versions only:
                               {generated_at,
                                coverage {charts, images, images_scanned, images_pending, scanned_pct, cvenow_pct},
@@ -325,6 +328,35 @@ def _fallback_counts(main: list[str], images: dict[str, dict[str, Any]]) -> tupl
             max((_int((r.get("counts") or {}).get("HIGH")) for r in recs), default=0))
 
 
+def sa_summaries(chart_entry: dict[str, Any], images: dict[str, dict[str, Any]]) -> dict[str, dict[str, Any]]:
+    """Per-ServiceAccount image CVE summary for the Overview table of a version page.
+
+    Keyed by serviceAccountName (json2hugo anchors use the name only, so namespaces are merged) over the
+    distinct valid images of its role=main workloads: {lvl, n: images, [partial, pending, kev, crit, high]};
+    kev/crit/high are each the maximum over those images and are left out when 0."""
+    by_sa: dict[str, dict[str, None]] = defaultdict(dict)
+    for img in chart_entry.get("images") or []:
+        c = img.get("canonical") if isinstance(img, dict) else None
+        if not c:
+            continue
+        for w in img.get("workloads") or []:
+            if isinstance(w, dict) and w.get("role", "main") == "main":
+                by_sa[str(w.get("serviceAccountName") or "")][c] = None
+    out: dict[str, dict[str, Any]] = {}
+    for sa, canonicals in sorted(by_sa.items()):
+        recs = [images.get(c) or {} for c in canonicals]
+        level, partial = report.chart_level([r.get("risk_level") or "Unknown" for r in recs])
+        kev, crit, high = _fallback_counts(list(canonicals), images)
+        rec: dict[str, Any] = {"lvl": level, "n": len(canonicals)}
+        if partial:
+            rec["partial"] = True
+        if all(_status(images.get(c))[0] == "pending" for c in canonicals):
+            rec["pending"] = True
+        rec.update({k: v for k, v in (("kev", kev), ("crit", crit), ("high", high)) if v})
+        out[sa] = rec
+    return out
+
+
 def version_record(chart_entry: dict[str, Any], key: str, rollup: dict[str, Any] | None,
                    images: dict[str, dict[str, Any]], details: dict[str, dict[str, Any]]) -> dict[str, Any] | None:
     refs = [img for img in chart_entry.get("images") or [] if isinstance(img, dict)]
@@ -352,7 +384,7 @@ def version_record(chart_entry: dict[str, Any], key: str, rollup: dict[str, Any]
     combos = [normalize_combo(c, key, chart, version, images, details) for c in raw_combos if isinstance(c, dict)]
     combos.sort(key=combo_sort_key)
     out = {"lvl": level, "partial": partial, "kev": kev, "crit": crit, "high": high,
-           "imgs": dict(sorted(imgs.items())), "combos": combos}
+           "imgs": dict(sorted(imgs.items())), "combos": combos, "sas": sa_summaries(chart_entry, images)}
     if main and all(_status(images.get(c))[0] == "pending" for c in main):
         out["pending"] = True  # not scanned yet: pages say "pending scan", not "Unknown"
     return out

@@ -1,0 +1,12 @@
+{{- /* Compact image CVE stat for a home page project card. Context: version record (non-empty).
+  Hidden while the chart's images are pending, unscannable (Unknown) or absent (N/A). */ -}}
+{{- $lvl := .lvl | default "Unknown" -}}
+{{- if and (not .pending) (in (slice "Exploited" "High" "Elevated" "Moderate" "Low") $lvl) -}}
+<span class="stat-item vuln-stat vuln-lvl--{{ lower $lvl }}"
+      title="Worst CVE level among the chart's main workload images{{ if .partial }} (some images not scanned yet){{ end }}">
+  {{ partialCached "icon.html" "shield-alert" "shield-alert" }}
+  Image risk: {{ $lvl }}{{ if .partial }}*{{ end }}
+  {{- with .kev }} · {{ . }} KEV{{ end -}}
+  {{- with .crit }} · {{ . }} critical CVEs{{ end }}
+</span>
+{{- end -}}

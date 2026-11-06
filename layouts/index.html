@@ -1,95 +1,128 @@
 {{ define "main" }}
-  {{ $allLatest := partialCached "latest-per-chart.html" "global" }}
-  {{ if .Content }}
-    <div class="index-content {{ if .Params.framed -}}framed{{- end -}}">
-      {{ .Content }}
-    </div>
-  {{ end }}
+{{ $allLatest := partialCached "latest-per-chart.html" "global" }}
+{{ if .Content }}
+<div class="index-content {{ if .Params.framed -}}framed{{- end -}}">{{ .Content }}</div>
+{{ end }}
 
-  <section class="hero" aria-labelledby="hero-title">
-    <div class="hero__copy">
-      <p class="eyebrow"><span class="status-dot"></span> Open source Kubernetes security intelligence</p>
-      <h1 id="hero-title">Know what your <span>RBAC policies</span> can do.</h1>
-      <p class="hero__description">Explore the identities and permissions behind popular Kubernetes projects. RBAC Atlas turns complex access rules into clear findings, risks, and paths to investigate.</p>
-      <div class="hero__actions">
-        <a class="action action--primary" href="#projects-list">Explore projects {{ partialCached "icon.html" "arrow-up-right" "arrow-up-right" }}</a>
-        <a class="action action--secondary" href="/pages/threat-landscape/">View latest report {{ partialCached "icon.html" "arrow-right" "arrow-right" }}</a>
-      </div>
-      <div class="hero__meta">
-        <p class="hero__footnote">Built by <a href="https://www.linkedin.com/in/alevsk/">Lenin Alevski</a> · Updated through automated analysis</p>
-        <dl class="hero__stats" aria-label="Atlas coverage">
-          <div><dt>Projects indexed</dt><dd>{{ len $allLatest }}</dd></div>
-          <div><dt>Security rules</dt><dd>{{ len (where .Site.RegularPages "Section" "rules") }}</dd></div>
-        </dl>
-      </div>
+<section class="hero" aria-labelledby="hero-title">
+  <div class="hero__copy">
+    <p class="eyebrow">
+      <span class="status-dot"></span> Open source Kubernetes security intelligence
+    </p>
+    <h1 id="hero-title">
+      Know what your <span>RBAC policies</span> can do.
+    </h1>
+    <p class="hero__description">
+      Explore the identities and permissions behind popular Kubernetes projects. RBAC Atlas turns complex access rules into clear findings, risks, and paths to investigate.
+    </p>
+    <div class="hero__actions">
+      <a class="action action--primary" href="#projects-list">Explore projects {{ partialCached "icon.html" "arrow-up-right" "arrow-up-right" }}</a>
+      <a class="action action--secondary" href="/pages/threat-landscape/">View latest report {{ partialCached "icon.html" "arrow-right" "arrow-right" }}</a>
+    </div>
+    <div class="hero__meta">
+      <p class="hero__footnote">
+        Built by <a href="https://www.linkedin.com/in/alevsk/">Lenin Alevski</a> · Updated through automated analysis
+      </p>
+      <dl class="hero__stats" aria-label="Atlas coverage">
+        <div>
+          <dt>Projects indexed</dt>
+          <dd>
+            {{ len $allLatest }}
+          </dd>
+        </div>
+        <div>
+          <dt>Security rules</dt>
+          <dd>
+            {{ len (where .Site.RegularPages "Section" "rules") }}
+          </dd>
+        </div>
+      </dl>
+    </div>
+  </div>
+</section>
+
+<div class="section-heading section-heading--intro">
+  <div>
+    <p class="eyebrow">START EXPLORING</p>
+    <h2>Follow the signal</h2>
+  </div>
+  <p>Find patterns across the ecosystem, then inspect a project in detail.</p>
+</div>
+
+<div class="index-two-col discovery-grid">
+  <section class="index-col discovery-card">
+    <div class="discovery-card__head">
+      <span class="discovery-card__icon">{{ partialCached "icon.html" "shield-alert" "shield-alert" }}</span><span class="eyebrow">01 / EXPLORE</span>
+    </div>
+    <h3>Popular risks</h3>
+    <p>See the permissions and behaviors that appear most often.</p>
+    <div class="tags-list">
+      {{ range $taxonomy := first 10 .Site.Taxonomies.tags.ByCount }}
+      {{ if not (hasPrefix $taxonomy.Name "letter-") }}
+      <a href="{{ "/tags/" | relLangURL }}{{ $taxonomy.Name | urlize }}">{{ $taxonomy.Name }}</a>
+      {{ end }}
+      {{ end }}
+      <a class="see-all" href="{{ "/tags/" | relLangURL }}">Browse all risks {{ partialCached "icon.html" "arrow-right" "arrow-right" }}</a>
     </div>
   </section>
+  <section class="index-col discovery-card">
+    <div class="discovery-card__head">
+      <span class="discovery-card__icon">{{ partialCached "icon.html" "layout-grid" "layout-grid" }}</span><span class="eyebrow">02 / DISCOVER</span>
+    </div>
+    <h3>Project categories</h3>
+    <p>Browse policies by the tools and workloads they protect.</p>
+    <div class="categories-list">
+      {{ range $taxonomy := first 10 .Site.Taxonomies.categories.ByCount }}
+      <a href="{{ "/categories/" | relLangURL }}{{ $taxonomy.Name | urlize }}">{{ $taxonomy.Name }}</a>
+      {{ end }}
+      <a class="see-all" href="{{ "/categories/" | relLangURL }}">Browse categories {{ partialCached "icon.html" "arrow-right" "arrow-right" }}</a>
+    </div>
+  </section>
+</div>
 
-  <div class="section-heading section-heading--intro"><div><p class="eyebrow">START EXPLORING</p><h2>Follow the signal</h2></div><p>Find patterns across the ecosystem, then inspect a project in detail.</p></div>
-
-  <div class="index-two-col discovery-grid">
-    <section class="index-col discovery-card">
-      <div class="discovery-card__head"><span class="discovery-card__icon">{{ partialCached "icon.html" "shield-alert" "shield-alert" }}</span><span class="eyebrow">01 / EXPLORE</span></div>
-      <h3>Popular risks</h3>
-      <p>See the permissions and behaviors that appear most often.</p>
-      <div class="tags-list">
-        {{ range $taxonomy := first 10 .Site.Taxonomies.tags.ByCount }}
-          {{ if not (hasPrefix $taxonomy.Name "letter-") }}
-          <a href="{{ "/tags/" | relLangURL }}{{ $taxonomy.Name | urlize }}">
-            {{ $taxonomy.Name }}
-          </a>
-          {{ end }}
-        {{ end }}
-        <a class="see-all" href="{{ "/tags/" | relLangURL }}">Browse all risks {{ partialCached "icon.html" "arrow-right" "arrow-right" }}</a>
-      </div>
-    </section>
-    <section class="index-col discovery-card">
-      <div class="discovery-card__head"><span class="discovery-card__icon">{{ partialCached "icon.html" "layout-grid" "layout-grid" }}</span><span class="eyebrow">02 / DISCOVER</span></div>
-      <h3>Project categories</h3>
-      <p>Browse policies by the tools and workloads they protect.</p>
-      <div class="categories-list">
-        {{ range $taxonomy := first 10 .Site.Taxonomies.categories.ByCount }}
-          <a href="{{ "/categories/" | relLangURL }}{{ $taxonomy.Name | urlize }}">
-            {{ $taxonomy.Name }}
-          </a>
-        {{ end }}
-        <a class="see-all" href="{{ "/categories/" | relLangURL }}">Browse categories {{ partialCached "icon.html" "arrow-right" "arrow-right" }}</a>
-      </div>
-    </section>
+<div class="section-heading">
+  <div>
+    <p class="eyebrow">THE BIGGER PICTURE</p>
+    <h2>Threat landscape</h2>
   </div>
+  <a class="section-link" href="/pages/threat-landscape/">Read the daily report {{ partialCached "icon.html" "arrow-up-right" "arrow-up-right" }}</a>
+</div>
+<p class="section-description">A running view of RBAC risk across the open source Kubernetes ecosystem.</p>
 
-  <div class="section-heading"><div><p class="eyebrow">THE BIGGER PICTURE</p><h2>Threat landscape</h2></div><a class="section-link" href="/pages/threat-landscape/">Read the daily report {{ partialCached "icon.html" "arrow-up-right" "arrow-up-right" }}</a></div>
-  <p class="section-description">A running view of RBAC risk across the open source Kubernetes ecosystem.</p>
-
-  {{/* --- Risk Distribution chart on the index page --- */}}
-  {{ $ts := .Site.Data.timeseries }}
-  {{ if and $ts $ts.series (gt (len $ts.series) 0) }}
-  {{ $latest := index $ts.series (sub (len $ts.series) 1) }}
-  <div class="chart-section">
-    <div class="chart-container chart-container--risk">
-      <div class="chart-container__heading">
-        <div class="chart-heading">
-          <span class="chart-heading__icon">{{ partialCached "icon.html" "activity" "activity" }}</span>
-          <div><span class="eyebrow">RISK INTELLIGENCE</span><h3>Risk distribution over time</h3></div>
+{{/* --- Risk Distribution chart on the index page --- */}}
+{{ $ts := .Site.Data.timeseries }}
+{{ if and $ts $ts.series (gt (len $ts.series) 0) }}
+{{ $latest := index $ts.series (sub (len $ts.series) 1) }}
+<div class="chart-section">
+  <div class="chart-container chart-container--risk">
+    <div class="chart-container__heading">
+      <div class="chart-heading">
+        <span class="chart-heading__icon">{{ partialCached "icon.html" "activity" "activity" }}</span>
+        <div>
+          <span class="eyebrow">RISK INTELLIGENCE</span>
+          <h3>Risk distribution over time</h3>
         </div>
-        <span class="chart-period">Last 12 months</span>
       </div>
-      <div class="risk-trend-grid">
-        {{ range $level := slice "critical" "high" "medium" "low" }}
-          <div class="risk-trend-card risk-trend-card--{{ $level }}">
-            <div class="risk-trend-card__header">
-              <span class="risk-trend-card__label">{{ title $level }}</span>
-              <strong>{{ index $latest.risk_distribution $level }}</strong>
-            </div>
-            <div class="risk-trend-card__plot">
-              <canvas id="risk-spark-{{ $level }}" role="img" aria-label="{{ title $level }} risk count by month over the last 12 months">{{ title $level }} risk trend</canvas>
-            </div>
-          </div>
-        {{ end }}
+      <span class="chart-period">Last 12 months</span>
+    </div>
+    <div class="risk-trend-grid">
+      {{ range $level := slice "critical" "high" "medium" "low" }}
+      <div class="risk-trend-card risk-trend-card--{{ $level }}">
+        <div class="risk-trend-card__header">
+          <span class="risk-trend-card__label">{{ title $level }}</span>
+          <strong>{{ index $latest.risk_distribution $level }}</strong>
+        </div>
+        <div class="risk-trend-card__plot">
+          <canvas id="risk-spark-{{ $level }}"
+                  role="img"
+                  aria-label="{{ title $level }} risk count by month over the last 12 months">{{ title $level }} risk trend</canvas>
+        </div>
       </div>
+      {{ end }}
     </div>
   </div>
-  <script>
+</div>
+<script>
   (function() {
     if (!window.Chart || !window.RBACCharts) return;
     var series = RBACCharts.monthlySeries({{ $ts.series | jsonify | safeJS }}, 12);
@@ -112,107 +145,110 @@
       });
     });
   })();
-  </script>
-  {{ end }}
-  {{- partialCached "vulns/home-card.html" "home" }}
+</script>
+{{ end }}
+{{- partialCached "vulns/home-card.html" "home" }}
 
-  <div class="section-heading section-heading--projects"><div><p class="eyebrow">EXPLORE THE INDEX</p><h2>All projects</h2></div><span class="project-count">{{ len $allLatest }} projects</span></div>
+<div class="section-heading section-heading--projects">
+  <div>
+    <p class="eyebrow">EXPLORE THE INDEX</p>
+    <h2>All projects</h2>
+  </div>
+  <span class="project-count">{{ len $allLatest }} projects</span>
+</div>
 
-  <div class="posts">
-    {{/* Get the latest page per chart (cached across all pages that use this partial) */}}
-    {{ $groupedPages := sort $allLatest "Title" }}
+<div class="posts">
+{{/* Get the latest page per chart (cached across all pages that use this partial) */}}
+{{ $groupedPages := sort $allLatest "Title" }}
 
-    {{ partial "alphabet-pagination.html" (dict "RelPermalink" .RelPermalink "GroupedPages" $groupedPages) }}
+{{ partial "alphabet-pagination.html" (dict "RelPermalink" .RelPermalink "GroupedPages" $groupedPages) }}
 
-    <div id="projects-list">
-      {{ $paginator := .Paginate $groupedPages }}
+<div id="projects-list">
+  {{ $paginator := .Paginate $groupedPages }}
 
-    {{ range $paginator.Pages }}
-      {{ $page := . }}
-      <article class="post on-list">
-        <div class="title-card-wrapper">
-          <h2>
-            <a href="{{ $page.Permalink }}">{{ $page.Title | markdownify }}</a>
-          </h2>
-          {{- if $page.Params.version -}}
-            <span class="post-version">
-              {{- $page.Params.version -}}
-            </span>
-          {{- end -}}
-        </div>
+  {{ range $paginator.Pages }}
+  {{ $page := . }}
+  <article class="post on-list">
+    <div class="title-card-wrapper">
+      <h2>
+        <a href="{{ $page.Permalink }}">{{ $page.Title | markdownify }}</a>
+      </h2>
+      {{- if $page.Params.version -}}
+      <span class="post-version">{{- $page.Params.version -}}</span>
+      {{- end -}}
+    </div>
 
-        {{ partial "cover.html" . }}
+    {{ partial "cover.html" . }}
 
-        <div class="post-stats">
-          {{ if gt (int .Params.critical_findings) 0 }}
-            <span class="stat-item risk-critical">
-              {{ partialCached "icon.html" "skull" "skull" }}
-              {{ .Params.critical_findings }} Critical
-            </span>
-          {{ end }}
-          {{ if gt (int .Params.high_findings) 0 }}
-            <span class="stat-item risk-high">
-              {{ partialCached "icon.html" "triangle-alert" "triangle-alert" }}
-              {{ .Params.high_findings }} High
-            </span>
-          {{ end }}
-          {{ if gt (int .Params.medium_findings) 0 }}
-            <span class="stat-item risk-medium">
-              {{ partialCached "icon.html" "circle-alert" "circle-alert" }}
-              {{ .Params.medium_findings }} Medium
-            </span>
-          {{ end }}
-          {{ if gt (int .Params.low_findings) 0 }}
-            <span class="stat-item risk-low">
-              {{ partialCached "icon.html" "info" "info" }}
-              {{ .Params.low_findings }} Low
-            </span>
-          {{ end }}
-
-          <span class="stat-item">{{ partialCached "icon.html" "bot" "bot" }} {{ default "0" .Params.service_accounts }} accounts</span>
-          <span class="stat-item">{{ partialCached "icon.html" "box" "box" }} {{ default "0" .Params.workloads }} workloads</span>
-          <span class="stat-item">{{ partialCached "icon.html" "link-2" "link-2" }} {{ default "0" .Params.bindings }} bindings</span>
-        </div>
-
-        <div class="post-content">
-          {{ if .Params.showFullContent }}
-            {{ .Content }}
-          {{ else if .Description }}
-            <p>{{ .Description | markdownify }}</p>
-          {{ else }}
-            {{ .Summary }}
-          {{ end }}
-        </div>
-
-        {{ if .Params.tags }}
-        <span class="post-tags">
-          {{ $filteredTags := slice }}
-          {{ range .Params.tags }}
-            {{ if not (hasPrefix . "letter-") }}
-              {{ $filteredTags = $filteredTags | append . }}
-            {{ end }}
-          {{ end }}
-          {{ $tags := $filteredTags }}
-          {{ $tagCount := len $tags }}
-          {{ range first 3 $tags }}
-          #<a href="{{ (urlize (printf "tags/%s/" . )) | absLangURL }}">
-            {{- . -}}
-          </a>&nbsp;
-          {{ end }}
-          {{ if gt $tagCount 3 }}
-            (+{{ sub $tagCount 3 }} more)
-          {{ end }}
-        </span>
+    <div class="post-stats">
+      {{ if gt (int .Params.critical_findings) 0 }}
+      <span class="stat-item risk-critical">
+        {{ partialCached "icon.html" "skull" "skull" }}
+        {{ .Params.critical_findings }} Critical
+      </span>
+      {{ end }}
+      {{ if gt (int .Params.high_findings) 0 }}
+      <span class="stat-item risk-high">
+        {{ partialCached "icon.html" "triangle-alert" "triangle-alert" }}
+        {{ .Params.high_findings }} High
+      </span>
+      {{ end }}
+      {{ if gt (int .Params.medium_findings) 0 }}
+      <span class="stat-item risk-medium">
+        {{ partialCached "icon.html" "circle-alert" "circle-alert" }}
+        {{ .Params.medium_findings }} Medium
+      </span>
+      {{ end }}
+      {{ if gt (int .Params.low_findings) 0 }}
+      <span class="stat-item risk-low">
+        {{ partialCached "icon.html" "info" "info" }}
+        {{ .Params.low_findings }} Low
+      </span>
       {{ end }}
 
-        {{ if not .Params.showFullContent }}
-          <div>
-            <a class="read-more button inline" href="{{ .RelPermalink }}">{{ $.Site.Params.ReadMore }} {{ partialCached "icon.html" "arrow-right" "arrow-right" }}</a>
-          </div>
-        {{ end }}
-      </article>
+      <span class="stat-item">{{ partialCached "icon.html" "bot" "bot" }} {{ default "0" .Params.service_accounts }} accounts</span>
+      <span class="stat-item">{{ partialCached "icon.html" "box" "box" }} {{ default "0" .Params.workloads }} workloads</span>
+      <span class="stat-item">{{ partialCached "icon.html" "link-2" "link-2" }} {{ default "0" .Params.bindings }} bindings</span>
+      {{ with partial "vulns/version-record.html" $page }}{{ partial "vulns/card-stat.html" . }}{{ end }}
+    </div>
+
+    <div class="post-content">
+      {{ if .Params.showFullContent }}
+      {{ .Content }}
+      {{ else if .Description }}
+      <p>{{ .Description | markdownify }}</p>
+    {{ else }}
+      {{ .Summary }}
+      {{ end }}
+    </div>
+
+    {{ if .Params.tags }}
+    <span class="post-tags">
+      {{ $filteredTags := slice }}
+      {{ range .Params.tags }}
+      {{ if not (hasPrefix . "letter-") }}
+      {{ $filteredTags = $filteredTags | append . }}
+      {{ end }}
+      {{ end }}
+      {{ $tags := $filteredTags }}
+      {{ $tagCount := len $tags }}
+      {{ range first 3 $tags }}
+      #<a href="{{ (urlize (printf "tags/%s/" . )) | absLangURL }}">{{- . -}}</a>&nbsp;
+      {{ end }}
+      {{ if gt $tagCount 3 }}
+      (+{{ sub $tagCount 3 }} more)
+      {{ end }}
+    </span>
     {{ end }}
 
-    {{ partial "pagination.html" . }}
-  </div>
+    {{ if not .Params.showFullContent }}
+    <div>
+      <a class="read-more button inline" href="{{ .RelPermalink }}">{{ $.Site.Params.ReadMore }} {{ partialCached "icon.html" "arrow-right" "arrow-right" }}</a>
+    </div>
+    {{ end }}
+  </article>
+  {{ end }}
+
+  {{ partial "pagination.html" . }}
+</div>
 {{ end }}

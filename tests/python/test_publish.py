@@ -178,6 +178,36 @@ class BuildTests(unittest.TestCase):
         self.assertNotIn("pending", web)
         self.assertNotIn("pending", api)
 
+    def test_per_sa_summaries(self) -> None:
+        versions = build_fixture()["versions"]
+        # main workloads only (web-test is a test Pod), invalid refs dropped (x), zero counts omitted
+        self.assertEqual(versions["acme/web/2.0.0"]["sas"], {
+            "side": {"lvl": "Unknown", "n": 1},
+            "web": {"lvl": "Exploited", "n": 1, "kev": 1, "crit": 1, "high": 2},
+        })
+        self.assertEqual(versions["acme/web/1.0.0"]["sas"], {"web": {"lvl": "Unknown", "n": 1, "pending": True}})
+        self.assertEqual(versions["beta/Api/0.1.0"]["sas"], {"api": {"lvl": "High", "n": 1, "crit": 1}})
+
+    def test_per_sa_merges_namespaces_and_images(self) -> None:
+        entry = {"images": [
+            {"ref": "a", "canonical": "A", "role": "main", "workloads": [
+                {"serviceAccountName": "s", "namespace": "n1", "role": "main"},
+                {"serviceAccountName": "s", "namespace": "n2", "role": "main"}]},
+            {"ref": "b", "canonical": "B", "role": "main", "workloads": [
+                {"serviceAccountName": "s", "namespace": "n1", "role": "main"},
+                {"serviceAccountName": "", "namespace": "n1", "role": "main"}]},
+            {"ref": "c", "canonical": "C", "role": "test", "workloads": [
+                {"serviceAccountName": "t", "namespace": "n1", "role": "test"}]}]}
+        images = {"A": {"status": "ok", "risk_level": "Moderate", "counts": {"HIGH": 3}},
+                  "B": {"status": "ok", "risk_level": "Elevated", "counts": {"CRITICAL": 2, "HIGH": 1}, "kev": 0}}
+        self.assertEqual(publish.sa_summaries(entry, images), {
+            "": {"lvl": "Elevated", "n": 1, "crit": 2, "high": 1},
+            "s": {"lvl": "Elevated", "n": 2, "crit": 2, "high": 3},
+        })
+        # an unscanned image makes the summary partial, not pending
+        self.assertEqual(publish.sa_summaries(entry, {"A": images["A"]})["s"],
+                         {"lvl": "Moderate", "n": 2, "partial": True, "high": 3})
+
     def test_old_per_chart_summary_layout(self) -> None:
         summary = load("summary")
         rollup = summary.pop("versions")["acme/web/2.0.0"]

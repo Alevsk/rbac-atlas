@@ -1,5 +1,7 @@
-{{- /* Riskiest combinations callout for a chart version page. Context: version record (non-empty). */ -}}
-{{- with .combos -}}
+{{- /* Riskiest combinations callout for a chart version page. Context: dict "rec" (version record, non-empty)
+  "page" (the version page). */ -}}
+{{- $page := .page -}}
+{{- with .rec.combos -}}
 <section class="vuln-callout" aria-labelledby="vuln-combos-title">
   <div class="vuln-callout__head">
     <span class="chart-heading__icon">{{ partialCached "icon.html" "skull" "skull" }}</span>
@@ -13,7 +15,7 @@
   </p>
   <ul class="vuln-combos">
     {{- range . -}}
-    {{ partial "vulns/combo-item.html" (dict "c" . "chart" false "limit" 5) }}
+    {{ partial "vulns/combo-item.html" (dict "c" . "chart" false "limit" 5 "page" $page) }}
     {{- end -}}
   </ul>
   {{ partialCached "vulns/provenance.html" "p" }}

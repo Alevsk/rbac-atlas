@@ -363,7 +363,7 @@ data/vulns/
   images/<s>.json           s = first 2 hex chars of md5(canonical image)
                             {canonical: {lvl, st, rs, os, eosl, n, kev, lk, fx, top, at}}
   versions/<s>.json         s = first 2 hex chars of md5("org/chart/<version>")
-                            {key: {lvl, partial, kev, crit, high, imgs, combos, [pending]}}
+                            {key: {lvl, partial, kev, crit, high, imgs, combos, [pending], sas}}
   landscape.json            latest versions only: generated_at, coverage, distribution
                             {images, charts}, combos (top 25), stats
 ```
@@ -379,6 +379,10 @@ data/vulns/
   each raw string with the page's Markdown renderer (`.RenderString`, so typographer and
   linkify changes match) to find its table cell. `pending: true` marks versions none of
   whose main images has been scanned yet; their pages show "Image risk: Pending scan".
+  `sas` maps each ServiceAccount name to `{lvl, n, [partial], [pending], [kev], [crit],
+  [high]}` over the distinct images of its main workloads (`kev`/`crit`/`high` are the
+  highest single-image values, left out when 0). It fills the "CVEs" column of the
+  version page's Overview table; rows are matched by their `#sa-<name>` anchor.
 - "Latest" means the latest stable version (prereleases are skipped unless a chart has
   only prereleases). The site's project index sorts by version number and can link a
   prerelease, so for a few charts the landscape ranks a different version than the index
