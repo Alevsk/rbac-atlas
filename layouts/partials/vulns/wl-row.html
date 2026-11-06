@@ -1,0 +1,17 @@
+{{- /* Locates a combination's workload row in a rendered Workloads table. Context: dict "c" (combination
+  record) and optionally "page" (version page). Returns dict "id" (the row anchor: "wl-" + kind, workload and
+  container slugged like sa-anchor.html) and, with "page", "pattern": a regexp matching the row's opening
+  "<tr" (group 1) and its first three cells KIND | NAME | CONTAINER (group 2) as rendered, any whitespace
+  between tags. */ -}}
+{{- $c := .c -}}
+{{- $container := $c.container | default "" -}}
+{{- $slug := trim (replaceRE `[^a-z0-9]+` "-" (lower (printf "%s %s %s" $c.kind $c.workload $container))) "-" -}}
+{{- $row := dict "id" (printf "wl-%s" $slug) "pattern" "" -}}
+{{- with .page -}}
+{{- $meta := `([.*+?^${}()|\[\]\\])` -}}
+{{- $kind := replaceRE $meta `\$1` $c.kind -}}
+{{- $name := replaceRE $meta `\$1` (partialCached "vulns/cell-text.html" (dict "page" . "raw" $c.workload) $c.workload) -}}
+{{- $cont := replaceRE $meta `\$1` (partialCached "vulns/cell-text.html" (dict "page" . "raw" $container) $container) -}}
+{{- $row = merge $row (dict "pattern" (printf `(<tr)(>\s*<td>%s</td>\s*<td>%s</td>\s*<td>%s</td>)` $kind $name $cont)) -}}
+{{- end -}}
+{{- return $row -}}

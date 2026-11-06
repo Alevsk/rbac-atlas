@@ -6,11 +6,18 @@
 {{- $chartURL := $c.url | default (printf "/charts/%s/" (lower $c.key)) -}}
 {{- $anchor := partialCached "vulns/sa-anchor.html" $c.serviceAccountName $c.serviceAccountName -}}
 {{- $saHref := "" -}}
+{{- $wlHref := "" -}}
 {{- if .chart -}}
 {{- $saHref = printf "%s#%s" $chartURL $anchor -}}
+{{- $wlHref = printf "%s#%s" $chartURL (partial "vulns/wl-row.html" (dict "c" $c)).id -}}
 {{- else if .page -}}
 {{- if in .page.Content (printf `id="%s"` $anchor) -}}
 {{- $saHref = printf "#%s" $anchor -}}
+{{- end -}}
+{{- /* inject-workloads.html anchors this row (same needle), so only link when the row is on the page. */ -}}
+{{- $row := partial "vulns/wl-row.html" (dict "c" $c "page" .page) -}}
+{{- if findRE $row.pattern .page.Content 1 -}}
+{{- $wlHref = printf "#%s" $row.id -}}
 {{- end -}}
 {{- end -}}
 <li class="vuln-combo">
@@ -19,8 +26,13 @@
     <a class="vuln-combo__chart" href="{{ $chartURL }}">{{ $c.chart }}</a>
     <span class="vuln-combo__version">{{ $c.version }}</span>
     {{- end -}}
+    {{- if $wlHref -}}
+    <a class="vuln-combo__workload" href="{{ $wlHref }}">{{ $c.kind }}/{{ $c.workload }}</a>
+    {{ with $c.container }}<a class="vuln-combo__container" href="{{ $wlHref }}">container {{ . }}</a>{{ end }}
+    {{- else -}}
     <span class="vuln-combo__workload">{{ $c.kind }}/{{ $c.workload }}</span>
     {{ with $c.container }}<span class="vuln-combo__container">container {{ . }}</span>{{ end }}
+    {{- end -}}
   </div>
   <div class="vuln-combo__facts">
     <span>SA {{ with $saHref -}}<a class="vuln-combo__sa" href="{{ . }}"><code>{{ $c.serviceAccountName }}</code></a>{{- else -}}<code>{{ $c.serviceAccountName }}</code>{{- end }}</span>

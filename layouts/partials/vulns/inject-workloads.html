@@ -16,4 +16,11 @@
 {{- end -}}
 {{- end -}}
 {{- end -}}
+{{- /* Anchor the rows of riskiest-combination workloads so the callout can link to them (first match only). */ -}}
+{{- range .rec.combos -}}
+{{- $row := partial "vulns/wl-row.html" (dict "c" . "page" $.page) -}}
+{{- if not (in $html (printf `id="%s"` $row.id)) -}}
+{{- $html = replaceRE $row.pattern (printf `$1 id="%s" class="vuln-wl-row"$2` $row.id) $html 1 -}}
+{{- end -}}
+{{- end -}}
 {{- return $html -}}
