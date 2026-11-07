@@ -1,0 +1,1675 @@
+{
+  "metadata": {
+    "version": "1.1.0",
+    "name": "kwatch",
+    "source": "charts/kwatch__kwatch__1.1.0/",
+    "timestamp": 1794027686,
+    "extra": {
+      "helm": {
+        "description": "See what broke. Understand why. Know what to do next. kwatch watches your Kubernetes cluster, finds the one thing that caused a failure and tells your team in plain words, with the command to fix it.",
+        "home": "https://kwatch.dev",
+        "icon": "https://kwatch.dev/favicon.svg",
+        "keywords": [
+          "kwatch",
+          "kubernetes",
+          "monitoring",
+          "crash-reporting",
+          "event-notifier"
+        ],
+        "kubeVersion": "",
+        "maintainers": [
+          {
+            "name": "Abdelrahman Ahmed",
+            "email": "a.ahmed1026@gmail.com",
+            "url": "github.com/abahmed"
+          },
+          {
+            "name": "yaser",
+            "email": "yaserkalali.work@gmail.com",
+            "url": "github.com/yaskinny"
+          }
+        ],
+        "sources": [
+          "https://kwatch.dev",
+          "https://github.com/abahmed/kwatch"
+        ]
+      }
+    }
+  },
+  "serviceAccountData": [
+    {
+      "serviceAccountName": "kwatch",
+      "namespace": "default",
+      "automountToken": true,
+      "secrets": null,
+      "imagePullSecrets": null
+    }
+  ],
+  "serviceAccountPermissions": [
+    {
+      "serviceAccountName": "kwatch",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kwatch-default",
+      "apiGroup": "",
+      "resource": "configmaps",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "InformationDisclosure",
+        "ConfigMapAccess",
+        "DataExposure"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1022,
+          "name": "Read ConfigMaps cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1022/"
+        },
+        {
+          "id": 1023,
+          "name": "Read ConfigMaps in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1023/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kwatch",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kwatch-default",
+      "apiGroup": "",
+      "resource": "serviceaccounts",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kwatch",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kwatch-default",
+      "apiGroup": "",
+      "resource": "namespaces",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [
+        "InformationDisclosure",
+        "Reconnaissance",
+        "ClusterStructure"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1082,
+          "name": "List Namespaces (Cluster Reconnaissance)",
+          "link": "https://rbac-atlas.github.io/rules/1082/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kwatch",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kwatch-default",
+      "apiGroup": "",
+      "resource": "nodes/metrics",
+      "resourceName": "",
+      "verbs": [
+        "get"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kwatch",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kwatch-default",
+      "apiGroup": "",
+      "resource": "persistentvolumeclaims",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kwatch",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kwatch-default",
+      "apiGroup": "",
+      "resource": "limitranges",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [
+        "InformationDisclosure",
+        "Reconnaissance",
+        "ResourceConfiguration"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1087,
+          "name": "Read LimitRanges (Namespace Information Disclosure)",
+          "link": "https://rbac-atlas.github.io/rules/1087/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kwatch",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kwatch-default",
+      "apiGroup": "",
+      "resource": "services",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kwatch",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kwatch-default",
+      "apiGroup": "",
+      "resource": "replicationcontrollers",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kwatch",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kwatch-default",
+      "apiGroup": "",
+      "resource": "events",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Medium",
+      "tags": [
+        "Reconnaissance",
+        "OperationalData",
+        "InformationDisclosure"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1070,
+          "name": "Read events cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1070/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kwatch",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kwatch-default",
+      "apiGroup": "",
+      "resource": "nodes",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kwatch",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kwatch-default",
+      "apiGroup": "",
+      "resource": "secrets",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "ClusterWideSecretAccess",
+        "CredentialAccess",
+        "DataExposure",
+        "InformationDisclosure",
+        "SecretAccess"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1010,
+          "name": "Read secrets cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1010/"
+        },
+        {
+          "id": 1011,
+          "name": "Read secrets in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1011/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kwatch",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kwatch-default",
+      "apiGroup": "",
+      "resource": "resourcequotas",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Medium",
+      "tags": [
+        "InformationDisclosure",
+        "Reconnaissance",
+        "ResourceConfiguration",
+        "QuotaTampering"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1089,
+          "name": "Read All ResourceQuotas (Cluster-wide Information Disclosure)",
+          "link": "https://rbac-atlas.github.io/rules/1089/"
+        },
+        {
+          "id": 1088,
+          "name": "Read ResourceQuotas (Namespace Information Disclosure)",
+          "link": "https://rbac-atlas.github.io/rules/1088/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kwatch",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kwatch-default",
+      "apiGroup": "",
+      "resource": "nodes/stats",
+      "resourceName": "",
+      "verbs": [
+        "get"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kwatch",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kwatch-default",
+      "apiGroup": "",
+      "resource": "pods",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kwatch",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kwatch-default",
+      "apiGroup": "",
+      "resource": "persistentvolumes",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kwatch",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kwatch-default",
+      "apiGroup": "",
+      "resource": "pods/log",
+      "resourceName": "",
+      "verbs": [
+        "get"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "ClusterWideLogAccess",
+        "InformationDisclosure",
+        "DataExposure",
+        "LogAccess"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1018,
+          "name": "Read pod logs cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1018/"
+        },
+        {
+          "id": 1019,
+          "name": "Read pod logs in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1019/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kwatch",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kwatch-default",
+      "apiGroup": "apps",
+      "resource": "deployments",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kwatch",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kwatch-default",
+      "apiGroup": "apps",
+      "resource": "replicasets",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kwatch",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kwatch-default",
+      "apiGroup": "apps",
+      "resource": "statefulsets",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kwatch",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kwatch-default",
+      "apiGroup": "apps",
+      "resource": "daemonsets",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kwatch",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kwatch-default",
+      "apiGroup": "apps",
+      "resource": "controllerrevisions",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kwatch",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kwatch-default",
+      "apiGroup": "batch",
+      "resource": "cronjobs",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kwatch",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kwatch-default",
+      "apiGroup": "batch",
+      "resource": "jobs",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kwatch",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kwatch-default",
+      "apiGroup": "node.k8s.io",
+      "resource": "runtimeclasses",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kwatch",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kwatch-default",
+      "apiGroup": "flowcontrol.apiserver.k8s.io",
+      "resource": "prioritylevelconfigurations",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kwatch",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kwatch-default",
+      "apiGroup": "flowcontrol.apiserver.k8s.io",
+      "resource": "flowschemas",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kwatch",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kwatch-default",
+      "apiGroup": "resource.k8s.io",
+      "resource": "resourceclaims",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kwatch",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kwatch-default",
+      "apiGroup": "apiextensions.k8s.io",
+      "resource": "customresourcedefinitions",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kwatch",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kwatch-default",
+      "apiGroup": "rbac.authorization.k8s.io",
+      "resource": "roles",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Medium",
+      "tags": [
+        "InformationDisclosure",
+        "RBACQuery",
+        "Reconnaissance"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1077,
+          "name": "Read RBAC configuration cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1077/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kwatch",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kwatch-default",
+      "apiGroup": "rbac.authorization.k8s.io",
+      "resource": "rolebindings",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Medium",
+      "tags": [
+        "InformationDisclosure",
+        "RBACQuery",
+        "Reconnaissance"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1077,
+          "name": "Read RBAC configuration cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1077/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kwatch",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kwatch-default",
+      "apiGroup": "rbac.authorization.k8s.io",
+      "resource": "clusterroles",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Medium",
+      "tags": [
+        "InformationDisclosure",
+        "RBACQuery",
+        "Reconnaissance"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1077,
+          "name": "Read RBAC configuration cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1077/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kwatch",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kwatch-default",
+      "apiGroup": "rbac.authorization.k8s.io",
+      "resource": "clusterrolebindings",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Medium",
+      "tags": [
+        "InformationDisclosure",
+        "RBACQuery",
+        "Reconnaissance"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1077,
+          "name": "Read RBAC configuration cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1077/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kwatch",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kwatch-default",
+      "apiGroup": "autoscaling",
+      "resource": "horizontalpodautoscalers",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kwatch",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kwatch-default",
+      "apiGroup": "discovery.k8s.io",
+      "resource": "endpointslices",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kwatch",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kwatch-default",
+      "apiGroup": "snapshot.storage.k8s.io",
+      "resource": "volumesnapshotclasses",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kwatch",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kwatch-default",
+      "apiGroup": "snapshot.storage.k8s.io",
+      "resource": "volumesnapshots",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kwatch",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kwatch-default",
+      "apiGroup": "snapshot.storage.k8s.io",
+      "resource": "volumesnapshotcontents",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kwatch",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kwatch-default",
+      "apiGroup": "authorization.k8s.io",
+      "resource": "selfsubjectaccessreviews",
+      "resourceName": "",
+      "verbs": [
+        "create"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kwatch",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kwatch-default",
+      "apiGroup": "certificates.k8s.io",
+      "resource": "certificatesigningrequests",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kwatch",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kwatch-default",
+      "apiGroup": "apiregistration.k8s.io",
+      "resource": "apiservices",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kwatch",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kwatch-default",
+      "apiGroup": "gateway.networking.k8s.io",
+      "resource": "tcproutes",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kwatch",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kwatch-default",
+      "apiGroup": "gateway.networking.k8s.io",
+      "resource": "tlsroutes",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kwatch",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kwatch-default",
+      "apiGroup": "gateway.networking.k8s.io",
+      "resource": "referencegrants",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kwatch",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kwatch-default",
+      "apiGroup": "gateway.networking.k8s.io",
+      "resource": "gatewayclasses",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kwatch",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kwatch-default",
+      "apiGroup": "gateway.networking.k8s.io",
+      "resource": "gateways",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kwatch",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kwatch-default",
+      "apiGroup": "gateway.networking.k8s.io",
+      "resource": "httproutes",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kwatch",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kwatch-default",
+      "apiGroup": "gateway.networking.k8s.io",
+      "resource": "grpcroutes",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kwatch",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kwatch-default",
+      "apiGroup": "policy",
+      "resource": "poddisruptionbudgets",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kwatch",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kwatch-default",
+      "apiGroup": "networking.k8s.io",
+      "resource": "ingresses",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kwatch",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kwatch-default",
+      "apiGroup": "networking.k8s.io",
+      "resource": "ingressclasses",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kwatch",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kwatch-default",
+      "apiGroup": "networking.k8s.io",
+      "resource": "networkpolicies",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kwatch",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kwatch-default",
+      "apiGroup": "scheduling.k8s.io",
+      "resource": "priorityclasses",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kwatch",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kwatch-default",
+      "apiGroup": "storage.k8s.io",
+      "resource": "storageclasses",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kwatch",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kwatch-default",
+      "apiGroup": "storage.k8s.io",
+      "resource": "volumeattachments",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kwatch",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kwatch-default",
+      "apiGroup": "admissionregistration.k8s.io",
+      "resource": "mutatingadmissionpolicies",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kwatch",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kwatch-default",
+      "apiGroup": "admissionregistration.k8s.io",
+      "resource": "mutatingadmissionpolicybindings",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kwatch",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kwatch-default",
+      "apiGroup": "admissionregistration.k8s.io",
+      "resource": "mutatingwebhookconfigurations",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Medium",
+      "tags": [
+        "InformationDisclosure",
+        "WebhookReconnaissance",
+        "Reconnaissance"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1084,
+          "name": "List MutatingWebhookConfigurations (Reconnaissance)",
+          "link": "https://rbac-atlas.github.io/rules/1084/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kwatch",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kwatch-default",
+      "apiGroup": "admissionregistration.k8s.io",
+      "resource": "validatingwebhookconfigurations",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Medium",
+      "tags": [
+        "Reconnaissance",
+        "InformationDisclosure",
+        "WebhookReconnaissance"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1083,
+          "name": "List ValidatingWebhookConfigurations (Reconnaissance)",
+          "link": "https://rbac-atlas.github.io/rules/1083/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kwatch",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kwatch-default",
+      "apiGroup": "admissionregistration.k8s.io",
+      "resource": "validatingadmissionpolicies",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kwatch",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kwatch-default",
+      "apiGroup": "admissionregistration.k8s.io",
+      "resource": "validatingadmissionpolicybindings",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kwatch",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "kwatch-default",
+      "apiGroup": "coordination.k8s.io",
+      "resource": "leases",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kwatch",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "kwatch-leader-election",
+      "apiGroup": "coordination.k8s.io",
+      "resource": "leases",
+      "resourceName": "",
+      "verbs": [
+        "create"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kwatch",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "kwatch-leader-election",
+      "apiGroup": "coordination.k8s.io",
+      "resource": "leases",
+      "resourceName": "kwatch-leader",
+      "verbs": [
+        "get",
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [
+        "ResourceNameRestricted"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kwatch",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "kwatch-restart-evidence",
+      "apiGroup": "",
+      "resource": "pods",
+      "resourceName": "",
+      "verbs": [
+        "get"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kwatch",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "kwatch-control-plane-leases",
+      "apiGroup": "coordination.k8s.io",
+      "resource": "leases",
+      "resourceName": "kube-scheduler",
+      "verbs": [
+        "get"
+      ],
+      "riskLevel": "Low",
+      "tags": [
+        "ResourceNameRestricted"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kwatch",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "kwatch-control-plane-leases",
+      "apiGroup": "coordination.k8s.io",
+      "resource": "leases",
+      "resourceName": "kube-controller-manager",
+      "verbs": [
+        "get"
+      ],
+      "riskLevel": "Low",
+      "tags": [
+        "ResourceNameRestricted"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "kwatch",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "kwatch-config-overlay",
+      "apiGroup": "kwatch.abahmed.dev",
+      "resource": "kwatchconfigs",
+      "resourceName": "",
+      "verbs": [
+        "list",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    }
+  ],
+  "serviceAccountWorkloads": [
+    {
+      "serviceAccountName": "kwatch",
+      "namespace": "default",
+      "workloadType": "Deployment",
+      "workloadName": "kwatch",
+      "containerName": "kwatch",
+      "image": "ghcr.io/abahmed/kwatch:v1.1.0"
+    }
+  ]
+}

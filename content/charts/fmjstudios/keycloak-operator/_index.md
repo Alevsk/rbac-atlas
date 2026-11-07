@@ -9,4 +9,4 @@ Keycloak is an open source software product to allow single sign-on with identit
 
 ## Sources
 
-- https://github.com/fmjstudios/helm
+- https://github.com/adnoctem/charts
