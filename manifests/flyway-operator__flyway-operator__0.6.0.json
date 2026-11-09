@@ -1,0 +1,399 @@
+{
+  "metadata": {
+    "version": "0.6.0",
+    "name": "flyway-operator",
+    "source": "charts/flyway-operator__flyway-operator__0.6.0/",
+    "timestamp": 1794200627,
+    "extra": {
+      "helm": {
+        "description": "Flyway Operator - an operator to do declarative database schema migration.",
+        "home": "",
+        "icon": "https://pbs.twimg.com/profile_images/1339525060999192576/9ltj0fpE_400x400.png",
+        "keywords": null,
+        "kubeVersion": "\u003e=1.35.0-0",
+        "maintainers": [
+          {
+            "name": "davidkarlsen",
+            "email": "david@davidkarlsen.com"
+          }
+        ],
+        "sources": null
+      }
+    }
+  },
+  "serviceAccountData": [
+    {
+      "serviceAccountName": "flyway-operator",
+      "namespace": "default",
+      "automountToken": false,
+      "secrets": null,
+      "imagePullSecrets": null
+    }
+  ],
+  "serviceAccountPermissions": [
+    {
+      "serviceAccountName": "flyway-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "flyway-operator",
+      "apiGroup": "",
+      "resource": "events",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "list",
+        "patch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "flyway-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "flyway-operator",
+      "apiGroup": "",
+      "resource": "pods",
+      "resourceName": "",
+      "verbs": [
+        "list"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "flyway-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "flyway-operator",
+      "apiGroup": "",
+      "resource": "pods/log",
+      "resourceName": "",
+      "verbs": [
+        "get"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "DataExposure",
+        "LogAccess",
+        "ClusterWideLogAccess",
+        "InformationDisclosure"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1018,
+          "name": "Read pod logs cluster-wide",
+          "link": "https://rbac-atlas.github.io/rules/1018/"
+        },
+        {
+          "id": 1019,
+          "name": "Read pod logs in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1019/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "flyway-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "flyway-operator",
+      "apiGroup": "batch",
+      "resource": "jobs",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "Tampering",
+        "PotentialPrivilegeEscalation",
+        "WorkloadLifecycle",
+        "PrivilegeEscalation"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1041,
+          "name": "Manage Jobs cluster-wide (one-off privileged execution)",
+          "link": "https://rbac-atlas.github.io/rules/1041/"
+        },
+        {
+          "id": 1042,
+          "name": "Manage Jobs in a namespace (one-off privileged execution)",
+          "link": "https://rbac-atlas.github.io/rules/1042/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "flyway-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "flyway-operator",
+      "apiGroup": "flyway.davidkarlsen.com",
+      "resource": "migrations/status",
+      "resourceName": "",
+      "verbs": [
+        "get",
+        "patch",
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "flyway-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "flyway-operator",
+      "apiGroup": "flyway.davidkarlsen.com",
+      "resource": "migrations",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "flyway-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "flyway-operator",
+      "apiGroup": "flyway.davidkarlsen.com",
+      "resource": "migrations/finalizers",
+      "resourceName": "",
+      "verbs": [
+        "update"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "flyway-operator",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "flyway-operator-leader-election",
+      "apiGroup": "",
+      "resource": "events",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "patch"
+      ],
+      "riskLevel": "Low",
+      "tags": [],
+      "matchedRiskRules": [
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "flyway-operator",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "flyway-operator-leader-election",
+      "apiGroup": "",
+      "resource": "configmaps",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "High",
+      "tags": [
+        "Tampering",
+        "ConfigMapAccess",
+        "PotentialPrivilegeEscalation",
+        "InformationDisclosure",
+        "DataExposure"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1025,
+          "name": "Modify ConfigMaps in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1025/"
+        },
+        {
+          "id": 1023,
+          "name": "Read ConfigMaps in a namespace",
+          "link": "https://rbac-atlas.github.io/rules/1023/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "flyway-operator",
+      "namespace": "default",
+      "roleType": "Role",
+      "roleName": "flyway-operator-leader-election",
+      "apiGroup": "coordination.k8s.io",
+      "resource": "leases",
+      "resourceName": "",
+      "verbs": [
+        "create",
+        "delete",
+        "get",
+        "list",
+        "patch",
+        "update",
+        "watch"
+      ],
+      "riskLevel": "Critical",
+      "tags": [
+        "DenialOfService",
+        "ControlPlaneDisruption",
+        "CriticalNamespace",
+        "Tampering"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1081,
+          "name": "Manage Leases in kube-system or kube-node-lease namespace",
+          "link": "https://rbac-atlas.github.io/rules/1081/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "flyway-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "flyway-operator-metrics-auth",
+      "apiGroup": "authentication.k8s.io",
+      "resource": "tokenreviews",
+      "resourceName": "",
+      "verbs": [
+        "create"
+      ],
+      "riskLevel": "Medium",
+      "tags": [
+        "RBACQuery",
+        "InformationDisclosure",
+        "CredentialAccess"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1049,
+          "name": "Create TokenReviews (validate arbitrary tokens)",
+          "link": "https://rbac-atlas.github.io/rules/1049/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    },
+    {
+      "serviceAccountName": "flyway-operator",
+      "namespace": "default",
+      "roleType": "ClusterRole",
+      "roleName": "flyway-operator-metrics-auth",
+      "apiGroup": "authorization.k8s.io",
+      "resource": "subjectaccessreviews",
+      "resourceName": "",
+      "verbs": [
+        "create"
+      ],
+      "riskLevel": "Medium",
+      "tags": [
+        "InformationDisclosure",
+        "RBACQuery"
+      ],
+      "matchedRiskRules": [
+        {
+          "id": 1050,
+          "name": "Create SubjectAccessReviews (check arbitrary permissions)",
+          "link": "https://rbac-atlas.github.io/rules/1050/"
+        },
+        {
+          "id": 9996,
+          "name": "Base Risk Level - Low",
+          "link": "https://rbac-atlas.github.io/rules/9996/"
+        }
+      ]
+    }
+  ],
+  "serviceAccountWorkloads": [
+    {
+      "serviceAccountName": "flyway-operator",
+      "namespace": "default",
+      "workloadType": "Deployment",
+      "workloadName": "flyway-operator",
+      "containerName": "flyway-operator",
+      "image": "ghcr.io/davidkarlsen/flyway-operator:0.7.0"
+    }
+  ]
+}
