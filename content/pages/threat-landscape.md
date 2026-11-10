@@ -1,17 +1,17 @@
 ---
 title: "Cloud-Native Threat Landscape"
 description: "RBAC risk analysis across 259 Kubernetes open-source projects"
-date: "2026-11-09"
+date: "2026-11-10"
 ---
 
-This report is auto-generated from the latest RBAC Atlas scan (**2026-11-09**). It analyzes the RBAC permissions of **259** Kubernetes open-source projects across **28001** manifest versions to provide a snapshot of the current cloud-native threat landscape.
+This report is auto-generated from the latest RBAC Atlas scan (**2026-11-10**). It analyzes the RBAC permissions of **259** Kubernetes open-source projects across **28020** manifest versions to provide a snapshot of the current cloud-native threat landscape.
 
 ## At a Glance
 
 | Metric | Value |
 |--------|-------|
 | Projects analyzed | 259 |
-| Total manifest versions | 28001 |
+| Total manifest versions | 28020 |
 | Avg service accounts per project | 2.13 |
 | Avg permission bindings per project | 31.58 |
 | Avg workloads per project | 3.5 |
@@ -69,7 +69,7 @@ Ranked by weighted risk score (`critical×10 + high×5 + medium×2 + low×1`), u
 | Project | Version | Critical | High | Medium | Low | Score |
 |---------|---------|----------|------|--------|-----|-------|
 | [openebs](/charts/openebs/openebs/) | 3.9.0 | 90 | 73 | 30 | 170 | **1495** |
-| [victoria-metrics-k8s-stack](/charts/victoriametrics/victoria-metrics-k8s-stack/) | 0.97.1 | 14 | 179 | 5 | 38 | **1083** |
+| [victoria-metrics-k8s-stack](/charts/victoriametrics/victoria-metrics-k8s-stack/) | 0.98.1 | 14 | 179 | 5 | 38 | **1083** |
 | [victoria-metrics-distributed](/charts/victoriametrics/victoria-metrics-distributed/) | 0.9.0 | 13 | 117 | 5 | 39 | **764** |
 | [longhorn](/charts/longhorn/longhorn/) | 1.9.2 | 20 | 56 | 3 | 7 | **493** |
 | [gitlab](/charts/gitlab/gitlab/) | 9.9.3 | 18 | 10 | 9 | 199 | **447** |
