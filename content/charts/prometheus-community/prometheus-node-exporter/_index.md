@@ -9,4 +9,5 @@ A Helm chart for prometheus node-exporter
 
 ## Sources
 
+- https://github.com/prometheus-community/helm-charts
 - https://github.com/prometheus/node_exporter/
