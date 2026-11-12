@@ -9,4 +9,5 @@ Install kube-state-metrics to generate and expose cluster-level metrics
 
 ## Sources
 
+- https://github.com/prometheus-community/helm-charts
 - https://github.com/kubernetes/kube-state-metrics/
