@@ -5,7 +5,7 @@
    "chart": "openebs/openebs",
    "container": "openebs-jaeger-operator",
    "critical": 7,
-   "high": 207,
+   "high": 206,
    "image": "jaegertracing/jaeger-operator:1.24.0",
    "image_level": "Exploited",
    "kev": 4,
@@ -160,7 +160,7 @@
    "chart": "argo/argocd-image-updater",
    "container": "argocd-image-updater-controller",
    "critical": 2,
-   "high": 6,
+   "high": 9,
    "image": "quay.io/argoprojlabs/argocd-image-updater:v1.4.0",
    "image_level": "Exploited",
    "kev": 2,
@@ -180,35 +180,11 @@
    "workload": "argocd-image-updater-controller"
   },
   {
-   "canonical": "registry.gitlab.com/gitlab-org/gitlab-runner:alpine-v19.5.1",
-   "chart": "gitlab/gitlab",
-   "container": "gitlab-gitlab-runner",
-   "critical": 2,
-   "high": 17,
-   "image": "registry.gitlab.com/gitlab-org/gitlab-runner:alpine-v19.5.1",
-   "image_level": "Exploited",
-   "kev": 2,
-   "kev_ids": [
-    "CVE-2026-111497",
-    "CVE-2026-123158"
-   ],
-   "key": "gitlab/gitlab/10.5.5",
-   "kind": "Deployment",
-   "likely": 0,
-   "likely_ids": [],
-   "namespace": "default",
-   "sa_rbac_risk": "Critical",
-   "serviceAccountName": "gitlab-gitlab-runner",
-   "url": "/charts/gitlab/gitlab/10.5.5/",
-   "version": "10.5.5",
-   "workload": "gitlab-gitlab-runner"
-  },
-  {
    "canonical": "docker.io/nginxinc/nginx-unprivileged:1.29-alpine",
    "chart": "grafana/loki",
    "container": "nginx",
    "critical": 1,
-   "high": 41,
+   "high": 42,
    "image": "docker.io/nginxinc/nginx-unprivileged:1.29-alpine",
    "image_level": "Exploited",
    "kev": 2,
@@ -692,42 +668,67 @@
    "url": "/charts/eclipse-che/eclipse-che/7.124.0/",
    "version": "7.124.0",
    "workload": "che-operator"
+  },
+  {
+   "canonical": "public.ecr.aws/aws-observability/aws-for-fluent-bit:3.2.1",
+   "chart": "aws-eks-charts/aws-for-fluent-bit",
+   "container": "aws-for-fluent-bit",
+   "critical": 0,
+   "high": 91,
+   "image": "public.ecr.aws/aws-observability/aws-for-fluent-bit:3.2.1",
+   "image_level": "Exploited",
+   "kev": 1,
+   "kev_ids": [
+    "CVE-2026-111497"
+   ],
+   "key": "aws-eks-charts/aws-for-fluent-bit/0.2.0",
+   "kind": "DaemonSet",
+   "likely": 1,
+   "likely_ids": [
+    "CVE-2025-15467"
+   ],
+   "namespace": "default",
+   "sa_rbac_risk": "Critical",
+   "serviceAccountName": "aws-for-fluent-bit",
+   "url": "/charts/aws-eks-charts/aws-for-fluent-bit/0.2.0/",
+   "version": "0.2.0",
+   "workload": "aws-for-fluent-bit"
   }
  ],
  "coverage": {
   "charts": 283,
-  "cvenow_pct": 87.9,
-  "images": 634,
+  "cvenow_pct": 87.8,
+  "images": 632,
   "images_pending": 0,
-  "images_scanned": 583,
-  "scanned_pct": 92.0
+  "images_scanned": 579,
+  "scanned_pct": 91.6
  },
  "distribution": {
   "charts": {
-   "Elevated": 63,
-   "Exploited": 61,
-   "High": 34,
+   "Elevated": 62,
+   "Exploited": 60,
+   "High": 35,
    "Low": 12,
    "Moderate": 74,
    "N/A": 20,
-   "Unknown": 19
+   "Unknown": 20
   },
   "images": {
    "Elevated": 117,
-   "Exploited": 82,
+   "Exploited": 79,
    "High": 140,
-   "Low": 45,
-   "Moderate": 199,
-   "Unknown": 51
+   "Low": 48,
+   "Moderate": 195,
+   "Unknown": 53
   }
  },
- "generated_at": "2026-11-11T14:53:34Z",
+ "generated_at": "2026-11-12T17:04:07Z",
  "stats": {
   "charts_with_combos": 58,
   "combos_kev": 56,
   "combos_total": 159,
-  "images_exploited": 82,
+  "images_exploited": 79,
   "workloads_critical_or_high_rbac": 493,
-  "workloads_total": 932
+  "workloads_total": 933
  }
 }
