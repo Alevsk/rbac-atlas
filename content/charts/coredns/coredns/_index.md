@@ -10,3 +10,4 @@ CoreDNS is a DNS server that chains plugins and provides Kubernetes DNS Services
 ## Sources
 
 - https://github.com/coredns/coredns
+- https://github.com/coredns/helm

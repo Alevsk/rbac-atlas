@@ -1,24 +1,24 @@
 ---
 title: "Cloud-Native Threat Landscape"
 description: "RBAC risk analysis across 259 Kubernetes open-source projects"
-date: "2026-11-14"
+date: "2026-11-15"
 ---
 
-This report is auto-generated from the latest RBAC Atlas scan (**2026-11-14**). It analyzes the RBAC permissions of **259** Kubernetes open-source projects across **28091** manifest versions to provide a snapshot of the current cloud-native threat landscape.
+This report is auto-generated from the latest RBAC Atlas scan (**2026-11-15**). It analyzes the RBAC permissions of **259** Kubernetes open-source projects across **28104** manifest versions to provide a snapshot of the current cloud-native threat landscape.
 
 ## At a Glance
 
 | Metric | Value |
 |--------|-------|
 | Projects analyzed | 259 |
-| Total manifest versions | 28091 |
+| Total manifest versions | 28104 |
 | Avg service accounts per project | 2.13 |
-| Avg permission bindings per project | 31.72 |
+| Avg permission bindings per project | 31.73 |
 | Avg workloads per project | 3.5 |
 | Avg critical risks per project | 3.45 |
 | Avg high risks per project | 4.04 |
 | Avg medium risks per project | 2.06 |
-| Avg low risks per project | 22.17 |
+| Avg low risks per project | 22.18 |
 | Projects with critical risks | 172 |
 | Projects with no RBAC permissions | 54 |
 
@@ -29,8 +29,8 @@ This report is auto-generated from the latest RBAC Atlas scan (**2026-11-14**). 
 | {{< risk "Critical" >}} | 894 | 10.88% |
 | {{< risk "High" >}} | 1046 | 12.73% |
 | {{< risk "Medium" >}} | 534 | 6.5% |
-| {{< risk "Low" >}} | 5742 | 69.89% |
-| **Total** | **8216** | |
+| {{< risk "Low" >}} | 5745 | 69.9% |
+| **Total** | **8219** | |
 
 ## Top 10 RBAC Risk Tags
 
@@ -51,7 +51,7 @@ This report is auto-generated from the latest RBAC Atlas scan (**2026-11-14**). 
 
 | Rule | Occurrences |
 |------|-------------|
-| Base Risk Level - Low | 7175 |
+| Base Risk Level - Low | 7178 |
 | Base Risk Level - High | 921 |
 | Read ConfigMaps in a namespace | 257 |
 | Read secrets in a namespace | 244 |
