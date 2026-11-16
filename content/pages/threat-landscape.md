@@ -1,24 +1,24 @@
 ---
 title: "Cloud-Native Threat Landscape"
 description: "RBAC risk analysis across 259 Kubernetes open-source projects"
-date: "2026-11-15"
+date: "2026-11-16"
 ---
 
-This report is auto-generated from the latest RBAC Atlas scan (**2026-11-15**). It analyzes the RBAC permissions of **259** Kubernetes open-source projects across **28104** manifest versions to provide a snapshot of the current cloud-native threat landscape.
+This report is auto-generated from the latest RBAC Atlas scan (**2026-11-16**). It analyzes the RBAC permissions of **259** Kubernetes open-source projects across **28108** manifest versions to provide a snapshot of the current cloud-native threat landscape.
 
 ## At a Glance
 
 | Metric | Value |
 |--------|-------|
 | Projects analyzed | 259 |
-| Total manifest versions | 28104 |
+| Total manifest versions | 28108 |
 | Avg service accounts per project | 2.13 |
-| Avg permission bindings per project | 31.73 |
+| Avg permission bindings per project | 31.74 |
 | Avg workloads per project | 3.5 |
 | Avg critical risks per project | 3.45 |
 | Avg high risks per project | 4.04 |
 | Avg medium risks per project | 2.06 |
-| Avg low risks per project | 22.18 |
+| Avg low risks per project | 22.19 |
 | Projects with critical risks | 172 |
 | Projects with no RBAC permissions | 54 |
 
@@ -29,8 +29,8 @@ This report is auto-generated from the latest RBAC Atlas scan (**2026-11-15**). 
 | {{< risk "Critical" >}} | 894 | 10.88% |
 | {{< risk "High" >}} | 1046 | 12.73% |
 | {{< risk "Medium" >}} | 534 | 6.5% |
-| {{< risk "Low" >}} | 5745 | 69.9% |
-| **Total** | **8219** | |
+| {{< risk "Low" >}} | 5746 | 69.9% |
+| **Total** | **8220** | |
 
 ## Top 10 RBAC Risk Tags
 
@@ -51,7 +51,7 @@ This report is auto-generated from the latest RBAC Atlas scan (**2026-11-15**). 
 
 | Rule | Occurrences |
 |------|-------------|
-| Base Risk Level - Low | 7178 |
+| Base Risk Level - Low | 7179 |
 | Base Risk Level - High | 921 |
 | Read ConfigMaps in a namespace | 257 |
 | Read secrets in a namespace | 244 |
@@ -88,7 +88,7 @@ Ranked by weighted risk score (`critical×10 + high×5 + medium×2 + low×1`), u
 | [victoria-metrics-k8s-stack](/charts/victoriametrics/victoria-metrics-k8s-stack/) | 236 |
 | [rook-ceph](/charts/rook-release/rook-ceph/) | 185 |
 | [stackgres-operator](/charts/stackgres-charts/stackgres-operator/) | 181 |
-| [tigera-operator](/charts/stevehipwell/tigera-operator/) | 174 |
+| [tigera-operator](/charts/stevehipwell/tigera-operator/) | 175 |
 | [victoria-metrics-distributed](/charts/victoriametrics/victoria-metrics-distributed/) | 174 |
 | [gateway-operator](/charts/kong/gateway-operator/) | 162 |
 | [gitlab-operator](/charts/gitlab/gitlab-operator/) | 158 |
