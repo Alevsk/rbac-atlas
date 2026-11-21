@@ -1,11 +1,11 @@
 ---
 title: "netdata"
-description: "Real-time performance monitoring, done right!"
+description: "Netdata, full-stack observability: the AI SRE that learns your stack!"
 ---
 
 ## netdata
 
-Real-time performance monitoring, done right!
+Netdata, full-stack observability: the AI SRE that learns your stack!
 
 ## Sources
 
